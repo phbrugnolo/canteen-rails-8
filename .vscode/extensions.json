@@ -1,0 +1,18 @@
+{
+  "recommendations": [
+    "eamodio.gitlens",
+    "streetsidesoftware.code-spell-checker-portuguese-brazilian",
+    "streetsidesoftware.code-spell-checker",
+    "EditorConfig.EditorConfig",
+    "setobiralo.erb-commenter",
+    "aliariff.vscode-erb-beautify",
+    "christian-kohler.path-intellisense",
+    "Shopify.ruby-lsp",
+    "vortizhe.simple-ruby-erb",
+    "redhat.vscode-yaml",
+    "dbaeumer.vscode-eslint",
+    "steoates.autoimport",
+    "ecmel.vscode-html-css",
+    "VisualStudioExptTeam.vscodeintellicode"
+  ]
+}
