@@ -7,23 +7,65 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
-
   <body>
-    <%= yield %>
+    <section class="container-fluid align-text-start">
+      <div class="row">
+        <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-light col-3 position-fixed">
+          <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <img id="logo" src="/assets/logo-rd.png" alt="Logo da Religião de Deus do Cristo e do Espírito Santo">
+            <span class="fs-4 ms-3"><%= I18n.t(:title) %></span>
+          </div>
+          <hr>
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-demand list-group-item">
+              <%= link_to "<i class='bi bi-house-fill me-3'></i>#{I18n.t(:home)}".html_safe, main_root_path, class: "nav-link link-dark" %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to "<i class='bi bi-cart4 me-3'></i>#{I18n.t(:sale, scope: %i[activerecord models], count: 1)}".html_safe, new_main_sale_path, class: "nav-link link-dark" %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to "<i class='bi bi-grid me-3'></i>#{I18n.t(:product, scope: %i[activerecord models], count: 2)}".html_safe, main_products_path, class: "nav-link link-dark" %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to "<i class='bi bi-person-circle me-3'></i>#{I18n.t(:customer, scope: %i[activerecord models], count: 2)}".html_safe, main_customers_path, class: "nav-link link-dark" %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to "<i class='bi bi-clock-history me-3'></i>Fechamento".html_safe, main_closing_periods_path, class: "nav-link link-dark" %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to "<i class='bi bi-clipboard-data me-3'></i>Relatórios".html_safe, main_reports_path, class: "nav-link link-dark" %>
+            </li>
+          </ul>
+          <hr>
+          <div class="dropdown align-items-baseline">
+            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="/assets/logo-rd.png" alt="Foto de Perfil" width="32" height="32" class="rounded-circle me-2">
+              <strong><%= I18n.t(:user) %></strong>
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+              <li class="list-group-item"><a class="dropdown-demand ms-2 link-underline link-underline-opacity-0 link-underline-opacity-75-hover link-dark mb-1" href="#"><%= I18n.t(:profile) %></a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="list-group-item"><a class="dropdown-demand ms-2 link-underline link-underline-opacity-0 link-underline-opacity-75-hover link-dark mb-1" href="#"><%= I18n.t(:exit) %></a></li>
+            </ul>
+          </div>
+        </div>
+        <div id="content" class="col-9">
+          <main>
+            <%= yield %>
+          </main>
+        </div>
+      </div>
+    </section>
   </body>
 </html>

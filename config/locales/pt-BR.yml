@@ -1,0 +1,94 @@
+pt-BR:
+  title: 'Cantina - RD'
+  profile: 'Perfil'
+  home: 'Home'
+  exit: 'Sair'
+  return: 'Voltar'
+  cancel: 'Cancelar'
+  date: 'Data'
+  user: 'Usuário'
+  active: 'Ativo'
+  inactive: 'Inativo'
+  activate: 'Ativar'
+  deactivate: 'Desativar'
+  documents: 'Documentos'
+  purchases: 'Compras'
+  total_price: 'Preço total'
+  subtotal: 'Subtotal'
+  price_by_unit: 'Preço por unidade'
+  show_cart: "Exibir carrinho"
+  actions: 'Ações'
+  recent_purchases: 'Compras Recentes'
+  confirm_activation: 'Confirmar Ativação'
+  confirm_deactivation: 'Confirmar Desativação'
+  product_activation: 'Tem certeza que deseja ativar o produto?'
+  product_deactivation: 'Tem certeza que deseja desativar o produto?'
+  customer_activation: 'Tem certeza que deseja ativar a conta do cliente?'
+  customer_deactivation: 'Tem certeza que deseja desativar a conta do cliente?'
+  select_status: 'Selecione o status'
+  search_by_name: 'Pesquisar por nome'
+  search_product: 'Procurar produto..'
+  add: 'Adicionar'
+  edit: 'Editar'
+  delete: 'Excluir'
+  show: 'Visualizar'
+  errors:
+    messages:
+      blank: "Não pode ficar em branco"
+      invalid: "Não é válido"
+      taken: "Já está em uso"
+      too_short: "É muito curto (mínimo de %{count} caracteres)"
+      too_long: "É muito longo (máximo de %{count} caracteres)"
+      wrong_length: "Não possui o tamanho correto (deve ter %{count} caracteres)"
+      not_a_number: "Não é um número"
+      greater_than: "Deve ser maior que %{count}"
+      greater_than_or_equal_to: "Deve ser maior ou igual a %{count}"
+      equal_to: "Deve ser igual a %{count}"
+      less_than: "Deve ser menor que %{count}"
+      less_than_or_equal_to: "Deve ser menor ou igual a %{count}"
+  form:
+    actions:
+      back: "Voltar"
+      submit: "Enviar"
+  activerecord:
+    add: "Adicionar %{model}"
+    edit: "Editar %{model}"
+    delete: "Excluir %{model}"
+    show: "Visualizar %{model}"
+    activate: "Ativar %{model}"
+    deactivate: "Desativar %{model}"
+    alt_image: "Imagem de %{model}"
+    register: "Cadastrar %{model}"
+    attributes:
+      product:
+        name: 'Nome'
+        price: 'Preço'
+        description: 'Descrição'
+        status: 'Status'
+      customer:
+        name: 'Nome'
+        matriculation: 'Matrícula'
+        password: 'Senha'
+        status: 'Status'
+      sale:
+        product: 'Produto'
+        customer: 'Cliente'
+        customer_id: 'Cliente'
+        quantity: 'Quantidade'
+        total: 'Total'
+    models:
+      product:
+        one: 'Produto'
+        other: 'Produtos'
+      customer:
+        one: 'Cliente'
+        other: 'Clientes'
+      sale:
+        one: 'Vender'
+        other: 'Vendas'
+    errors:
+      models:
+        sale:
+          attributes:
+            customer:
+              blank: "O cliente não pode ficar em branco"
