@@ -1,22 +1,16 @@
-<div id="<%= dom_id product %>">
-  <p>
-    <strong>Name:</strong>
-    <%= product.name %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= product.description %>
-  </p>
-
-  <p>
-    <strong>Status:</strong>
-    <%= product.status %>
-  </p>
-
-  <p>
-    <strong>Price:</strong>
-    <%= product.price %>
-  </p>
-
+<div id='<%= dom_id product %>'>
+  <div class='card-body'>
+    <h5 class='card-title'><%= product.name %></h5>
+    <p class='card-text'><%= product.description %></p>
+  </div>
+  <ul class='list-group list-group-flush'>
+    <li class='list-group-item' style= 'border-top: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)'><%= I18n.t(:price, scope: %i[activerecord attributes product]) %>: R$<%= number_with_precision(product.price, precision: 2) %></li>
+    <li class='list-group-item' style= 'border-bottom: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)'><%= I18n.t(:status, scope: %i[activerecord attributes product]) %>:
+      <% if product.status == 'active' %>
+        <span class='text-success border rounded border-success px-2 bg-success-subtle'><%= I18n.t(:active) %></span>
+      <% else %>
+        <span class='text-danger border rounded border-danger px-2 bg-danger-subtle'><%= I18n.t(:inactive) %></span>
+      <% end %>
+    </li>
+  </ul>
 </div>

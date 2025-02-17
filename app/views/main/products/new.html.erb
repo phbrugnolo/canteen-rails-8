@@ -1,11 +1,4 @@
-<% content_for :title, "New product" %>
-
-<h1>New product</h1>
-
-<%= render "form", product: @product %>
-
+<h1 class='text-center mt-3'><%= I18n.t(:add, scope: %i[activerecord], model: @product.model_name.human) %></h1>
+<hr>
+<%= render 'form', product: @product %>
 <br>
-
-<div>
-  <%= link_to "Back to products", products_path %>
-</div>

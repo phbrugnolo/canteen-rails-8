@@ -1,37 +1,24 @@
-<%= form_with(model: product) do |form| %>
-  <% if product.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
-
-      <ul>
-        <% product.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+<div class='container mx-auto w-50'>
+  <div class='card p-4 mt-4' style='background-color: #EEF5FF'>
+    <%= simple_form_for [:main, @product] do |f| %>
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+      <div class='form-inputs'>
+        <%= f.input :name, as: :string, placeholder: I18n.t(:name, scope: %i[activerecord attributes product]), required: true, autofocus: true, error: I18n.t(:blank, scope: %i[errors messages]) %>
+        <%= f.input :description, as: :string, required: true, placeholder: I18n.t(:description, scope: %i[activerecord attributes product]), error: I18n.t(:blank, scope: %i[errors messages]) %>
+        <div class='w-50'>
+          <p style='margin-bottom: 5px;'><%= I18n.t(:price, scope: %i[activerecord attributes product]) %>:</p>
+          <div class='input-group mb-3'>
+            <span class='input-group-text' id='basic-addon1'>R$</span>
+            <%= f.text_field :price, as: :decimal, required: true, error: I18n.t(:blank, scope: %i[errors messages]), value: number_with_precision(f.object.price, precision: 2), class: 'form-control' %>
+          </div>
+        </div>
+        <%= f.input :status, as: :hidden, input_html: { value: 'active' } %>
+      </div>
+      <div class='form-actions float-end'>
+        <%= link_to I18n.t(:back, scope: %i[form actions]), main_products_path, class: 'btn btn-secondary mt-3 ms-2' %>
+        <%= f.button :submit, I18n.t(:submit, scope: %i[form actions]), class: 'btn btn-primary mt-3' %>
+      </div>
+    <% end %>
   </div>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
-  </div>
-
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
-
-  <div>
-    <%= form.label :price, style: "display: block" %>
-    <%= form.text_field :price %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

@@ -1,12 +1,4 @@
-<% content_for :title, "Editing product" %>
-
-<h1>Editing product</h1>
-
-<%= render "form", product: @product %>
-
+<h1 class='text-center mt-3'><%= I18n.t(:edit, scope: %i[activerecord], model: @product.model_name.human) %></h1>
+<hr>
+<%= render 'form', product: @product %>
 <br>
-
-<div>
-  <%= link_to "Show this product", @product %> |
-  <%= link_to "Back to products", products_path %>
-</div>
