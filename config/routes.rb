@@ -18,10 +18,9 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   namespace :main, path: "", path_names: { new: "novo", create: "novo", edit: "editar", update: "editar" } do
-    resources :products, path: "produtos"
-
     with_options concerns: [ :activatable ], except: [ :destroy ] do
       resources :products, path: "produtos"
+      resources :customers, path: "clientes"
     end
   end
 end

@@ -1,0 +1,15 @@
+<div class="container mx-auto w-50">
+  <div class="card p-4 mt-4" style="background-color: #EEF5FF">
+    <%= simple_form_for [:main, @customer] do |f| %>
+      <%= f.error_notification %>
+      <div class="form-inputs">
+        <%= f.input :name, placeholder: I18n.t(:name, scope: %i[activerecord attributes customer]), required: true %>
+        <%= f.input :matriculation, placeholder: I18n.t(:matriculation, scope: %i[activerecord attributes customer]), required: true %>
+      </div>
+      <div class="form-actions float-end">
+        <%= link_to "Voltar", (request.referer.present? ? request.referer : main_customers_path), class: "btn btn-secondary mt-3 ms-2" %>
+        <%= f.button :submit, "Enviar", class: "btn btn-primary mt-3" %>
+      </div>
+    <% end %>
+  </div>
+</div>

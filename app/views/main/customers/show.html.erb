@@ -1,0 +1,172 @@
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true"><%= I18n.t(:profile) %></button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="purchases-tab" data-bs-toggle="tab" data-bs-target="#purchases-tab-pane" type="button" role="tab" aria-controls="purchases-tab-pane" aria-selected="false"><%= I18n.t(:purchases) %></button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents-tab-pane" type="button" role="tab" aria-controls="documents-tab-pane" aria-selected="false"><%= I18n.t(:documents) %></button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+    <p style="color: green"><%= notice %></p>
+    <div class="card px-4 py-5 d-flex justify-content-center" style="background-color: #EEF5FF; margin-top: 2rem">
+      <div class="container">
+        <div class="d-flex w-100 h-100 justify-content-center align-items-center">
+          <div class="m-auto">
+            <div class="card" style="width: 720px;">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                  <img src="/assets/img-perfil.png" class="img-fluid rounded border border-secondary-subtle" alt="..."  style="width: 12rem; height: 12rem;">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body mt-2">
+                    <h5 class="card-title ms-1"><%= @customer.name %></h5>
+                    <ul class="list-group list-group-flush mt-2">
+                      <li class="list-group-item"><%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>: <%= @customer.matriculation %></li>
+                      <li class="list-group-item"><%= I18n.t(:status, scope: %i[activerecord attributes customer]) %>:
+                        <% if @customer.status == 'active' %>
+                          <span class="text-success border rounded border-success px-2 bg-success-subtle"><%= I18n.t(:active) %></span>
+                        <% else %>
+                          <span class="text-danger border rounded border-danger px-2 bg-danger-subtle"><%= I18n.t(:inactive) %></span>
+                        <% end %>
+                      </li>
+                    </ul>
+                    <div class="card-body text-end" style="margin: 0px">
+                      <%= link_to I18n.t(:return), main_customers_path, class: "btn btn-secondary ms-1" %>
+                      <%= link_to I18n.t(:edit), edit_main_customer_path(@customer), class: "btn btn-primary" %>
+                      <% if @customer.status === "active" %>
+                        <button type="button" class="btn btn-danger me-1" onclick="showModal('confirmDeactivateModal')"><%= I18n.t(:deactivate) %></button>
+                      <% else %>
+                        <button type="button" class="btn btn-success me-1" onclick="showModal('confirmActivateModal')"><%= I18n.t(:activate) %></button>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="purchases-tab-pane" role="tabpanel" aria-labelledby="purchases-tab" tabindex="0">
+    <h1 class="mx-2 mt-2"><%= I18n.t(:recent_purchases) %></h1>
+    <hr>
+    <div class="card p-2 mt-4" style="background-color: #EEF5FF">
+      <div class="container">
+        <div class="row">
+          <% if @customer.sales.size > 0 %>
+            <% @customer.sales.order(created_at: :desc).each do |sale| %>
+              <div class="card border-info m-4 p-2 col-lg-6" style="position: relative;">
+                <table class="table mb-0 mt-1">
+                  <tr class="list-group list-group-flush table-row">
+                    <td><%= I18n.t(:date) %>: <%= sale.created_at.strftime('%d/%m/%Y') %></td>
+                    <td><%= I18n.t(:total_price) %>: R$<%= number_with_precision(sale.total_price, precision: 2) %></td>
+                    <td class="border-bottom-0 d-flex justify-content-end flex-column">
+                      <button class="btn btn-primary show-cart my-2"><%= I18n.t(:show_cart) %></button>
+                    </td>
+                  </tr>
+                </table>
+                <table class="cart-table table border my-2 hidden table-wrapper-scroll-y rounded border-info" style="display: none; position: absolute; top: 0; right: -95%; width: 90%; margin-top: 30px; background-color: #fff; padding: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1);">
+                  <thead style="display: table; width: 100%; table-layout: fixed;">
+                    <tr>
+                      <th class="col-5"><%= I18n.t(:product) %></th>
+                      <th class="col-3"><%= I18n.t(:price) %></th>
+                      <th class="col-4"><%= I18n.t(:quantity) %></th>
+                    </tr>
+                  </thead>
+                  <tbody style="display: table; width: 100%; table-layout: fixed;">
+                    <% cart = JSON.parse(sale.cart) %>
+                    <% cart.each do |item| %>
+                      <tr>
+                        <td class="col-5"><%= item['name'] %></td>
+                        <td class="col-3">R$<%= number_with_precision(item['price'], precision: 2) %></td>
+                        <td class="col-4 text-center"><%= item['quantity'] %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            <% end %>
+          <% else %>
+            <h6 class="mb-0"><%= I18n.t(:no_purchases_made) %></h6>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="documents-tab-pane" role="tabpanel" aria-labelledby="documents-tab" tabindex="0">
+    ...
+  </div>
+</div>
+<div id="confirmDeactivateModal" class="modal" onclick="hideModal('confirmDeactivateModal')">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header" style="border: none;">
+        <h5 class="modal-title"><%= I18n.t(:confirm_deactivation) %></h5>
+        <button type="button" class="close" onclick="hideModal('confirmDeactivateModal')" style="position: absolute; top: 10px; right: 10px; background-color: transparent; border: none;">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><%= I18n.t(:customer_deactivation) %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="hideModal('confirmDeactivateModal')"><%= I18n.t(:cancel) %></button>
+        <%= button_to I18n.t(:deactivate, scope: %i[activerecord], model: @customer.model_name.human), deactivate_main_customer_path(@customer), method: :put, class: 'btn btn-danger' %>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="confirmActivateModal" class="modal" onclick="hideModal('confirmActivateModal')">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header" style="border: none;">
+        <h5 class="modal-title fs-3" style="margin: -10px"><%= I18n.t(:confirm_activation) %></h5>
+        <button type="button" class="close" onclick="hideModal('confirmActivateModal')" style="position: absolute; top: 10px; right: 10px; background-color: transparent; border: none;">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><%= I18n.t(:customer_activation) %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="hideModal('confirmActivateModal')"><%= I18n.t(:cancel) %></button>
+        <%= button_to I18n.t(:activate, scope: %i[activerecord], model: @customer.model_name.human), activate_main_customer_path(@customer), method: :put, class: 'btn btn-success' %>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function showModal(modalId) {
+    var modal = document.getElementById(modalId);
+    modal.style.display = "block";
+  }
+
+  function hideModal(modalId) {
+    var modal = document.getElementById(modalId);
+    modal.style.display = "none";
+  }
+
+
+  $('.show-cart').click(function() {
+    var cartTable = $(this).closest('.card').find('.cart-table');
+    cartTable.toggle();
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const buttons = document.querySelectorAll(".show-cart");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", function() {
+            const targetId = button.getAttribute("data-target");
+            const targetTable = document.getElementById(targetId);
+
+            if (targetTable) {
+                targetTable.classList.toggle("hidden");
+                const buttonParent = button.parentNode.parentNode;
+                buttonParent.classList.toggle("no-collapse");
+            }
+        });
+    });
+  });
+</script>
