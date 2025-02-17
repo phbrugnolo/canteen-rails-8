@@ -1,15 +1,39 @@
-
-<%= simple_form_for(@sale) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
-  <div class="form-inputs">
-    <%= f.input :cart %>
-    <%= f.input :total_price %>
-    <%= f.association :customer %>
+<div class="row">
+  <div class="col-12">
+    <%= simple_form_for [:main, @sale] do |f| %>
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+      <div class="form-inputs w-50 float-end">
+        <div class="float-end w-100">
+          <%= f.association :customer,
+                collection: @customers,
+                label_method: :name,
+                value_method: :id,
+                input_html: { class: 'form-control select2' },
+                include_blank: false,
+                prompt: "Selecione um cliente" %>
+        </div>
+        <%= f.input :cart, as: :hidden, input_html: { value: '' }, error: "" %>
+        <div class="float-end" style="width: 30%;">
+          <p style="margin-bottom: 5px;">Preço Total:</p>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">R$</span>
+            <%= f.text_field :total_price, readonly: true, error: "Nenhum produto selecionado", class: "form-control" %>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4 w-100">
+      <div class="form-actions d-flex justify-content-end">
+        <%= f.submit 'Encerrar Compra', class: "btn btn-primary" %>
+      </div>
+    <% end %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  $('.select2').select2({
+    placeholder: "Selecione um cliente",
+    allowClear: true
+  });
+});
+</script>

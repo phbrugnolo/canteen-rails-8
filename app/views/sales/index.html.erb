@@ -1,16 +1,29 @@
 <p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Sales" %>
-
-<h1>Sales</h1>
-
+<h1 class="mx-2 mt-2">Vendas</h1>
+<hr>
 <div id="sales">
-  <% @sales.each do |sale| %>
-    <%= render sale %>
-    <p>
-      <%= link_to "Show this sale", sale %>
-    </p>
-  <% end %>
+  <div class="card p-2 mt-4" style="background-color: #EEF5FF">
+    <div class="container">
+      <% if @sales.size > 0 %>
+        <div class="row">
+          <% @sales.order(created_at: :desc).each do |sale| %>
+            <div class="col-6">
+              <div class="card border-info m-4 p-2" style="position: relative;">
+                <table class="table mb-0 mt-1">
+                  <tr class="list-group list-group-flush table-row">
+                    <td>Data: <%= sale.created_at.strftime('%d/%m/%Y') %></td>
+                    <td>Cliente: <%= sale.customer.name %></td>
+                    <td>Preço total: R$<%= number_with_precision(sale.total_price, precision: 2) %></td>
+                    <td class="border-bottom-0 d-flex justify-content-end flex-column">
+                      <%= link_to "Exibir venda", main_sale_path(sale), class: "btn btn-primary show-cart my-2" %>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New sale", new_sale_path %>

@@ -13,6 +13,7 @@ pt-BR:
   deactivate: 'Desativar'
   documents: 'Documentos'
   purchases: 'Compras'
+  price: 'Preço'
   total_price: 'Preço total'
   subtotal: 'Subtotal'
   price_by_unit: 'Preço por unidade'

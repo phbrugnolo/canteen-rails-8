@@ -1,11 +1,233 @@
-<% content_for :title, "New sale" %>
-
-<h1>New sale</h1>
-
-<%= render "form", sale: @sale %>
-
-<br>
-
-<div>
-  <%= link_to "Back to sales", sales_path %>
+<div class="container">
+  <h1 class="m-3">Vender</h1>
+  <hr>
+  <div id="products"></div>
+  <div>
+    <div>
+      <div id="cart"></div>
+    </div>
+    <div>
+      <%= render "form", sale: @sale %>
+    </div>
+  </div>
+  <br>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Realiza a requisição usando fetch
+    fetch('<%= new_main_sale_path(format: :json) %>')
+      .then(response => response.json())
+      .then(data => {
+        initializeStore(data.products);
+        mapLinks(data.products);
+        productSearch();
+      });
+
+    // Função de busca dos produtos
+    function productSearch() {
+      const inputBusca = document.getElementById("input-busca");
+      inputBusca.addEventListener("keyup", function () {
+        const value = this.value.toLowerCase().trim();
+        const rows = document.querySelectorAll("#tabela-produtos tr");
+        rows.forEach(row => {
+          if (row.textContent.toLowerCase().includes(value)) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        });
+        adjustTableSize();
+      });
+
+      // Chama a função para ajustar o tamanho da tabela inicialmente
+      adjustTableSize();
+    }
+
+    // Ajusta o tamanho máximo da tabela conforme o número de linhas visíveis
+    function adjustTableSize() {
+      const rows = Array.from(document.querySelectorAll("#tabela-produtos tr"));
+      // Considera que, se a propriedade style.display não estiver definida, o elemento está visível
+      const visibleRows = rows.filter(row => row.style.display !== "none");
+      const tableWrapper = document.querySelector("#products .table-wrapper-scroll-y");
+      if (visibleRows.length <= 5) {
+        tableWrapper.style.maxHeight = "none";
+      } else {
+        tableWrapper.style.maxHeight = "400px";
+      }
+    }
+
+    // Variável global para os produtos selecionados
+    var selectedProducts = [];
+
+    // Gera o HTML para a lista de produtos
+    function listOfProducts(products) {
+      let html = "";
+      products.forEach((product, index) => {
+        let formattedPrice = parseFloat(product.price).toFixed(2);
+        html += `
+            <tr>
+              <td scope="row" class="col-2">
+                <img src="/assets/img_product.png" width="50" height="50" alt="Produto"/>
+              </td>
+              <td class="col-6">${product.name}</td>
+              <td class="col-2">${formattedPrice}</td>
+              <td class="col-2 text-center">
+                <!-- Utilizando data-key para armazenar o índice -->
+                <input type="button" class="btn btn-success add" data-key="${index}" value="Adicionar">
+              </td>
+            </tr>
+          `;
+      });
+      return html;
+    }
+
+    // Inicializa a loja com a lista de produtos
+    function initializeStore(products) {
+      const containerProducts = document.getElementById("products");
+      containerProducts.innerHTML = `
+          <input id="input-busca" type="text" placeholder="Procurar produto.." class="mx-4">
+          <div class="text-center table-wrapper-scroll-y">
+            <table class="table table-bordered table-hover my-4 mx-6 my-custom-scrollbar">
+              <thead class="table-size">
+                <tr>
+                  <th scope="col" class="col-2"></th>
+                  <th scope="col" class="col-6">Produto</th>
+                  <th scope="col" class="col-2">Preço (R$)</th>
+                  <th scope="col" class="col-2"></th>
+                </tr>
+              </thead>
+              <tbody id="tabela-produtos" class="table-size">
+                ${listOfProducts(products)}
+              </tbody>
+            </table>
+          </div>
+        `;
+    }
+
+    // Remove um produto do carrinho
+    window.removeProduct = function (index) {
+      let product = selectedProducts[index];
+      product.quantity = 0;
+      selectedProducts.splice(index, 1);
+      updateCart();
+    };
+
+    // Incrementa a quantidade do produto
+    window.addItem = function (index) {
+      let product = selectedProducts[index];
+      product.quantity++;
+      updateCart();
+    };
+
+    // Decrementa a quantidade do produto (removendo-o se a quantidade chegar a 0)
+    window.removeItem = function (index) {
+      let product = selectedProducts[index];
+      if (product.quantity <= 1) {
+        removeProduct(index);
+      } else {
+        product.quantity--;
+        updateCart();
+      }
+    };
+
+    // Calcula o valor total da compra
+    function totalValue() {
+      let total = 0.0;
+      selectedProducts.forEach(product => {
+        if (typeof product.quantity === "number") {
+          total += product.quantity * product.price;
+        }
+      });
+      console.log(total);
+      return total;
+    }
+
+    // Atualiza o campo com o valor total da compra
+    function updateTotalValue() {
+      const cartContainer = document.getElementById("sale_total_price");
+      cartContainer.value = totalValue().toFixed(2);
+    }
+
+    // Atualiza o campo com os dados do carrinho em JSON
+    function updateCartValue() {
+      const cartContainer = document.getElementById("sale_cart");
+      const cartData = selectedProducts.map(product => ({
+        name: product.name,
+        price: product.price,
+        id: product.id,
+        quantity: product.quantity
+      }));
+      cartContainer.value = JSON.stringify(cartData);
+    }
+
+    // Atualiza a exibição do carrinho na página
+    function updateCart() {
+      const cartContainer = document.getElementById("cart");
+      let listOfSelectedProducts = "";
+      selectedProducts.forEach((product, index) => {
+        let formattedPrice = parseFloat(product.price).toFixed(2);
+        let subTotal = (parseFloat(product.price) * product.quantity).toFixed(2);
+        if (product !== undefined) {
+          listOfSelectedProducts += `
+              <tr class="row">
+                <td class="col-4">${product.name}</td>
+                <td class="col-2">${product.quantity}</td>
+                <td class="col-2"> R$ ${formattedPrice}</td>
+                <td class="col-2"> R$ ${subTotal}</td>
+                <td class="col-2 m-auto text-center">
+                  <button type="button" class="btn btn-primary" onclick="addItem(${index})">
+                    <i class="bi bi-plus-circle"></i>
+                  </button>
+                  <button type="button" class="btn btn-primary" onclick="removeItem(${index})">
+                    <i class="bi bi-dash-circle"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger" onclick="removeProduct(${index})">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                </td>
+              </tr>
+            `;
+        }
+      });
+
+      cartContainer.innerHTML = `
+          <table class="table table-bordered table-hover table-sm my-4 m-auto">
+            <thead>
+              <tr class="row">
+                <th class="col-4 text-center">Produto</th>
+                <th class="col-2 text-center">Quantidade</th>
+                <th class="col-2 text-center">Preço por unidade</th>
+                <th class="col-2 text-center">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${listOfSelectedProducts}
+            </tbody>
+          </table>
+        `;
+
+      updateTotalValue();
+      updateCartValue();
+    }
+
+    // Mapeia os botões "Adicionar" para inserir os produtos no carrinho
+    function mapLinks(products) {
+      const links = document.getElementsByClassName("add");
+      for (let i = 0; i < links.length; i++) {
+        links[i].addEventListener("click", function () {
+          let key = this.getAttribute("data-key");
+          let product = products[key];
+          if (!product.quantity) {
+            product.quantity = 1;
+          } else {
+            product.quantity++;
+          }
+          if (!selectedProducts.includes(product)) {
+            selectedProducts.push(product);
+          }
+          updateCart();
+        });
+      }
+    }
+  });
+</script>

@@ -1,0 +1,27 @@
+.my-custom-scrollbar {
+  position: relative;
+  overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 400px;
+  margin-bottom: 0;
+}
+
+#product-table-container {
+  max-height: 400px;
+  overflow: auto;
+}
+
+#product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.table-size {
+  width: 940px;
+}
