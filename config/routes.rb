@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :customers
   concern :activatable do
     member do
       put :activate
