@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
+  concern :activatable do
+    member do
+      put :activate
+      put :deactivate
+    end
+  end
+
   root "main/main#index"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
@@ -12,5 +18,9 @@ Rails.application.routes.draw do
 
   namespace :main, path: "", path_names: { new: "novo", create: "novo", edit: "editar", update: "editar" } do
     resources :products, path: "produtos"
+
+    with_options concerns: [ :activatable ], except: [ :destroy ] do
+      resources :products, path: "produtos"
+    end
   end
 end
