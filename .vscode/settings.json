@@ -10,5 +10,10 @@
   "files.eol": "\n",
   "emmet.includeLanguages": {
     "erb": "html"
-  }
+  },
+  "cSpell.words": [
+    "Activatable",
+    "activerecord",
+    "onclick"
+  ]
 }
