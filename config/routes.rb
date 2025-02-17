@@ -23,5 +23,7 @@ Rails.application.routes.draw do
       resources :products, path: "produtos"
       resources :customers, path: "clientes"
     end
+
+    resources :sales, path: "vendas", except: %i[edit update destroy]
   end
 end

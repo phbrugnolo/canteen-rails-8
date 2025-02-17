@@ -1,5 +1,5 @@
 class Main::ProductsController < ApplicationController
-  before_action :set_product, only: %i[ show edit update destroy deactivate activate ]
+  before_action :set_product, only: %i[ show edit update deactivate activate ]
 
   # GET /products or /products.json
   def index
@@ -42,16 +42,6 @@ class Main::ProductsController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /products/1 or /products/1.json
-  def destroy
-    @product.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to main_product_url(@product), status: :see_other, notice: "Product was successfully destroyed." }
-      format.json { head :no_content }
     end
   end
 
