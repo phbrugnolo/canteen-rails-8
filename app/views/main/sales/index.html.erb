@@ -15,7 +15,7 @@
                     <td><%= I18n.t(:customer, scope: %i[activerecord models], count: 1) %>: <%= sale.customer.name %></td>
                     <td><%= I18n.t(:total_price) %>: R$<%= number_with_precision(sale.total_price, precision: 2) %></td>
                     <td class="border-bottom-0 d-flex justify-content-end flex-column">
-                      <%= link_to "Exibir venda", main_sale_path(sale), class: "btn btn-primary show-cart my-2" %>
+                      <%= link_to I18n.t(:show_sale), main_sale_path(sale), class: "btn btn-primary show-cart my-2" %>
                     </td>
                   </tr>
                 </table>

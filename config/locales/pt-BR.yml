@@ -1,38 +1,39 @@
 pt-BR:
-  title: 'Cantina - RD'
-  profile: 'Perfil'
-  home: 'Home'
-  exit: 'Sair'
-  return: 'Voltar'
-  cancel: 'Cancelar'
-  date: 'Data'
-  user: 'Usuário'
-  active: 'Ativo'
-  inactive: 'Inativo'
-  activate: 'Ativar'
-  deactivate: 'Desativar'
-  documents: 'Documentos'
-  purchases: 'Compras'
-  price: 'Preço'
-  total_price: 'Preço total'
-  subtotal: 'Subtotal'
-  price_by_unit: 'Preço por unidade'
+  title: "Cantina - RD"
+  profile: "Perfil"
+  home: "Home"
+  exit: "Sair"
+  return: "Voltar"
+  cancel: "Cancelar"
+  date: "Data"
+  user: "Usuário"
+  active: "Ativo"
+  inactive: "Inativo"
+  activate: "Ativar"
+  deactivate: "Desativar"
+  documents: "Documentos"
+  purchases: "Compras"
+  price: "Preço"
+  total_price: "Preço total"
+  subtotal: "Subtotal"
+  price_by_unit: "Preço por unidade"
   show_cart: "Exibir carrinho"
-  actions: 'Ações'
-  recent_purchases: 'Compras Recentes'
-  confirm_activation: 'Confirmar Ativação'
-  confirm_deactivation: 'Confirmar Desativação'
-  product_activation: 'Tem certeza que deseja ativar o produto?'
-  product_deactivation: 'Tem certeza que deseja desativar o produto?'
-  customer_activation: 'Tem certeza que deseja ativar a conta do cliente?'
-  customer_deactivation: 'Tem certeza que deseja desativar a conta do cliente?'
-  select_status: 'Selecione o status'
-  search_by_name: 'Pesquisar por nome'
-  search_product: 'Procurar produto..'
-  add: 'Adicionar'
-  edit: 'Editar'
-  delete: 'Excluir'
-  show: 'Visualizar'
+  show_sale: "Exibir venda"
+  actions: "Ações"
+  recent_purchases: "Compras Recentes"
+  confirm_activation: "Confirmar Ativação"
+  confirm_deactivation: "Confirmar Desativação"
+  product_activation: "Tem certeza que deseja ativar o produto?"
+  product_deactivation: "Tem certeza que deseja desativar o produto?"
+  customer_activation: "Tem certeza que deseja ativar a conta do cliente?"
+  customer_deactivation: "Tem certeza que deseja desativar a conta do cliente?"
+  select_status: "Selecione o status"
+  search_by_name: "Pesquisar por nome"
+  search_product: "Procurar produto.."
+  add: "Adicionar"
+  edit: "Editar"
+  delete: "Excluir"
+  show: "Visualizar"
   errors:
     messages:
       blank: "Não pode ficar em branco"
@@ -62,31 +63,31 @@ pt-BR:
     register: "Cadastrar %{model}"
     attributes:
       product:
-        name: 'Nome'
-        price: 'Preço'
-        description: 'Descrição'
-        status: 'Status'
+        name: "Nome"
+        price: "Preço"
+        description: "Descrição"
+        status: "Status"
       customer:
-        name: 'Nome'
-        matriculation: 'Matrícula'
-        password: 'Senha'
-        status: 'Status'
+        name: "Nome"
+        matriculation: "Matrícula"
+        password: "Senha"
+        status: "Status"
       sale:
-        product: 'Produto'
-        customer: 'Cliente'
-        customer_id: 'Cliente'
-        quantity: 'Quantidade'
-        total: 'Total'
+        product: "Produto"
+        customer: "Cliente"
+        customer_id: "Cliente"
+        quantity: "Quantidade"
+        total: "Total"
     models:
       product:
-        one: 'Produto'
-        other: 'Produtos'
+        one: "Produto"
+        other: "Produtos"
       customer:
-        one: 'Cliente'
-        other: 'Clientes'
+        one: "Cliente"
+        other: "Clientes"
       sale:
-        one: 'Vender'
-        other: 'Vendas'
+        one: "Vender"
+        other: "Vendas"
     errors:
       models:
         sale:

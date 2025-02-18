@@ -19,7 +19,7 @@
             <div class="card" style="width: 720px;">
               <div class="row g-0">
                 <div class="col-md-4 d-flex justify-content-center align-items-center">
-                  <img src="/assets/img-perfil.png" class="img-fluid rounded border border-secondary-subtle" alt="..."  style="width: 12rem; height: 12rem;">
+                  <img src="<%= asset_path('img-perfil.png') %>" class="img-fluid rounded border border-secondary-subtle" alt="..."  style="width: 12rem; height: 12rem;">
                 </div>
                 <div class="col-md-8">
                   <div class="card-body mt-2">
@@ -73,9 +73,9 @@
                 <table class="cart-table table border my-2 hidden table-wrapper-scroll-y rounded border-info" style="display: none; position: absolute; top: 0; right: -95%; width: 90%; margin-top: 30px; background-color: #fff; padding: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1);">
                   <thead style="display: table; width: 100%; table-layout: fixed;">
                     <tr>
-                      <th class="col-5"><%= I18n.t(:product) %></th>
+                      <th class="col-5"><%= I18n.t(:product, scope: %i[activerecord attributes sale]) %></th>
                       <th class="col-3"><%= I18n.t(:price) %></th>
-                      <th class="col-4"><%= I18n.t(:quantity) %></th>
+                      <th class="col-4"><%= I18n.t(:quantity, scope: %i[activerecord attributes sale]) %></th>
                     </tr>
                   </thead>
                   <tbody style="display: table; width: 100%; table-layout: fixed;">
@@ -147,26 +147,37 @@
     modal.style.display = "none";
   }
 
-
-  $('.show-cart').click(function() {
-    var cartTable = $(this).closest('.card').find('.cart-table');
-    cartTable.toggle();
-  });
-
   document.addEventListener("DOMContentLoaded", function() {
-    const buttons = document.querySelectorAll(".show-cart");
+    // Seleciona todos os botões com a classe "show-cart"
+    var showCartButtons = document.querySelectorAll(".show-cart");
 
-    buttons.forEach(button => {
-        button.addEventListener("click", function() {
-            const targetId = button.getAttribute("data-target");
-            const targetTable = document.getElementById(targetId);
-
-            if (targetTable) {
-                targetTable.classList.toggle("hidden");
-                const buttonParent = button.parentNode.parentNode;
-                buttonParent.classList.toggle("no-collapse");
+    showCartButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        // Primeiro: alterna a exibição da(s) tabela(s) de carrinho
+        var card = button.closest(".card");
+        if (card) {
+          var cartTables = card.querySelectorAll(".cart-table");
+          cartTables.forEach(function(cartTable) {
+            // Verifica se o elemento está oculto (display: none) e alterna
+            if (window.getComputedStyle(cartTable).display === "none") {
+              cartTable.style.display = "block";
+            } else {
+              cartTable.style.display = "none";
             }
-        });
+          });
+        }
+
+        // Segundo: alterna classes para o elemento de destino e seu contêiner
+        var targetId = button.getAttribute("data-target");
+        var targetTable = document.getElementById(targetId);
+        if (targetTable) {
+          targetTable.classList.toggle("hidden");
+          var buttonParent = button.parentNode.parentNode;
+          if (buttonParent) {
+            buttonParent.classList.toggle("no-collapse");
+          }
+        }
+      });
     });
   });
 </script>
