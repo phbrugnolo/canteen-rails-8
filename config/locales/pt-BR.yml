@@ -21,6 +21,7 @@ pt-BR:
   price_by_unit: "Preço por unidade"
   show_cart: "Exibir carrinho"
   show_sale: "Exibir venda"
+  close_sale: "Encerrar compra"
   actions: "Ações"
   recent_purchases: "Compras Recentes"
   confirm_activation: "Confirmar Ativação"

@@ -15,7 +15,7 @@
         </div>
         <%= f.input :cart, as: :hidden, input_html: { value: '' }, error: "" %>
         <div class="float-end" style="width: 30%;">
-          <p style="margin-bottom: 5px;">Preço Total:</p>
+          <p style="margin-bottom: 5px;"><%= I18n.t(:total_price) %>:</p>
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">R$</span>
             <%= f.text_field :total_price, readonly: true, error: "Nenhum produto selecionado", class: "form-control" %>
@@ -24,7 +24,7 @@
       </div>
       <hr class="my-4 w-100">
       <div class="form-actions d-flex justify-content-end">
-        <%= f.submit 'Encerrar Compra', class: "btn btn-primary" %>
+        <%= f.submit I18n.t(:close_sale), class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>
