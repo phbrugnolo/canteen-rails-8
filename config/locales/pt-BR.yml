@@ -13,6 +13,8 @@ pt-BR:
   deactivate: "Desativar"
   documents: "Documentos"
   purchases: "Compras"
+  no_purchases_made: "Nenhuma compra realizada"
+  select_a_customer: "Selecione um cliente"
   price: "Preço"
   total_price: "Preço total"
   subtotal: "Subtotal"

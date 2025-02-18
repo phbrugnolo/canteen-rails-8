@@ -9,9 +9,9 @@
                 collection: @customers,
                 label_method: :name,
                 value_method: :id,
-                input_html: { class: 'form-control select2' },
+                input_html: { id: 'customer-id' },
                 include_blank: false,
-                prompt: "Selecione um cliente" %>
+                prompt: I18n.t(:select_a_customer) %>
         </div>
         <%= f.input :cart, as: :hidden, input_html: { value: '' }, error: "" %>
         <div class="float-end" style="width: 30%;">
@@ -31,9 +31,6 @@
 </div>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  $('.select2').select2({
-    placeholder: "Selecione um cliente",
-    allowClear: true
-  });
+  new TomSelect('#customer-id');
 });
 </script>
