@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="m-3">Vender</h1>
+  <h1 class="m-3"><%= I18n.t(:sale, scope: %i[activerecord models], count: 1) %></h1>
   <hr>
   <div id="products"></div>
   <div>
@@ -67,13 +67,13 @@
         html += `
             <tr>
               <td scope="row" class="col-2">
-                <img src="/assets/img_product.png" width="50" height="50" alt="Produto"/>
+                <img src="<%= asset_path('img-product.png') %>" width="50" height="50" alt="Produto"/>
               </td>
               <td class="col-6">${product.name}</td>
               <td class="col-2">${formattedPrice}</td>
               <td class="col-2 text-center">
                 <!-- Utilizando data-key para armazenar o índice -->
-                <input type="button" class="btn btn-success add" data-key="${index}" value="Adicionar">
+                <input type="button" class="btn btn-success add" data-key="${index}" value="<%= I18n.t(:add) %>">
               </td>
             </tr>
           `;

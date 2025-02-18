@@ -7,7 +7,7 @@
         <%= f.input :matriculation, placeholder: I18n.t(:matriculation, scope: %i[activerecord attributes customer]), required: true %>
       </div>
       <div class="form-actions float-end">
-        <%= link_to "Voltar", (request.referer.present? ? request.referer : main_customers_path), class: "btn btn-secondary mt-3 ms-2" %>
+        <%= link_to I18n.t(:back), (request.referer.present? ? request.referer : main_customers_path), class: "btn btn-secondary mt-3 ms-2" %>
         <%= f.button :submit, "Enviar", class: "btn btn-primary mt-3" %>
       </div>
     <% end %>
