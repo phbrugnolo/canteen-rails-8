@@ -27,7 +27,7 @@ class Main::SalesController < ApplicationController
 
     respond_to do |format|
       if @sale.save
-        format.html { redirect_to main_sale_url(@sale), notice: "Sale was successfully created." }
+        format.html { redirect_to main_sale_url(@sale), notice: I18n.t(:model_was_successfully_created, model: @sale.model_name.human) }
         format.json { render :show, status: :created, location: @sale }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -44,6 +44,6 @@ class Main::SalesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def sale_params
-      params.expect(sale: [ :cart, :total_price, :customer_id ])
+      params.expect(sale: %i[cart total_price customer_id])
     end
 end

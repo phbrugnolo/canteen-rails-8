@@ -19,7 +19,12 @@
             <div class="card" style="width: 720px;">
               <div class="row g-0">
                 <div class="col-md-4 d-flex justify-content-center align-items-center">
-                  <img src="<%= asset_path('img-perfil.png') %>" class="img-fluid rounded border border-secondary-subtle" alt="..."  style="width: 12rem; height: 12rem;">
+                  <%= image_tag(
+                    @customer.avatar.attached? ? url_for(@customer.avatar) : asset_path('img-perfil.png'),
+                    alt: I18n.t(:alt_image, scope: %i[activerecord], model: @customer.model_name.human),
+                    class: 'img-fluid rounded border border-secondary-subtle',
+                    style: { width: '12rem', height: '12rem' }
+                  ) %>
                 </div>
                 <div class="col-md-8">
                   <div class="card-body mt-2">

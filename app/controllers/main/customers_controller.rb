@@ -23,7 +23,7 @@ class Main::CustomersController < ApplicationController
 
     respond_to do |format|
       if @customer.save
-        format.html { redirect_to main_customer_url(@customer), notice: "Customer was successfully created." }
+        format.html { redirect_to main_customer_url(@customer), notice: I18n.t(:model_was_successfully_created, model: @customer.model_name.human) }
         format.json { render :show, status: :created, location: @customer }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -36,7 +36,7 @@ class Main::CustomersController < ApplicationController
   def update
     respond_to do |format|
       if @customer.update(customer_params)
-        format.html { redirect_to main_customer_url(@customer), notice: "Customer was successfully updated." }
+        format.html { redirect_to main_customer_url(@customer), notice: I18n.t(:model_was_successfully_updated, model: @customer.model_name.human) }
         format.json { render :show, status: :ok, location: @customer }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -65,6 +65,6 @@ class Main::CustomersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def customer_params
-      params.expect(customer: [ :name, :matriculation, :status ])
+      params.expect(customer: %i[name matriculation status avatar])
     end
 end

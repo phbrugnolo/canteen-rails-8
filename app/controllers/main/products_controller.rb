@@ -23,7 +23,7 @@ class Main::ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to main_product_url(@product), notice: "Produto criado com sucesso." }
+        format.html { redirect_to main_product_url(@product), notice: I18n.t(:model_was_successfully_created, model: @product.model_name.human) }
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -36,7 +36,7 @@ class Main::ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to main_product_url(@product), notice: "Produto atualizado com sucesso." }
+        format.html { redirect_to main_product_url(@product), notice: I18n.t(:model_was_successfully_updated, model: @product.model_name.human) }
         format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -65,6 +65,6 @@ class Main::ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.expect(product: [ :name, :description, :status, :price ])
+      params.expect(product: %i[name description status price image])
     end
 end

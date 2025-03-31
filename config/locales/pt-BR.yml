@@ -37,6 +37,8 @@ pt-BR:
   edit: "Editar"
   delete: "Excluir"
   show: "Visualizar"
+  model_was_successfully_created: "%{model} foi criado com sucesso"
+  model_was_successfully_updated: "%{model} foi atualizado com sucesso"
   errors:
     messages:
       blank: "Não pode ficar em branco"
