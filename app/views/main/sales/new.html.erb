@@ -13,8 +13,7 @@
   <br>
 </div>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Realiza a requisição usando fetch
+  document.addEventListener("turbo:load", function () {
     fetch('<%= new_main_sale_path(format: :json) %>')
       .then(response => response.json())
       .then(data => {
@@ -23,12 +22,11 @@
         productSearch();
       });
 
-    // Função de busca dos produtos
     function productSearch() {
-      const inputBusca = document.getElementById("input-busca");
+      const inputBusca = document.getElementById("search-input");
       inputBusca.addEventListener("keyup", function () {
         const value = this.value.toLowerCase().trim();
-        const rows = document.querySelectorAll("#tabela-produtos tr");
+        const rows = document.querySelectorAll("#products-table tr");
         rows.forEach(row => {
           if (row.textContent.toLowerCase().includes(value)) {
             row.style.display = "";
@@ -39,14 +37,11 @@
         adjustTableSize();
       });
 
-      // Chama a função para ajustar o tamanho da tabela inicialmente
       adjustTableSize();
     }
 
-    // Ajusta o tamanho máximo da tabela conforme o número de linhas visíveis
     function adjustTableSize() {
-      const rows = Array.from(document.querySelectorAll("#tabela-produtos tr"));
-      // Considera que, se a propriedade style.display não estiver definida, o elemento está visível
+      const rows = Array.from(document.querySelectorAll("#products-table tr"));
       const visibleRows = rows.filter(row => row.style.display !== "none");
       const tableWrapper = document.querySelector("#products .table-wrapper-scroll-y");
       if (visibleRows.length <= 5) {
@@ -56,10 +51,8 @@
       }
     }
 
-    // Variável global para os produtos selecionados
     var selectedProducts = [];
 
-    // Gera o HTML para a lista de produtos
     function listOfProducts(products) {
       let html = "";
       products.forEach((product, index) => {
@@ -72,7 +65,6 @@
               <td class="col-6">${product.name}</td>
               <td class="col-2">${formattedPrice}</td>
               <td class="col-2 text-center">
-                <!-- Utilizando data-key para armazenar o índice -->
                 <input type="button" class="btn btn-success add" data-key="${index}" value="<%= I18n.t(:add) %>">
               </td>
             </tr>
@@ -81,22 +73,21 @@
       return html;
     }
 
-    // Inicializa a loja com a lista de produtos
     function initializeStore(products) {
       const containerProducts = document.getElementById("products");
       containerProducts.innerHTML = `
-          <input id="input-busca" type="text" placeholder="Procurar produto.." class="mx-4">
+          <input id="search-input" type="text" placeholder="<%= I18n.t(:search_product) %>" class="mx-4">
           <div class="text-center table-wrapper-scroll-y">
             <table class="table table-bordered table-hover my-4 mx-6 my-custom-scrollbar">
               <thead class="table-size">
                 <tr>
                   <th scope="col" class="col-2"></th>
-                  <th scope="col" class="col-6">Produto</th>
-                  <th scope="col" class="col-2">Preço (R$)</th>
+                  <th scope="col" class="col-6"><%= I18n.t(:product, scope: %i[activerecord attributes sale]) %></th>
+                  <th scope="col" class="col-2"><%= I18n.t(:price) %> (R$)</th>
                   <th scope="col" class="col-2"></th>
                 </tr>
               </thead>
-              <tbody id="tabela-produtos" class="table-size">
+              <tbody id="products-table" class="table-size">
                 ${listOfProducts(products)}
               </tbody>
             </table>
@@ -104,7 +95,6 @@
         `;
     }
 
-    // Remove um produto do carrinho
     window.removeProduct = function (index) {
       let product = selectedProducts[index];
       product.quantity = 0;
@@ -112,14 +102,12 @@
       updateCart();
     };
 
-    // Incrementa a quantidade do produto
     window.addItem = function (index) {
       let product = selectedProducts[index];
       product.quantity++;
       updateCart();
     };
 
-    // Decrementa a quantidade do produto (removendo-o se a quantidade chegar a 0)
     window.removeItem = function (index) {
       let product = selectedProducts[index];
       if (product.quantity <= 1) {
@@ -130,7 +118,6 @@
       }
     };
 
-    // Calcula o valor total da compra
     function totalValue() {
       let total = 0.0;
       selectedProducts.forEach(product => {
@@ -138,17 +125,14 @@
           total += product.quantity * product.price;
         }
       });
-      console.log(total);
       return total;
     }
 
-    // Atualiza o campo com o valor total da compra
     function updateTotalValue() {
       const cartContainer = document.getElementById("sale_total_price");
       cartContainer.value = totalValue().toFixed(2);
     }
 
-    // Atualiza o campo com os dados do carrinho em JSON
     function updateCartValue() {
       const cartContainer = document.getElementById("sale_cart");
       const cartData = selectedProducts.map(product => ({
@@ -160,7 +144,6 @@
       cartContainer.value = JSON.stringify(cartData);
     }
 
-    // Atualiza a exibição do carrinho na página
     function updateCart() {
       const cartContainer = document.getElementById("cart");
       let listOfSelectedProducts = "";
@@ -210,7 +193,6 @@
       updateCartValue();
     }
 
-    // Mapeia os botões "Adicionar" para inserir os produtos no carrinho
     function mapLinks(products) {
       const links = document.getElementsByClassName("add");
       for (let i = 0; i < links.length; i++) {
