@@ -266,30 +266,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hotwired/stimulus@npm:^3.2.2":
-  version: 3.2.2
-  resolution: "@hotwired/stimulus@npm:3.2.2"
-  checksum: 10/31b9dc3a36a73b87a30570d6e73d27b387a8f6c3caf934aedc4dc96e5b40dde8fc36d530e16056b3d590b1d31b8a13bc1fca002e83df838f1bf5148b188046de
-  languageName: node
-  linkType: hard
-
-"@hotwired/turbo-rails@npm:^8.0.12":
-  version: 8.0.12
-  resolution: "@hotwired/turbo-rails@npm:8.0.12"
-  dependencies:
-    "@hotwired/turbo": "npm:^8.0.12"
-    "@rails/actioncable": "npm:^7.0"
-  checksum: 10/c88fb676a9329a526eba9e1947298ea7f607bd1315943a3243b7d9862a75e9fe9bc93ead30531ae40e2fa1d8718bad27650ca7dbfb4a6a53aadfcbbe595f5af6
-  languageName: node
-  linkType: hard
-
-"@hotwired/turbo@npm:^8.0.12":
-  version: 8.0.12
-  resolution: "@hotwired/turbo@npm:8.0.12"
-  checksum: 10/6ac981387a6a1bdad9e91f83c7acbebf4c31f0ca7fcaca386bd1d1f20099609db3ef28fdcac335c42d7ac9c67352a9667d3f9c3ec41fcaa728211cb0cbb14395
-  languageName: node
-  linkType: hard
-
 "@humanfs/core@npm:^0.19.1":
   version: 0.19.1
   resolution: "@humanfs/core@npm:0.19.1"
@@ -574,13 +550,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rails/actioncable@npm:^7.0":
-  version: 7.2.201
-  resolution: "@rails/actioncable@npm:7.2.201"
-  checksum: 10/688d0ad24c48f0566c2e7cfe6dbaf4871cb7357f8ca47c319f154e4fa1c5bbcec5ec45ff1d840595e5a01f78a895c373211ca06457bd7321105eedd003f3f890
-  languageName: node
-  linkType: hard
-
 "@sindresorhus/merge-streams@npm:^2.1.0":
   version: 2.3.0
   resolution: "@sindresorhus/merge-streams@npm:2.3.0"
@@ -691,8 +660,6 @@ __metadata:
   resolution: "app@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.23.0"
-    "@hotwired/stimulus": "npm:^3.2.2"
-    "@hotwired/turbo-rails": "npm:^8.0.12"
     "@popperjs/core": "npm:^2.11.8"
     autoprefixer: "npm:^10.4.20"
     bootstrap: "npm:^5.3.3"

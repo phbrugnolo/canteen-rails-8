@@ -13,7 +13,7 @@
   <br>
 </div>
 <script>
-  document.addEventListener("turbo:load", function () {
+  document.addEventListener("DOMContentLoaded", function () {
     fetch('<%= new_main_sale_path(format: :json) %>')
       .then(response => response.json())
       .then(data => {
