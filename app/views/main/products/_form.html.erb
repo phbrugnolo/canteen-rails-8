@@ -14,7 +14,8 @@
               <%= f.input_field :price,
                                 required: true,
                                 value: number_with_precision(f.object.price, precision: 2),
-                                class: 'form-control' %>
+                                class: 'form-control',
+                                error: I18n.t(:greater_than, scope: %i[errors messages]) %>
             </div>
           </div>
         </div>

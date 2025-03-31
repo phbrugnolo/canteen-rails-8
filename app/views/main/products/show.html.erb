@@ -6,7 +6,12 @@
       <div class='m-auto'>
         <p style='color: green'><%= notice %></p>
         <div class='card' style='width: 18rem;'>
-          <img src='<%= asset_path('img-product.png') %>' class='card-img-top mx-auto' alt='<%= I18n.t(:alt_image, scope: %i[activerecord], model: @product.model_name.human) %>' style='width: 12rem; height: 12rem;'>
+          <%= image_tag(
+            @product.image.attached? ? url_for(@product.image) : asset_path('img-product.png'),
+            alt: I18n.t(:alt_image, scope: %i[activerecord], model: @product.model_name.human),
+            class: 'card-img-top mx-auto',
+            style: { width: '12rem', height: '12rem' }
+          ) %>
           <div class='card-body'>
             <h5 class='card-title'><%= @product.name %></h5>
             <p class='card-text'><%= @product.description %></p>
