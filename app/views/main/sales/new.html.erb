@@ -60,7 +60,7 @@
         html += `
             <tr>
               <td scope="row" class="col-2">
-                <img src="<%= asset_path('img-product.png') %>" width="50" height="50" alt="Produto"/>
+                <%#= image_tag(@product.image.attached? ? url_for(@product.image) : asset_path('img-product.png'), alt: I18n.t(:alt_image, scope: %i[activerecord], model: @product.model_name.human), size: '50x50') %>
               </td>
               <td class="col-6">${product.name}</td>
               <td class="col-2">${formattedPrice}</td>

@@ -22,8 +22,7 @@
                   <%= image_tag(
                     @customer.avatar.attached? ? url_for(@customer.avatar) : asset_path('img-perfil.png'),
                     alt: I18n.t(:alt_image, scope: %i[activerecord], model: @customer.model_name.human),
-                    class: 'img-fluid rounded border border-secondary-subtle',
-                    style: { width: '12rem', height: '12rem' }
+                    class: 'img-fluid rounded border border-secondary-subtle standard-image-size'
                   ) %>
                 </div>
                 <div class="col-md-8">

@@ -13,9 +13,9 @@
     <link rel="icon" href="<%= asset_path("favicon.ico") %>" type="image/png">
     <link rel="apple-touch-icon" href="<%= asset_path("favicon.ico") %>">
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :app %> <%# To add turbo integration puts "data-turbo-track": "reload" on stylesheet and javascript link tags %>
+    <%= javascript_include_tag "application", type: "module" %>
+    <%= stylesheet_link_tag "application" %>
   </head>
   <body>
     <section class="container-fluid align-text-start">
