@@ -72,11 +72,13 @@ pt-BR:
         price: "Preço"
         description: "Descrição"
         status: "Status"
+        image: "Imagem"
       customer:
         name: "Nome"
         matriculation: "Matrícula"
         password: "Senha"
         status: "Status"
+        avatar: "Avatar"
       sale:
         product: "Produto"
         customer: "Cliente"

@@ -5,7 +5,7 @@
       <div class="form-inputs">
         <%= f.input :name, placeholder: I18n.t(:name, scope: %i[activerecord attributes product]), required: true, autofocus: true, error: I18n.t(:blank, scope: %i[errors messages]) %>
         <%= f.input :description, required: true, placeholder: I18n.t(:description, scope: %i[activerecord attributes product]), error: I18n.t(:blank, scope: %i[errors messages]) %>
-        <%= f.input :image, as: :file, label: "Imagem" %>
+        <%= f.input :image, as: :file, label: I18n.t(:image, scope: %i[activerecord attributes product]) %>
         <div class="w-50">
           <div class="mb-3">
             <%= f.label :price, I18n.t(:price, scope: %i[activerecord attributes product]) %>
