@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :sales
-  resources :customers
   concern :activatable do
     member do
       put :activate
@@ -9,6 +7,9 @@ Rails.application.routes.draw do
   end
 
   root "main/main#index"
+
+  resource :session
+  resources :passwords, param: :token
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

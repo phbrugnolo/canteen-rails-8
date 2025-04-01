@@ -1,0 +1,39 @@
+<% if flash[:alert] %>
+  <div class="alert alert-danger" role="alert">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+<% if flash[:notice] %>
+  <div class="alert alert-success" role="alert">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="card-title mb-4 text-center">
+          <%= image_tag 'logo-rd-login.png', class: 'standard-image-size' %>
+          <h3><%= I18n.t(:title) %></h3>
+        </div>
+        <%= form_with url: session_path, local: true do |form| %>
+          <div class="mb-3">
+            <%= form.label :email_address, I18n.t(:email_address), class: "form-label" %>
+            <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: I18n.t(:email_address_placeholder), value: params[:email_address], class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :password, I18n.t(:password), class: "form-label" %>
+            <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: I18n.t(:password_placeholder), maxlength: 72, class: "form-control" %>
+          </div>
+          <div class="d-grid mb-3">
+            <%= form.submit I18n.t(:sign_in), class: "btn btn-primary" %>
+          </div>
+        <% end %>
+        <div class="text-center">
+          <%= link_to I18n.t(:forgot_password), new_password_path, class: "text-decoration-none" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
