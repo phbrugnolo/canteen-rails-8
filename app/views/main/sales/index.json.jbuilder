@@ -1,1 +1,1 @@
-json.array! @sales, partial: "sales/sale", as: :sale
+json.array! @sales, partial: "main/sales/sale", as: :sale

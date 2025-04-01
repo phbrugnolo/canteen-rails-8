@@ -1,1 +1,1 @@
-json.partial! "products/product", product: @product
+json.partial! "main/products/product", product: @product
