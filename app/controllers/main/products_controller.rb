@@ -46,13 +46,13 @@ class Main::ProductsController < ApplicationController
   end
 
   def activate
-    @product.update(status: "active") # This line updates the status of the product to 'inactive'
+    @product.update(status: "active")
     @product.save!
     redirect_to main_products_path
   end
 
   def deactivate
-    @product.update(status: "inactive") # This line updates the status of the product to 'inactive'
+    @product.update(status: "inactive")
     @product.save!
     redirect_to main_products_path
   end

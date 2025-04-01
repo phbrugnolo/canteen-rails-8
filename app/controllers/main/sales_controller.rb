@@ -17,7 +17,7 @@ class Main::SalesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: { products: @products } }
+      format.json { render json: { products: @products.as_json(methods: :image_url) } }
     end
   end
 
