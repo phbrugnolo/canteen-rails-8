@@ -24,7 +24,7 @@ class CustomersTest < ApplicationSystemTestCase
   end
 
   test "should update Customer" do
-    visit customer_url(@customer)
+    visit main_customer_url(@customer)
     click_on "Edit this customer", match: :first
 
     fill_in "Matriculation", with: @customer.matriculation
@@ -37,7 +37,7 @@ class CustomersTest < ApplicationSystemTestCase
   end
 
   test "should destroy Customer" do
-    visit customer_url(@customer)
+    visit main_customer_url(@customer)
     click_on "Destroy this customer", match: :first
 
     assert_text "Customer was successfully destroyed"

@@ -177,10 +177,10 @@
           <table class="table table-bordered table-hover table-sm my-4 m-auto">
             <thead>
               <tr class="row">
-                <th class="col-4 text-center">Produto</th>
-                <th class="col-2 text-center">Quantidade</th>
-                <th class="col-2 text-center">Preço por unidade</th>
-                <th class="col-2 text-center">Subtotal</th>
+                <th class="col-4 text-center"><%= I18n.t(:product, scope: %i[activerecord attributes sale]) %></th>
+                <th class="col-2 text-center"><%= I18n.t(:quantity, scope: %i[activerecord attributes sale]) %></th>
+                <th class="col-2 text-center"><%= I18n.t(:price_per_unit) %></th>
+                <th class="col-2 text-center"><%= I18n.t(:subtotal) %></th>
               </tr>
             </thead>
             <tbody>

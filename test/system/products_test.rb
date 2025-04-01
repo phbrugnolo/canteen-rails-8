@@ -25,7 +25,7 @@ class ProductsTest < ApplicationSystemTestCase
   end
 
   test "should update Product" do
-    visit product_url(@product)
+    visit main_product_url(@product)
     click_on "Edit this product", match: :first
 
     fill_in "Description", with: @product.description
@@ -39,7 +39,7 @@ class ProductsTest < ApplicationSystemTestCase
   end
 
   test "should destroy Product" do
-    visit product_url(@product)
+    visit main_product_url(@product)
     click_on "Destroy this product", match: :first
 
     assert_text "Product was successfully destroyed"

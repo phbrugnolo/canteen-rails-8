@@ -24,7 +24,7 @@ class SalesTest < ApplicationSystemTestCase
   end
 
   test "should update Sale" do
-    visit sale_url(@sale)
+    visit main_sale_url(@sale)
     click_on "Edit this sale", match: :first
 
     fill_in "Cart", with: @sale.cart
@@ -37,7 +37,7 @@ class SalesTest < ApplicationSystemTestCase
   end
 
   test "should destroy Sale" do
-    visit sale_url(@sale)
+    visit main_sale_url(@sale)
     click_on "Destroy this sale", match: :first
 
     assert_text "Sale was successfully destroyed"

@@ -18,7 +18,7 @@ pt-BR:
   price: "Preço"
   total_price: "Preço total"
   subtotal: "Subtotal"
-  price_by_unit: "Preço por unidade"
+  price_per_unit: "Preço por unidade"
   show_cart: "Exibir carrinho"
   show_sale: "Exibir venda"
   close_sale: "Encerrar compra"
