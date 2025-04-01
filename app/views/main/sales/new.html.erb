@@ -14,7 +14,7 @@
 </div>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    fetch('<%= new_main_sale_path(format: :json) %>')
+    fetch("<%= new_main_sale_path(format: :json) %>")
       .then(response => response.json())
       .then(data => {
         initializeStore(data.products);

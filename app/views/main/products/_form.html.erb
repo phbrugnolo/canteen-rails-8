@@ -1,28 +1,28 @@
-<div class='container mx-auto w-50'>
-  <div class='card p-4 mt-4' style='background-color: #EEF5FF'>
+<div class="container mx-auto w-50">
+  <div class="card p-4 mt-4" style="background-color: #EEF5FF">
     <%= simple_form_for [:main, @product] do |f| %>
       <%= f.error_notification %>
-      <div class='form-inputs'>
+      <div class="form-inputs">
         <%= f.input :name, placeholder: I18n.t(:name, scope: %i[activerecord attributes product]), required: true, autofocus: true, error: I18n.t(:blank, scope: %i[errors messages]) %>
         <%= f.input :description, required: true, placeholder: I18n.t(:description, scope: %i[activerecord attributes product]), error: I18n.t(:blank, scope: %i[errors messages]) %>
         <%= f.input :image, as: :file, label: "Imagem" %>
-        <div class='w-50'>
-          <div class='mb-3'>
+        <div class="w-50">
+          <div class="mb-3">
             <%= f.label :price, I18n.t(:price, scope: %i[activerecord attributes product]) %>
-            <div class='input-group'>
-              <span class='input-group-text'>R$</span>
+            <div class="input-group">
+              <span class="input-group-text">R$</span>
               <%= f.input_field :price,
                                 required: true,
                                 value: number_with_precision(f.object.price, precision: 2),
-                                class: 'form-control',
+                                class: "form-control",
                                 error: I18n.t(:greater_than, scope: %i[errors messages]) %>
             </div>
           </div>
         </div>
       </div>
-      <div class='form-actions float-end'>
-        <%= link_to I18n.t(:back, scope: %i[form actions]), main_products_path, class: 'btn btn-secondary mt-3 ms-2' %>
-        <%= f.button :submit, I18n.t(:submit, scope: %i[form actions]), class: 'btn btn-primary mt-3' %>
+      <div class="form-actions float-end">
+        <%= link_to I18n.t(:back, scope: %i[form actions]), main_products_path, class: "btn btn-secondary mt-3 ms-2" %>
+        <%= f.button :submit, I18n.t(:submit, scope: %i[form actions]), class: "btn btn-primary mt-3" %>
       </div>
     <% end %>
   </div>

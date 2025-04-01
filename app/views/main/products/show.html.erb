@@ -1,37 +1,37 @@
-<h1 class='mx-2'><%= I18n.t(:product, scope: %i[activerecord models], count: 1) %></h1>
+<h1 class="mx-2"><%= I18n.t(:product, scope: %i[activerecord models], count: 1) %></h1>
 <hr>
-<div class='container d-flex justify-content-center'>
-  <div class='card p-4 mt-3' style='background-color: #EEF5FF; width: 100%;'>
-    <div class='d-flex w-100 h-100 justify-content-center align-items-center my-3'>
-      <div class='m-auto'>
-        <p style='color: green'><%= notice %></p>
-        <div class='card' style='width: 18rem;'>
+<div class="container d-flex justify-content-center">
+  <div class="card p-4 mt-3" style="background-color: #EEF5FF; width: 100%;">
+    <div class="d-flex w-100 h-100 justify-content-center align-items-center my-3">
+      <div class="m-auto">
+        <p style="color: green"><%= notice %></p>
+        <div class="card" style="width: 18rem;">
           <%= image_tag(
             @product.image_url,
             alt: I18n.t(:alt_image, scope: %i[activerecord], model: @product.model_name.human),
-            class: 'card-img-top mx-auto standard-image-size'
+            class: "card-img-top mx-auto standard-image-size"
           ) %>
-          <div class='card-body'>
-            <h5 class='card-title'><%= @product.name %></h5>
-            <p class='card-text'><%= @product.description %></p>
+          <div class="card-body">
+            <h5 class="card-title"><%= @product.name %></h5>
+            <p class="card-text"><%= @product.description %></p>
           </div>
-          <ul class='list-group list-group-flush'>
-            <li class='list-group-item'><%= I18n.t(:price, scope: %i[activerecord attributes product]) %>: R$<%= number_with_precision(@product.price, precision: 2) %></li>
-            <li class='list-group-item'><%= I18n.t(:status, scope: %i[activerecord attributes product]) %>:
-              <% if @product.status == 'active' %>
-                <span class='text-success border rounded border-success px-2 bg-success-subtle'><%= I18n.t(:active) %></span>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><%= I18n.t(:price, scope: %i[activerecord attributes product]) %>: R$<%= number_with_precision(@product.price, precision: 2) %></li>
+            <li class="list-group-item"><%= I18n.t(:status, scope: %i[activerecord attributes product]) %>:
+              <% if @product.status == "active" %>
+                <span class="text-success border rounded border-success px-2 bg-success-subtle"><%= I18n.t(:active) %></span>
               <% else %>
-                <span class='text-danger border rounded border-danger px-2 bg-danger-subtle'><%= I18n.t(:inactive) %></span>
+                <span class="text-danger border rounded border-danger px-2 bg-danger-subtle"><%= I18n.t(:inactive) %></span>
               <% end %>
             </li>
           </ul>
-          <div class='card-body text-center'>
-            <%= link_to I18n.t(:return), main_products_path, class: 'btn btn-secondary ms-1' %>
-            <%= link_to I18n.t(:edit), edit_main_product_path(@product), class: 'btn btn-primary' %>
-            <% if @product.status === 'active' %>
-              <button type='button' class='btn btn-danger me-1' onclick="showModal('confirmDeactivateModal')"><%= I18n.t(:deactivate) %></button>
+          <div class="card-body text-center">
+            <%= link_to I18n.t(:return), main_products_path, class: "btn btn-secondary ms-1" %>
+            <%= link_to I18n.t(:edit), edit_main_product_path(@product), class: "btn btn-primary" %>
+            <% if @product.status === "active" %>
+              <button type="button" class="btn btn-danger me-1" onclick="showModal('confirmDeactivateModal')"><%= I18n.t(:deactivate) %></button>
             <% else %>
-              <button type='button' class='btn btn-success me-1' onclick="showModal('confirmActivateModal')"><%= I18n.t(:activate) %></button>
+              <button type="button" class="btn btn-success me-1" onclick="showModal("confirmDeactivateModal")"><%= I18n.t(:activate) %></button>
             <% end %>
           </div>
         </div>
@@ -39,36 +39,36 @@
     </div>
   </div>
 </div>
-<div id='confirmDeactivateModal' class='modal' onclick="hideModal('confirmDeactivateModal')">
-  <div class='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
-    <div class='modal-content' onclick="event.stopPropagation()">
-      <div class='modal-header' style='border: none;'>
-        <h5 class='modal-title'><%= I18n.t(:confirm_deactivation) %></h5>
-        <button type='button' class='close' onclick="hideModal('confirmDeactivateModal')" style='position: absolute; top: 10px; right: 10px; background-color: transparent; border: none;'>&times;</button>
+<div id="confirmDeactivateModal" class="modal" onclick="hideModal('confirmDeactivateModal')">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header" style="border: none;">
+        <h5 class="modal-title"><%= I18n.t(:confirm_deactivation) %></h5>
+        <button type="button" class="close" onclick="hideModal('confirmDeactivateModal')" style="position: absolute; top: 10px; right: 10px; background-color: transparent; border: none;">&times;</button>
       </div>
-      <div class='modal-body'>
+      <div class="modal-body">
         <p><%= I18n.t(:product_deactivation) %></p>
       </div>
-      <div class='modal-footer'>
-        <button type='button' class='btn btn-secondary' onclick="hideModal('confirmDeactivateModal')"><%= I18n.t(:cancel) %></button>
-        <%= button_to I18n.t(:deactivate, scope: %i[activerecord], model: @product.model_name.human), deactivate_main_product_path(@product), method: :put, class: 'btn btn-danger' %>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="hideModal('confirmDeactivateModal')"><%= I18n.t(:cancel) %></button>
+        <%= button_to I18n.t(:deactivate, scope: %i[activerecord], model: @product.model_name.human), deactivate_main_product_path(@product), method: :put, class: "btn btn-danger" %>
       </div>
     </div>
   </div>
 </div>
-<div id='confirmActivateModal' class='modal' onclick="hideModal('confirmActivateModal')">
-  <div class='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
-    <div class='modal-content' onclick="event.stopPropagation()">
-      <div class='modal-header' style='border: none;'>
-        <h5 class='modal-title fs-3' style='margin: -10px'><%= I18n.t(:confirm_activation) %></h5>
-        <button type='button' class='close'  onclick="hideModal('confirmActivateModal')" style='position: absolute; top: 0px; right: 5px; background-color: transparent; border: none;'>&times;</button>
+<div id="confirmDeactivateModal" class="modal" onclick="hideModal('confirmDeactivateModal')">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header" style="border: none;">
+        <h5 class="modal-title fs-3" style="margin: -10px"><%= I18n.t(:confirm_activation) %></h5>
+        <button type="button" class="close"  onclick="hideModal('confirmDeactivateModal')" style="position: absolute; top: 0px; right: 5px; background-color: transparent; border: none;">&times;</button>
       </div>
-      <div class='modal-body text-center fs-6'>
+      <div class="modal-body text-center fs-6">
         <p><%= I18n.t(:product_activation) %></p>
       </div>
-      <div class='modal-footer'>
-        <button type='button' class='btn btn-secondary' onclick="hideModal('confirmActivateModal')"><%= I18n.t(:cancel) %></button>
-        <%= button_to I18n.t(:activate, scope: %i[activerecord], model: @product.model_name.human), activate_main_product_path(@product), method: :put, class: 'btn btn-success' %>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="hideModal('confirmDeactivateModal')"><%= I18n.t(:cancel) %></button>
+        <%= button_to I18n.t(:activate, scope: %i[activerecord], model: @product.model_name.human), activate_main_product_path(@product), method: :put, class: "btn btn-success" %>
       </div>
     </div>
   </div>
@@ -76,11 +76,11 @@
 <script>
   function showModal(modalId) {
     var modal = document.getElementById(modalId);
-    modal.style.display = 'block';
+    modal.style.display = "block";
   }
 
   function hideModal(modalId) {
     var modal = document.getElementById(modalId);
-    modal.style.display = 'none';
+    modal.style.display = "none";
   }
 </script>

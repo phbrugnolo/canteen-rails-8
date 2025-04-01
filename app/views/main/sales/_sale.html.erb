@@ -2,7 +2,7 @@
   <div class="card border-info m-4 p-2" style="position: relative;">
     <table class="table mb-0 mt-1">
       <tr class="list-group list-group-flush table-row">
-        <td><%= I18n.t(:date) %>: <%= sale.created_at.strftime('%d/%m/%Y') %></td>
+        <td><%= I18n.t(:date) %>: <%= sale.created_at.strftime("%d/%m/%Y") %></td>
         <td><%= I18n.t(:customer, scope: %i[activerecord attributes sale]) %>: <%= sale.customer.name %></td>
         <td><%= I18n.t(:total_price) %>: R$<%= number_with_precision(sale.total_price, precision: 2) %></td>
       </tr>
@@ -19,11 +19,11 @@
       <tbody style="display: table; width: 100%; table-layout: fixed;">
         <% cart = JSON.parse(sale.cart) %>
         <% cart.each do |item| %>
-          <% subtotal = item['quantity'].to_i * item['price'].to_f %>
+          <% subtotal = item["quantity"].to_i * item["price"].to_f %>
           <tr>
-            <td class="col-6"><%= item['name'] %></td>
-            <td class="col-2 text-center"><%= item['quantity'] %></td>
-            <td class="col-2 text-center">R$<%= number_with_precision(item['price'], precision: 2) %></td>
+            <td class="col-6"><%= item["name"] %></td>
+            <td class="col-2 text-center"><%= item["quantity"] %></td>
+            <td class="col-2 text-center">R$<%= number_with_precision(item["price"], precision: 2) %></td>
             <td class="col-2 text-center">R$<%= number_with_precision(subtotal, precision: 2) %></td>
           </tr>
         <% end %>

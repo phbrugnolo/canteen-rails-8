@@ -9,11 +9,11 @@
                 collection: @customers,
                 label_method: :name,
                 value_method: :id,
-                input_html: { id: 'customer-id' },
+                input_html: { id: "customer-id" },
                 include_blank: false,
                 prompt: I18n.t(:select_a_customer) %>
         </div>
-        <%= f.input :cart, as: :hidden, input_html: { value: '' }, error: "" %>
+        <%= f.input :cart, as: :hidden, input_html: { value: "" }, error: "" %>
         <div class="float-end" style="width: 30%;">
           <p style="margin-bottom: 5px;"><%= I18n.t(:total_price) %>:</p>
           <div class="input-group mb-3">
@@ -30,5 +30,5 @@
   </div>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', () => new TomSelect('#customer-id'));
+document.addEventListener("DOMContentLoaded", () => new TomSelect("#customer-id"));
 </script>

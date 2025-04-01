@@ -20,9 +20,9 @@
               <div class="row g-0">
                 <div class="col-md-4 d-flex justify-content-center align-items-center">
                   <%= image_tag(
-                    @customer.avatar.attached? ? url_for(@customer.avatar) : asset_path('img-perfil.png'),
+                    @customer.avatar.attached? ? url_for(@customer.avatar) : asset_path("img-perfil.png"),
                     alt: I18n.t(:alt_image, scope: %i[activerecord], model: @customer.model_name.human),
-                    class: 'img-fluid rounded border border-secondary-subtle standard-image-size'
+                    class: "img-fluid rounded border border-secondary-subtle standard-image-size"
                   ) %>
                 </div>
                 <div class="col-md-8">
@@ -31,7 +31,7 @@
                     <ul class="list-group list-group-flush mt-2">
                       <li class="list-group-item"><%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>: <%= @customer.matriculation %></li>
                       <li class="list-group-item"><%= I18n.t(:status, scope: %i[activerecord attributes customer]) %>:
-                        <% if @customer.status == 'active' %>
+                        <% if @customer.status == "active" %>
                           <span class="text-success border rounded border-success px-2 bg-success-subtle"><%= I18n.t(:active) %></span>
                         <% else %>
                           <span class="text-danger border rounded border-danger px-2 bg-danger-subtle"><%= I18n.t(:inactive) %></span>
@@ -67,7 +67,7 @@
               <div class="card border-info m-4 p-2 col-lg-6" style="position: relative;">
                 <table class="table mb-0 mt-1">
                   <tr class="list-group list-group-flush table-row">
-                    <td><%= I18n.t(:date) %>: <%= sale.created_at.strftime('%d/%m/%Y') %></td>
+                    <td><%= I18n.t(:date) %>: <%= sale.created_at.strftime("%d/%m/%Y") %></td>
                     <td><%= I18n.t(:total_price) %>: R$<%= number_with_precision(sale.total_price, precision: 2) %></td>
                     <td class="border-bottom-0 d-flex justify-content-end flex-column">
                       <button class="btn btn-primary show-cart my-2"><%= I18n.t(:show_cart) %></button>
@@ -86,9 +86,9 @@
                     <% cart = JSON.parse(sale.cart) %>
                     <% cart.each do |item| %>
                       <tr>
-                        <td class="col-5"><%= item['name'] %></td>
-                        <td class="col-3">R$<%= number_with_precision(item['price'], precision: 2) %></td>
-                        <td class="col-4 text-center"><%= item['quantity'] %></td>
+                        <td class="col-5"><%= item["name"] %></td>
+                        <td class="col-3">R$<%= number_with_precision(item["price"], precision: 2) %></td>
+                        <td class="col-4 text-center"><%= item["quantity"] %></td>
                       </tr>
                     <% end %>
                   </tbody>
@@ -118,7 +118,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" onclick="hideModal('confirmDeactivateModal')"><%= I18n.t(:cancel) %></button>
-        <%= button_to I18n.t(:deactivate, scope: %i[activerecord], model: @customer.model_name.human), deactivate_main_customer_path(@customer), method: :put, class: 'btn btn-danger' %>
+        <%= button_to I18n.t(:deactivate, scope: %i[activerecord], model: @customer.model_name.human), deactivate_main_customer_path(@customer), method: :put, class: "btn btn-danger" %>
       </div>
     </div>
   </div>
@@ -135,7 +135,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" onclick="hideModal('confirmActivateModal')"><%= I18n.t(:cancel) %></button>
-        <%= button_to I18n.t(:activate, scope: %i[activerecord], model: @customer.model_name.human), activate_main_customer_path(@customer), method: :put, class: 'btn btn-success' %>
+        <%= button_to I18n.t(:activate, scope: %i[activerecord], model: @customer.model_name.human), activate_main_customer_path(@customer), method: :put, class: "btn btn-success" %>
       </div>
     </div>
   </div>

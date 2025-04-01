@@ -35,7 +35,7 @@
           <td scope="row align-middle"><%= customer.id %></td>
           <td class="text-start text-break"><%= customer.name %></td>
           <td class="align-middle">
-            <% if customer.status == 'active' %>
+            <% if customer.status == "active" %>
               <span class="text-success border rounded border-success px-2 bg-success-subtle"><%= I18n.t(:active) %></span>
             <% else %>
               <span class="text-danger border rounded border-danger px-2 bg-danger-subtle"><%= I18n.t(:inactive) %></span>
@@ -48,11 +48,11 @@
   </table>
 </div>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const searchNameInput = document.getElementById('search_name');
-    const searchIdInput = document.getElementById('search_id');
-    const searchStatusSelect = document.getElementById('search_status');
-    const customersTable = document.getElementById('customers');
+  document.addEventListener("DOMContentLoaded", function() {
+    const searchNameInput = document.getElementById("search_name");
+    const searchIdInput = document.getElementById("search_id");
+    const searchStatusSelect = document.getElementById("search_status");
+    const customersTable = document.getElementById("customers");
 
     function filterCustomers() {
         const searchName = searchNameInput.value.trim().toLowerCase();
@@ -60,27 +60,27 @@
         const searchStatus = searchStatusSelect.value;
 
         Array.from(customersTable.children).forEach(row => {
-            if (row.tagName === 'TR') {
-                const id = row.querySelector('td:nth-child(1)').textContent.trim().toLowerCase();
-                const name = row.querySelector('td:nth-child(2)').textContent.trim().toLowerCase();
-                const statusText = row.querySelector('td:nth-child(3) span').textContent.trim().toLowerCase();
-                const status = statusText === 'ativo' ? 'active' : 'inactive';
+            if (row.tagName === "TR") {
+                const id = row.querySelector("td:nth-child(1)").textContent.trim().toLowerCase();
+                const name = row.querySelector("td:nth-child(2)").textContent.trim().toLowerCase();
+                const statusText = row.querySelector("td:nth-child(3) span").textContent.trim().toLowerCase();
+                const status = statusText === "ativo" ? "active" : "inactive";
 
                 const nameMatch = name.includes(searchName);
                 const idMatch = id.includes(searchId);
-                const statusMatch = searchStatus === '' || status === searchStatus;
+                const statusMatch = searchStatus === "" || status === searchStatus;
 
                 if (nameMatch && idMatch && statusMatch) {
-                    row.style.display = '';
+                    row.style.display = "";
                 } else {
-                    row.style.display = 'none';
+                    row.style.display = "none";
                 }
             }
         });
     }
 
-    searchNameInput.addEventListener('input', filterCustomers);
-    searchIdInput.addEventListener('input', filterCustomers);
-    searchStatusSelect.addEventListener('change', filterCustomers);
+    searchNameInput.addEventListener("input", filterCustomers);
+    searchIdInput.addEventListener("input", filterCustomers);
+    searchStatusSelect.addEventListener("change", filterCustomers);
   });
 </script>

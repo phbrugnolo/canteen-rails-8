@@ -11,7 +11,7 @@
               <div class="card border-info m-4 p-2" style="position: relative;">
                 <table class="table mb-0 mt-1">
                   <tr class="list-group list-group-flush table-row">
-                    <td><%= I18n.t(:date) %>: <%= sale.created_at.strftime('%d/%m/%Y') %></td>
+                    <td><%= I18n.t(:date) %>: <%= sale.created_at.strftime("%d/%m/%Y") %></td>
                     <td><%= I18n.t(:customer, scope: %i[activerecord models], count: 1) %>: <%= sale.customer.name %></td>
                     <td><%= I18n.t(:total_price) %>: R$<%= number_with_precision(sale.total_price, precision: 2) %></td>
                     <td class="border-bottom-0 d-flex justify-content-end flex-column">

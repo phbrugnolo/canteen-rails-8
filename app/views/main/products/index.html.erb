@@ -1,43 +1,43 @@
-<p style='color: green'><%= notice %></p>
-<h1 class='mx-2'><%= I18n.t(:product, scope: %i[activerecord models], count: 2) %></h1>
+<p style="color: green"><%= notice %></p>
+<h1 class="mx-2"><%= I18n.t(:product, scope: %i[activerecord models], count: 2) %></h1>
 <hr>
-<div class='container'>
-  <div class='card p-2 mt-4' style='background-color: #EEF5FF'>
-    <div class='d-flex justify-content-end flex-wrap'>
-      <%= link_to I18n.t(:add, scope: %i[activerecord], model: Product.model_name.human), new_main_product_path, class: 'btn btn-primary mt-3 me-5' %>
+<div class="container">
+  <div class="card p-2 mt-4" style="background-color: #EEF5FF">
+    <div class="d-flex justify-content-end flex-wrap">
+      <%= link_to I18n.t(:add, scope: %i[activerecord], model: Product.model_name.human), new_main_product_path, class: "btn btn-primary mt-3 me-5" %>
     </div>
-    <div class='row mt-4'>
-      <div class='col-md-6'>
-        <input type='text' id='search_name' class='form-control' placeholder='<%= I18n.t(:search_by_name) %>'>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <input type="text" id="search_name" class="form-control" placeholder="<%= I18n.t(:search_by_name) %>">
       </div>
-      <div class='col-md-6'>
-        <select id='search_status' class='form-control'>
-          <option value=''><%= I18n.t(:select_status) %></option>
-          <option value='active'><%= I18n.t(:active) %></option>
-          <option value='inactive'><%= I18n.t(:inactive) %></option>
+      <div class="col-md-6">
+        <select id="search_status" class="form-control">
+          <option value=""><%= I18n.t(:select_status) %></option>
+          <option value="active"><%= I18n.t(:active) %></option>
+          <option value="inactive"><%= I18n.t(:inactive) %></option>
         </select>
       </div>
     </div>
-    <div id='products' class='mt-1'>
-      <div class='container d-flex justify-content-around flex-wrap'>
+    <div id="products" class="mt-1">
+      <div class="container d-flex justify-content-around flex-wrap">
         <% @products.each do |product| %>
-          <div class='card border-info m-4' style='width: 15rem;' data-status='<%= product.status %>'>
-            <div class='card-body'>
-              <h5 class='card-title'><%= product.name %></h5>
-              <p class='card-text'><%= product.description %></p>
+          <div class="card border-info m-4" style="width: 15rem;" data-status="<%= product.status %>">
+            <div class="card-body">
+              <h5 class="card-title"><%= product.name %></h5>
+              <p class="card-text"><%= product.description %></p>
             </div>
-            <ul class='list-group list-group-flush'>
-              <li class='list-group-item' style='border-top: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)'><%= I18n.t(:price, scope: %i[activerecord attributes product]) %>: R$<%= number_with_precision(product.price, precision: 2) %></li>
-              <li class='list-group-item' style='border-bottom: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)'><%= I18n.t(:status, scope: %i[activerecord attributes product]) %>:
-                <% if product.status == 'active' %>
-                  <span class='text-success border rounded border-success px-2 bg-success-subtle'><%= I18n.t(:active) %></span>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" style="border-top: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)"><%= I18n.t(:price, scope: %i[activerecord attributes product]) %>: R$<%= number_with_precision(product.price, precision: 2) %></li>
+              <li class="list-group-item" style="border-bottom: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)"><%= I18n.t(:status, scope: %i[activerecord attributes product]) %>:
+                <% if product.status == "active" %>
+                  <span class="text-success border rounded border-success px-2 bg-success-subtle"><%= I18n.t(:active) %></span>
                 <% else %>
-                  <span class='text-danger border rounded border-danger px-2 bg-danger-subtle'><%= I18n.t(:inactive) %></span>
+                  <span class="text-danger border rounded border-danger px-2 bg-danger-subtle"><%= I18n.t(:inactive) %></span>
                 <% end %>
               </li>
             </ul>
-            <div class='text-center mb-3'>
-              <%= link_to I18n.t(:show, scope: %i[activerecord], model: @products.model_name.human), main_product_path(product), class: 'btn btn-primary mt-4' %>
+            <div class="text-center mb-3">
+              <%= link_to I18n.t(:show, scope: %i[activerecord], model: @products.model_name.human), main_product_path(product), class: "btn btn-primary mt-4" %>
             </div>
           </div>
         <% end %>
@@ -46,34 +46,34 @@
   </div>
 </div>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const searchNameInput = document.getElementById('search_name');
-    const searchStatusSelect = document.getElementById('search_status');
-    const productsContainer = document.getElementById('products');
+  document.addEventListener("DOMContentLoaded", function() {
+    const searchNameInput = document.getElementById("search_name");
+    const searchStatusSelect = document.getElementById("search_status");
+    const productsContainer = document.getElementById("products");
 
-    if (!searchNameInput || !searchStatusSelect || !productsContainer) return console.log('Elements not found');
+    if (!searchNameInput || !searchStatusSelect || !productsContainer) return console.log("Elements not found");
 
     function filterProducts() {
       const searchName = searchNameInput.value.trim().toLowerCase();
       const searchStatus = searchStatusSelect.value;
 
-      Array.from(productsContainer.querySelectorAll('.card')).forEach(card => {
-        const name = card.querySelector('.card-title').textContent.trim().toLowerCase();
-        const status = card.getAttribute('data-status');
+      Array.from(productsContainer.querySelectorAll(".card")).forEach(card => {
+        const name = card.querySelector(".card-title").textContent.trim().toLowerCase();
+        const status = card.getAttribute("data-status");
 
         const nameMatch = name.includes(searchName);
-        const statusMatch = searchStatus === '' || status === searchStatus;
+        const statusMatch = searchStatus === "" || status === searchStatus;
 
         if (nameMatch && statusMatch) {
-          card.style.display = '';
+          card.style.display = "";
         } else {
-          card.style.display = 'none';
+          card.style.display = "none";
         }
       });
     }
 
-    searchNameInput.addEventListener('input', filterProducts);
-    searchStatusSelect.addEventListener('change', filterProducts);
+    searchNameInput.addEventListener("input", filterProducts);
+    searchStatusSelect.addEventListener("change", filterProducts);
 
     filterProducts();
   });
