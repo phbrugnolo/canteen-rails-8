@@ -31,7 +31,7 @@
             <% if @product.status === "active" %>
               <button type="button" class="btn btn-danger me-1" onclick="showModal('confirmDeactivateModal')"><%= I18n.t(:deactivate) %></button>
             <% else %>
-              <button type="button" class="btn btn-success me-1" onclick="showModal("confirmDeactivateModal")"><%= I18n.t(:activate) %></button>
+              <button type="button" class="btn btn-success me-1" onclick="showModal('confirmActivateModal')"><%= I18n.t(:activate) %></button>
             <% end %>
           </div>
         </div>
@@ -56,18 +56,18 @@
     </div>
   </div>
 </div>
-<div id="confirmDeactivateModal" class="modal" onclick="hideModal('confirmDeactivateModal')">
+<div id="confirmActivateModal" class="modal" onclick="hideModal('confirmActivateModal')">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content" onclick="event.stopPropagation()">
       <div class="modal-header" style="border: none;">
         <h5 class="modal-title fs-3" style="margin: -10px"><%= I18n.t(:confirm_activation) %></h5>
-        <button type="button" class="close"  onclick="hideModal('confirmDeactivateModal')" style="position: absolute; top: 0px; right: 5px; background-color: transparent; border: none;">&times;</button>
+        <button type="button" class="close"  onclick="hideModal('confirmActivateModal')" style="position: absolute; top: 0px; right: 5px; background-color: transparent; border: none;">&times;</button>
       </div>
       <div class="modal-body text-center fs-6">
         <p><%= I18n.t(:product_activation) %></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="hideModal('confirmDeactivateModal')"><%= I18n.t(:cancel) %></button>
+        <button type="button" class="btn btn-secondary" onclick="hideModal('confirmActivateModal')"><%= I18n.t(:cancel) %></button>
         <%= button_to I18n.t(:activate, scope: %i[activerecord], model: @product.model_name.human), activate_main_product_path(@product), method: :put, class: "btn btn-success" %>
       </div>
     </div>
