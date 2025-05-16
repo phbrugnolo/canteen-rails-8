@@ -242,7 +242,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:9.27.0, @eslint/js@npm:^9.23.0":
+"@eslint/js@npm:9.27.0, @eslint/js@npm:^9.27.0":
   version: 9.27.0
   resolution: "@eslint/js@npm:9.27.0"
   checksum: 10/cdbe380fd31bb325b9ec65ae310fb92a57efb796d3cc5d8bc9dafef447d634c64e497bedade6a49e0cf44a5b14560ab6ac9ed9da5a38e2415b31ae01ae5b758e
@@ -625,18 +625,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app@workspace:."
   dependencies:
-    "@eslint/js": "npm:^9.23.0"
+    "@eslint/js": "npm:^9.27.0"
     "@popperjs/core": "npm:^2.11.8"
-    autoprefixer: "npm:^10.4.20"
-    bootstrap: "npm:^5.3.3"
-    bootstrap-icons: "npm:^1.11.3"
-    esbuild: "npm:^0.25.0"
-    eslint: "npm:^9.23.0"
-    globals: "npm:^16.0.0"
-    nodemon: "npm:^3.1.9"
-    postcss: "npm:^8.5.2"
-    postcss-cli: "npm:^11.0.0"
-    sass: "npm:^1.85.0"
+    autoprefixer: "npm:^10.4.21"
+    bootstrap: "npm:^5.3.6"
+    bootstrap-icons: "npm:^1.13.1"
+    esbuild: "npm:^0.25.4"
+    eslint: "npm:^9.27.0"
+    globals: "npm:^16.1.0"
+    nodemon: "npm:^3.1.10"
+    postcss: "npm:^8.5.3"
+    postcss-cli: "npm:^11.0.1"
+    sass: "npm:^1.89.0"
     tom-select: "npm:^2.4.3"
   languageName: unknown
   linkType: soft
@@ -648,7 +648,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^10.4.20":
+"autoprefixer@npm:^10.4.21":
   version: 10.4.21
   resolution: "autoprefixer@npm:10.4.21"
   dependencies:
@@ -680,14 +680,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap-icons@npm:^1.11.3":
+"bootstrap-icons@npm:^1.13.1":
   version: 1.13.1
   resolution: "bootstrap-icons@npm:1.13.1"
   checksum: 10/d6a3bb69268c5132acd4b4a3ca40c46c4548f7c8cbb33154d2d5fa4668c42e0b60a2e55abcd08aca9b1e6871ce5b18ce5f7789031486e8807cc552cc52f88dee
   languageName: node
   linkType: hard
 
-"bootstrap@npm:^5.3.3":
+"bootstrap@npm:^5.3.6":
   version: 5.3.6
   resolution: "bootstrap@npm:5.3.6"
   peerDependencies:
@@ -948,7 +948,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.25.0":
+"esbuild@npm:^0.25.4":
   version: 0.25.4
   resolution: "esbuild@npm:0.25.4"
   dependencies:
@@ -1072,7 +1072,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^9.23.0":
+"eslint@npm:^9.27.0":
   version: 9.27.0
   resolution: "eslint@npm:9.27.0"
   dependencies:
@@ -1354,7 +1354,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^16.0.0":
+"globals@npm:^16.1.0":
   version: 16.1.0
   resolution: "globals@npm:16.1.0"
   checksum: 10/b24fa86c9d9e7f452572977105cefa66529ac166faf1d81abe6618e0ccce98cdd32f8cbc25d37ed6c2dbe7936b00d442696fd0c96da4c90567490488ecefb8fa
@@ -1831,7 +1831,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemon@npm:^3.1.9":
+"nodemon@npm:^3.1.10":
   version: 3.1.10
   resolution: "nodemon@npm:3.1.10"
   dependencies:
@@ -1983,7 +1983,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-cli@npm:^11.0.0":
+"postcss-cli@npm:^11.0.1":
   version: 11.0.1
   resolution: "postcss-cli@npm:11.0.1"
   dependencies:
@@ -2046,7 +2046,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.5.2":
+"postcss@npm:^8.5.3":
   version: 8.5.3
   resolution: "postcss@npm:8.5.3"
   dependencies:
@@ -2155,7 +2155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.85.0":
+"sass@npm:^1.89.0":
   version: 1.89.0
   resolution: "sass@npm:1.89.0"
   dependencies:
