@@ -54,3 +54,16 @@ Sale.create([
     total_price: 2.00
   }
 ])
+
+users = {
+  admin:   { name: "admin", email: "admin@exemplo.com",   password: "admin123" },
+  user: { name: "user", email: "user@exemplo.com", password: "user123" }
+}
+
+users.each do |role, attrs|
+  User.find_or_create_by!(name: attrs[:name]) do |u|
+    u.email    = attrs[:email]
+    u.password = attrs[:password]
+    u.role     = role
+  end
+end
