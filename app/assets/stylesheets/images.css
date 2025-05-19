@@ -1,7 +1,12 @@
-.standard-image-size {
+.standard-image-size-product {
   min-height: 8rem;
   min-width: 8rem;
   max-height: 14rem;
   object-fit: contain;
   margin-left: 5px;
+}
+
+.standard-image-size {
+  height: 12rem;
+  width: 12rem;
 }
