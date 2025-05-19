@@ -36,41 +36,47 @@
   </div>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  const nameInput = document.getElementById("search_name");
-  const dateInput = document.getElementById("search_date");
-  const cards = document.querySelectorAll("#sales .card.border-info");
-  const container = document.querySelector("#sales > .card.p-2 .container");
-  const noSalesMessage = document.createElement("p");
+  document.addEventListener("DOMContentLoaded", function() {
+    const nameInput = document.getElementById("search_name");
+    const dateInput = document.getElementById("search_date");
+    const saleCards = document.querySelectorAll("#sales .card.border-info");
+    const container = document.querySelector("#sales > .card.p-2 .container");
 
-  noSalesMessage.textContent = "<%= I18n.t(:no_purchases_found) %>";
-  noSalesMessage.className = "mx-2 mt-2 text-center text-muted";
-  noSalesMessage.style.display = "none";
-  container.appendChild(noSalesMessage);
+    const noSalesMessage = document.createElement("p");
+    noSalesMessage.textContent = "<%= I18n.t(:no_purchases_found) %>";
+    noSalesMessage.className = "mx-2 mt-2 text-center text-muted";
+    noSalesMessage.style.display = "none";
+    container.appendChild(noSalesMessage);
 
-  function filterSales() {
-    let anyVisible = false;
-    const nameTerm = nameInput.value.trim().toLowerCase();
-    const dateTerm = dateInput.value;
+    function filterSales() {
+      let hasVisibleItems = false;
+      const searchName = nameInput.value.trim().toLowerCase();
+      const searchDate = dateInput.value;
 
-    cards.forEach(card => {
-      const dateText = card.querySelector("td:nth-child(1)").textContent.split(":")[1].trim();
-      const customerName = card.querySelector("td:nth-child(2)").textContent.split(":")[1].trim().toLowerCase();
-      const parts = dateText.split("/");
-      const isoDate = parts[2] + "-" + parts[1].padStart(2, "0") + "-" + parts[0].padStart(2, "0");
+      saleCards.forEach(card => {
+        // Extrai dados da venda
+        const dateCell = card.querySelector("td:nth-child(1)");
+        const customerCell = card.querySelector("td:nth-child(2)");
 
-      const matchesName = !nameTerm || customerName.includes(nameTerm);
-      const matchesDate = !dateTerm || isoDate === dateTerm;
-      const show = matchesName && matchesDate;
+        // Formata data para YYYY-MM-DD
+        const [day, month, year] = dateCell.textContent.split(": ")[1].split("/");
+        const isoDate = `${year}-${month}-${day}`;
 
-      card.closest(".col-6").style.display = show ? "" : "none";
-      if (show) anyVisible = true;
-    });
+        // Verifica correspondências
+        const customerName = customerCell.textContent.split(": ")[1].toLowerCase();
+        const nameMatch = !searchName || customerName.includes(searchName);
+        const dateMatch = !searchDate || isoDate === searchDate;
 
-    noSalesMessage.style.display = anyVisible ? "none" : "";
-  }
+        // Exibe/oculta cards
+        const parentCol = card.closest(".col-6");
+        parentCol.style.display = (nameMatch && dateMatch) ? "" : "none";
+        if (parentCol.style.display === "") hasVisibleItems = true;
+      });
 
-  nameInput.addEventListener("input", filterSales);
-  dateInput.addEventListener("input", filterSales);
-});
+      noSalesMessage.style.display = hasVisibleItems ? "none" : "";
+    }
+
+    nameInput.addEventListener("input", filterSales);
+    dateInput.addEventListener("input", filterSales);
+  });
 </script>
