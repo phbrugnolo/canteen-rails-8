@@ -22,6 +22,11 @@
       <div class="container d-flex justify-content-around flex-wrap">
         <% @products.each do |product| %>
           <div class="card border-info m-4" style="width: 15rem;" data-status="<%= product.status %>">
+            <%= image_tag(
+              product.image_url,
+              alt: I18n.t(:alt_image, scope: %i[activerecord], model: product.model_name.human),
+              class: "card-img-top mx-auto standard-image-size-product-card"
+            ) %>
             <div class="card-body">
               <h5 class="card-title"><%= product.name %></h5>
               <p class="card-text"><%= product.description %></p>
