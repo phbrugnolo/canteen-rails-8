@@ -118,7 +118,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" onclick="hideModal('confirmDeactivateModal')"><%= I18n.t(:cancel) %></button>
-        <%= button_to I18n.t(:deactivate, scope: %i[activerecord], model: @customer.model_name.human), deactivate_main_customer_path(@customer), method: :put, class: "btn btn-danger" %>
+        <%= button_to I18n.t(:deactivate, scope: %i[activerecord], model: @customer.model_name.human), deactivate_main_customer_path(@customer), method: :patch, class: "btn btn-danger" %>
       </div>
     </div>
   </div>
@@ -135,7 +135,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" onclick="hideModal('confirmActivateModal')"><%= I18n.t(:cancel) %></button>
-        <%= button_to I18n.t(:activate, scope: %i[activerecord], model: @customer.model_name.human), activate_main_customer_path(@customer), method: :put, class: "btn btn-success" %>
+        <%= button_to I18n.t(:activate, scope: %i[activerecord], model: @customer.model_name.human), activate_main_customer_path(@customer), method: :patch, class: "btn btn-success" %>
       </div>
     </div>
   </div>

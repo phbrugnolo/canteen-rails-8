@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  cart: 
-  total_price: 9.99
+  id: 1
+  cart: "[{\"name\":\"Bala\",\"price\":\"0.25\",\"id\":1,\"quantity\":4},{\"name\":\"Diversos\",\"price\":\"0.50\",\"id\":2,\"quantity\":2}]"
+  total_price: 2.0
   customer: one
 
 two:
-  cart: 
-  total_price: 9.99
+  id: 2
+  cart: "[{}]"
+  total_price: 0.0
   customer: two

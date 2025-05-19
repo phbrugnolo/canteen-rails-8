@@ -11,5 +11,12 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+
+    include Devise::Test::IntegrationHelpers
+
+    def sign_in_user(role = :admin)
+      @user = users(role)
+      sign_in @user
+    end
   end
 end

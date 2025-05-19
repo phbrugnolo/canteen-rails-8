@@ -107,4 +107,5 @@ pt-BR:
         sale:
           attributes:
             customer:
-              blank: "O cliente não pode ficar em branco"
+              blank: "não pode ficar em branco"
+              required: "não pode ficar em branco"

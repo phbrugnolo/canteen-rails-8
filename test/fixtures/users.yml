@@ -1,0 +1,19 @@
+# test/fixtures/users.yml
+
+admin:
+  id: 1
+  name: "Admin User"
+  email: "admin@example.com"
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  role: 0
+  created_at: <%= Time.zone.now - 1.day %>
+  updated_at: <%= Time.zone.now - 1.day %>
+
+regular:
+  id: 2
+  name: "Regular User"
+  email: "user@example.com"
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  role: 1
+  created_at: <%= Time.zone.now - 1.day %>
+  updated_at: <%= Time.zone.now - 1.day %>
