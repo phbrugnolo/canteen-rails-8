@@ -13,7 +13,8 @@
     <link rel="icon" href="<%= asset_path("favicon.ico") %>" type="image/png">
     <link rel="apple-touch-icon" href="<%= asset_path("favicon.ico") %>">
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app %> <%# To add turbo integration puts "data-turbo-track": "reload" on stylesheet and javascript link tags %>
+    <%= stylesheet_link_tag :app %>
+    <%# To add turbo integration puts "data-turbo-track": "reload" on stylesheet and javascript link tags %>
     <%= javascript_include_tag "application", type: "module" %>
     <%= stylesheet_link_tag "application" %>
   </head>
@@ -22,7 +23,7 @@
       <div class="row">
         <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-light col-3 position-fixed">
           <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            <%= image_tag "logo-rd.png", id: "logo", alt: "Logo da Religião de Deus do Cristo e do Espírito Santo" %>
+            <%= image_tag "logo-rd.png", id: "logo", alt: I18n.t(:logo_rd_alt_image) %>
             <span class="fs-4 ms-3"><%= I18n.t(:title) %></span>
           </div>
           <hr>
@@ -45,14 +46,20 @@
           </ul>
           <hr>
           <div class="dropdown align-items-baseline">
-            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-              <%= image_tag "logo-rd.png", alt: "Foto de Perfil", width: 32, height: 32, class: "rounded-circle me-2" %>
-              <strong><%= I18n.t(:user) %></strong>
+            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+              <%= image_tag "logo-rd.png", alt: I18n.t(:logo_rd_alt_image), width: 32, height: 32, class: "rounded-circle me-2" %>
+              <%= content_tag :strong, current_user&.name&.capitalize %>
             </a>
-            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-              <li class="list-group-item"><a class="dropdown-demand ms-2 link-underline link-underline-opacity-0 link-underline-opacity-75-hover link-dark mb-1" href="#"><%= I18n.t(:profile) %></a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li class="list-group-item"><a class="dropdown-demand ms-2 link-underline link-underline-opacity-0 link-underline-opacity-75-hover link-dark mb-1" href="#"><%= I18n.t(:exit) %></a></li>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser">
+              <% if current_user&.admin? %>
+                <li>
+                  <%= link_to I18n.t(:sale, scope: %i[activerecord models], count: 2), main_sales_path, class: "dropdown-item" %>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+              <% end %>
+              <li>
+                <%= link_to I18n.t(:exit), destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+              </li>
             </ul>
           </div>
         </div>
