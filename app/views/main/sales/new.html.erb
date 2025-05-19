@@ -60,7 +60,7 @@
         html += `
             <tr>
               <td scope="row" class="col-2">
-                <img src="${product.image_url}" width="50" height="50" alt="<%= I18n.t(:alt_image, scope: %i[activerecord], model: Product.model_name.human) %>"/>
+                <img src="${product.image_url}" height="55" alt="<%= I18n.t(:alt_image, scope: %i[activerecord], model: Product.model_name.human) %>"/>
               </td>
               <td class="col-6">${product.name}</td>
               <td class="col-2">${formattedPrice}</td>
