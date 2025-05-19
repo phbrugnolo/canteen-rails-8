@@ -50,12 +50,14 @@
               <strong><%= I18n.t(:user) %></strong>
             </a>
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser">
-              <% if current_user.admin? %>
-                <%= link_to I18n.t(:sale, scope: %i[activerecord models], count: 2), main_sales_path, class: "dropdown-demand ms-2 link-underline link-underline-opacity-0 link-underline-opacity-75-hover link-dark mb-1" %>
+              <% if current_user&.admin? %>
+                <li>
+                  <%= link_to I18n.t(:sale, scope: %i[activerecord models], count: 2), main_sales_path, class: "dropdown-item" %>
+                </li>
                 <li><hr class="dropdown-divider"></li>
               <% end %>
-              <li class="list-group-item">
-                <%= link_to I18n.t(:exit), destroy_user_session_path, method: :delete, class: "dropdown-demand ms-2 link-underline link-underline-opacity-0 link-underline-opacity-75-hover link-dark mb-1" %>
+              <li>
+                <%= link_to I18n.t(:exit), destroy_user_session_path, method: :delete, class: "dropdown-item" %>
               </li>
             </ul>
           </div>

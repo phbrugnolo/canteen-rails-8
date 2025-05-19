@@ -56,8 +56,8 @@ Sale.create([
 ])
 
 users = {
-  admin: { name: "admin", email: "admin@exemplo.com", password: "admin123" },
-  user: { name: "user", email: "user@exemplo.com", password: "user123" }
+  admin: { name: "admin", email: "admin@admin.com", password: "admin123" },
+  user: { name: "user", email: "user@user.com", password: "user123" }
 }
 
 users.each do |role, attrs|

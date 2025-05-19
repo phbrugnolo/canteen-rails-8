@@ -2,7 +2,7 @@
 
 class Users::SessionsController < Devise::SessionsController
   skip_before_action :authenticate_user!, only: [ :new, :create ]
-  layout false
+  layout "login"
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
