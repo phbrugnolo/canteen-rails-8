@@ -5,6 +5,12 @@
   object-fit: contain;
 }
 
+.standard-image-size-product-card {
+  height: 10rem;
+  min-width: 8rem;
+  object-fit: contain;
+}
+
 .standard-image-size {
   height: 12rem;
   width: 12rem;
