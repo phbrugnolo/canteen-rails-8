@@ -523,6 +523,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rails/ujs@npm:7.1.501":
+  version: 7.1.501
+  resolution: "@rails/ujs@npm:7.1.501"
+  checksum: 10/10217b618cf9f16abc0455cf01856ebf15b88b14aaddf7cb2416fce851d4efff633b332107a4dff1077020f6250b8c2c30d879d4afb33e8e02e00da6cd7bf1c0
+  languageName: node
+  linkType: hard
+
 "@types/estree@npm:^1.0.6":
   version: 1.0.7
   resolution: "@types/estree@npm:1.0.7"
@@ -627,6 +634,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.27.0"
     "@popperjs/core": "npm:^2.11.8"
+    "@rails/ujs": "npm:7.1.501"
     autoprefixer: "npm:^10.4.21"
     bootstrap: "npm:^5.3.6"
     bootstrap-icons: "npm:^1.13.1"

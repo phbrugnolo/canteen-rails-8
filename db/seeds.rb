@@ -56,14 +56,14 @@ Sale.create([
 ])
 
 users = {
-  admin:   { name: "admin", email: "admin@exemplo.com",   password: "admin123" },
+  admin: { name: "admin", email: "admin@exemplo.com", password: "admin123" },
   user: { name: "user", email: "user@exemplo.com", password: "user123" }
 }
 
 users.each do |role, attrs|
-  User.find_or_create_by!(name: attrs[:name]) do |u|
-    u.email    = attrs[:email]
-    u.password = attrs[:password]
-    u.role     = role
-  end
+  user = User.find_or_initialize_by(name: attrs[:name])
+  user.email = attrs[:email]
+  user.password = attrs[:password] if user.new_record? || attrs[:password].present?
+  user.role = role
+  user.save!
 end

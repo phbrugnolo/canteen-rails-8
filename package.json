@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@rails/ujs": "7.1.501",
     "autoprefixer": "^10.4.21",
     "bootstrap": "^5.3.6",
     "bootstrap-icons": "^1.13.1",
