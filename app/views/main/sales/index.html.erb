@@ -5,6 +5,14 @@
   <div class="card p-2 mt-4" style="background-color: #EEF5FF">
     <div class="container">
       <% if @sales.size > 0 %>
+        <div class="row mb-2 mt-4">
+          <div class="col-md-6">
+            <input type="text" id="search_name" class="form-control" placeholder="<%= I18n.t(:search_by_name) %>">
+          </div>
+          <div class="col-md-3">
+            <input type="date" id="search_date" class="form-control" placeholder="<%= I18n.t(:created_at, scope: %i[activerecord attributes sales]) %>">
+          </div>
+        </div>
         <div class="row">
           <% @sales.order(created_at: :desc).each do |sale| %>
             <div class="col-6">
@@ -27,3 +35,42 @@
     </div>
   </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const nameInput = document.getElementById("search_name");
+  const dateInput = document.getElementById("search_date");
+  const cards = document.querySelectorAll("#sales .card.border-info");
+  const container = document.querySelector("#sales > .card.p-2 .container");
+  const noSalesMessage = document.createElement("p");
+
+  noSalesMessage.textContent = "<%= I18n.t(:no_purchases_found) %>";
+  noSalesMessage.className = "mx-2 mt-2 text-center text-muted";
+  noSalesMessage.style.display = "none";
+  container.appendChild(noSalesMessage);
+
+  function filterSales() {
+    let anyVisible = false;
+    const nameTerm = nameInput.value.trim().toLowerCase();
+    const dateTerm = dateInput.value;
+
+    cards.forEach(card => {
+      const dateText = card.querySelector("td:nth-child(1)").textContent.split(":")[1].trim();
+      const customerName = card.querySelector("td:nth-child(2)").textContent.split(":")[1].trim().toLowerCase();
+      const parts = dateText.split("/");
+      const isoDate = parts[2] + "-" + parts[1].padStart(2, "0") + "-" + parts[0].padStart(2, "0");
+
+      const matchesName = !nameTerm || customerName.includes(nameTerm);
+      const matchesDate = !dateTerm || isoDate === dateTerm;
+      const show = matchesName && matchesDate;
+
+      card.closest(".col-6").style.display = show ? "" : "none";
+      if (show) anyVisible = true;
+    });
+
+    noSalesMessage.style.display = anyVisible ? "none" : "";
+  }
+
+  nameInput.addEventListener("input", filterSales);
+  dateInput.addEventListener("input", filterSales);
+});
+</script>
