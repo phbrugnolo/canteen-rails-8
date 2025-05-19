@@ -1,5 +1,5 @@
 <% if resource.errors.any? %>
-  <div id="error_explanation" data-turbo-cache="false">
+  <div class="alert alert-danger">
     <h2>
       <%= I18n.t("errors.messages.not_saved",
                  count: resource.errors.count,
@@ -11,5 +11,19 @@
         <li><%= message %></li>
       <% end %>
     </ul>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <% unless flash[:alert] == I18n.t("devise.failure.unauthenticated") %>
+    <div class="alert alert-danger">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+<% end %>
+
+<% if flash[:notice] %>
+  <div class="alert alert-info">
+    <%= flash[:notice] %>
   </div>
 <% end %>
