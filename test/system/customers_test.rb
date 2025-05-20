@@ -8,28 +8,28 @@ class CustomersTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit main_customers_url
-    assert_selector "h1", text: "Customers"
+    assert_selector "h1", text: I18n.t(:customer, scope: %i[activerecord models], count: 2)
   end
 
   test "should create customer" do
     visit main_customers_url
-    click_on "New customer"
+    click_on I18n.t(:add, scope: %i[activerecord], model: Customer.model_name.human)
 
     fill_in "Matriculation", with: "UNIQUE123"
     fill_in "Name", with: "New Test Customer"
-    click_on "Create Customer"
+    click_on I18n.t(:submit, scope: %i[form actions])
 
-    assert_text "Customer was successfully created"
+    assert_text I18n.t(:model_was_successfully_created, model: @customer.model_name.human)
   end
 
   test "should update Customer" do
     visit main_customer_url(@customer)
-    click_on "Edit"
+    click_on I18n.t(:edit)
 
     fill_in "Name", with: @customer.name + " Updated"
-    click_on "Update Customer"
+    click_on I18n.t(:submit, scope: %i[form actions])
 
-    assert_text "Customer was successfully updated"
+    assert_text I18n.t(:model_was_successfully_updated, model: @customer.model_name.human)
   end
 
   test "should view customer profile details" do
@@ -41,9 +41,9 @@ class CustomersTest < ApplicationSystemTestCase
 
       # Check status display
       if @customer.status == "active"
-        assert_selector ".text-success", text: "Active"
+        assert_selector ".text-success", text: I18n.t(:active)
       else
-        assert_selector ".text-danger", text: "Inactive"
+        assert_selector ".text-danger", text: I18n.t(:inactive)
       end
     end
   end
@@ -53,7 +53,7 @@ class CustomersTest < ApplicationSystemTestCase
     # This assumes sales fixture or method to create sales
 
     visit main_customer_url(@customer)
-    click_on "Purchases"
+    click_on I18n.t(:purchases)
 
     assert_selector "#purchases-tab-pane.active", wait: 1
 
@@ -69,7 +69,7 @@ class CustomersTest < ApplicationSystemTestCase
         find(".show-cart").click
         assert_selector ".cart-table", visible: false
       else
-        assert_text "No purchases made"
+        assert_text I18n.t(:no_purchases_made)
       end
     end
   end
@@ -78,13 +78,13 @@ class CustomersTest < ApplicationSystemTestCase
     @customer.update(status: "active")
 
     visit main_customer_url(@customer)
-    click_on "Deactivate"
+    click_on I18n.t(:deactivate)
 
     # Test modal appears
     assert_selector "#confirmDeactivateModal", visible: true
     within "#confirmDeactivateModal" do
-      assert_text "Confirm Deactivation"
-      click_on "Deactivate"
+      assert_text I18n.t(:confirm_deactivation)
+      click_on I18n.t(:deactivate, scope: %i[activerecord], model: @customer.model_name.human)
     end
 
     # Should be redirected to index
@@ -99,13 +99,13 @@ class CustomersTest < ApplicationSystemTestCase
     @customer.update(status: "inactive")
 
     visit main_customer_url(@customer)
-    click_on "Activate"
+    click_on I18n.t(:activate)
 
     # Test modal appears
     assert_selector "#confirmActivateModal", visible: true
     within "#confirmActivateModal" do
-      assert_text "Confirm Activation"
-      click_on "Activate"
+      assert_text I18n.t(:confirm_activation)
+      click_on I18n.t(:activate, scope: %i[activerecord], model: @customer.model_name.human)
     end
 
     # Should be redirected to index
@@ -120,10 +120,10 @@ class CustomersTest < ApplicationSystemTestCase
     @customer.update(status: "active")
 
     visit main_customer_url(@customer)
-    click_on "Deactivate"
+    click_on I18n.t(:deactivate)
 
     within "#confirmDeactivateModal" do
-      click_on "Cancel"
+      click_on I18n.t(:cancel)
     end
 
     # Modal should be hidden
@@ -141,15 +141,15 @@ class CustomersTest < ApplicationSystemTestCase
     assert_selector "#profile-tab-pane.active"
 
     # Navigate to Purchases tab
-    click_on "Purchases"
+    click_on I18n.t(:purchases)
     assert_selector "#purchases-tab-pane.active", wait: 1
 
     # Navigate to Documents tab
-    click_on "Documents"
+    click_on I18n.t(:documents)
     assert_selector "#documents-tab-pane.active", wait: 1
 
     # Navigate back to Profile tab
-    click_on "Profile"
+    click_on I18n.t(:profile)
     assert_selector "#profile-tab-pane.active", wait: 1
   end
 end

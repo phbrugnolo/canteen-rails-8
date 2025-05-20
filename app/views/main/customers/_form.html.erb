@@ -9,7 +9,7 @@
       </div>
       <div class="form-actions float-end">
         <%= link_to I18n.t(:back, scope: %i[form actions]), (request.referer.present? ? request.referer : main_customers_path), class: "btn btn-secondary mt-3 ms-2" %>
-        <%= f.button :submit, "Enviar", class: "btn btn-primary mt-3" %>
+        <%= f.button :submit, I18n.t(:submit, scope: %i[form actions]), class: "btn btn-primary mt-3" %>
       </div>
     <% end %>
   </div>
