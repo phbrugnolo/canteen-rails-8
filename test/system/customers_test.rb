@@ -3,43 +3,153 @@ require "application_system_test_case"
 class CustomersTest < ApplicationSystemTestCase
   setup do
     @customer = customers(:one)
+    sign_in_user
   end
 
   test "visiting the index" do
-    visit customers_url
+    visit main_customers_url
     assert_selector "h1", text: "Customers"
   end
 
   test "should create customer" do
-    visit customers_url
+    visit main_customers_url
     click_on "New customer"
 
-    fill_in "Matriculation", with: @customer.matriculation
-    fill_in "Name", with: @customer.name
-    fill_in "Status", with: @customer.status
+    fill_in "Matriculation", with: "UNIQUE123"
+    fill_in "Name", with: "New Test Customer"
     click_on "Create Customer"
 
     assert_text "Customer was successfully created"
-    click_on "Back"
   end
 
   test "should update Customer" do
     visit main_customer_url(@customer)
-    click_on "Edit this customer", match: :first
+    click_on "Edit"
 
-    fill_in "Matriculation", with: @customer.matriculation
-    fill_in "Name", with: @customer.name
-    fill_in "Status", with: @customer.status
+    fill_in "Name", with: @customer.name + " Updated"
     click_on "Update Customer"
 
     assert_text "Customer was successfully updated"
-    click_on "Back"
   end
 
-  test "should destroy Customer" do
+  test "should view customer profile details" do
     visit main_customer_url(@customer)
-    click_on "Destroy this customer", match: :first
 
-    assert_text "Customer was successfully destroyed"
+    within "#profile-tab-pane" do
+      assert_text @customer.name
+      assert_text @customer.matriculation
+
+      # Check status display
+      if @customer.status == "active"
+        assert_selector ".text-success", text: "Active"
+      else
+        assert_selector ".text-danger", text: "Inactive"
+      end
+    end
+  end
+
+  test "should view customer purchases" do
+    # Create a sale for the customer if needed
+    # This assumes sales fixture or method to create sales
+
+    visit main_customer_url(@customer)
+    click_on "Purchases"
+
+    assert_selector "#purchases-tab-pane.active", wait: 1
+
+    within "#purchases-tab-pane" do
+      if @customer.sales.any?
+        assert_selector ".card.border-info", minimum: 1
+
+        # Test show cart functionality
+        find(".show-cart").click
+        assert_selector ".cart-table", visible: true
+
+        # Hide cart again
+        find(".show-cart").click
+        assert_selector ".cart-table", visible: false
+      else
+        assert_text "No purchases made"
+      end
+    end
+  end
+
+  test "should deactivate active customer" do
+    @customer.update(status: "active")
+
+    visit main_customer_url(@customer)
+    click_on "Deactivate"
+
+    # Test modal appears
+    assert_selector "#confirmDeactivateModal", visible: true
+    within "#confirmDeactivateModal" do
+      assert_text "Confirm Deactivation"
+      click_on "Deactivate"
+    end
+
+    # Should be redirected to index
+    assert_current_path main_customers_path
+
+    # Verify customer status changed
+    @customer.reload
+    assert_equal "inactive", @customer.status
+  end
+
+  test "should activate inactive customer" do
+    @customer.update(status: "inactive")
+
+    visit main_customer_url(@customer)
+    click_on "Activate"
+
+    # Test modal appears
+    assert_selector "#confirmActivateModal", visible: true
+    within "#confirmActivateModal" do
+      assert_text "Confirm Activation"
+      click_on "Activate"
+    end
+
+    # Should be redirected to index
+    assert_current_path main_customers_path
+
+    # Verify customer status changed
+    @customer.reload
+    assert_equal "active", @customer.status
+  end
+
+  test "should cancel customer deactivation" do
+    @customer.update(status: "active")
+
+    visit main_customer_url(@customer)
+    click_on "Deactivate"
+
+    within "#confirmDeactivateModal" do
+      click_on "Cancel"
+    end
+
+    # Modal should be hidden
+    assert_selector "#confirmDeactivateModal", visible: false
+
+    # Customer status should remain unchanged
+    @customer.reload
+    assert_equal "active", @customer.status
+  end
+
+  test "should view tabs navigation" do
+    visit main_customer_url(@customer)
+
+    # Profile tab should be active by default
+    assert_selector "#profile-tab-pane.active"
+
+    # Navigate to Purchases tab
+    click_on "Purchases"
+    assert_selector "#purchases-tab-pane.active", wait: 1
+
+    # Navigate to Documents tab
+    click_on "Documents"
+    assert_selector "#documents-tab-pane.active", wait: 1
+
+    # Navigate back to Profile tab
+    click_on "Profile"
+    assert_selector "#profile-tab-pane.active", wait: 1
   end
 end
