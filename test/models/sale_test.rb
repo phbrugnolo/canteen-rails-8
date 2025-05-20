@@ -16,25 +16,25 @@ class SaleTest < ActiveSupport::TestCase
   test "should not be valid without a customer" do
     @sale.customer = nil
     assert_not @sale.valid?
-    assert_includes @sale.errors[:customer], "must exist"
+    assert_includes @sale.errors[:customer], I18n.t("activerecord.errors.models.sale.attributes.customer.blank")
   end
 
   test "should not be valid without cart" do
     @sale.cart = nil
     assert_not @sale.valid?
-    assert_includes @sale.errors[:cart], "can't be blank"
+    assert_includes @sale.errors[:cart], I18n.t("errors.messages.blank")
   end
 
   test "should not be valid without total_price" do
     @sale.total_price = nil
     assert_not @sale.valid?
-    assert_includes @sale.errors[:total_price], "can't be blank"
+    assert_includes @sale.errors[:total_price], I18n.t("errors.messages.blank")
   end
 
   test "should not be valid with negative total_price" do
     @sale.total_price = -1.0
     assert_not @sale.valid?
-    assert_includes @sale.errors[:total_price], "must be greater than or equal to 0"
+    assert_includes @sale.errors[:total_price], I18n.t("errors.messages.greater_than_or_equal_to", count: 0)
   end
 
   test "should be able to parse cart JSON" do
@@ -68,8 +68,7 @@ class SaleTest < ActiveSupport::TestCase
   end
 
   test "should sort sales by creation date in descending order" do
-    if Sale.respond_to?(:recent)
-      assert_equal Sale.order(created_at: :desc).to_a, Sale.recent.to_a
-    end
+    recent_sales = Sale.order(created_at: :desc).to_a
+    assert_equal recent_sales, Sale.recent.to_a
   end
 end

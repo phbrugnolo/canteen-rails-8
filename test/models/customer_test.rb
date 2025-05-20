@@ -12,20 +12,20 @@ class CustomerTest < ActiveSupport::TestCase
   test "should not be valid without a name" do
     @customer.name = nil
     assert_not @customer.valid?
-    assert_includes @customer.errors[:name], "can't be blank"
+    assert_includes @customer.errors[:name], I18n.t("errors.messages.blank")
   end
 
   test "should not be valid without a matriculation" do
     @customer.matriculation = nil
     assert_not @customer.valid?
-    assert_includes @customer.errors[:matriculation], "can't be blank"
+    assert_includes @customer.errors[:matriculation], I18n.t("errors.messages.blank")
   end
 
   test "should not be valid with a duplicate matriculation" do
     duplicate_customer = customers(:one)
     @customer.matriculation = duplicate_customer.matriculation
     assert_not @customer.valid?
-    assert_includes @customer.errors[:matriculation], "has already been taken"
+    assert_includes @customer.errors[:matriculation], I18n.t("errors.messages.taken")
   end
 
   test "should have one attached avatar" do
@@ -34,9 +34,11 @@ class CustomerTest < ActiveSupport::TestCase
   end
 
   test "should be able to attach an avatar" do
-    file = fixture_file_upload(Rails.root.join("test", "fixtures", "files", "img-perfil.png"), "image/png")
-    @customer.avatar.attach(file)
+    file = Tempfile.new([ "test_avatar", ".png" ])
+    @customer.avatar.attach(io: file, filename: "test_avatar.png", content_type: "avatar/png")
     assert @customer.avatar.attached?
+    file.close
+    file.unlink
   end
 
   test "should have many sales" do

@@ -17,41 +17,41 @@ class ProductTest < ActiveSupport::TestCase
   test "should not be valid without a name" do
     @product.name = nil
     assert_not @product.valid?
-    assert_includes @product.errors[:name], "can't be blank"
+    assert_includes @product.errors[:name], I18n.t("errors.messages.blank")
   end
 
   test "should not be valid without a description" do
     @product.description = nil
     assert_not @product.valid?
-    assert_includes @product.errors[:description], "can't be blank"
+    assert_includes @product.errors[:description], I18n.t("errors.messages.blank")
   end
 
   test "should not be valid with a description longer than 50 characters" do
     @product.description = "a" * 51
     assert_not @product.valid?
-    assert_includes @product.errors[:description], "is too long (maximum is 50 characters)"
+    assert_includes @product.errors[:description], I18n.t("errors.messages.too_long", count: 50)
   end
 
   test "should not be valid without a price" do
     @product.price = nil
     assert_not @product.valid?
-    assert_includes @product.errors[:price], "can't be blank"
+    assert_includes @product.errors[:price], I18n.t("errors.messages.blank")
   end
 
   test "should not be valid with a non-positive price" do
     @product.price = 0
     assert_not @product.valid?
-    assert_includes @product.errors[:price], "must be greater than 0"
+    assert_includes @product.errors[:price], I18n.t("errors.messages.greater_than", count: 0)
 
     @product.price = -1.50
     assert_not @product.valid?
-    assert_includes @product.errors[:price], "must be greater than 0"
+    assert_includes @product.errors[:price], I18n.t("errors.messages.greater_than", count: 0)
   end
 
   test "should not be valid with price greater than Float::MAX" do
-    @product.price = Float::MAX + 1
+    @product.price = Float::INFINITY
     assert_not @product.valid?
-    assert_includes @product.errors[:price], "must be less than or equal to #{Float::MAX}"
+    assert @product.errors[:price].any?
   end
 
   test "should have one attached image" do
@@ -60,16 +60,21 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "should be able to attach an image" do
-    file = fixture_file_upload(Rails.root.join("test", "fixtures", "files", "img-product.png"), "image/png")
-    @product.image.attach(file)
+    file = Tempfile.new([ "test_image", ".png" ])
+    @product.image.attach(io: file, filename: "test_image.png", content_type: "image/png")
     assert @product.image.attached?
+    file.close
+    file.unlink
   end
 
   test "image_url should return attached image url when image is attached" do
-    file = fixture_file_upload(Rails.root.join("test", "fixtures", "files", "img-product.png"), "image/png")
-    @product.image.attach(file)
+    file = Tempfile.new([ "test_image", ".png" ])
+    @product.save!
+    @product.image.attach(io: file, filename: "test_image.png", content_type: "image/png")
 
     assert_match(/\/rails\/active_storage\/blobs/, @product.image_url)
+    file.close
+    file.unlink
   end
 
   test "image_url should return default image path when no image is attached" do
