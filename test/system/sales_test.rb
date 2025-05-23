@@ -9,7 +9,7 @@ class SalesTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit main_sales_url
-    assert_selector "h1", text: "Sales"
+    assert_selector "h1", text: I18n.t(:sale, scope: %i[activerecord models], count: 2)
   end
 
   test "should show sale details" do
@@ -18,7 +18,6 @@ class SalesTest < ApplicationSystemTestCase
     assert_text @sale.customer.name
     assert_text "R$#{ActionController::Base.helpers.number_with_precision(@sale.total_price, precision: 2)}"
 
-    # Check if cart items are displayed
     cart = JSON.parse(@sale.cart)
     cart.each do |item|
       if item["name"].present?
@@ -70,13 +69,17 @@ class SalesTest < ApplicationSystemTestCase
 
     assert_selector "#cart table tbody tr", wait: 5
 
-    find("button.btn.btn-primary", text: "").click
+    within("#cart table tbody tr", match: :first) do
+      find(:xpath, './/button[contains(@class, "btn-primary") and .//i[contains(@class, "bi-plus-circle")]').click
+    end
 
     within("#cart table tbody tr", match: :first) do
       assert_text "2"
     end
 
-    find("button.btn.btn-primary:nth-of-type(2)").click
+    within("#cart table tbody tr", match: :first) do
+      find(:xpath, './/button[contains(@class, "btn-primary") and .//i[contains(@class, "bi-dash-circle")]').click
+    end
 
     within("#cart table tbody tr", match: :first) do
       assert_text "1"
@@ -111,7 +114,7 @@ class SalesTest < ApplicationSystemTestCase
 
     click_on I18n.t(:close_sale)
 
-    assert_text "Customer can't be blank"
+    assert_text I18n.t("simple_form.error_notification.default_message")
   end
 
   test "should show only active customers in dropdown" do
