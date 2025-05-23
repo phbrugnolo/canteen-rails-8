@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   resources :customers
   concern :activatable do
     member do
-      put :activate
-      put :deactivate
+      patch :activate
+      patch :deactivate
     end
   end
 

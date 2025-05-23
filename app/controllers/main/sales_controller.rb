@@ -30,6 +30,9 @@ class Main::SalesController < ApplicationController
         format.html { redirect_to main_sale_url(@sale), notice: I18n.t(:model_was_successfully_created, model: @sale.model_name.human) }
         format.json { render :show, status: :created, location: @sale }
       else
+        @customers = Customer.where(status: "active")
+        @products = Product.where(status: "active")
+
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @sale.errors, status: :unprocessable_entity }
       end
