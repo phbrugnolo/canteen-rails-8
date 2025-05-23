@@ -15,8 +15,8 @@ class CustomersTest < ApplicationSystemTestCase
     visit main_customers_url
     click_on I18n.t(:add, scope: %i[activerecord], model: Customer.model_name.human)
 
-    fill_in "Matriculation", with: "UNIQUE123"
-    fill_in "Name", with: "New Test Customer"
+    fill_in I18n.t(:name, scope: %i[activerecord attributes customer]), with: "New Test Customer"
+    fill_in I18n.t(:matriculation, scope: %i[activerecord attributes customer]), with: "UNIQUE123"
     click_on I18n.t(:submit, scope: %i[form actions])
 
     assert_text I18n.t(:model_was_successfully_created, model: @customer.model_name.human)
@@ -26,7 +26,7 @@ class CustomersTest < ApplicationSystemTestCase
     visit main_customer_url(@customer)
     click_on I18n.t(:edit)
 
-    fill_in "Name", with: @customer.name + " Updated"
+    fill_in I18n.t(:name, scope: %i[activerecord attributes customer]), with: @customer.name + " Updated"
     click_on I18n.t(:submit, scope: %i[form actions])
 
     assert_text I18n.t(:model_was_successfully_updated, model: @customer.model_name.human)
