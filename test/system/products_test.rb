@@ -8,7 +8,7 @@ class ProductsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit main_products_url
-    assert_selector "h1", text: "Products"
+    assert_selector "h1", text: I18n.t("activerecord.models.product.other")
   end
 
   test "should filter products by name" do
@@ -23,7 +23,7 @@ class ProductsTest < ApplicationSystemTestCase
   test "should filter products by status" do
     visit main_products_url
 
-    select "Active", from: "search_status"
+    select I18n.t("active"), from: "search_status"
 
     # Ensure only active products are visible
     assert_selector ".card", count: Product.where(status: "active").count
@@ -31,40 +31,40 @@ class ProductsTest < ApplicationSystemTestCase
 
   test "should create product" do
     visit main_products_url
-    click_on "Add Product"
+    click_on I18n.t(:add, scope: %i[activerecord], model: Product.model_name.human)
 
-    fill_in "Name", with: "New Test Product"
-    fill_in "Description", with: "New product description"
-    fill_in "Price", with: "19.99"
+    fill_in I18n.t("activerecord.attributes.product.name"), with: "New Test Product"
+    fill_in I18n.t("activerecord.attributes.product.description"), with: "New product description"
+    fill_in I18n.t("activerecord.attributes.product.price"), with: "19.99"
 
-    click_on "Submit"
+    click_on I18n.t("form.actions.submit")
 
-    assert_text "Product was successfully created"
+    assert_text I18n.t("model_was_successfully_created", model: Product.model_name.human)
   end
 
   test "should upload product image" do
     visit main_products_url
-    click_on "Add Product"
+    click_on I18n.t(:add, scope: %i[activerecord], model: Product.model_name.human)
 
-    fill_in "Name", with: "Product with Image"
-    fill_in "Description", with: "Product with uploaded image"
-    fill_in "Price", with: "29.99"
-    attach_file "Image", Rails.root.join("test/fixtures/files/img-product.png")
+    fill_in I18n.t("activerecord.attributes.product.name"), with: "Product with Image"
+    fill_in I18n.t("activerecord.attributes.product.description"), with: "Product with uploaded image"
+    fill_in I18n.t("activerecord.attributes.product.price"), with: "29.99"
+    attach_file I18n.t("activerecord.attributes.product.image"), Rails.root.join("test/fixtures/files/img-product.png")
 
-    click_on "Submit"
+    click_on I18n.t("form.actions.submit")
 
-    assert_text "Product was successfully created"
+    assert_text I18n.t("model_was_successfully_created", model: Product.model_name.human)
     assert Product.last.image.attached?
   end
 
   test "should update Product" do
     visit main_product_url(@product)
-    click_on "Edit"
+    click_on I18n.t("edit")
 
-    fill_in "Name", with: @product.name + " Updated"
-    click_on "Submit"
+    fill_in I18n.t("activerecord.attributes.product.name"), with: @product.name + " Updated"
+    click_on I18n.t("form.actions.submit")
 
-    assert_text "Product was successfully updated"
+    assert_text I18n.t("model_was_successfully_updated", model: Product.model_name.human)
   end
 
   test "should view product details" do
@@ -75,9 +75,9 @@ class ProductsTest < ApplicationSystemTestCase
     assert_text "R$#{number_with_precision(@product.price, precision: 2)}"
 
     if @product.status == "active"
-      assert_selector ".text-success", text: "Active"
+      assert_selector ".text-success", text: "Ativo"
     else
-      assert_selector ".text-danger", text: "Inactive"
+      assert_selector ".text-danger", text: "Inativo"
     end
   end
 
@@ -85,13 +85,15 @@ class ProductsTest < ApplicationSystemTestCase
     @product.update(status: "active")
 
     visit main_product_url(@product)
-    click_on "Deactivate"
+
+    # Use JavaScript to show modal and click deactivate
+    page.execute_script("showModal('confirmDeactivateModal')")
 
     # Test modal appears
     assert_selector "#confirmDeactivateModal", visible: true
     within "#confirmDeactivateModal" do
-      assert_text "Confirm Deactivation"
-      click_on "Deactivate"
+      assert_text I18n.t("confirm_deactivation")
+      click_on I18n.t("deactivate")
     end
 
     # Should be redirected to index
@@ -106,13 +108,15 @@ class ProductsTest < ApplicationSystemTestCase
     @product.update(status: "inactive")
 
     visit main_product_url(@product)
-    click_on "Activate"
+
+    # Use JavaScript to show modal and click activate
+    page.execute_script("showModal('confirmActivateModal')")
 
     # Test modal appears
     assert_selector "#confirmActivateModal", visible: true
     within "#confirmActivateModal" do
-      assert_text "Confirm Activation"
-      click_on "Activate"
+      assert_text I18n.t("confirm_activation")
+      click_on I18n.t("activate")
     end
 
     # Should be redirected to index
@@ -127,10 +131,12 @@ class ProductsTest < ApplicationSystemTestCase
     @product.update(status: "active")
 
     visit main_product_url(@product)
-    click_on "Deactivate"
+
+    # Use JavaScript to show modal
+    page.execute_script("showModal('confirmDeactivateModal')")
 
     within "#confirmDeactivateModal" do
-      click_on "Cancel"
+      click_on I18n.t("cancel")
     end
 
     # Modal should be hidden
@@ -143,7 +149,44 @@ class ProductsTest < ApplicationSystemTestCase
 
   test "should navigate back to product list" do
     visit main_product_url(@product)
-    click_on "Return"
+    click_on I18n.t("return")
+
+    assert_current_path main_products_path
+  end
+
+  test "should show deactivate button for active products" do
+    @product.update(status: "active")
+    visit main_product_url(@product)
+
+    assert_selector "button", text: I18n.t("deactivate")
+    assert_no_selector "button", text: I18n.t("activate")
+  end
+
+  test "should show activate button for inactive products" do
+    @product.update(status: "inactive")
+    visit main_product_url(@product)
+
+    assert_selector "button", text: I18n.t("activate")
+    assert_no_selector "button", text: I18n.t("deactivate")
+  end
+
+  test "should display product image" do
+    visit main_product_url(@product)
+
+    assert_selector "img.card-img-top.standard-image-size-product"
+  end
+
+  test "should navigate to edit from show page" do
+    visit main_product_url(@product)
+    click_on I18n.t("edit")
+
+    assert_current_path edit_main_product_path(@product)
+    assert_selector "h1", text: I18n.t("activerecord.edit", model: Product.model_name.human)
+  end
+
+  test "should navigate back from form" do
+    visit new_main_product_path
+    click_on I18n.t("return")
 
     assert_current_path main_products_path
   end
