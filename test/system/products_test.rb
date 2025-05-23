@@ -16,8 +16,7 @@ class ProductsTest < ApplicationSystemTestCase
 
     fill_in "search_name", with: @product.name
 
-    # Ensure only matching products are visible
-    assert_selector ".card", count: Product.where("name LIKE ?", "%#{@product.name}%").count
+    assert_selector ".card:not(.search-card)", count: Product.where("name LIKE ?", "%#{@product.name}%").count
   end
 
   test "should filter products by status" do
@@ -25,8 +24,7 @@ class ProductsTest < ApplicationSystemTestCase
 
     select I18n.t("active"), from: "search_status"
 
-    # Ensure only active products are visible
-    assert_selector ".card", count: Product.where(status: "active").count
+    assert_selector ".card:not(.search-card)", count: Product.where(status: "active").count
   end
 
   test "should create product" do
@@ -49,7 +47,7 @@ class ProductsTest < ApplicationSystemTestCase
     fill_in I18n.t("activerecord.attributes.product.name"), with: "Product with Image"
     fill_in I18n.t("activerecord.attributes.product.description"), with: "Product with uploaded image"
     fill_in I18n.t("activerecord.attributes.product.price"), with: "29.99"
-    attach_file I18n.t("activerecord.attributes.product.image"), Rails.root.join("test/fixtures/files/img-product.png")
+    attach_file I18n.t("activerecord.attributes.product.image"), Rails.root.join("test/fixtures/files/image-product.png")
 
     click_on I18n.t("form.actions.submit")
 
@@ -72,12 +70,12 @@ class ProductsTest < ApplicationSystemTestCase
 
     assert_selector "h5.card-title", text: @product.name
     assert_selector "p.card-text", text: @product.description
-    assert_text "R$#{number_with_precision(@product.price, precision: 2)}"
+    assert_text "R$#{ActionController::Base.helpers.number_with_precision(@product.price, precision: 2)}"
 
     if @product.status == "active"
-      assert_selector ".text-success", text: "Ativo"
+      assert_selector ".text-success", text: I18n.t("active")
     else
-      assert_selector ".text-danger", text: "Inativo"
+      assert_selector ".text-danger", text: I18n.t("inactive")
     end
   end
 
@@ -86,20 +84,16 @@ class ProductsTest < ApplicationSystemTestCase
 
     visit main_product_url(@product)
 
-    # Use JavaScript to show modal and click deactivate
     page.execute_script("showModal('confirmDeactivateModal')")
 
-    # Test modal appears
     assert_selector "#confirmDeactivateModal", visible: true
     within "#confirmDeactivateModal" do
       assert_text I18n.t("confirm_deactivation")
       click_on I18n.t("deactivate")
     end
 
-    # Should be redirected to index
     assert_current_path main_products_path
 
-    # Verify product status changed
     @product.reload
     assert_equal "inactive", @product.status
   end
@@ -109,20 +103,16 @@ class ProductsTest < ApplicationSystemTestCase
 
     visit main_product_url(@product)
 
-    # Use JavaScript to show modal and click activate
     page.execute_script("showModal('confirmActivateModal')")
 
-    # Test modal appears
     assert_selector "#confirmActivateModal", visible: true
     within "#confirmActivateModal" do
       assert_text I18n.t("confirm_activation")
       click_on I18n.t("activate")
     end
 
-    # Should be redirected to index
     assert_current_path main_products_path
 
-    # Verify product status changed
     @product.reload
     assert_equal "active", @product.status
   end
@@ -132,17 +122,14 @@ class ProductsTest < ApplicationSystemTestCase
 
     visit main_product_url(@product)
 
-    # Use JavaScript to show modal
     page.execute_script("showModal('confirmDeactivateModal')")
 
     within "#confirmDeactivateModal" do
       click_on I18n.t("cancel")
     end
 
-    # Modal should be hidden
     assert_selector "#confirmDeactivateModal", visible: false
 
-    # Product status should remain unchanged
     @product.reload
     assert_equal "active", @product.status
   end
