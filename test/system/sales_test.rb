@@ -70,7 +70,7 @@ class SalesTest < ApplicationSystemTestCase
     assert_selector "#cart table tbody tr", wait: 5
 
     within("#cart table tbody tr", match: :first) do
-      find(:xpath, './/button[contains(@class, "btn-primary") and .//i[contains(@class, "bi-plus-circle")]').click
+      find("i.bi-plus-circle").click
     end
 
     within("#cart table tbody tr", match: :first) do
@@ -78,14 +78,14 @@ class SalesTest < ApplicationSystemTestCase
     end
 
     within("#cart table tbody tr", match: :first) do
-      find(:xpath, './/button[contains(@class, "btn-primary") and .//i[contains(@class, "bi-dash-circle")]').click
+      find("i.bi-dash-circle").click
     end
 
     within("#cart table tbody tr", match: :first) do
       assert_text "1"
     end
 
-    find("button.btn.btn-danger").click
+    find("i.bi-trash3").click
 
     assert_no_selector "#cart table tbody tr"
   end
