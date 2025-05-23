@@ -16,7 +16,7 @@ class ProductsTest < ApplicationSystemTestCase
 
     fill_in "search_name", with: @product.name
 
-    assert_selector ".card:not(.search-card)", count: Product.where("name LIKE ?", "%#{@product.name}%").count
+    assert_selector "#products .card", count: Product.where("name LIKE ?", "%#{@product.name}%").count
   end
 
   test "should filter products by status" do
@@ -24,7 +24,7 @@ class ProductsTest < ApplicationSystemTestCase
 
     select I18n.t("active"), from: "search_status"
 
-    assert_selector ".card:not(.search-card)", count: Product.where(status: "active").count
+    assert_selector "#products .card", count: Product.where(status: "active").count
   end
 
   test "should create product" do

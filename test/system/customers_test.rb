@@ -39,7 +39,6 @@ class CustomersTest < ApplicationSystemTestCase
       assert_text @customer.name
       assert_text @customer.matriculation
 
-      # Check status display
       if @customer.status == "active"
         assert_selector ".text-success", text: I18n.t(:active)
       else
@@ -49,9 +48,6 @@ class CustomersTest < ApplicationSystemTestCase
   end
 
   test "should view customer purchases" do
-    # Create a sale for the customer if needed
-    # This assumes sales fixture or method to create sales
-
     visit main_customer_url(@customer)
     click_on I18n.t(:purchases)
 
@@ -61,11 +57,9 @@ class CustomersTest < ApplicationSystemTestCase
       if @customer.sales.any?
         assert_selector ".card.border-info", minimum: 1
 
-        # Test show cart functionality
         find(".show-cart").click
         assert_selector ".cart-table", visible: true
 
-        # Hide cart again
         find(".show-cart").click
         assert_selector ".cart-table", visible: false
       else
@@ -80,17 +74,14 @@ class CustomersTest < ApplicationSystemTestCase
     visit main_customer_url(@customer)
     click_on I18n.t(:deactivate)
 
-    # Test modal appears
     assert_selector "#confirmDeactivateModal", visible: true
     within "#confirmDeactivateModal" do
       assert_text I18n.t(:confirm_deactivation)
       click_on I18n.t(:deactivate, scope: %i[activerecord], model: @customer.model_name.human)
     end
 
-    # Should be redirected to index
     assert_current_path main_customers_path
 
-    # Verify customer status changed
     @customer.reload
     assert_equal "inactive", @customer.status
   end
@@ -101,17 +92,14 @@ class CustomersTest < ApplicationSystemTestCase
     visit main_customer_url(@customer)
     click_on I18n.t(:activate)
 
-    # Test modal appears
     assert_selector "#confirmActivateModal", visible: true
     within "#confirmActivateModal" do
       assert_text I18n.t(:confirm_activation)
       click_on I18n.t(:activate, scope: %i[activerecord], model: @customer.model_name.human)
     end
 
-    # Should be redirected to index
     assert_current_path main_customers_path
 
-    # Verify customer status changed
     @customer.reload
     assert_equal "active", @customer.status
   end
@@ -126,10 +114,8 @@ class CustomersTest < ApplicationSystemTestCase
       click_on I18n.t(:cancel)
     end
 
-    # Modal should be hidden
     assert_selector "#confirmDeactivateModal", visible: false
 
-    # Customer status should remain unchanged
     @customer.reload
     assert_equal "active", @customer.status
   end
@@ -137,18 +123,14 @@ class CustomersTest < ApplicationSystemTestCase
   test "should view tabs navigation" do
     visit main_customer_url(@customer)
 
-    # Profile tab should be active by default
     assert_selector "#profile-tab-pane.active"
 
-    # Navigate to Purchases tab
     click_on I18n.t(:purchases)
     assert_selector "#purchases-tab-pane.active", wait: 1
 
-    # Navigate to Documents tab
     click_on I18n.t(:documents)
     assert_selector "#documents-tab-pane.active", wait: 1
 
-    # Navigate back to Profile tab
     click_on I18n.t(:profile)
     assert_selector "#profile-tab-pane.active", wait: 1
   end
