@@ -9,6 +9,10 @@ class Main::MainController < ApplicationController
     @recent_sales = Sale.includes(:customer).recent.limit(5)
     @monthly_sales = monthly_sales_data
     @top_customers = top_customers_data
+
+    # Add period-based revenue calculation
+    period = params[:period]&.to_sym || :this_month
+    @period_revenue = Sale.revenue_for_period(period)
   end
 
   private
