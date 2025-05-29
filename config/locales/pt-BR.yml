@@ -44,8 +44,9 @@ pt-BR:
   dashboard: "Painel de Controle"
   welcome_back: "Bem-vindo de volta"
   total_revenue: "Receita Total"
-  all_time: "todos os tempos"
-  this_month: "este mês"
+  revenue: "Receita"
+  all_time: "Todos os tempos"
+  this_month: "Este mês"
   recent_sales: "Vendas Recentes"
   quick_actions: "Ações Rápidas"
   new_sale: "Nova Venda"
@@ -124,3 +125,42 @@ pt-BR:
             customer:
               blank: "não pode ficar em branco"
               required: "não pode ficar em branco"
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: "Aproximadamente 1 hora"
+        other: "Aproximadamente %{count} horas"
+      about_x_months:
+        one: "Aproximadamente 1 mês"
+        other: "Aproximadamente %{count} meses"
+      about_x_years:
+        one: "Aproximadamente 1 ano"
+        other: "Aproximadamente %{count} anos"
+      almost_x_years:
+        one: "Quase 1 ano"
+        other: "Quase %{count} anos"
+      half_a_minute: "Meio minuto"
+      less_than_x_minutes:
+        one: "Menos de um minuto"
+        other: "Menos de %{count} minutos"
+      less_than_x_seconds:
+        one: "Menos de 1 segundo"
+        other: "Menos de %{count} segundos"
+      over_x_years:
+        one: "Mais de 1 ano"
+        other: "Mais de %{count} anos"
+      x_days:
+        one: "1 dia"
+        other: "%{count} dias"
+      x_minutes:
+        one: "1 minuto"
+        other: "%{count} minutos"
+      x_months:
+        one: "1 mês"
+        other: "%{count} meses"
+      x_seconds:
+        one: "1 segundo"
+        other: "%{count} segundos"
+      x_years:
+        one: "1 ano"
+        other: "%{count} anos"

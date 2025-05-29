@@ -20,7 +20,7 @@
         <h3 class="metric-value"><%= @total_customers %></h3>
         <p class="metric-label"><%= I18n.t(:customer, scope: %i[activerecord models], count: 2) %></p>
         <small class="metric-detail text-success">
-          <%= @active_customers %> <%= I18n.t(:actives).downcase %>
+          <%= @active_customers %> <%= I18n.t(:actives) %>
         </small>
       </div>
     </div>
@@ -33,7 +33,7 @@
         <h3 class="metric-value"><%= @total_products %></h3>
         <p class="metric-label"><%= I18n.t(:product, scope: %i[activerecord models], count: 2) %></p>
         <small class="metric-detail text-success">
-          <%= @active_products %> <%= I18n.t(:actives).downcase %>
+          <%= @active_products %> <%= I18n.t(:actives) %>
         </small>
       </div>
     </div>
@@ -56,10 +56,29 @@
         <i class="bi bi-currency-dollar"></i>
       </div>
       <div class="metric-content">
-        <h3 class="metric-value">R$ <%= number_with_precision(@total_revenue, precision: 2, delimiter: '.', separator: ',') %></h3>
-        <p class="metric-label"><%= I18n.t(:total_revenue) %></p>
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <h3 class="metric-value mb-0">R$ <%= number_with_precision(@monthly_revenue || 0, precision: 2, delimiter: '.', separator: ',') %></h3>
+          <div class="dropdown">
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+              <i class="bi bi-funnel"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" style="min-width: 140px;">
+              <li><%= link_to "Hoje", request.path + "?period=today", class: "dropdown-item #{'active' if params[:period] == 'today'}" %></li>
+              <li><%= link_to "Este Mês", request.path + "?period=this_month", class: "dropdown-item #{'active' if params[:period].blank? || params[:period] == 'this_month'}" %></li>
+              <li><%= link_to "Este Ano", request.path + "?period=this_year", class: "dropdown-item #{'active' if params[:period] == 'this_year'}" %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><%= link_to "Todo Período", request.path + "?period=all_time", class: "dropdown-item #{'active' if params[:period] == 'all_time'}" %></li>
+            </ul>
+          </div>
+        </div>
+        <p class="metric-label"><%= I18n.t(:revenue) %></p>
         <small class="metric-detail text-success">
-          <%= I18n.t(:all_time) %>
+          <%= case params[:period]
+              when 'today' then 'Hoje'
+              when 'this_year' then 'Este Ano'
+              when 'all_time' then 'Todo Período'
+              else 'Este Mês'
+              end %>
         </small>
       </div>
     </div>
