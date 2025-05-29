@@ -1,0 +1,85 @@
+html, body, .container-fluid {
+  height: 100%;
+  width: 100%;
+}
+
+.container-fluid {
+  padding: 0;
+}
+
+.row {
+  height: 100%;
+  margin: 0;
+}
+
+#sidebar {
+  height: 100%;
+  width: 250px; /* Largura fixa para facilitar transição */
+  transition: width 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+#content {
+  width: calc(100% - 250px);
+  margin-left: 250px;
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+main {
+  margin: 1%;
+  padding: 20px;
+}
+
+#logo {
+  width: 3rem;
+  height: 3rem;
+  transition: opacity 0.3s ease;
+}
+
+.list-group-item:hover {
+  background-color: rgb(236,236,236);
+  cursor: pointer;
+}
+
+/* Estado colapsado */
+#sidebar.collapsed {
+  width: 80px;
+  overflow: visible; /* Importante para manter ícones visíveis */
+}
+
+#sidebar.collapsed .nav-link span,
+#sidebar.collapsed .fs-4,
+#sidebar.collapsed .dropdown-toggle strong,
+#sidebar.collapsed .dropdown-toggle img,
+#sidebar.collapsed #logo {
+  display: none;
+}
+
+#sidebar.collapsed .nav-link {
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+#sidebar.collapsed .nav-link i {
+  margin-right: 0;
+  font-size: 1.5rem;
+  display: block;
+}
+
+#sidebar.collapsed .dropdown-toggle {
+  justify-content: center;
+}
+
+#content.expanded {
+  margin-left: 80px;
+  width: calc(100% - 80px);
+}
+
+/* Melhoria para o botão toggle */
+#sidebarToggle {
+  transition: transform 0.3s ease;
+}
+
+#sidebar.collapsed #sidebarToggle {
+  transform: rotate(90deg);
+}
