@@ -277,14 +277,24 @@ html, body {
 
 /* === MAIN CONTENT === */
 .main-content {
-  width: calc(100% - var(--sidebar-width));
-  margin-left: var(--sidebar-width);
-  transition: margin-left var(--transition-duration) ease, width var(--transition-duration) ease;
+  flex: 1;
+  overflow-y: auto;
+  background: #ffffff;
+  transition: all var(--transition-duration) ease;
 }
 
-.sidebar.collapsed ~ .main-content {
-  width: calc(100% - var(--sidebar-collapsed-width));
-  margin-left: var(--sidebar-collapsed-width);
+.main-content.expanded {
+  margin-left: 0;
+}
+
+.content-wrapper {
+  padding: 2rem;
+  max-width: 100%;
+  transition: padding var(--transition-duration) ease;
+}
+
+.main-content.expanded .content-wrapper {
+  padding-left: 3rem;
 }
 
 /* === RESPONSIVE DESIGN === */

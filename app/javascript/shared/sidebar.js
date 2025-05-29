@@ -1,11 +1,12 @@
 import { Dropdown } from 'bootstrap';
 
-class SidebarManager {
+export class Sidebar {
   constructor() {
     this.sidebar = document.getElementById('sidebar');
     this.content = document.getElementById('content');
     this.sidebarToggle = document.getElementById('sidebarToggle');
     this.dropdownToggle = document.getElementById('dropdownUser');
+    this.mainContent = document.querySelector('.main-content');
     this.isMobile = window.innerWidth <= 768;
 
     this.init();
@@ -28,20 +29,16 @@ class SidebarManager {
   }
 
   bindEvents() {
-    // Toggle sidebar
     this.sidebarToggle?.addEventListener('click', () => this.toggle());
 
-    // Handle escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && this.isMobile && this.sidebar?.classList.contains('show')) {
         this.hide();
       }
     });
 
-    // Handle window resize
     window.addEventListener('resize', () => this.handleResize());
 
-    // Close dropdown when sidebar collapses
     this.sidebar?.addEventListener('transitionend', () => {
       if (this.sidebar.classList.contains('collapsed') && this.dropdownToggle?.classList.contains('show')) {
         const dropdown = Dropdown.getInstance(this.dropdownToggle);
@@ -49,7 +46,6 @@ class SidebarManager {
       }
     });
 
-    // Add backdrop for mobile
     if (this.isMobile) {
       this.createBackdrop();
     }
@@ -65,6 +61,7 @@ class SidebarManager {
 
   collapse() {
     this.sidebar?.classList.add('collapsed');
+    this.mainContent?.classList.add('expanded');
     this.updateToggleIcon(true);
     this.updateAriaState(false);
     localStorage.setItem('sidebarCollapsed', 'true');
@@ -72,6 +69,7 @@ class SidebarManager {
 
   expand() {
     this.sidebar?.classList.remove('collapsed');
+    this.mainContent?.classList.remove('expanded');
     this.updateToggleIcon(false);
     this.updateAriaState(true);
     localStorage.setItem('sidebarCollapsed', 'false');
@@ -95,7 +93,7 @@ class SidebarManager {
 
     if (collapsed) {
       icon.classList.remove('bi-list');
-      icon.classList.add('bi-arrow-right-circle'); // Better icon for collapsed state
+      icon.classList.add('bi-arrow-right-circle');
     } else {
       icon.classList.remove('bi-arrow-right-circle');
       icon.classList.add('bi-list');
@@ -127,13 +125,12 @@ class SidebarManager {
 
     if (wasMobile !== this.isMobile) {
       if (this.isMobile) {
-        // Switched to mobile
         this.sidebar?.classList.remove('collapsed');
         this.sidebar?.classList.remove('show');
+        this.mainContent?.classList.remove('expanded');
         this.hideBackdrop();
         if (!this.backdrop) this.createBackdrop();
       } else {
-        // Switched to desktop
         this.sidebar?.classList.remove('show');
         this.hideBackdrop();
         this.loadSavedState();
@@ -153,8 +150,3 @@ class SidebarManager {
     });
   }
 }
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  new SidebarManager();
-});
