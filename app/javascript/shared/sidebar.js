@@ -1,4 +1,5 @@
 import { Dropdown } from 'bootstrap';
+import Cookie from './cookie';
 
 export class Sidebar {
   constructor() {
@@ -21,7 +22,7 @@ export class Sidebar {
 
   loadSavedState() {
     if (!this.isMobile) {
-      const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+      const isCollapsed = Cookie.get('sidebarCollapsed') === 'true';
       if (isCollapsed) {
         this.collapse();
       }
@@ -64,7 +65,7 @@ export class Sidebar {
     this.mainContent?.classList.add('expanded');
     this.updateToggleIcon(true);
     this.updateAriaState(false);
-    localStorage.setItem('sidebarCollapsed', 'true');
+    Cookie.set('sidebarCollapsed', 'true');
   }
 
   expand() {
@@ -72,7 +73,7 @@ export class Sidebar {
     this.mainContent?.classList.remove('expanded');
     this.updateToggleIcon(false);
     this.updateAriaState(true);
-    localStorage.setItem('sidebarCollapsed', 'false');
+    Cookie.set('sidebarCollapsed', 'false');
   }
 
   show() {

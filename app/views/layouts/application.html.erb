@@ -19,8 +19,9 @@
     <%= stylesheet_link_tag "application" %>
   </head>
   <body>
+    <% sidebar_collapsed = cookies['sidebarCollapsed'] == 'true' %>
     <div class="app-container">
-      <aside id="sidebar" class="sidebar" role="navigation" aria-label="Main navigation">
+      <aside id="sidebar" class="sidebar<%= ' collapsed' if sidebar_collapsed %>" role="navigation" aria-label="Main navigation">
         <div class="sidebar-header">
           <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle sidebar" aria-expanded="true">
             <i class="bi bi-list"></i>
@@ -87,7 +88,7 @@
         </div>
       </aside>
 
-      <main id="content" class="main-content">
+      <main id="content" class="main-content<%= ' expanded' if sidebar_collapsed %>">
         <div class="content-wrapper">
           <%= yield %>
         </div>
