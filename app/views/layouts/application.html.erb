@@ -19,41 +19,57 @@
     <%= stylesheet_link_tag "application" %>
   </head>
   <body>
-    <section class="container-fluid align-text-start">
-      <div class="row">
-        <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-light col-3 position-fixed">
-          <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            <button id="sidebarToggle" class="btn btn-link me-2">
-              <i class="bi bi-list"></i>
-            </button>
-            <%= image_tag "logo-rd.png", id: "logo", alt: I18n.t(:logo_rd_alt_image) %>
-            <span class="fs-4 ms-3"><%= I18n.t(:title) %></span>
+    <div class="app-container">
+      <aside id="sidebar" class="sidebar" role="navigation" aria-label="Main navigation">
+        <div class="sidebar-header">
+          <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle sidebar" aria-expanded="true">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="brand">
+            <%= image_tag "logo-rd.png", id: "logo", alt: I18n.t(:logo_rd_alt_image), class: "brand-logo" %>
+            <span class="brand-text"><%= I18n.t(:title) %></span>
           </div>
-          <hr>
-          <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-demand list-group-item">
-              <%= link_to "<i class='bi bi-house-fill me-3'></i>#{I18n.t(:home)}".html_safe, root_path, class: "nav-link link-dark" %>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul class="nav-list">
+            <li class="nav-item">
+              <%= link_to root_path, class: "nav-link", data: { tooltip: I18n.t(:home) } do %>
+                <i class="bi bi-house-fill nav-icon"></i>
+                <span class="nav-text"><%= I18n.t(:home) %></span>
+              <% end %>
             </li>
-            <li class="list-group-item">
-              <%= link_to "<i class='bi bi-cart4 me-3'></i>#{I18n.t(:sale, scope: %i[activerecord models], count: 1)}".html_safe, new_main_sale_path, class: "nav-link link-dark" %>
+            <li class="nav-item">
+              <%= link_to new_main_sale_path, class: "nav-link", data: { tooltip: I18n.t(:sale, scope: %i[activerecord models], count: 1) } do %>
+                <i class="bi bi-cart4 nav-icon"></i>
+                <span class="nav-text"><%= I18n.t(:sale, scope: %i[activerecord models], count: 1) %></span>
+              <% end %>
             </li>
-            <li class="list-group-item">
-              <%= link_to "<i class='bi bi-grid me-3'></i>#{I18n.t(:product, scope: %i[activerecord models], count: 2)}".html_safe, main_products_path, class: "nav-link link-dark" %>
+            <li class="nav-item">
+              <%= link_to main_products_path, class: "nav-link", data: { tooltip: I18n.t(:product, scope: %i[activerecord models], count: 2) } do %>
+                <i class="bi bi-grid nav-icon"></i>
+                <span class="nav-text"><%= I18n.t(:product, scope: %i[activerecord models], count: 2) %></span>
+              <% end %>
             </li>
-            <li class="list-group-item">
-              <%= link_to "<i class='bi bi-person-circle me-3'></i>#{I18n.t(:customer, scope: %i[activerecord models], count: 2)}".html_safe, main_customers_path, class: "nav-link link-dark" %>
-            </li>
-            <li class="list-group-item">
-              <%#= link_to "<i class='bi bi-clipboard-data me-3'></i>Relatórios".html_safe, main_reports_path, class: "nav-link link-dark" %>
+            <li class="nav-item">
+              <%= link_to main_customers_path, class: "nav-link", data: { tooltip: I18n.t(:customer, scope: %i[activerecord models], count: 2) } do %>
+                <i class="bi bi-person-circle nav-icon"></i>
+                <span class="nav-text"><%= I18n.t(:customer, scope: %i[activerecord models], count: 2) %></span>
+              <% end %>
             </li>
           </ul>
-          <hr>
-          <div class="dropdown align-items-baseline">
-            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-              <%= image_tag "logo-rd.png", alt: I18n.t(:logo_rd_alt_image), width: 32, height: 32, class: "rounded-circle me-2" %>
-              <%= content_tag :strong, current_user&.name&.capitalize %>
-            </a>
-            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser">
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="user-menu">
+            <button class="user-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false" data-tooltip="<%= current_user&.name&.capitalize %>">
+              <%= image_tag "logo-rd.png", alt: I18n.t(:logo_rd_alt_image), class: "user-avatar" %>
+              <div class="user-info">
+                <span class="user-name"><%= current_user&.name&.capitalize %></span>
+                <i class="bi bi-chevron-up dropdown-arrow"></i>
+              </div>
+            </button>
+            <ul class="dropdown-menu user-dropdown" aria-labelledby="dropdownUser">
               <% if current_user&.admin? %>
                 <li>
                   <%= link_to I18n.t(:sale, scope: %i[activerecord models], count: 2), main_sales_path, class: "dropdown-item" %>
@@ -61,17 +77,21 @@
                 <li><hr class="dropdown-divider"></li>
               <% end %>
               <li>
-                <%= link_to I18n.t(:exit), destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+                <%= link_to destroy_user_session_path, method: :delete, class: "dropdown-item text-danger" do %>
+                  <i class="bi bi-box-arrow-right me-2"></i>
+                  <%= I18n.t(:exit) %>
+                <% end %>
               </li>
             </ul>
           </div>
         </div>
-        <div id="content" class="col-9">
-          <main>
-            <%= yield %>
-          </main>
+      </aside>
+
+      <main id="content" class="main-content">
+        <div class="content-wrapper">
+          <%= yield %>
         </div>
-      </div>
-    </section>
+      </main>
+    </div>
   </body>
 </html>
