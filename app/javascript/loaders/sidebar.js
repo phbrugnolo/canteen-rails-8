@@ -95,9 +95,9 @@ class SidebarManager {
 
     if (collapsed) {
       icon.classList.remove('bi-list');
-      icon.classList.add('bi-layout-sidebar');
+      icon.classList.add('bi-arrow-right-circle'); // Better icon for collapsed state
     } else {
-      icon.classList.remove('bi-layout-sidebar');
+      icon.classList.remove('bi-arrow-right-circle');
       icon.classList.add('bi-list');
     }
   }
