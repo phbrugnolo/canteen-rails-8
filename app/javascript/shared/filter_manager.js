@@ -45,11 +45,21 @@ export class FilterManager {
         const input = document.querySelector(filterConfig.input);
         if (!input) return;
 
-        const filterValue = input.value.trim().toLowerCase();
-        if (!filterValue) return;
+        let filterValues = [];
+
+        if (filterConfig.type === 'tomselect-multiple') {
+          const tomSelectInstance = input.tomselect;
+          if (tomSelectInstance) {
+            filterValues = tomSelectInstance.getValue();
+          }
+          if (!filterValues || filterValues.length === 0) return;
+        } else {
+          const filterValue = input.value.trim().toLowerCase();
+          if (!filterValue) return;
+          filterValues = [filterValue];
+        }
 
         let itemValue = '';
-
         if (filterConfig.attribute) {
           itemValue = item.getAttribute(filterConfig.attribute) || '';
         } else if (filterConfig.selector) {
@@ -64,21 +74,37 @@ export class FilterManager {
         const matchType = filterConfig.matchType || 'includes';
         let matches = false;
 
-        switch (matchType) {
-          case 'includes':
-            matches = itemValue.includes(filterValue);
-            break;
-          case 'equals':
-            matches = itemValue === filterValue;
-            break;
-          case 'starts':
-            matches = itemValue.startsWith(filterValue);
-            break;
-          case 'date':
-            matches = this.matchDate(itemValue, filterValue);
-            break;
-          default:
-            matches = itemValue.includes(filterValue);
+        if (filterConfig.type === 'tomselect-multiple') {
+          matches = filterValues.some(filterValue => {
+            switch (matchType) {
+              case 'includes':
+                return itemValue.includes(filterValue.toLowerCase());
+              case 'equals':
+                return itemValue === filterValue.toLowerCase();
+              case 'starts':
+                return itemValue.startsWith(filterValue.toLowerCase());
+              default:
+                return itemValue.includes(filterValue.toLowerCase());
+            }
+          });
+        } else {
+          const filterValue = filterValues[0];
+          switch (matchType) {
+            case 'includes':
+              matches = itemValue.includes(filterValue);
+              break;
+            case 'equals':
+              matches = itemValue === filterValue;
+              break;
+            case 'starts':
+              matches = itemValue.startsWith(filterValue);
+              break;
+            case 'date':
+              matches = this.matchDate(itemValue, filterValue);
+              break;
+            default:
+              matches = itemValue.includes(filterValue);
+          }
         }
 
         if (!matches) {
@@ -129,7 +155,11 @@ export class FilterManager {
     this.filters.forEach(filterConfig => {
       const input = document.querySelector(filterConfig.input);
       if (input) {
-        input.value = '';
+        if (filterConfig.type === 'tomselect-multiple' && input.tomselect) {
+          input.tomselect.clear();
+        } else {
+          input.value = '';
+        }
       }
     });
     this.filter();
@@ -156,7 +186,13 @@ export class FilterManager {
       return;
     }
 
-    if (input.type === 'text' || input.type === 'search') {
+    if (filterConfig.type === 'tomselect-multiple') {
+      if (input.tomselect) {
+        input.tomselect.on('change', () => this.filter());
+      } else {
+        console.warn(`FilterManager: TomSelect instance not found for ${filterConfig.input}`);
+      }
+    } else if (input.type === 'text' || input.type === 'search') {
       input.addEventListener('input', this.debounce(() => this.filter(), this.debounceDelay));
     } else {
       input.addEventListener('change', () => this.filter());

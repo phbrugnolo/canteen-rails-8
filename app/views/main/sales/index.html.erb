@@ -8,7 +8,8 @@
       <% if @sales.size > 0 %>
         <div class="row mb-2 mt-4">
           <div class="col-md-6">
-            <input type="text" id="search_name" class="form-control" placeholder="<%= I18n.t(:search_by_name) %>">
+            <select multiple id="search_customers" class="form-control" data-placeholder="<%= I18n.t(:search_by_name) %>">
+            </select>
           </div>
           <div class="col-md-3">
             <input type="date" id="search_date" class="form-control" placeholder="<%= I18n.t(:created_at, scope: %i[activerecord attributes sales]) %>">

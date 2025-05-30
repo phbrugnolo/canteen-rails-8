@@ -9,13 +9,16 @@ export class SalesFilters {
     const salesContainer = document.querySelector('#sales');
     if (!salesContainer) return;
 
+    this.initCustomerSelect();
+
     this.filterManager = new FilterManager({
       container: '#sales .container',
       items: '.card.border-info',
       noResultsMessage: this.getNoResultsMessage(),
       filters: [
         {
-          input: '#search_name',
+          input: '#search_customers',
+          type: 'tomselect-multiple',
           getText: (item) => {
             const customerCell = item.querySelector('td:nth-child(2)');
             return customerCell ? customerCell.textContent.split(': ')[1] || '' : '';
@@ -31,7 +34,6 @@ export class SalesFilters {
             const dateText = dateCell.textContent.split(': ')[1];
             if (!dateText) return '';
 
-            // Converte DD/MM/YYYY para YYYY-MM-DD
             const [day, month, year] = dateText.split('/');
             return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
           },
@@ -39,8 +41,50 @@ export class SalesFilters {
         }
       ]
     });
+  }
 
-    this.customizeForSales();
+  initCustomerSelect() {
+    const selectElement = document.querySelector('#search_customers');
+    if (!selectElement) return;
+
+    const customerNames = this.getUniqueCustomerNames();
+
+    customerNames.forEach(name => {
+      const option = document.createElement('option');
+      option.value = name;
+      option.textContent = name;
+      selectElement.appendChild(option);
+    });
+
+    new window.TomSelect(selectElement, {
+      plugins: ['remove_button'],
+      placeholder: selectElement.getAttribute('data-placeholder') || 'Selecione clientes...',
+      allowEmptyOption: true,
+      maxItems: null,
+      create: false,
+      searchField: ['text'],
+      sortField: {
+        field: 'text',
+        direction: 'asc'
+      }
+    });
+  }
+
+  getUniqueCustomerNames() {
+    const customerNames = new Set();
+    const salesCards = document.querySelectorAll('#sales .card.border-info');
+
+    salesCards.forEach(card => {
+      const customerCell = card.querySelector('td:nth-child(2)');
+      if (customerCell) {
+        const customerName = customerCell.textContent.split(': ')[1];
+        if (customerName) {
+          customerNames.add(customerName.trim());
+        }
+      }
+    });
+
+    return Array.from(customerNames).sort();
   }
 
   getNoResultsMessage() {
@@ -48,59 +92,27 @@ export class SalesFilters {
     return messageElement ? messageElement.textContent : 'Nenhuma venda encontrada';
   }
 
-  customizeForSales() {
-    this.filterManager.filter = () => {
-      const items = this.filterManager.container.querySelectorAll(this.filterManager.itemSelector);
-      let visibleCount = 0;
+  refresh() {
+    if (this.filterManager) {
+      this.filterManager.refresh();
+    }
+  }
 
-      items.forEach(item => {
-        let shouldShow = true;
+  reset() {
+    if (this.filterManager) {
+      this.filterManager.reset();
+    }
+  }
 
-        this.filterManager.filters.forEach(filterConfig => {
-          const input = document.querySelector(filterConfig.input);
-          if (!input) return;
+  addFilter(filterConfig) {
+    if (this.filterManager) {
+      this.filterManager.addFilter(filterConfig);
+    }
+  }
 
-          const filterValue = input.value.trim().toLowerCase();
-          if (!filterValue) return;
-
-          let itemValue = '';
-          if (filterConfig.getText) {
-            itemValue = filterConfig.getText(item);
-          }
-
-          itemValue = itemValue.trim().toLowerCase();
-
-          const matchType = filterConfig.matchType || 'includes';
-          let matches = false;
-
-          switch (matchType) {
-            case 'includes':
-              matches = itemValue.includes(filterValue);
-              break;
-            case 'equals':
-              matches = itemValue === filterValue;
-              break;
-            default:
-              matches = itemValue.includes(filterValue);
-          }
-
-          if (!matches) {
-            shouldShow = false;
-          }
-        });
-
-        const wrapper = item.closest('.col-6');
-        if (wrapper) {
-          wrapper.style.display = shouldShow ? '' : 'none';
-          if (shouldShow) visibleCount++;
-        }
-      });
-
-      this.filterManager.noResultsElement.style.display = visibleCount === 0 ? '' : 'none';
-
-      if (this.filterManager.onFilter) {
-        this.filterManager.onFilter(visibleCount);
-      }
-    };
+  removeFilter(inputSelector) {
+    if (this.filterManager) {
+      this.filterManager.removeFilter(inputSelector);
+    }
   }
 }
