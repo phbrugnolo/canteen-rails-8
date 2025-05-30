@@ -1,5 +1,5 @@
-import TomSelect from "tom-select";
-window.TomSelect = TomSelect;
+import { Sidebar } from '../shared/sidebar';
 
-import Rails from "@rails/ujs";
-Rails.start();
+document.addEventListener('DOMContentLoaded', () => {
+  new Sidebar();
+});

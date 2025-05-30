@@ -3,13 +3,13 @@
   "private": true,
   "devDependencies": {
     "@eslint/js": "^9.27.0",
-    "esbuild": "^0.25.4",
+    "esbuild": "^0.25.5",
     "eslint": "^9.27.0",
-    "globals": "^16.1.0"
+    "globals": "^16.2.0"
   },
   "scripts": {
     "build": "node esbuild.config.mjs",
-    "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "build:css:compile": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
     "build:css:prefix": "postcss ./app/assets/builds/application.css --use=autoprefixer --output=./app/assets/builds/application.css",
     "build:css": "yarn build:css:compile && yarn build:css:prefix",
     "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss,css --exec \"yarn build:css\""
@@ -21,7 +21,7 @@
     "bootstrap": "^5.3.6",
     "bootstrap-icons": "^1.13.1",
     "nodemon": "^3.1.10",
-    "postcss": "^8.5.3",
+    "postcss": "^8.5.4",
     "postcss-cli": "^11.0.1",
     "sass": "^1.89.0",
     "tom-select": "^2.4.3"

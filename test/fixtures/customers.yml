@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  matriculation: MyString
-  status: MyString
+  name: Teste
+  matriculation: "9876543"
+  status: "active"
 
 two:
-  name: MyString
-  matriculation: MyString
-  status: MyString
+  name: "Teste 2"
+  matriculation: "18769061"
+  status: "inactive"
