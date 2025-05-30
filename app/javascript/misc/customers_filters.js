@@ -1,15 +1,11 @@
 import { FilterManager } from '../shared/filter_manager.js';
 
-/**
- * Filtros específicos para a página de clientes
- */
 export class CustomersFilters {
   constructor() {
     this.init();
   }
 
   init() {
-    // Verifica se estamos na página correta
     const customersTable = document.querySelector('#customers');
     if (!customersTable) return;
 
@@ -35,7 +31,6 @@ export class CustomersFilters {
             if (!statusSpan) return '';
 
             const statusText = statusSpan.textContent.trim().toLowerCase();
-            // Converte texto do status para valor
             return statusText === 'ativo' ? 'active' : 'inactive';
           },
           matchType: 'equals'

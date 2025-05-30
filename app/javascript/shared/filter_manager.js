@@ -19,7 +19,7 @@ export class FilterManager {
       .trim()
       .toLowerCase()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, ''); // Remove acentos
+      .replace(/[\u0300-\u036f]/g, '');
   }
 
   init() {
