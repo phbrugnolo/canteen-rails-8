@@ -164,3 +164,11 @@ pt-BR:
       x_years:
         one: "1 ano"
         other: "%{count} anos"
+  number:
+    currency:
+      format:
+        delimiter: "."
+        separator: ","
+        precision: 2
+        unit: "R$"
+        format: "%u %n"

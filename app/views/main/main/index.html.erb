@@ -1,3 +1,9 @@
+<!-- Income metrics card custom configuration -->
+<%
+  revenue_value = @period_revenue || 0
+  tag_class = revenue_value > 10000 ? "h4" : "h3"
+%>
+
 <p style="color: green"><%= notice %></p>
 
 <div class="dashboard-container">
@@ -57,7 +63,9 @@
       </div>
       <div class="metric-content">
         <div class="d-flex justify-content-between align-items-start mb-2">
-          <h3 class="metric-value mb-0">R$ <%= number_with_precision(@period_revenue || 0, precision: 2, delimiter: '.', separator: ',') %></h3>
+          <%= content_tag tag_class, class: "metric-value mb-0" do %>
+            <%= number_to_currency(revenue_value) %>
+          <% end %>
           <div class="dropup">
             <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-funnel"></i>
@@ -126,7 +134,7 @@
                         </td>
                         <td class="text-end">
                           <span class="badge bg-success">
-                            R$ <%= number_with_precision(sale.total_price, precision: 2) %>
+                            <%= number_to_currency(sale.total_price) %>
                           </span>
                         </td>
                         <td class="text-center">
@@ -202,7 +210,7 @@
                   <div class="flex-grow-1">
                     <div class="fw-medium"><%= customer[:name] %></div>
                     <small class="text-success">
-                      R$ <%= number_with_precision(customer[:total], precision: 2) %>
+                      <%= number_to_currency(customer[:total]) %>
                     </small>
                   </div>
                 </div>
