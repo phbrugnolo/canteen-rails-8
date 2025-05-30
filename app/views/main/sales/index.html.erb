@@ -4,6 +4,7 @@
 <div id="sales">
   <div class="card p-2 mt-4" style="background-color: #EEF5FF">
     <div class="container">
+      <span data-i18n="no_purchases_found" style="display: none;"><%= I18n.t(:no_purchases_found) %></span>
       <% if @sales.size > 0 %>
         <div class="row mb-2 mt-4">
           <div class="col-md-6">
@@ -35,48 +36,3 @@
     </div>
   </div>
 </div>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const nameInput = document.getElementById("search_name");
-    const dateInput = document.getElementById("search_date");
-    const saleCards = document.querySelectorAll("#sales .card.border-info");
-    const container = document.querySelector("#sales > .card.p-2 .container");
-
-    const noSalesMessage = document.createElement("p");
-    noSalesMessage.textContent = "<%= I18n.t(:no_purchases_found) %>";
-    noSalesMessage.className = "mx-2 mt-2 text-center text-muted";
-    noSalesMessage.style.display = "none";
-    container.appendChild(noSalesMessage);
-
-    function filterSales() {
-      let hasVisibleItems = false;
-      const searchName = nameInput.value.trim().toLowerCase();
-      const searchDate = dateInput.value;
-
-      saleCards.forEach(card => {
-        // Extrai dados da venda
-        const dateCell = card.querySelector("td:nth-child(1)");
-        const customerCell = card.querySelector("td:nth-child(2)");
-
-        // Formata data para YYYY-MM-DD
-        const [day, month, year] = dateCell.textContent.split(": ")[1].split("/");
-        const isoDate = `${year}-${month}-${day}`;
-
-        // Verifica correspondências
-        const customerName = customerCell.textContent.split(": ")[1].toLowerCase();
-        const nameMatch = !searchName || customerName.includes(searchName);
-        const dateMatch = !searchDate || isoDate === searchDate;
-
-        // Exibe/oculta cards
-        const parentCol = card.closest(".col-6");
-        parentCol.style.display = (nameMatch && dateMatch) ? "" : "none";
-        if (parentCol.style.display === "") hasVisibleItems = true;
-      });
-
-      noSalesMessage.style.display = hasVisibleItems ? "none" : "";
-    }
-
-    nameInput.addEventListener("input", filterSales);
-    dateInput.addEventListener("input", filterSales);
-  });
-</script>
