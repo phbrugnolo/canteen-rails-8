@@ -14,6 +14,14 @@ export class FilterManager {
     this.init();
   }
 
+  normalizeText(text) {
+    return text.toString()
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, ''); // Remove acentos
+  }
+
   init() {
     this.createNoResultsMessage();
     this.bindEvents();
@@ -54,7 +62,7 @@ export class FilterManager {
           }
           if (!filterValues || filterValues.length === 0) return;
         } else {
-          const filterValue = input.value.trim().toLowerCase();
+          const filterValue = input.value.trim();
           if (!filterValue) return;
           filterValues = [filterValue];
         }
@@ -69,41 +77,42 @@ export class FilterManager {
           itemValue = filterConfig.getText(item);
         }
 
-        itemValue = itemValue.trim().toLowerCase();
+        itemValue = this.normalizeText(itemValue);
 
         const matchType = filterConfig.matchType || 'includes';
         let matches = false;
 
         if (filterConfig.type === 'tomselect-multiple') {
           matches = filterValues.some(filterValue => {
+            const normalizedFilterValue = this.normalizeText(filterValue);
             switch (matchType) {
               case 'includes':
-                return itemValue.includes(filterValue.toLowerCase());
+                return itemValue.includes(normalizedFilterValue);
               case 'equals':
-                return itemValue === filterValue.toLowerCase();
+                return itemValue === normalizedFilterValue;
               case 'starts':
-                return itemValue.startsWith(filterValue.toLowerCase());
+                return itemValue.startsWith(normalizedFilterValue);
               default:
-                return itemValue.includes(filterValue.toLowerCase());
+                return itemValue.includes(normalizedFilterValue);
             }
           });
         } else {
-          const filterValue = filterValues[0];
+          const normalizedFilterValue = this.normalizeText(filterValues[0]);
           switch (matchType) {
             case 'includes':
-              matches = itemValue.includes(filterValue);
+              matches = itemValue.includes(normalizedFilterValue);
               break;
             case 'equals':
-              matches = itemValue === filterValue;
+              matches = itemValue === normalizedFilterValue;
               break;
             case 'starts':
-              matches = itemValue.startsWith(filterValue);
+              matches = itemValue.startsWith(normalizedFilterValue);
               break;
             case 'date':
-              matches = this.matchDate(itemValue, filterValue);
+              matches = this.matchDate(itemValue, normalizedFilterValue);
               break;
             default:
-              matches = itemValue.includes(filterValue);
+              matches = itemValue.includes(normalizedFilterValue);
           }
         }
 
