@@ -1,4 +1,3 @@
-import { Dropdown } from 'bootstrap';
 import Cookie from './cookie';
 
 export class Sidebar {
@@ -39,13 +38,6 @@ export class Sidebar {
     });
 
     window.addEventListener('resize', () => this.handleResize());
-
-    this.sidebar?.addEventListener('transitionend', () => {
-      if (this.sidebar.classList.contains('collapsed') && this.dropdownToggle?.classList.contains('show')) {
-        const dropdown = Dropdown.getInstance(this.dropdownToggle);
-        dropdown?.hide();
-      }
-    });
 
     if (this.isMobile) {
       this.createBackdrop();
