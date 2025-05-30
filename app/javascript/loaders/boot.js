@@ -1,4 +1,4 @@
-import { Sidebar } from "../shared/sidebar";
+import { Sidebar } from '../shared/sidebar';
 
 document.addEventListener('DOMContentLoaded', () => {
   new Sidebar();

@@ -35,25 +35,25 @@
         <nav class="sidebar-nav">
           <ul class="nav-list">
             <li class="nav-item">
-              <%= link_to root_path, class: "nav-link", data: { tooltip: I18n.t(:home) } do %>
+              <%= link_to root_path, class: "nav-link" do %>
                 <i class="bi bi-house-fill nav-icon"></i>
                 <span class="nav-text"><%= I18n.t(:home) %></span>
               <% end %>
             </li>
             <li class="nav-item">
-              <%= link_to new_main_sale_path, class: "nav-link", data: { tooltip: I18n.t(:sale, scope: %i[activerecord models], count: 1) } do %>
+              <%= link_to new_main_sale_path, class: "nav-link" do %>
                 <i class="bi bi-cart4 nav-icon"></i>
                 <span class="nav-text"><%= I18n.t(:sale, scope: %i[activerecord models], count: 1) %></span>
               <% end %>
             </li>
             <li class="nav-item">
-              <%= link_to main_products_path, class: "nav-link", data: { tooltip: I18n.t(:product, scope: %i[activerecord models], count: 2) } do %>
+              <%= link_to main_products_path, class: "nav-link" do %>
                 <i class="bi bi-grid nav-icon"></i>
                 <span class="nav-text"><%= I18n.t(:product, scope: %i[activerecord models], count: 2) %></span>
               <% end %>
             </li>
             <li class="nav-item">
-              <%= link_to main_customers_path, class: "nav-link", data: { tooltip: I18n.t(:customer, scope: %i[activerecord models], count: 2) } do %>
+              <%= link_to main_customers_path, class: "nav-link" do %>
                 <i class="bi bi-person-circle nav-icon"></i>
                 <span class="nav-text"><%= I18n.t(:customer, scope: %i[activerecord models], count: 2) %></span>
               <% end %>
@@ -63,7 +63,7 @@
 
         <div class="sidebar-footer">
           <div class="user-menu">
-            <button class="user-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false" data-tooltip="<%= current_user&.name&.capitalize %>">
+            <button class="user-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
               <%= image_tag "logo-rd.png", alt: I18n.t(:logo_rd_alt_image), class: "user-avatar" %>
               <div class="user-info">
                 <span class="user-name"><%= current_user&.name&.capitalize %></span>

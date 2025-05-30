@@ -1,2 +1,2 @@
-import "./loaders/dependencies"
-import "./loaders/boot"
+import './loaders/dependencies'
+import './loaders/boot'

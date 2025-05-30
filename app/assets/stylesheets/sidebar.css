@@ -275,11 +275,6 @@ html, body {
   padding: 0.75rem 0;
 }
 
-.sidebar.collapsed [data-tooltip]:hover::after,
-.sidebar.collapsed [data-tooltip]:hover::before {
-  display: none;
-}
-
 .sidebar.collapsed .nav-link:hover {
   background-color: var(--nav-link-hover);
   border-left: 3px solid var(--nav-link-active);
