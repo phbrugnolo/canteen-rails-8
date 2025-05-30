@@ -1,16 +1,3 @@
-/**
- * FilterManager - Uma classe reutilizável para gerenciar filtros em tabelas e cards
- *
- * Uso:
- * const filter = new FilterManager({
- *   container: '#products',
- *   items: '.card',
- *   filters: [
- *     { input: '#search_name', attribute: 'data-name' },
- *     { input: '#search_status', attribute: 'data-status' }
- *   ]
- * });
- */
 export class FilterManager {
   constructor(options) {
     this.container = document.querySelector(options.container);
@@ -20,7 +7,7 @@ export class FilterManager {
     this.debounceDelay = options.debounceDelay || 300;
 
     if (!this.container) {
-      console.warn(`FilterManager: Container ${options.container} não encontrado`);
+      console.warn(`FilterManager: Container ${options.container} not found`);
       return;
     }
 
@@ -30,7 +17,7 @@ export class FilterManager {
   init() {
     this.createNoResultsMessage();
     this.bindEvents();
-    this.filter(); // Filtro inicial
+    this.filter();
   }
 
   createNoResultsMessage() {
@@ -54,17 +41,15 @@ export class FilterManager {
     items.forEach(item => {
       let shouldShow = true;
 
-      // Verifica cada filtro
       this.filters.forEach(filterConfig => {
         const input = document.querySelector(filterConfig.input);
         if (!input) return;
 
         const filterValue = input.value.trim().toLowerCase();
-        if (!filterValue) return; // Se filtro vazio, não afeta
+        if (!filterValue) return;
 
         let itemValue = '';
 
-        // Obtém o valor do item baseado na configuração
         if (filterConfig.attribute) {
           itemValue = item.getAttribute(filterConfig.attribute) || '';
         } else if (filterConfig.selector) {
@@ -76,7 +61,6 @@ export class FilterManager {
 
         itemValue = itemValue.trim().toLowerCase();
 
-        // Aplica a lógica de comparação
         const matchType = filterConfig.matchType || 'includes';
         let matches = false;
 
@@ -102,25 +86,21 @@ export class FilterManager {
         }
       });
 
-      // Mostra/oculta o item
-      const wrapper = item.closest('.col-6') || item; // Default wrapper para vendas
+      const wrapper = item.closest('.col-6') || item;
       if (wrapper) {
         wrapper.style.display = shouldShow ? '' : 'none';
         if (shouldShow) visibleCount++;
       }
     });
 
-    // Mostra/oculta mensagem de "nenhum resultado"
     this.noResultsElement.style.display = visibleCount === 0 ? '' : 'none';
 
-    // Callback personalizado após filtrar
     if (this.onFilter) {
       this.onFilter(visibleCount);
     }
   }
 
   matchDate(itemDate, filterDate) {
-    // Para datas no formato DD/MM/YYYY
     if (itemDate.includes('/') && filterDate.includes('-')) {
       const [day, month, year] = itemDate.split('/');
       const isoDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
@@ -141,7 +121,6 @@ export class FilterManager {
     };
   }
 
-  // Métodos públicos para controle externo
   refresh() {
     this.filter();
   }
@@ -156,13 +135,11 @@ export class FilterManager {
     this.filter();
   }
 
-  // Método para adicionar filtros dinamicamente
   addFilter(filterConfig) {
     this.filters.push(filterConfig);
     this.bindFilterEvents(filterConfig);
   }
 
-  // Método para remover filtros
   removeFilter(inputSelector) {
     this.filters = this.filters.filter(filter => filter.input !== inputSelector);
     const input = document.querySelector(inputSelector);
@@ -172,11 +149,10 @@ export class FilterManager {
     }
   }
 
-  // Bind de eventos para um filtro específico
   bindFilterEvents(filterConfig) {
     const input = document.querySelector(filterConfig.input);
     if (!input) {
-      console.warn(`FilterManager: Input ${filterConfig.input} não encontrado`);
+      console.warn(`FilterManager: Input ${filterConfig.input} not found`);
       return;
     }
 

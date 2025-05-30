@@ -1,15 +1,11 @@
 import { FilterManager } from '../shared/filter_manager.js';
 
-/**
- * Filtros específicos para a página de vendas
- */
 export class SalesFilters {
   constructor() {
     this.init();
   }
 
   init() {
-    // Verifica se estamos na página correta
     const salesContainer = document.querySelector('#sales');
     if (!salesContainer) return;
 
@@ -44,7 +40,6 @@ export class SalesFilters {
       ]
     });
 
-    // Override do wrapper para vendas (.col-6)
     this.customizeForSales();
   }
 
@@ -54,7 +49,6 @@ export class SalesFilters {
   }
 
   customizeForSales() {
-    // Override do método filter para usar .col-6 como wrapper
     this.filterManager.filter = () => {
       const items = this.filterManager.container.querySelectorAll(this.filterManager.itemSelector);
       let visibleCount = 0;
@@ -95,7 +89,6 @@ export class SalesFilters {
           }
         });
 
-        // Para vendas, o wrapper é .col-6
         const wrapper = item.closest('.col-6');
         if (wrapper) {
           wrapper.style.display = shouldShow ? '' : 'none';
@@ -105,7 +98,6 @@ export class SalesFilters {
 
       this.filterManager.noResultsElement.style.display = visibleCount === 0 ? '' : 'none';
 
-      // Callback se definido
       if (this.filterManager.onFilter) {
         this.filterManager.onFilter(visibleCount);
       }
