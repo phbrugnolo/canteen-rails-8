@@ -11,12 +11,6 @@ class Sale < ApplicationRecord
   scope :last_year, -> { where(created_at: 1.year.ago.beginning_of_year..1.year.ago.end_of_year) }
   scope :today, -> { where(created_at: Date.current.beginning_of_day..Date.current.end_of_day) }
 
-  def self.group_by_month(column = :created_at, options = {})
-    format = options[:format] || "%Y-%m"
-
-    group(Arel.sql("strftime('#{format}', #{column})")).order(Arel.sql("strftime('#{format}', #{column}) DESC"))
-  end
-
   def self.revenue_for_period(period = :all_time)
     case period
     when :today
