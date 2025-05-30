@@ -70,7 +70,7 @@ class ProductsTest < ApplicationSystemTestCase
 
     assert_selector "h5.card-title", text: @product.name
     assert_selector "p.card-text", text: @product.description
-    assert_text "R$#{ActionController::Base.helpers.number_with_precision(@product.price, precision: 2)}"
+    assert_text ActionController::Base.helpers.number_to_currency(@product.price)
 
     if @product.status == "active"
       assert_selector ".text-success", text: I18n.t("active")

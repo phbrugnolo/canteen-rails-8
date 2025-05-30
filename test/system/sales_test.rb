@@ -16,13 +16,13 @@ class SalesTest < ApplicationSystemTestCase
     visit main_sale_url(@sale)
 
     assert_text @sale.customer.name
-    assert_text "R$#{ActionController::Base.helpers.number_with_precision(@sale.total_price, precision: 2)}"
+    assert_text ActionController::Base.helpers.number_to_currency(@sale.total_price)
 
     cart = JSON.parse(@sale.cart)
     cart.each do |item|
       if item["name"].present?
         assert_text item["name"]
-        assert_text "R$#{ActionController::Base.helpers.number_with_precision(item["price"], precision: 2)}"
+        assert_text ActionController::Base.helpers.number_to_currency(item["price"])
         assert_text item["quantity"].to_s
       end
     end

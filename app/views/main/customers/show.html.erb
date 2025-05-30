@@ -68,7 +68,7 @@
                 <table class="table mb-0 mt-1">
                   <tr class="list-group list-group-flush table-row">
                     <td><%= I18n.t(:date) %>: <%= sale.created_at.strftime("%d/%m/%Y") %></td>
-                    <td><%= I18n.t(:total_price) %>: R$<%= number_with_precision(sale.total_price, precision: 2) %></td>
+                    <td><%= I18n.t(:total_price) %>: <%= number_to_currency(sale.total_price) %></td>
                     <td class="border-bottom-0 d-flex justify-content-end flex-column">
                       <button class="btn btn-primary show-cart my-2"><%= I18n.t(:show_cart) %></button>
                     </td>
@@ -87,7 +87,7 @@
                     <% cart.each do |item| %>
                       <tr>
                         <td class="col-5"><%= item["name"] %></td>
-                        <td class="col-3">R$<%= number_with_precision(item["price"], precision: 2) %></td>
+                        <td class="col-3"><%= number_to_currency(item["price"]) %></td>
                         <td class="col-4 text-center"><%= item["quantity"] %></td>
                       </tr>
                     <% end %>

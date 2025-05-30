@@ -8,6 +8,7 @@ pt-BR:
   date: "Data"
   user: "Usuário"
   active: "Ativo"
+  actives: "Ativo(s)"
   inactive: "Inativo"
   activate: "Ativar"
   deactivate: "Desativar"
@@ -40,6 +41,24 @@ pt-BR:
   show: "Visualizar"
   model_was_successfully_created: "%{model} foi criado com sucesso"
   model_was_successfully_updated: "%{model} foi atualizado com sucesso"
+  dashboard: "Painel de Controle"
+  welcome_back: "Bem-vindo de volta"
+  total_revenue: "Receita Total"
+  revenue: "Receita"
+  all_time: "Todos os tempos"
+  this_month: "Este mês"
+  today: "Hoje"
+  this_year: "Este ano"
+  all_period: "Todo período"
+  recent_sales: "Vendas Recentes"
+  quick_actions: "Ações Rápidas"
+  new_sale: "Nova Venda"
+  top_customers: "Melhores Clientes"
+  no_customer_data: "Nenhum dado de cliente disponível"
+  no_recent_sales: "Nenhuma venda recente"
+  view_all_sales: "Ver Todas as Vendas"
+  create_sale: "Criar Venda"
+  ago: "atrás"
   errors:
     messages:
       blank: "Não pode ficar em branco"
@@ -109,3 +128,50 @@ pt-BR:
             customer:
               blank: "não pode ficar em branco"
               required: "não pode ficar em branco"
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: "Aproximadamente 1 hora"
+        other: "Aproximadamente %{count} horas"
+      about_x_months:
+        one: "Aproximadamente 1 mês"
+        other: "Aproximadamente %{count} meses"
+      about_x_years:
+        one: "Aproximadamente 1 ano"
+        other: "Aproximadamente %{count} anos"
+      almost_x_years:
+        one: "Quase 1 ano"
+        other: "Quase %{count} anos"
+      half_a_minute: "Meio minuto"
+      less_than_x_minutes:
+        one: "Menos de um minuto"
+        other: "Menos de %{count} minutos"
+      less_than_x_seconds:
+        one: "Menos de 1 segundo"
+        other: "Menos de %{count} segundos"
+      over_x_years:
+        one: "Mais de 1 ano"
+        other: "Mais de %{count} anos"
+      x_days:
+        one: "1 dia"
+        other: "%{count} dias"
+      x_minutes:
+        one: "1 minuto"
+        other: "%{count} minutos"
+      x_months:
+        one: "1 mês"
+        other: "%{count} meses"
+      x_seconds:
+        one: "1 segundo"
+        other: "%{count} segundos"
+      x_years:
+        one: "1 ano"
+        other: "%{count} anos"
+  number:
+    currency:
+      format:
+        delimiter: "."
+        separator: ","
+        precision: 2
+        unit: "R$"
+        format: "%u %n"
