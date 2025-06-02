@@ -105,7 +105,7 @@ export class CartDisplay {
   destroy() {
     const showCartButtons = document.querySelectorAll(".show-cart");
     showCartButtons.forEach((button) => {
-      button.removeEventListener("click", this.handleCartToggle);
+      button.removeEventListener("click", this.handleCartToggle.bind(this));
     });
   }
 }
