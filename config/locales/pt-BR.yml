@@ -22,6 +22,7 @@ pt-BR:
   subtotal: "Subtotal"
   price_per_unit: "Preço por unidade"
   show_cart: "Exibir carrinho"
+  hide_cart: "Ocultar carrinho"
   show_sale: "Exibir venda"
   close_sale: "Encerrar compra"
   actions: "Ações"
