@@ -15,6 +15,7 @@ export class SalesFilters {
       container: '#sales .container',
       items: '.card.border-info',
       noResultsMessage: this.getNoResultsMessage(),
+      noResultsIcon: 'bi-cart-x',
       filters: [
         {
           input: '#search_customers',

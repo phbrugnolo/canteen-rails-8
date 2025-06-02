@@ -13,6 +13,7 @@ export class ProductsFilters {
       container: '#products',
       items: '.card.border-info',
       noResultsMessage: 'Nenhum produto encontrado',
+      noResultsIcon: 'bi-box-seam',
       filters: [
         {
           input: '#search_name',

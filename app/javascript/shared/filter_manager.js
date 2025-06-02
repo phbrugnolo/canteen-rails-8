@@ -4,6 +4,7 @@ export class FilterManager {
     this.itemSelector = options.items;
     this.filters = options.filters || [];
     this.noResultsMessage = options.noResultsMessage || 'Nenhum resultado encontrado';
+    this.noResultsIcon = options.noResultsIcon || 'bi-search';
     this.debounceDelay = options.debounceDelay || 300;
 
     if (!this.container) {
@@ -30,8 +31,16 @@ export class FilterManager {
 
   createNoResultsMessage() {
     this.noResultsElement = document.createElement('div');
-    this.noResultsElement.className = 'text-center text-muted py-4';
-    this.noResultsElement.innerHTML = `<p class="mb-0">${this.noResultsMessage}</p>`;
+    this.noResultsElement.className = 'text-center py-5';
+    this.noResultsElement.innerHTML = `
+      <div class="card border-0 bg-transparent">
+        <div class="card-body">
+          <i class="bi ${this.noResultsIcon} display-4 text-muted mb-3"></i>
+          <h5 class="text-muted mb-2">${this.noResultsMessage}</h5>
+          <p class="text-muted small mb-0">Tente ajustar os filtros de busca</p>
+        </div>
+      </div>
+    `;
     this.noResultsElement.style.display = 'none';
     this.container.appendChild(this.noResultsElement);
   }

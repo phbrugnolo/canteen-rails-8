@@ -13,6 +13,7 @@ export class CustomersFilters {
       container: '#customers',
       items: 'tr',
       noResultsMessage: 'Nenhum cliente encontrado',
+      noResultsIcon: 'bi-person-x',
       filters: [
         {
           input: '#search_name',
