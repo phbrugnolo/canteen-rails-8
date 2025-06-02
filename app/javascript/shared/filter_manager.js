@@ -42,7 +42,29 @@ export class FilterManager {
       </div>
     `;
     this.noResultsElement.style.display = 'none';
-    this.container.appendChild(this.noResultsElement);
+
+    const isTable = this.container.tagName === 'TABLE' ||
+                   this.container.tagName === 'TBODY' ||
+                   this.container.tagName === 'THEAD' ||
+                   this.container.querySelector('table');
+
+    if (isTable) {
+      let targetElement = this.container;
+
+      if (this.container.tagName === 'TABLE' ||
+          this.container.tagName === 'TBODY' ||
+          this.container.tagName === 'THEAD') {
+        targetElement = this.container.parentElement || this.container;
+      }
+
+      if (targetElement.parentElement) {
+        targetElement.parentElement.insertBefore(this.noResultsElement, targetElement.nextSibling);
+      } else {
+        document.body.appendChild(this.noResultsElement);
+      }
+    } else {
+      this.container.appendChild(this.noResultsElement);
+    }
   }
 
   bindEvents() {
