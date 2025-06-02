@@ -15,6 +15,7 @@ pt-BR:
   documents: "Documentos"
   purchases: "Compras"
   no_purchases_made: "Nenhuma compra realizada"
+  no_purchases_found: "Nenhuma compra encontrada"
   select_a_customer: "Selecione um cliente"
   price: "Preço"
   total_price: "Preço total"

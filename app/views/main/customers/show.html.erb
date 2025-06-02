@@ -151,18 +151,15 @@
     modal.style.display = "none";
   }
 
-  document.addEventListener("DOMContentLoaded", function() {
-    // Seleciona todos os botões com a classe "show-cart"
+  document.addEventListener("DOMContentLoaded", () => {
     var showCartButtons = document.querySelectorAll(".show-cart");
 
-    showCartButtons.forEach(function(button) {
-      button.addEventListener("click", function() {
-        // Primeiro: alterna a exibição da(s) tabela(s) de carrinho
+    showCartButtons.forEach((button) => {
+      button.addEventListener("click", () => {
         var card = button.closest(".card");
         if (card) {
           var cartTables = card.querySelectorAll(".cart-table");
-          cartTables.forEach(function(cartTable) {
-            // Verifica se o elemento está oculto (display: none) e alterna
+          cartTables.forEach((cartTable) => {
             if (window.getComputedStyle(cartTable).display === "none") {
               cartTable.style.display = "block";
             } else {
@@ -171,7 +168,6 @@
           });
         }
 
-        // Segundo: alterna classes para o elemento de destino e seu contêiner
         var targetId = button.getAttribute("data-target");
         var targetTable = document.getElementById(targetId);
         if (targetTable) {
