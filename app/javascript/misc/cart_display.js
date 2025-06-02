@@ -21,15 +21,17 @@ export class CartDisplay {
     const showCartButtons = document.querySelectorAll(".show-cart");
 
     showCartButtons.forEach((button) => {
-      button.removeEventListener("click", this.handleCartToggle);
+      button.removeEventListener("click", this.handleCartToggle.bind(this));
 
-      button.addEventListener("click", (event) => {
-        event.preventDefault();
-        this.toggleCartDisplay(button);
-      });
+      button.addEventListener("click", this.handleCartToggle.bind(this));
     });
   }
 
+  handleCartToggle(event) {
+    event.preventDefault();
+    const button = event.currentTarget;
+    this.toggleCartDisplay(button);
+  }
   toggleCartDisplay(button) {
     const card = button.closest(".card");
     if (!card) return;
