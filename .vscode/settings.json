@@ -15,6 +15,9 @@
     "Activatable",
     "activerecord",
     "onclick",
-    "sweetalert"
+    "sweetalert",
+    "sweetalert2",
+    "swal",
+    "Swal",
   ]
 }
