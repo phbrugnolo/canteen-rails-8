@@ -1,94 +1,218 @@
-function getCSRFToken() {
-  const csrfToken = document.querySelector('meta[name="csrf-token"]');
-  return csrfToken ? csrfToken.getAttribute('content') : null;
-}
-
-function submitRailsForm(url, method = 'POST', data = {}) {
-  const form = document.createElement('form');
-  form.method = 'POST';
-  form.action = url;
-  form.style.display = 'none';
-
-  const csrfToken = getCSRFToken();
-  if (csrfToken) {
-    const tokenInput = document.createElement('input');
-    tokenInput.type = 'hidden';
-    tokenInput.name = 'authenticity_token';
-    tokenInput.value = csrfToken;
-    form.appendChild(tokenInput);
+class RailsFormSubmitter {
+  static getCSRFToken() {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]');
+    return csrfToken ? csrfToken.getAttribute('content') : null;
   }
 
-  if (method.toUpperCase() !== 'POST') {
-    const methodInput = document.createElement('input');
-    methodInput.type = 'hidden';
-    methodInput.name = '_method';
-    methodInput.value = method.toLowerCase();
-    form.appendChild(methodInput);
+  static async submit(url, method = 'POST', data = {}) {
+    if (this.canUseFetch(method)) {
+      return this.submitWithFetch(url, method, data);
+    }
+
+    return this.submitWithForm(url, method, data);
   }
 
-  Object.entries(data).forEach(([key, value]) => {
+  static canUseFetch(method) {
+    const safeMethods = ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'];
+    return fetch && safeMethods.includes(method.toUpperCase());
+  }
+
+  static async submitWithFetch(url, method, data) {
+    const csrfToken = this.getCSRFToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    };
+
+    if (csrfToken) {
+      headers['X-CSRF-Token'] = csrfToken;
+    }
+
+    const config = {
+      method: method.toUpperCase(),
+      headers,
+      credentials: 'same-origin'
+    };
+
+    if (method.toUpperCase() !== 'GET' && Object.keys(data).length > 0) {
+      config.body = JSON.stringify(data);
+    }
+
+    try {
+      const response = await fetch(url, config);
+
+      if (response.ok) {
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          return await response.json();
+        }
+
+        if (response.redirected) {
+          window.location.href = response.url;
+          return;
+        }
+
+        return { success: true };
+      } else {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Fetch submission failed:', error);
+      return this.submitWithForm(url, method, data);
+    }
+  }
+
+  static submitWithForm(url, method, data) {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = url;
+    form.style.display = 'none';
+
+    const csrfToken = this.getCSRFToken();
+    if (csrfToken) {
+      this.addHiddenInput(form, 'authenticity_token', csrfToken);
+    }
+
+    if (method.toUpperCase() !== 'POST') {
+      this.addHiddenInput(form, '_method', method.toLowerCase());
+    }
+
+    Object.entries(data).forEach(([key, value]) => {
+      this.addHiddenInput(form, key, value);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+  static addHiddenInput(form, name, value) {
     const input = document.createElement('input');
     input.type = 'hidden';
-    input.name = key;
+    input.name = name;
     input.value = value;
     form.appendChild(input);
-  });
-
-  document.body.appendChild(form);
-  form.submit();
+  }
 }
 
-window.showRailsConfirmDialog = function(options) {
-  const {
-    url,
-    method = 'POST',
-    data = {},
-    title = 'Tem certeza?',
-    text = '',
-    icon = 'warning',
-    confirmButtonText = 'Sim, continuar',
-    cancelButtonText = 'Cancelar',
-    action = '',
-    onSuccess = null,
-    onCancel = null
-  } = options;
+class RailsConfirmationDialog {
+  static defaultOptions = {
+    title: 'Tem certeza?',
+    text: '',
+    icon: 'warning',
+    confirmButtonText: 'Sim, continuar',
+    cancelButtonText: 'Cancelar'
+  };
 
-  let customButtonClass = '';
-  switch (action) {
-    case 'activate':
-      customButtonClass = 'btn-activate-confirm';
-      break;
-    case 'deactivate':
-      customButtonClass = 'btn-deactivate-confirm';
-      break;
-    case 'delete':
-      customButtonClass = 'btn-delete-confirm';
-      break;
+  static async show(options = {}) {
+    const config = this.buildConfiguration(options);
+
+    try {
+      const result = await window.showConfirmDialog(config);
+
+      if (result.isConfirmed && options.url) {
+        await this.handleConfirmation(options);
+      }
+
+      return result;
+    } catch (error) {
+      console.error('Confirmation dialog error:', error);
+      throw error;
+    }
   }
 
-  return window.showConfirmDialog({
-    title,
-    text,
-    icon,
-    confirmButtonText,
-    cancelButtonText,
-    customButtonClass
-  }).then((result) => {
-    if (result.isConfirmed) {
-      if (url) {
-        submitRailsForm(url, method, data);
-      }
+  static buildConfiguration(options) {
+    const config = { ...this.defaultOptions, ...options };
+
+    if (options.action && !options.customButtonClass) {
+      config.customButtonClass = this.getButtonClassForAction(options.action);
+    }
+
+    return config;
+  }
+
+  static getButtonClassForAction(action) {
+    const classMap = {
+      activate: 'btn-activate-confirm',
+      deactivate: 'btn-deactivate-confirm',
+      delete: 'btn-delete-confirm'
+    };
+    return classMap[action] || '';
+  }
+
+  static async handleConfirmation(options) {
+    const {
+      url,
+      method = 'POST',
+      data = {},
+      onSuccess,
+      onError
+    } = options;
+
+    try {
+      const result = await RailsFormSubmitter.submit(url, method, data);
+
       if (onSuccess && typeof onSuccess === 'function') {
         onSuccess(result);
       }
-    } else if (onCancel && typeof onCancel === 'function') {
-      onCancel(result);
+
+      return result;
+    } catch (error) {
+      if (onError && typeof onError === 'function') {
+        onError(error);
+      } else {
+        console.error('Confirmation action failed:', error);
+        window.showConfirmDialog({
+          title: 'Erro',
+          text: 'Ocorreu um erro ao processar a solicitação.',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonText: 'OK'
+        });
+      }
+      throw error;
     }
-    return result;
+  }
+}
+
+window.showRailsConfirmDialog = function(options) {
+  return RailsConfirmationDialog.show(options);
+};
+
+window.showEnhancedRailsConfirmDialog = function(options) {
+  return RailsConfirmationDialog.show({
+    ...options,
+    onSuccess: (result) => {
+      if (options.successMessage) {
+        window.showConfirmDialog({
+          title: 'Sucesso!',
+          text: options.successMessage,
+          icon: 'success',
+          showCancelButton: false,
+          confirmButtonText: 'OK'
+        });
+      }
+
+      if (options.onSuccess) {
+        options.onSuccess(result);
+      }
+    },
+    onError: (error) => {
+      window.showConfirmDialog({
+        title: 'Erro',
+        text: options.errorMessage || 'Ocorreu um erro inesperado.',
+        icon: 'error',
+        showCancelButton: false,
+        confirmButtonText: 'OK'
+      });
+
+      if (options.onError) {
+        options.onError(error);
+      }
+    }
   });
 };
 
 export {
-  getCSRFToken,
-  submitRailsForm
+  RailsFormSubmitter,
+  RailsConfirmationDialog
 };
