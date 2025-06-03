@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     resources :sales, path: "vendas", except: %i[edit update destroy]
 
     resources :reports, path: "relatorios", except: %i[new create edit update destroy] do
-      get "promissory", to: "reports#promissory"
+      get "promissory", on: :collection
     end
   end
 end
