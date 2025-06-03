@@ -58,6 +58,16 @@ pt-BR:
     actions:
       back: "Voltar"
       submit: "Enviar"
+  reports:
+    promissory:
+      title: "Adiantamento Salarial"
+      code: "Código: %{code}"
+      discount_month: "Desconto mês:"
+      name: "Nome:"
+      matriculation: "Matrícula:"
+      cpf: "CPF:"
+      date: "Data:"
+      signature: "Assinatura"
   activerecord:
     add: "Adicionar %{model}"
     edit: "Editar %{model}"
