@@ -1,5 +1,6 @@
 class Main::SalesController < ApplicationController
   before_action :set_sale, only: %i[ show ]
+  before_action :load_form_data, only: %i[ new create ]
 
   # GET /sales or /sales.json
   def index
@@ -12,8 +13,6 @@ class Main::SalesController < ApplicationController
   # GET /sales/new
   def new
     @sale = Sale.new
-    @customers = Customer.where(status: "active")
-    @products = Product.where(status: "active")
 
     respond_to do |format|
       format.html
@@ -30,9 +29,6 @@ class Main::SalesController < ApplicationController
         format.html { redirect_to main_sale_url(@sale), notice: I18n.t(:model_was_successfully_created, model: @sale.model_name.human) }
         format.json { render :show, status: :created, location: main_sale_url(@sale) }
       else
-        @customers = Customer.where(status: "active")
-        @products = Product.where(status: "active")
-
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @sale.errors, status: :unprocessable_entity }
       end
@@ -43,6 +39,12 @@ class Main::SalesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_sale
       @sale = Sale.find(params.expect(:id))
+    end
+
+    # Load common data for forms
+    def load_form_data
+      @customers = Customer.active
+      @products = Product.active
     end
 
     # Only allow a list of trusted parameters through.
