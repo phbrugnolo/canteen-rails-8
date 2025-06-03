@@ -41,9 +41,9 @@ export class SalesManager {
   }
 
   setupGlobalMethods() {
-    window.removeProduct = (index) => this.cartManager.removeProduct(index);
-    window.addItem = (index) => this.cartManager.addItem(index);
-    window.removeItem = (index) => this.cartManager.removeItem(index);
+    window.removeProduct = (productId) => this.cartManager.removeProduct(productId);
+    window.addItem = (productId) => this.cartManager.addItem(productId);
+    window.removeItem = (productId) => this.cartManager.removeItem(productId);
   }
 
   showError(message) {
@@ -77,6 +77,32 @@ export class SalesManager {
 
   reset() {
     this.cartManager.clear();
+
+    // Limpar seleção de cliente
+    const customerSelect = document.getElementById('customer-id');
+    if (customerSelect) {
+      customerSelect.value = '';
+      // Se está usando TomSelect, atualizar também
+      if (customerSelect.tomselect) {
+        customerSelect.tomselect.clear();
+      }
+    }
+  }
+
+  // Método para limpar tudo quando sair da página
+  destroy() {
+    if (this.cartManager && typeof this.cartManager.destroy === 'function') {
+      this.cartManager.destroy();
+    }
+
+    if (this.productManager && typeof this.productManager.destroy === 'function') {
+      this.productManager.destroy();
+    }
+
+    // Limpar métodos globais
+    if (window.removeProduct) delete window.removeProduct;
+    if (window.addItem) delete window.addItem;
+    if (window.removeItem) delete window.removeItem;
   }
 }
 

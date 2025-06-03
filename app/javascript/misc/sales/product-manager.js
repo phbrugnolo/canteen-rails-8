@@ -91,18 +91,39 @@ export class ProductManager {
   }
 
   setupEvents() {
-    this.container.removeEventListener('click', this.handleAddProduct);
+    // Remove event listener anterior se existir
+    if (this.handleAddProduct && this.container) {
+      this.container.removeEventListener('click', this.handleAddProduct);
+    }
 
     this.handleAddProduct = (event) => {
       if (event.target.classList.contains('add')) {
+        event.preventDefault();
+        event.stopPropagation();
+
         const productIndex = parseInt(event.target.getAttribute("data-key"));
         const product = this.products[productIndex];
         if (product && this.onAddProduct) {
-          this.onAddProduct(product);
+          // Criar uma cópia do produto para evitar mutação
+          const productCopy = {
+            ...product,
+            price: parseFloat(product.price)
+          };
+          this.onAddProduct(productCopy);
         }
       }
     };
 
-    this.container.addEventListener('click', this.handleAddProduct);
+    if (this.container) {
+      this.container.addEventListener('click', this.handleAddProduct);
+    }
+  }
+
+  // Método para limpar event listeners
+  destroy() {
+    if (this.handleAddProduct && this.container) {
+      this.container.removeEventListener('click', this.handleAddProduct);
+      this.handleAddProduct = null;
+    }
   }
 }

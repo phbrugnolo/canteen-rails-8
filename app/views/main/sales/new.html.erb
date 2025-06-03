@@ -26,5 +26,19 @@
         if (!salesManager.validateForm()) event.preventDefault();
       });
     }
+
+    // Cleanup ao sair da página
+    window.addEventListener('beforeunload', () => {
+      if (salesManager && typeof salesManager.destroy === 'function') {
+        salesManager.destroy();
+      }
+    });
+
+    // Também fazer cleanup quando navegar para outra página
+    window.addEventListener('pagehide', () => {
+      if (salesManager && typeof salesManager.destroy === 'function') {
+        salesManager.destroy();
+      }
+    });
   });
 </script>
