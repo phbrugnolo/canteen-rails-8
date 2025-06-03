@@ -1,4 +1,5 @@
-// Toast Notification System for Sales
+import { Toast } from 'bootstrap' ;
+
 export class ToastManager {
   constructor() {
     this.toastContainer = null;
@@ -6,13 +7,11 @@ export class ToastManager {
   }
 
   createToastContainer() {
-    // Remove existing container if any
     const existing = document.getElementById('toast-container');
     if (existing) {
       existing.remove();
     }
 
-    // Create new container
     this.toastContainer = document.createElement('div');
     this.toastContainer.id = 'toast-container';
     this.toastContainer.className = 'toast-container position-fixed top-0 end-0 p-3';
@@ -40,7 +39,7 @@ export class ToastManager {
     this.toastContainer.insertAdjacentHTML('beforeend', toastHtml);
 
     const toastElement = document.getElementById(toastId);
-    const toast = new bootstrap.Toast(toastElement, {
+    const toast = new Toast(toastElement, {
       autohide: true,
       delay: duration
     });
