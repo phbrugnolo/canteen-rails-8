@@ -34,6 +34,29 @@ pt-BR:
   product_deactivation: "Tem certeza que deseja desativar o produto?"
   customer_activation: "Tem certeza que deseja ativar a conta do cliente?"
   customer_deactivation: "Tem certeza que deseja desativar a conta do cliente?"
+
+  # Mensagens de confirmação padronizadas
+  confirmations:
+    activate:
+      title: "Confirmar Ativação"
+      text: "Tem certeza que deseja ativar este %{entity}?"
+      button: "Sim, ativar"
+      success: "%{entity} ativado com sucesso!"
+    deactivate:
+      title: "Confirmar Desativação"
+      text: "Tem certeza que deseja desativar este %{entity}?"
+      button: "Sim, desativar"
+      success: "%{entity} desativado com sucesso!"
+    delete:
+      title: "Confirmar Exclusão"
+      text: "Tem certeza que deseja excluir este %{entity}? Esta ação não pode ser desfeita."
+      button: "Sim, excluir"
+      success: "%{entity} excluído com sucesso!"
+    default:
+      title: "Confirmar Ação"
+      text: "Tem certeza que deseja realizar esta ação?"
+      button: "Sim, continuar"
+      success: "Operação realizada com sucesso!"
   select_status: "Selecione o status"
   search_by_name: "Pesquisar por nome"
   search_product: "Procurar produto.."
@@ -123,6 +146,9 @@ pt-BR:
       sale:
         one: "Vender"
         other: "Vendas"
+      user:
+        one: "Usuário"
+        other: "Usuários"
     errors:
       models:
         sale:

@@ -40,10 +40,16 @@ module ConfirmationHelper
   end
 
   def activation_button(entity, options = {})
+    entity_name = entity_name_for_confirmation(entity)
+
     default_options = {
-      entity_name: entity_name_for_confirmation(entity),
+      entity_name: entity_name,
       entity_type: entity.class.name.downcase,
-      class: "btn btn-success me-1"
+      class: "btn btn-success me-1",
+      title: I18n.t("confirmations.activate.title"),
+      confirm_text: I18n.t("confirmations.activate.text", entity: entity_name),
+      button_text: I18n.t("confirmations.activate.button"),
+      icon: "question"
     }
 
     url = generate_activation_url(entity)
@@ -51,10 +57,16 @@ module ConfirmationHelper
   end
 
   def deactivation_button(entity, options = {})
+    entity_name = entity_name_for_confirmation(entity)
+
     default_options = {
-      entity_name: entity_name_for_confirmation(entity),
+      entity_name: entity_name,
       entity_type: entity.class.name.downcase,
-      class: "btn btn-danger me-1"
+      class: "btn btn-danger me-1",
+      title: I18n.t("confirmations.deactivate.title"),
+      confirm_text: I18n.t("confirmations.deactivate.text", entity: entity_name),
+      button_text: I18n.t("confirmations.deactivate.button"),
+      icon: "warning"
     }
 
     url = generate_deactivation_url(entity)
@@ -62,11 +74,17 @@ module ConfirmationHelper
   end
 
   def delete_button(entity, options = {})
+    entity_name = entity_name_for_confirmation(entity)
+
     default_options = {
-      entity_name: entity_name_for_confirmation(entity),
+      entity_name: entity_name,
       entity_type: entity.class.name.downcase,
       class: "btn btn-danger",
-      method: "DELETE"
+      method: "DELETE",
+      title: I18n.t("confirmations.delete.title"),
+      confirm_text: I18n.t("confirmations.delete.text", entity: entity_name),
+      button_text: I18n.t("confirmations.delete.button"),
+      icon: "error"
     }
 
     url = polymorphic_path(entity_path_parts(entity) + [ entity ])
@@ -79,6 +97,38 @@ module ConfirmationHelper
     else
       activation_button(entity, options)
     end
+  end
+
+  def confirmation_translations_for_js
+    {
+      activate: {
+        title: I18n.t("confirmations.activate.title"),
+        button: I18n.t("confirmations.activate.button"),
+        success: I18n.t("confirmations.activate.success", entity: "{{entity}}")
+      },
+      deactivate: {
+        title: I18n.t("confirmations.deactivate.title"),
+        button: I18n.t("confirmations.deactivate.button"),
+        success: I18n.t("confirmations.deactivate.success", entity: "{{entity}}")
+      },
+      delete: {
+        title: I18n.t("confirmations.delete.title"),
+        button: I18n.t("confirmations.delete.button"),
+        success: I18n.t("confirmations.delete.success", entity: "{{entity}}")
+      },
+      default: {
+        title: I18n.t("confirmations.default.title"),
+        button: I18n.t("confirmations.default.button"),
+        success: I18n.t("confirmations.default.success", entity: "{{entity}}")
+      },
+      cancel: I18n.t(:cancel),
+      entities: {
+        product: Product.model_name.human.downcase,
+        customer: Customer.model_name.human.downcase,
+        sale: Sale.model_name.human.downcase,
+        user: User.model_name.human.downcase
+      }
+    }
   end
 
   private
@@ -97,18 +147,7 @@ module ConfirmationHelper
   end
 
   def entity_name_for_confirmation(entity)
-    case entity.class.name.downcase
-    when "product"
-      "produto"
-    when "customer"
-      "cliente"
-    when "sale"
-      "venda"
-    when "user"
-      "usuário"
-    else
-      entity.class.name.downcase
-    end
+    entity.class.model_name.human.downcase
   end
 
   def entity_path_parts(entity)
