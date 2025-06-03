@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+      }
+
+      .promissory {
+        width: 18cm;
+        height: 8cm;
+        margin: 1cm auto;
+        border: 1px solid #000;
+        position: relative;
+        padding: 0.25cm;
+      }
+
+      .logo {
+        position: absolute;
+        top: 0.5cm;
+        left: 0.5cm;
+        width: 1.5cm;
+        height: 1.5cm;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 1cm;
+      }
+
+      .header h3 {
+        margin: 0;
+        font-size: 14px;
+      }
+
+      .header .code {
+        margin-top: 0.2cm;
+        font-size: 12px;
+      }
+
+      .field {
+        margin-bottom: 0.5cm;
+      }
+
+      .field-line {
+        display: flex;
+        align-items: center;
+        gap: 0.2cm;
+        margin-bottom: 0.5cm;
+      }
+
+      .field-group {
+        display: flex;
+        gap: 1cm;
+      }
+
+      .underline {
+        border-bottom: 1px solid #000;
+        min-width: 3cm;
+        display: inline-block;
+        height: 1.2em;
+      }
+
+      .signature {
+        margin-top: 1.5cm;
+        text-align: center;
+      }
+
+      .signature-line {
+        width: 12cm;
+        border-bottom: 1px solid #000;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="promissory">
+      <div class="header">
+        <img src='<%= "file://#{Rails.root.join('app/assets/images/logo-lbv.png')}" %>' class='logo'>
+        <div>
+          <h3>ADIANTAMENTO SALARIAL</h3>
+          <div class="code">Código: 1613</div>
+        </div>
+      </div>
+
+      <div class="field-line">
+        <span>R$</span>
+        <span class="underline" style="width: 15cm;"></span>
+      </div>
+
+      <div class="field-line">
+        <span>Desconto mês:</span>
+        <span class="underline" style="width: 3cm;"></span>
+        <span>/</span>
+        <span class="underline" style="width: 2cm;"></span>
+      </div>
+
+      <div class="field-line">
+        <span>Nome:</span>
+        <span class="underline" style="width: 15cm;"></span>
+      </div>
+
+      <div class="field-group">
+        <div class="field-line">
+          <span>Matrícula:</span>
+          <span class="underline" style="width: 5cm;"></span>
+          <span>CPF:</span>
+          <span class="underline" style="width: 5cm;"></span>
+        </div>
+      </div>
+
+      <div class="field-line">
+        <span>Data:</span>
+        <span class="underline" style="width: 5cm;"></span>
+      </div>
+
+      <div class="signature">
+        <div class="signature-line"></div>
+        <div>Assinatura</div>
+      </div>
+    </div>
+  </body>
+</html>
