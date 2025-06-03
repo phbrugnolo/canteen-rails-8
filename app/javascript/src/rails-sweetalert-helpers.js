@@ -48,16 +48,31 @@ window.showRailsConfirmDialog = function(options) {
     icon = 'warning',
     confirmButtonText = 'Sim, continuar',
     cancelButtonText = 'Cancelar',
+    action = '',
     onSuccess = null,
     onCancel = null
   } = options;
+
+  let customButtonClass = '';
+  switch (action) {
+    case 'activate':
+      customButtonClass = 'btn-activate-confirm';
+      break;
+    case 'deactivate':
+      customButtonClass = 'btn-deactivate-confirm';
+      break;
+    case 'delete':
+      customButtonClass = 'btn-delete-confirm';
+      break;
+  }
 
   return window.showConfirmDialog({
     title,
     text,
     icon,
     confirmButtonText,
-    cancelButtonText
+    cancelButtonText,
+    customButtonClass
   }).then((result) => {
     if (result.isConfirmed) {
       if (url) {

@@ -136,11 +136,11 @@ module ConfirmationHelper
   def default_button_class(action)
     case action
     when "activate"
-      "btn btn-success me-1"
+      "btn btn-activate me-1"
     when "deactivate"
-      "btn btn-danger me-1"
+      "btn btn-deactivate me-1"
     when "delete"
-      "btn btn-danger"
+      "btn btn-delete"
     else
       "btn btn-primary"
     end

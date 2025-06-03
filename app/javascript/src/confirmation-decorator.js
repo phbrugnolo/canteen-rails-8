@@ -55,6 +55,7 @@ class ConfirmationDecorator {
     return window.showRailsConfirmDialog({
       url: this.options.url,
       method: this.options.method,
+      action: this.options.action,
       ...dialogOptions,
       onSuccess: () => {
         if (this.options.onSuccess) {
