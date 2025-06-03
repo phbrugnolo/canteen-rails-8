@@ -14,7 +14,6 @@ export class SalesManager {
     try {
       const products = await this.fetchProducts();
       this.setupManagers(products);
-      this.setupGlobalMethods();
     } catch (error) {
       console.error('Erro ao inicializar vendas:', error);
       this.showError('Erro ao carregar produtos. Tente recarregar a página.');
@@ -40,12 +39,6 @@ export class SalesManager {
     });
   }
 
-  setupGlobalMethods() {
-    window.removeProduct = (productId) => this.cartManager.removeProduct(productId);
-    window.addItem = (productId) => this.cartManager.addItem(productId);
-    window.removeItem = (productId) => this.cartManager.removeItem(productId);
-  }
-
   showError(message) {
     const errorDiv = document.createElement('div');
     errorDiv.className = 'alert alert-danger alert-dismissible fade show';
@@ -61,14 +54,19 @@ export class SalesManager {
   }
 
   validateForm() {
+    const errors = [];
+
     if (this.cartManager.isEmpty()) {
-      this.showError('Adicione pelo menos um produto ao carrinho.');
-      return false;
+      errors.push('Adicione pelo menos um produto ao carrinho.');
     }
 
     const customerSelect = document.getElementById('customer-id');
     if (!customerSelect || !customerSelect.value) {
-      this.showError('Selecione um cliente.');
+      errors.push('Selecione um cliente.');
+    }
+
+    if (errors.length > 0) {
+      this.showError(errors.join('<br>'));
       return false;
     }
 
@@ -78,18 +76,15 @@ export class SalesManager {
   reset() {
     this.cartManager.clear();
 
-    // Limpar seleção de cliente
     const customerSelect = document.getElementById('customer-id');
     if (customerSelect) {
       customerSelect.value = '';
-      // Se está usando TomSelect, atualizar também
       if (customerSelect.tomselect) {
         customerSelect.tomselect.clear();
       }
     }
   }
 
-  // Método para limpar tudo quando sair da página
   destroy() {
     if (this.cartManager && typeof this.cartManager.destroy === 'function') {
       this.cartManager.destroy();
@@ -98,11 +93,6 @@ export class SalesManager {
     if (this.productManager && typeof this.productManager.destroy === 'function') {
       this.productManager.destroy();
     }
-
-    // Limpar métodos globais
-    if (window.removeProduct) delete window.removeProduct;
-    if (window.addItem) delete window.addItem;
-    if (window.removeItem) delete window.removeItem;
   }
 }
 

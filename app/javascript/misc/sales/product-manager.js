@@ -94,7 +94,6 @@ export class ProductManager {
   }
 
   setupEvents() {
-    // Remove event listener anterior se existir
     if (this.handleAddProduct && this.container) {
       this.container.removeEventListener('click', this.handleAddProduct);
     }
@@ -107,7 +106,6 @@ export class ProductManager {
         const productIndex = parseInt(event.target.getAttribute("data-key"));
         const product = this.products[productIndex];
         if (product && this.onAddProduct) {
-          // Criar uma cópia do produto para evitar mutação
           const productCopy = {
             ...product,
             price: parseFloat(product.price)
@@ -122,14 +120,12 @@ export class ProductManager {
     }
   }
 
-  // Método para limpar event listeners
   destroy() {
     if (this.handleAddProduct && this.container) {
       this.container.removeEventListener('click', this.handleAddProduct);
       this.handleAddProduct = null;
     }
 
-    // Limpar o FilterManager se existir
     if (this.filterManager) {
       this.filterManager = null;
     }
