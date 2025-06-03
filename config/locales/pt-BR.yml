@@ -34,6 +34,32 @@ pt-BR:
   product_deactivation: "Tem certeza que deseja desativar o produto?"
   customer_activation: "Tem certeza que deseja ativar a conta do cliente?"
   customer_deactivation: "Tem certeza que deseja desativar a conta do cliente?"
+
+  confirmations:
+    activate:
+      title: "Confirmar Ativação"
+      text: "Tem certeza que deseja ativar este %{entity}?"
+      button: "Sim, ativar"
+      success: "%{entity} ativado com sucesso!"
+      error: "Erro ao ativar %{entity}. Tente novamente."
+    deactivate:
+      title: "Confirmar Desativação"
+      text: "Tem certeza que deseja desativar este %{entity}?"
+      button: "Sim, desativar"
+      success: "%{entity} desativado com sucesso!"
+      error: "Erro ao desativar %{entity}. Tente novamente."
+    delete:
+      title: "Confirmar Exclusão"
+      text: "Tem certeza que deseja excluir este %{entity}? Esta ação não pode ser desfeita."
+      button: "Sim, excluir"
+      success: "%{entity} excluído com sucesso!"
+      error: "Erro ao excluir %{entity}. Tente novamente."
+    default:
+      title: "Confirmar Ação"
+      text: "Tem certeza que deseja realizar esta ação?"
+      button: "Sim, continuar"
+      success: "Operação realizada com sucesso!"
+      error: "Erro ao realizar operação. Tente novamente."
   select_status: "Selecione o status"
   search_by_name: "Pesquisar por nome"
   search_product: "Procurar produto.."
@@ -75,6 +101,7 @@ pt-BR:
       equal_to: "Deve ser igual a %{count}"
       less_than: "Deve ser menor que %{count}"
       less_than_or_equal_to: "Deve ser menor ou igual a %{count}"
+      inclusion: "Não está incluído na lista"
   form:
     actions:
       back: "Voltar"
@@ -123,6 +150,9 @@ pt-BR:
       sale:
         one: "Vender"
         other: "Vendas"
+      user:
+        one: "Usuário"
+        other: "Usuários"
     errors:
       models:
         sale:

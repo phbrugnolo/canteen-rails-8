@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :sales
-  resources :customers
   concern :activatable do
     member do
       patch :activate
