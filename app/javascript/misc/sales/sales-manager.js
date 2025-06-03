@@ -1,23 +1,62 @@
 import { ProductManager } from './product-manager.js';
 import { CartManager } from './cart-manager.js';
+import { ToastManager } from './toast-manager.js';
 
 export class SalesManager {
   constructor() {
     this.productManager = new ProductManager();
     this.cartManager = new CartManager();
+    this.toastManager = new ToastManager();
     this.apiEndpoint = null;
   }
 
   async initialize(apiEndpoint) {
     this.apiEndpoint = apiEndpoint;
 
+    // Show loading state
+    this.showLoadingState();
+
     try {
       const products = await this.fetchProducts();
       this.setupManagers(products);
+      this.hideLoadingState();
+      this.toastManager.success('Sistema de vendas carregado com sucesso!');
     } catch (error) {
       console.error('Erro ao inicializar vendas:', error);
-      this.showError('Erro ao carregar produtos. Tente recarregar a página.');
+      this.hideLoadingState();
+      this.toastManager.error('Erro ao carregar produtos. Tente recarregar a página.');
     }
+  }
+
+  showLoadingState() {
+    const productsContainer = document.getElementById('products');
+    const cartContainer = document.getElementById('cart');
+
+    if (productsContainer) {
+      productsContainer.innerHTML = `
+        <div class="text-center p-5">
+          <div class="spinner-border text-primary mb-3" role="status">
+            <span class="visually-hidden">Carregando...</span>
+          </div>
+          <p class="text-muted">Carregando produtos...</p>
+        </div>
+      `;
+    }
+
+    if (cartContainer) {
+      cartContainer.innerHTML = `
+        <div class="text-center p-4">
+          <div class="spinner-border spinner-border-sm text-muted" role="status">
+            <span class="visually-hidden">Carregando...</span>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  hideLoadingState() {
+    // Loading states will be replaced by the actual content
+    // when managers are initialized
   }
 
   async fetchProducts() {
@@ -36,6 +75,7 @@ export class SalesManager {
 
     this.productManager.bindAddEvents((product) => {
       this.cartManager.addProduct(product);
+      this.toastManager.success(`${product.name} adicionado ao carrinho!`);
     });
   }
 
@@ -66,10 +106,30 @@ export class SalesManager {
     }
 
     if (errors.length > 0) {
-      this.showError(errors.join('<br>'));
+      this.toastManager.error(errors.join(' '), 5000);
+
+      // Highlight form fields with errors
+      if (this.cartManager.isEmpty()) {
+        const cartCard = document.querySelector('#cart').closest('.card');
+        if (cartCard) {
+          cartCard.style.border = '2px solid #dc3545';
+          setTimeout(() => {
+            cartCard.style.border = '';
+          }, 3000);
+        }
+      }
+
+      if (!customerSelect || !customerSelect.value) {
+        customerSelect.style.border = '2px solid #dc3545';
+        setTimeout(() => {
+          customerSelect.style.border = '';
+        }, 3000);
+      }
+
       return false;
     }
 
+    this.toastManager.success('Validação concluída! Finalizando venda...');
     return true;
   }
 

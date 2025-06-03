@@ -1,5 +1,3 @@
-import { FilterManager } from '../../shared/filter-manager.js';
-
 export class ProductManager {
   constructor() {
     this.products = [];
@@ -17,76 +15,123 @@ export class ProductManager {
 
   render() {
     this.container.innerHTML = `
-      <input id="search-input" type="text" placeholder="Buscar produto" class="mx-4">
-      <div class="text-center table-wrapper-scroll-y">
-        <table class="table table-bordered table-hover my-4 mx-6 my-custom-scrollbar">
-          <thead class="table-size">
-            <tr>
-              <th scope="col" class="col-2"></th>
-              <th scope="col" class="col-6">Produto</th>
-              <th scope="col" class="col-2">Preço (R$)</th>
-              <th scope="col" class="col-2"></th>
-            </tr>
-          </thead>
-          <tbody id="products-table" class="table-size">
-            ${this.generateProductRows()}
-          </tbody>
-        </table>
+      <!-- Search Section -->
+      <div class="p-3 bg-light border-bottom">
+        <div class="input-group">
+          <span class="input-group-text bg-white border-end-0">
+            <i class="bi bi-search text-muted"></i>
+          </span>
+          <input id="search-input"
+                 type="text"
+                 placeholder="Buscar produto..."
+                 class="form-control border-start-0"
+                 style="box-shadow: none;">
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="p-3">
+        <div id="products-grid" class="row g-3">
+          ${this.generateProductCards()}
+        </div>
+        <div id="no-results" class="text-center py-5 d-none">
+          <i class="bi bi-search display-1 text-muted"></i>
+          <p class="text-muted mt-3">Nenhum produto encontrado</p>
+          <small class="text-muted">Tente buscar com outras palavras</small>
+        </div>
       </div>
     `;
 
     this.setupEvents();
   }
 
-  generateProductRows() {
+  generateProductCards() {
     return this.products.map((product, index) => {
       const formattedPrice = parseFloat(product.price).toFixed(2);
       return `
-        <tr>
-          <td scope="row" class="col-2">
-            <img src="${product.image_url}" height="55" alt="Imagem do produto"/>
-          </td>
-          <td class="col-6">${product.name}</td>
-          <td class="col-2">${formattedPrice}</td>
-          <td class="col-2 text-center">
-            <input type="button" class="btn btn-success add" data-key="${index}" value="Adicionar">
-          </td>
-        </tr>
+        <div class="col-md-6 col-lg-4 product-card" data-name="${product.name.toLowerCase()}">
+          <div class="card h-100 shadow-sm border-0 product-item" style="transition: all 0.3s ease;">
+            <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                 style="height: 120px; overflow: hidden;">
+              <img src="${product.image_url}"
+                   alt="Imagem do produto ${product.name}"
+                   class="img-fluid"
+                   style="max-height: 100px; max-width: 100%; object-fit: contain;"
+                   onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjRjhGOUZBIi8+CjxwYXRoIGQ9Ik0yMCAyMEg0MFY0MEgyMFYyMFoiIGZpbGw9IiNEMUQ1REIiLz4KPC9zdmc+Cg=='"/>
+            </div>
+            <div class="card-body p-3">
+              <h6 class="card-title mb-2 fw-semibold text-truncate" title="${product.name}">
+                ${product.name}
+              </h6>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="h5 mb-0 text-success fw-bold">R$ ${formattedPrice}</span>
+                <button type="button"
+                        class="btn btn-success btn-sm add fw-semibold px-3"
+                        data-key="${index}"
+                        style="border-radius: 20px; box-shadow: 0 2px 8px rgba(25, 135, 84, 0.3);">
+                  <i class="bi bi-plus-circle me-1"></i>
+                  Adicionar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       `;
     }).join('');
   }
 
   setupFilter() {
-    this.filterManager = new FilterManager({
-      container: '#products-table',
-      items: 'tr',
-      noResultsMessage: 'Nenhum produto encontrado',
-      noResultsIcon: 'bi-box-seam',
-      filters: [
-        {
-          input: '#search-input',
-          getText: (row) => {
-            const nameCell = row.querySelector('td:nth-child(2)');
-            return nameCell ? nameCell.textContent : '';
-          },
-          matchType: 'includes'
-        }
-      ]
+    const searchInput = document.getElementById('search-input');
+    const productsGrid = document.getElementById('products-grid');
+    const noResults = document.getElementById('no-results');
+
+    if (!searchInput || !productsGrid) return;
+
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase().trim();
+      const productCards = productsGrid.querySelectorAll('.product-card');
+      let visibleCount = 0;
+
+      productCards.forEach(card => {
+        const productName = card.dataset.name;
+        const isVisible = productName.includes(searchTerm);
+
+        card.style.display = isVisible ? 'block' : 'none';
+        if (isVisible) visibleCount++;
+      });
+
+      // Show/hide no results message
+      if (noResults) {
+        noResults.classList.toggle('d-none', visibleCount > 0);
+      }
     });
 
-    this.filterManager.onFilter = () => {
-      this.adjustTableSize();
-    };
+    // Add hover effects to product cards
+    this.addHoverEffects();
+  }
+
+  addHoverEffects() {
+    // Use event delegation for hover effects
+    this.container.addEventListener('mouseenter', (e) => {
+      if (e.target.closest('.product-item')) {
+        const card = e.target.closest('.product-item');
+        card.style.transform = 'translateY(-4px)';
+        card.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+      }
+    }, true);
+
+    this.container.addEventListener('mouseleave', (e) => {
+      if (e.target.closest('.product-item')) {
+        const card = e.target.closest('.product-item');
+        card.style.transform = 'translateY(0)';
+        card.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+      }
+    }, true);
   }
 
   adjustTableSize() {
-    const rows = Array.from(document.querySelectorAll("#products-table tr"));
-    const visibleRows = rows.filter(row => row.style.display !== "none");
-    const tableWrapper = document.querySelector("#products .table-wrapper-scroll-y");
-
-    if (tableWrapper) {
-      tableWrapper.style.maxHeight = visibleRows.length <= 5 ? "none" : "400px";
-    }
+    // This method is no longer needed with the card layout
+    // Keeping for compatibility
   }
 
   bindAddEvents(onAddProduct) {
@@ -103,9 +148,23 @@ export class ProductManager {
         event.preventDefault();
         event.stopPropagation();
 
-        const productIndex = parseInt(event.target.getAttribute("data-key"));
+        const button = event.target;
+        const productIndex = parseInt(button.getAttribute("data-key"));
         const product = this.products[productIndex];
+
         if (product && this.onAddProduct) {
+          // Add visual feedback
+          button.classList.add('animate-success');
+          button.innerHTML = '<i class="bi bi-check-circle me-1"></i>Adicionado!';
+          button.disabled = true;
+
+          // Reset button after animation
+          setTimeout(() => {
+            button.classList.remove('animate-success');
+            button.innerHTML = '<i class="bi bi-plus-circle me-1"></i>Adicionar';
+            button.disabled = false;
+          }, 1000);
+
           const productCopy = {
             ...product,
             price: parseFloat(product.price)
@@ -126,8 +185,16 @@ export class ProductManager {
       this.handleAddProduct = null;
     }
 
-    if (this.filterManager) {
-      this.filterManager = null;
+    // Remove hover event listeners
+    if (this.container) {
+      this.container.removeEventListener('mouseenter', this.handleMouseEnter, true);
+      this.container.removeEventListener('mouseleave', this.handleMouseLeave, true);
+    }
+
+    // Clear search input
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.removeEventListener('input', this.handleSearch);
     }
   }
 }

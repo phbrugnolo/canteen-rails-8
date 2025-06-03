@@ -108,6 +108,7 @@ export class CartManager {
     this.render();
     this.updateTotalPrice();
     this.updateCartData();
+    this.updateCartSummaryDisplay();
   }
 
   render() {
@@ -131,41 +132,52 @@ export class CartManager {
         const subTotal = (price * quantity).toFixed(2);
 
         return `
-          <tr class="row" data-product-id="${product.id}">
-            <td class="col-4">${this.escapeHtml(product.name || 'Produto sem nome')}</td>
-            <td class="col-2">${quantity}</td>
-            <td class="col-2"> R$ ${formattedPrice}</td>
-            <td class="col-2"> R$ ${subTotal}</td>
-            <td class="col-2 m-auto text-center">
-              <button type="button" class="btn btn-primary btn-sm" data-action="add" data-product-id="${product.id}" title="Adicionar mais um">
-                <i class="bi bi-plus-circle"></i>
-              </button>
-              <button type="button" class="btn btn-primary btn-sm" data-action="remove" data-product-id="${product.id}" title="Remover um">
-                <i class="bi bi-dash-circle"></i>
-              </button>
-              <button type="button" class="btn btn-danger btn-sm" data-action="delete" data-product-id="${product.id}" title="Remover do carrinho">
-                <i class="bi bi-trash3"></i>
-              </button>
-            </td>
-          </tr>
+          <div class="cart-item border-bottom py-3 px-3" data-product-id="${product.id}">
+            <div class="row align-items-center">
+              <div class="col-7">
+                <h6 class="mb-1 fw-semibold text-truncate">${this.escapeHtml(product.name || 'Produto sem nome')}</h6>
+                <small class="text-muted">R$ ${formattedPrice} cada</small>
+              </div>
+              <div class="col-5 text-end">
+                <div class="d-flex align-items-center justify-content-end gap-2 mb-2">
+                  <button type="button" class="btn btn-outline-secondary btn-sm"
+                          data-action="remove" data-product-id="${product.id}"
+                          title="Remover um"
+                          style="width: 28px; height: 28px; padding: 0; border-radius: 50%;">
+                    <i class="bi bi-dash small"></i>
+                  </button>
+
+                  <span class="fw-bold px-2 min-width-30 text-center">${quantity}</span>
+
+                  <button type="button" class="btn btn-outline-secondary btn-sm"
+                          data-action="add" data-product-id="${product.id}"
+                          title="Adicionar mais um"
+                          style="width: 28px; height: 28px; padding: 0; border-radius: 50%;">
+                    <i class="bi bi-plus small"></i>
+                  </button>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <strong class="text-success">R$ ${subTotal}</strong>
+                  <button type="button" class="btn btn-outline-danger btn-sm"
+                          data-action="delete" data-product-id="${product.id}"
+                          title="Remover do carrinho"
+                          style="width: 28px; height: 28px; padding: 0; border-radius: 50%;">
+                    <i class="bi bi-trash3 small"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         `;
       }).join('');
 
       this.container.innerHTML = `
-        <table class="table table-bordered table-hover table-sm my-4 m-auto">
-          <thead>
-            <tr class="row">
-              <th class="col-4 text-center">Produto</th>
-              <th class="col-2 text-center">Quantidade</th>
-              <th class="col-2 text-center">Preço unitário</th>
-              <th class="col-2 text-center">Subtotal</th>
-              <th class="col-2 text-center">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div class="cart-content">
+          <div class="cart-items" style="max-height: 400px; overflow-y: auto;">
             ${cartRows}
-          </tbody>
-        </table>
+          </div>
+        </div>
       `;
     } catch (error) {
       console.error('Error rendering cart:', error);
@@ -175,10 +187,12 @@ export class CartManager {
 
   renderEmptyCart() {
     this.container.innerHTML = `
-      <div class="text-center p-4">
-        <i class="bi bi-cart-x display-1 text-muted"></i>
-        <p class="text-muted mt-2">Carrinho vazio</p>
-        <p class="text-muted small">Adicione produtos para começar</p>
+      <div class="text-center p-5">
+        <div class="mb-3">
+          <i class="bi bi-cart-x" style="font-size: 3rem; color: #dee2e6;"></i>
+        </div>
+        <h6 class="text-muted mb-2">Carrinho vazio</h6>
+        <small class="text-muted">Adicione produtos para começar sua venda</small>
       </div>
     `;
   }
@@ -260,6 +274,22 @@ export class CartManager {
       }
     } catch (error) {
       console.error('Error updating cart data:', error);
+    }
+  }
+
+  updateCartSummaryDisplay() {
+    const summary = this.getCartSummary();
+
+    // Update item count
+    const itemCountElement = document.getElementById('cart-item-count');
+    if (itemCountElement) {
+      itemCountElement.textContent = summary.totalQuantity;
+    }
+
+    // Update total value
+    const totalElement = document.getElementById('cart-total');
+    if (totalElement) {
+      totalElement.textContent = summary.totalValue.toFixed(2).replace('.', ',');
     }
   }
 

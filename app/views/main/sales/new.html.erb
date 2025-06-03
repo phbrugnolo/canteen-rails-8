@@ -1,20 +1,105 @@
-<div class="container">
-  <h1 class="m-3"><%= I18n.t(:sale, scope: %i[activerecord models], count: 1) %></h1>
-  <hr>
-  <div id="products"></div>
-  <div>
-    <div>
-      <div id="cart"></div>
-    </div>
-    <div>
-      <%= render "form", sale: @sale %>
+<div class="container-fluid px-4 py-3">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex align-items-center justify-content-between">
+        <h1 class="h3 mb-0 text-primary fw-bold">
+          <i class="bi bi-cart-plus me-2"></i>
+          <%= I18n.t(:sale, scope: %i[activerecord models], count: 1) %>
+        </h1>
+        <div class="badge bg-light text-dark fs-6 px-3 py-2">
+          <i class="bi bi-clock me-1"></i>
+          <span id="current-time"></span>
+        </div>
+      </div>
     </div>
   </div>
-  <br>
+
+  <!-- Main Content -->
+  <div class="row g-4">
+    <!-- Products Section -->
+    <div class="col-xl-8 col-lg-7">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-header bg-white border-bottom-0 py-3">
+          <h5 class="mb-0 text-dark fw-semibold">
+            <i class="bi bi-grid-3x3-gap me-2"></i>
+            Produtos Disponíveis
+          </h5>
+        </div>
+        <div class="card-body p-0">
+          <div id="products"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart and Form Section -->
+    <div class="col-xl-4 col-lg-5">
+      <div class="row g-4 h-100">
+        <!-- Cart Section -->
+        <div class="col-12">
+          <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white py-3">
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <h5 class="mb-0 fw-semibold">
+                  <i class="bi bi-cart3 me-2"></i>
+                  Carrinho
+                </h5>
+                <div class="cart-summary d-flex gap-2 flex-wrap">
+                  <span class="badge bg-light text-primary px-2 py-1 small">
+                    <i class="bi bi-box me-1"></i>
+                    <span id="cart-item-count">0</span> itens
+                  </span>
+                  <span class="badge bg-light text-primary px-2 py-1 small">
+                    <i class="bi bi-currency-dollar me-1"></i>
+                    R$ <span id="cart-total">0,00</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div id="cart"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Section -->
+        <div class="col-12">
+          <div class="card shadow-sm border-0">
+            <div class="card-header bg-success text-white py-3">
+              <h5 class="mb-0 fw-semibold">
+                <i class="bi bi-check-circle me-2"></i>
+                Finalizar Venda
+              </h5>
+            </div>
+            <div class="card-body">
+              <%= render "form", sale: @sale %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
   document.addEventListener("DOMContentLoaded", async () => {
+    // Initialize time display
+    function updateTime() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('pt-BR', {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      const timeElement = document.getElementById('current-time');
+      if (timeElement) {
+        timeElement.textContent = timeString;
+      }
+    }
+
+    updateTime();
+    setInterval(updateTime, 60000); // Update every minute
+
+    // Initialize sales manager
     const salesManager = new SalesManager();
     const apiEndpoint = "<%= new_main_sale_path(format: :json) %>";
 

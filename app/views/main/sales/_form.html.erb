@@ -1,34 +1,81 @@
-<div class="row">
-  <div class="col-12">
-    <%= simple_form_for [:main, @sale] do |f| %>
-      <%= f.error_notification %>
-      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-      <div class="form-inputs w-50 float-end">
-        <div class="float-end w-100">
-          <%= f.association :customer,
-                collection: @customers,
-                label_method: :name,
-                value_method: :id,
-                input_html: { id: "customer-id" },
-                include_blank: false,
-                prompt: I18n.t(:select_a_customer) %>
-        </div>
-        <%= f.input :cart, as: :hidden, input_html: { value: "" }, error: "" %>
-        <div class="float-end" style="width: 30%;">
-          <p style="margin-bottom: 5px;"><%= I18n.t(:total_price) %>:</p>
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">R$</span>
-            <%= f.text_field :total_price, readonly: true, error: "Nenhum produto selecionado", class: "form-control" %>
-          </div>
-        </div>
-      </div>
-      <hr class="my-4 w-100">
-      <div class="form-actions d-flex justify-content-end">
-        <%= f.submit I18n.t(:close_sale), class: "btn btn-primary" %>
-      </div>
-    <% end %>
+<%= simple_form_for [:main, @sale] do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <!-- Customer Selection -->
+  <div class="mb-4">
+    <label class="form-label fw-semibold text-dark mb-2">
+      <i class="bi bi-person me-1"></i>
+      Cliente
+    </label>
+    <%= f.association :customer,
+          collection: @customers,
+          label_method: :name,
+          value_method: :id,
+          input_html: {
+            id: "customer-id",
+            class: "form-select",
+            style: "border-radius: 8px;"
+          },
+          label: false,
+          include_blank: false,
+          prompt: I18n.t(:select_a_customer) %>
   </div>
-</div>
+
+  <!-- Hidden Cart Data -->
+  <%= f.input :cart, as: :hidden, input_html: { value: "" }, error: "", label: false %>
+
+  <!-- Total Price Display -->
+  <div class="mb-4">
+    <label class="form-label fw-semibold text-dark mb-2">
+      <i class="bi bi-currency-dollar me-1"></i>
+      <%= I18n.t(:total_price) %>
+    </label>
+    <div class="input-group" style="border-radius: 8px; overflow: hidden;">
+      <span class="input-group-text bg-light border-end-0 fw-bold text-success">R$</span>
+      <%= f.text_field :total_price,
+            readonly: true,
+            class: "form-control border-start-0 bg-light fw-bold text-success fs-5 text-end",
+            style: "font-family: 'Courier New', monospace;" %>
+    </div>
+    <small class="text-muted mt-1 d-block">
+      <i class="bi bi-info-circle me-1"></i>
+      Valor calculado automaticamente
+    </small>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="d-grid">
+    <%= f.submit I18n.t(:close_sale),
+          class: "btn btn-success btn-lg fw-semibold py-3",
+          style: "border-radius: 8px; box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);" %>
+  </div>
+<% end %>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => new TomSelect("#customer-id"));
+  document.addEventListener("DOMContentLoaded", () => {
+    const select = new TomSelect("#customer-id", {
+      create: false,
+      sortField: {
+        field: "text",
+        direction: "asc"
+      },
+      placeholder: "Selecione um cliente...",
+      searchField: ['text'],
+      render: {
+        option: function(data, escape) {
+          return '<div class="py-2 px-1">' +
+                   '<i class="bi bi-person-circle me-2 text-primary"></i>' +
+                   '<span>' + escape(data.text) + '</span>' +
+                 '</div>';
+        },
+        item: function(data, escape) {
+          return '<div>' +
+                   '<i class="bi bi-person-check me-2 text-success"></i>' +
+                   '<span>' + escape(data.text) + '</span>' +
+                 '</div>';
+        }
+      }
+    });
+  });
 </script>
