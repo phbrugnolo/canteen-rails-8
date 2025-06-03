@@ -5,8 +5,8 @@
   /* Confirmation button colors */
   --confirm-activate-color: #10b981;
   --confirm-activate-hover: #059669;
-  --confirm-deactivate-color: #f59e0b;
-  --confirm-deactivate-hover: #d97706;
+  --confirm-deactivate-color: #ef4444;
+  --confirm-deactivate-hover: #dc2626;
   --confirm-delete-color: #ef4444;
   --confirm-delete-hover: #dc2626;
   --confirm-cancel-color: #6b7280;
@@ -37,11 +37,11 @@
 }
 
 .btn-deactivate:hover {
-  background: linear-gradient(135deg, var(--confirm-deactivate-hover) 0%, #b45309 100%);
+  background: linear-gradient(135deg, var(--confirm-deactivate-hover) 0%, #b91c1c 100%);
   border-color: var(--confirm-deactivate-hover);
   color: white;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .btn-delete {
@@ -101,9 +101,9 @@
 }
 
 .swal2-confirm.swal2-styled.btn-deactivate-confirm:hover {
-  background: linear-gradient(135deg, var(--confirm-deactivate-hover) 0%, #b45309 100%);
+  background: linear-gradient(135deg, var(--confirm-deactivate-hover) 0%, #b91c1c 100%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .swal2-confirm.swal2-styled.btn-delete-confirm {
