@@ -1,25 +1,17 @@
-/**
- * ProductManager - Gerencia a listagem e busca de produtos
- */
 export class ProductManager {
   constructor() {
     this.products = [];
     this.container = document.getElementById("products");
   }
 
-  /**
-   * Inicializa o gerenciador de produtos
-   * @param {Array} products - Lista de produtos
-   */
   initialize(products) {
     this.products = products;
+    this.onAddProduct = null;
     this.render();
     this.setupSearch();
+    this.setupEvents();
   }
 
-  /**
-   * Renderiza a interface de produtos
-   */
   render() {
     this.container.innerHTML = `
       <input id="search-input" type="text" placeholder="Buscar produto" class="mx-4">
@@ -39,12 +31,10 @@ export class ProductManager {
         </table>
       </div>
     `;
+
+    this.setupEvents();
   }
 
-  /**
-   * Gera as linhas HTML dos produtos
-   * @returns {string} HTML das linhas de produtos
-   */
   generateProductRows() {
     return this.products.map((product, index) => {
       const formattedPrice = parseFloat(product.price).toFixed(2);
@@ -63,9 +53,6 @@ export class ProductManager {
     }).join('');
   }
 
-  /**
-   * Configura a funcionalidade de busca
-   */
   setupSearch() {
     const searchInput = document.getElementById("search-input");
     if (!searchInput) return;
@@ -77,10 +64,6 @@ export class ProductManager {
     this.adjustTableSize();
   }
 
-  /**
-   * Executa a busca de produtos
-   * @param {string} searchValue - Valor da busca
-   */
   performSearch(searchValue) {
     const value = searchValue.toLowerCase().trim();
     const rows = document.querySelectorAll("#products-table tr");
@@ -93,9 +76,6 @@ export class ProductManager {
     this.adjustTableSize();
   }
 
-  /**
-   * Ajusta o tamanho da tabela baseado no número de itens visíveis
-   */
   adjustTableSize() {
     const rows = Array.from(document.querySelectorAll("#products-table tr"));
     const visibleRows = rows.filter(row => row.style.display !== "none");
@@ -106,21 +86,23 @@ export class ProductManager {
     }
   }
 
-  /**
-   * Vincula eventos de clique nos botões de adicionar
-   * @param {Function} onAddProduct - Callback para quando um produto é adicionado
-   */
   bindAddEvents(onAddProduct) {
-    const addButtons = document.getElementsByClassName("add");
+    this.onAddProduct = onAddProduct;
+  }
 
-    Array.from(addButtons).forEach(button => {
-      button.addEventListener("click", (event) => {
+  setupEvents() {
+    this.container.removeEventListener('click', this.handleAddProduct);
+
+    this.handleAddProduct = (event) => {
+      if (event.target.classList.contains('add')) {
         const productIndex = parseInt(event.target.getAttribute("data-key"));
         const product = this.products[productIndex];
-        if (product && onAddProduct) {
-          onAddProduct(product);
+        if (product && this.onAddProduct) {
+          this.onAddProduct(product);
         }
-      });
-    });
+      }
+    };
+
+    this.container.addEventListener('click', this.handleAddProduct);
   }
 }

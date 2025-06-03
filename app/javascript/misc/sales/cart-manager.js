@@ -1,6 +1,3 @@
-/**
- * CartManager - Gerencia o carrinho de compras
- */
 export class CartManager {
   constructor() {
     this.selectedProducts = [];
@@ -9,19 +6,12 @@ export class CartManager {
     this.cartInput = null;
   }
 
-  /**
-   * Inicializa o gerenciador do carrinho
-   */
   initialize() {
     this.totalPriceInput = document.getElementById("sale_total_price");
     this.cartInput = document.getElementById("sale_cart");
     this.render();
   }
 
-  /**
-   * Adiciona um produto ao carrinho
-   * @param {Object} product - Produto a ser adicionado
-   */
   addProduct(product) {
     const existingProduct = this.selectedProducts.find(p => p.id === product.id);
 
@@ -35,10 +25,6 @@ export class CartManager {
     this.update();
   }
 
-  /**
-   * Remove um produto do carrinho
-   * @param {number} index - Índice do produto no array
-   */
   removeProduct(index) {
     if (index >= 0 && index < this.selectedProducts.length) {
       this.selectedProducts.splice(index, 1);
@@ -46,10 +32,6 @@ export class CartManager {
     }
   }
 
-  /**
-   * Adiciona uma unidade de um produto
-   * @param {number} index - Índice do produto no array
-   */
   addItem(index) {
     if (index >= 0 && index < this.selectedProducts.length) {
       this.selectedProducts[index].quantity++;
@@ -57,10 +39,6 @@ export class CartManager {
     }
   }
 
-  /**
-   * Remove uma unidade de um produto
-   * @param {number} index - Índice do produto no array
-   */
   removeItem(index) {
     if (index >= 0 && index < this.selectedProducts.length) {
       const product = this.selectedProducts[index];
@@ -73,10 +51,6 @@ export class CartManager {
     }
   }
 
-  /**
-   * Calcula o valor total do carrinho
-   * @returns {number} Valor total
-   */
   calculateTotal() {
     return this.selectedProducts.reduce((total, product) => {
       if (typeof product.quantity === "number" && typeof product.price === "number") {
@@ -86,18 +60,12 @@ export class CartManager {
     }, 0);
   }
 
-  /**
-   * Atualiza a exibição do carrinho
-   */
   update() {
     this.render();
     this.updateTotalPrice();
     this.updateCartData();
   }
 
-  /**
-   * Renderiza o carrinho
-   */
   render() {
     if (!this.container) return;
 
@@ -148,9 +116,6 @@ export class CartManager {
     this.bindEvents();
   }
 
-  /**
-   * Vincula eventos aos botões do carrinho
-   */
   bindEvents() {
     this.container.addEventListener('click', (event) => {
       const button = event.target.closest('button[data-action]');
@@ -173,18 +138,12 @@ export class CartManager {
     });
   }
 
-  /**
-   * Atualiza o campo de preço total
-   */
   updateTotalPrice() {
     if (this.totalPriceInput) {
       this.totalPriceInput.value = this.calculateTotal().toFixed(2);
     }
   }
 
-  /**
-   * Atualiza o campo de dados do carrinho
-   */
   updateCartData() {
     if (this.cartInput) {
       const cartData = this.selectedProducts.map(product => ({
@@ -197,18 +156,11 @@ export class CartManager {
     }
   }
 
-  /**
-   * Limpa o carrinho
-   */
   clear() {
     this.selectedProducts = [];
     this.update();
   }
 
-  /**
-   * Verifica se o carrinho está vazio
-   * @returns {boolean}
-   */
   isEmpty() {
     return this.selectedProducts.length === 0;
   }
