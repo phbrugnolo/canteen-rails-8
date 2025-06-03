@@ -1,2 +1,5 @@
-import "./loaders/dependencies"
-import "./loaders/boot"
+import './src/dependencies'
+import './src/sweetalert'
+import './src/rails-sweetalert-helpers'
+import './src/boot'
+import './misc/customers'

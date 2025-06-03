@@ -49,7 +49,7 @@ Customer.create([
 
 Sale.create([
   {
-    customer_id: 1,
+    customer_id: 2,
     cart: "[{\"name\":\"Bala\",\"price\":\"0.25\",\"id\":1,\"quantity\":4},{\"name\":\"Diversos\",\"price\":\"0.50\",\"id\":2,\"quantity\":2}]",
     total_price: 2.00
   }

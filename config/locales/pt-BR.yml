@@ -8,18 +8,21 @@ pt-BR:
   date: "Data"
   user: "Usuário"
   active: "Ativo"
+  actives: "Ativo(s)"
   inactive: "Inativo"
   activate: "Ativar"
   deactivate: "Desativar"
   documents: "Documentos"
   purchases: "Compras"
   no_purchases_made: "Nenhuma compra realizada"
+  no_purchases_found: "Nenhuma compra encontrada"
   select_a_customer: "Selecione um cliente"
   price: "Preço"
   total_price: "Preço total"
   subtotal: "Subtotal"
   price_per_unit: "Preço por unidade"
   show_cart: "Exibir carrinho"
+  hide_cart: "Ocultar carrinho"
   show_sale: "Exibir venda"
   close_sale: "Encerrar compra"
   actions: "Ações"
@@ -31,6 +34,32 @@ pt-BR:
   product_deactivation: "Tem certeza que deseja desativar o produto?"
   customer_activation: "Tem certeza que deseja ativar a conta do cliente?"
   customer_deactivation: "Tem certeza que deseja desativar a conta do cliente?"
+
+  confirmations:
+    activate:
+      title: "Confirmar Ativação"
+      text: "Tem certeza que deseja ativar este %{entity}?"
+      button: "Sim, ativar"
+      success: "%{entity} ativado com sucesso!"
+      error: "Erro ao ativar %{entity}. Tente novamente."
+    deactivate:
+      title: "Confirmar Desativação"
+      text: "Tem certeza que deseja desativar este %{entity}?"
+      button: "Sim, desativar"
+      success: "%{entity} desativado com sucesso!"
+      error: "Erro ao desativar %{entity}. Tente novamente."
+    delete:
+      title: "Confirmar Exclusão"
+      text: "Tem certeza que deseja excluir este %{entity}? Esta ação não pode ser desfeita."
+      button: "Sim, excluir"
+      success: "%{entity} excluído com sucesso!"
+      error: "Erro ao excluir %{entity}. Tente novamente."
+    default:
+      title: "Confirmar Ação"
+      text: "Tem certeza que deseja realizar esta ação?"
+      button: "Sim, continuar"
+      success: "Operação realizada com sucesso!"
+      error: "Erro ao realizar operação. Tente novamente."
   select_status: "Selecione o status"
   search_by_name: "Pesquisar por nome"
   search_product: "Procurar produto.."
@@ -40,6 +69,24 @@ pt-BR:
   show: "Visualizar"
   model_was_successfully_created: "%{model} foi criado com sucesso"
   model_was_successfully_updated: "%{model} foi atualizado com sucesso"
+  dashboard: "Painel de Controle"
+  welcome_back: "Bem-vindo de volta"
+  total_revenue: "Receita Total"
+  revenue: "Receita"
+  all_time: "Todos os tempos"
+  this_month: "Este mês"
+  today: "Hoje"
+  this_year: "Este ano"
+  all_period: "Todo período"
+  recent_sales: "Vendas Recentes"
+  quick_actions: "Ações Rápidas"
+  new_sale: "Nova Venda"
+  top_customers: "Melhores Clientes"
+  no_customer_data: "Nenhum dado de cliente disponível"
+  no_recent_sales: "Nenhuma venda recente"
+  view_all_sales: "Ver Todas as Vendas"
+  create_sale: "Criar Venda"
+  ago: "atrás"
   errors:
     messages:
       blank: "Não pode ficar em branco"
@@ -54,6 +101,7 @@ pt-BR:
       equal_to: "Deve ser igual a %{count}"
       less_than: "Deve ser menor que %{count}"
       less_than_or_equal_to: "Deve ser menor ou igual a %{count}"
+      inclusion: "Não está incluído na lista"
   form:
     actions:
       back: "Voltar"
@@ -112,6 +160,9 @@ pt-BR:
       sale:
         one: "Vender"
         other: "Vendas"
+      user:
+        one: "Usuário"
+        other: "Usuários"
     errors:
       models:
         sale:
@@ -119,3 +170,50 @@ pt-BR:
             customer:
               blank: "não pode ficar em branco"
               required: "não pode ficar em branco"
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: "Aproximadamente 1 hora"
+        other: "Aproximadamente %{count} horas"
+      about_x_months:
+        one: "Aproximadamente 1 mês"
+        other: "Aproximadamente %{count} meses"
+      about_x_years:
+        one: "Aproximadamente 1 ano"
+        other: "Aproximadamente %{count} anos"
+      almost_x_years:
+        one: "Quase 1 ano"
+        other: "Quase %{count} anos"
+      half_a_minute: "Meio minuto"
+      less_than_x_minutes:
+        one: "Menos de um minuto"
+        other: "Menos de %{count} minutos"
+      less_than_x_seconds:
+        one: "Menos de 1 segundo"
+        other: "Menos de %{count} segundos"
+      over_x_years:
+        one: "Mais de 1 ano"
+        other: "Mais de %{count} anos"
+      x_days:
+        one: "1 dia"
+        other: "%{count} dias"
+      x_minutes:
+        one: "1 minuto"
+        other: "%{count} minutos"
+      x_months:
+        one: "1 mês"
+        other: "%{count} meses"
+      x_seconds:
+        one: "1 segundo"
+        other: "%{count} segundos"
+      x_years:
+        one: "1 ano"
+        other: "%{count} anos"
+  number:
+    currency:
+      format:
+        delimiter: "."
+        separator: ","
+        precision: 2
+        unit: "R$"
+        format: "%u %n"

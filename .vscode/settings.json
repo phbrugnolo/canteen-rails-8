@@ -12,8 +12,14 @@
     "erb": "html"
   },
   "cSpell.words": [
+    "activatable",
     "Activatable",
     "activerecord",
-    "onclick"
+    "csrf",
+    "onclick",
+    "swal",
+    "Swal",
+    "sweetalert",
+    "sweetalert2"
   ]
 }

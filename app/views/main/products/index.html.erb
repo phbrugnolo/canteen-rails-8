@@ -32,7 +32,7 @@
               <p class="card-text"><%= product.description %></p>
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item" style="border-top: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)"><%= I18n.t(:price, scope: %i[activerecord attributes product]) %>: R$<%= number_with_precision(product.price, precision: 2) %></li>
+              <li class="list-group-item" style="border-top: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)"><%= I18n.t(:price, scope: %i[activerecord attributes product]) %>: <%= number_to_currency(product.price) %></li>
               <li class="list-group-item" style="border-bottom: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)"><%= I18n.t(:status, scope: %i[activerecord attributes product]) %>:
                 <% if product.status == "active" %>
                   <span class="text-success border rounded border-success px-2 bg-success-subtle"><%= I18n.t(:active) %></span>
@@ -50,36 +50,3 @@
     </div>
   </div>
 </div>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const searchNameInput = document.getElementById("search_name");
-    const searchStatusSelect = document.getElementById("search_status");
-    const productsContainer = document.getElementById("products");
-
-    if (!searchNameInput || !searchStatusSelect || !productsContainer) return console.log("Elements not found");
-
-    function filterProducts() {
-      const searchName = searchNameInput.value.trim().toLowerCase();
-      const searchStatus = searchStatusSelect.value;
-
-      Array.from(productsContainer.querySelectorAll(".card")).forEach(card => {
-        const name = card.querySelector(".card-title").textContent.trim().toLowerCase();
-        const status = card.getAttribute("data-status");
-
-        const nameMatch = name.includes(searchName);
-        const statusMatch = searchStatus === "" || status === searchStatus;
-
-        if (nameMatch && statusMatch) {
-          card.style.display = "";
-        } else {
-          card.style.display = "none";
-        }
-      });
-    }
-
-    searchNameInput.addEventListener("input", filterProducts);
-    searchStatusSelect.addEventListener("change", filterProducts);
-
-    filterProducts();
-  });
-</script>

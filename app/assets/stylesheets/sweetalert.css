@@ -1,0 +1,167 @@
+/* SweetAlert2 Custom Styles for Confirmation Dialogs */
+/* Modern color palette for better UX */
+
+:root {
+  /* Confirmation button colors */
+  --confirm-activate-color: #10b981;
+  --confirm-activate-hover: #059669;
+  --confirm-deactivate-color: #ef4444;
+  --confirm-deactivate-hover: #dc2626;
+  --confirm-delete-color: #ef4444;
+  --confirm-delete-hover: #dc2626;
+  --confirm-cancel-color: #6b7280;
+  --confirm-cancel-hover: #4b5563;
+}
+
+/* Custom button classes for main buttons */
+.btn-activate {
+  background: linear-gradient(135deg, var(--confirm-activate-color) 0%, var(--confirm-activate-hover) 100%);
+  border-color: var(--confirm-activate-color);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-activate:hover {
+  background: linear-gradient(135deg, var(--confirm-activate-hover) 0%, #047857 100%);
+  border-color: var(--confirm-activate-hover);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-deactivate {
+  background: linear-gradient(135deg, var(--confirm-deactivate-color) 0%, var(--confirm-deactivate-hover) 100%);
+  border-color: var(--confirm-deactivate-color);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-deactivate:hover {
+  background: linear-gradient(135deg, var(--confirm-deactivate-hover) 0%, #b91c1c 100%);
+  border-color: var(--confirm-deactivate-hover);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.btn-delete {
+  background: linear-gradient(135deg, var(--confirm-delete-color) 0%, var(--confirm-delete-hover) 100%);
+  border-color: var(--confirm-delete-color);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+  background: linear-gradient(135deg, var(--confirm-delete-hover) 0%, #b91c1c 100%);
+  border-color: var(--confirm-delete-hover);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* SweetAlert2 Custom Styles */
+.swal2-popup {
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.swal2-title {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.swal2-html-container {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+/* Custom confirm button styles for SweetAlert2 */
+.swal2-confirm.swal2-styled.btn-activate-confirm {
+  background: linear-gradient(135deg, var(--confirm-activate-color) 0%, var(--confirm-activate-hover) 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.swal2-confirm.swal2-styled.btn-activate-confirm:hover {
+  background: linear-gradient(135deg, var(--confirm-activate-hover) 0%, #047857 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.swal2-confirm.swal2-styled.btn-deactivate-confirm {
+  background: linear-gradient(135deg, var(--confirm-deactivate-color) 0%, var(--confirm-deactivate-hover) 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.swal2-confirm.swal2-styled.btn-deactivate-confirm:hover {
+  background: linear-gradient(135deg, var(--confirm-deactivate-hover) 0%, #b91c1c 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.swal2-confirm.swal2-styled.btn-delete-confirm {
+  background: linear-gradient(135deg, var(--confirm-delete-color) 0%, var(--confirm-delete-hover) 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.swal2-confirm.swal2-styled.btn-delete-confirm:hover {
+  background: linear-gradient(135deg, var(--confirm-delete-hover) 0%, #b91c1c 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Cancel button styling */
+.swal2-cancel.swal2-styled {
+  background: linear-gradient(135deg, var(--confirm-cancel-color) 0%, var(--confirm-cancel-hover) 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.swal2-cancel.swal2-styled:hover {
+  background: linear-gradient(135deg, var(--confirm-cancel-hover) 0%, #374151 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+}
+
+/* Icon styling based on action type */
+.swal2-icon.swal2-question {
+  border-color: var(--confirm-activate-color);
+  color: var(--confirm-activate-color);
+}
+
+.swal2-icon.swal2-warning {
+  border-color: var(--confirm-deactivate-color);
+  color: var(--confirm-deactivate-color);
+}
+
+.swal2-icon.swal2-error {
+  border-color: var(--confirm-delete-color);
+  color: var(--confirm-delete-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .swal2-popup {
+    padding: 1.5rem;
+  }
+
+  .swal2-confirm.swal2-styled,
+  .swal2-cancel.swal2-styled {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}

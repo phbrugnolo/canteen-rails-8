@@ -4,7 +4,17 @@
 <div id="sales">
   <div class="card p-2 mt-4" style="background-color: #EEF5FF">
     <div class="container">
+      <span data-i18n="no_purchases_found" style="display: none;"><%= I18n.t(:no_purchases_found) %></span>
       <% if @sales.size > 0 %>
+        <div class="row mb-2 mt-4">
+          <div class="col-md-6">
+            <select multiple id="search_customers" class="form-control" data-placeholder="<%= I18n.t(:search_by_name) %>">
+            </select>
+          </div>
+          <div class="col-md-3">
+            <input type="date" id="search_date" class="form-control" placeholder="<%= I18n.t(:created_at, scope: %i[activerecord attributes sales]) %>">
+          </div>
+        </div>
         <div class="row">
           <% @sales.order(created_at: :desc).each do |sale| %>
             <div class="col-6">
@@ -13,7 +23,7 @@
                   <tr class="list-group list-group-flush table-row">
                     <td><%= I18n.t(:date) %>: <%= sale.created_at.strftime("%d/%m/%Y") %></td>
                     <td><%= I18n.t(:customer, scope: %i[activerecord models], count: 1) %>: <%= sale.customer.name %></td>
-                    <td><%= I18n.t(:total_price) %>: R$<%= number_with_precision(sale.total_price, precision: 2) %></td>
+                    <td><%= I18n.t(:total_price) %>: <%= number_to_currency(sale.total_price) %></td>
                     <td class="border-bottom-0 d-flex justify-content-end flex-column">
                       <%= link_to I18n.t(:show_sale), main_sale_path(sale), class: "btn btn-primary show-cart my-2" %>
                     </td>

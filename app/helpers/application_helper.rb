@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include ConfirmationHelper
   def number_to_words(value)
     integer_part = value.to_i
     fractional_part = ((value - integer_part) * 100).round

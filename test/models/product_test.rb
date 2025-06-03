@@ -84,32 +84,48 @@ class ProductTest < ActiveSupport::TestCase
   test "should be activatable" do
     assert_respond_to @product, :status
 
-    # Test changing status
     @product.status = "inactive"
     assert_equal "inactive", @product.status
+    assert_not @product.active? if @product.respond_to?(:active?)
 
     @product.status = "active"
     assert_equal "active", @product.status
+    assert @product.active? if @product.respond_to?(:active?)
+  end
+
+  test "should validate status inclusion" do
+    @product.status = "invalid_status"
+    assert_not @product.valid?
+    assert_includes @product.errors[:status], I18n.t("errors.messages.inclusion") if @product.errors[:status].present?
   end
 
   test "should filter active products" do
-    # Assuming Activatable provides a scope or class method for filtering
     if Product.respond_to?(:active)
-      active_count = Product.where(status: "active").count
-      assert_equal active_count, Product.active.count
+      active_product = Product.create!(name: "Active Product", description: "Test", price: 5.99, status: "active")
+      inactive_product = Product.create!(name: "Inactive Product", description: "Test", price: 5.99, status: "inactive")
+
+      active_products = Product.active
+      assert_includes active_products, active_product
+      assert_not_includes active_products, inactive_product
     end
   end
 
   test "should filter inactive products" do
-    # Assuming Activatable provides a scope or class method for filtering
     if Product.respond_to?(:inactive)
-      inactive_count = Product.where(status: "inactive").count
-      assert_equal inactive_count, Product.inactive.count
+      active_product = Product.create!(name: "Active Product", description: "Test", price: 5.99, status: "active")
+      inactive_product = Product.create!(name: "Inactive Product", description: "Test", price: 5.99, status: "inactive")
+
+      inactive_products = Product.inactive
+      assert_includes inactive_products, inactive_product
+      assert_not_includes inactive_products, active_product
     end
   end
 
   test "should have default status of active if not specified" do
     product = Product.new(name: "Default Status", description: "Test", price: 5.99)
-    assert_equal "active", product.status if product.status.present?
+    assert_equal "active", product.status
+
+    product.save!
+    assert_equal "active", product.reload.status
   end
 end
