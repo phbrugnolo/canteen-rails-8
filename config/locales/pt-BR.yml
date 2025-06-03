@@ -163,6 +163,9 @@ pt-BR:
       user:
         one: "Usuário"
         other: "Usuários"
+      report:
+        one: "Relatório"
+        other: "Relatórios"
     errors:
       models:
         sale:
