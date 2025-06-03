@@ -1,7 +1,7 @@
 import { Sidebar } from '../shared/sidebar';
-import { SalesFilters } from '../misc/filters/sales_filters';
-import { ProductsFilters } from '../misc/filters/products_filters';
-import { CustomersFilters } from '../misc/filters/customers_filters';
+import { SalesFilters } from '../misc/filters/sales-filter';
+import { ProductsFilters } from '../misc/filters/products-filter';
+import { CustomersFilters } from '../misc/filters/customers-filter';
 
 import { initializeConfirmationSystem, reinitializeConfirmations } from './confirmation-decorator';
 
