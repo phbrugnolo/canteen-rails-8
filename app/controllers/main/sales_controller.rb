@@ -28,7 +28,7 @@ class Main::SalesController < ApplicationController
     respond_to do |format|
       if @sale.save
         format.html { redirect_to main_sale_url(@sale), notice: I18n.t(:model_was_successfully_created, model: @sale.model_name.human) }
-        format.json { render :show, status: :created, location: @sale }
+        format.json { render :show, status: :created, location: main_sale_url(@sale) }
       else
         @customers = Customer.where(status: "active")
         @products = Product.where(status: "active")

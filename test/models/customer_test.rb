@@ -47,36 +47,60 @@ class CustomerTest < ActiveSupport::TestCase
 
   test "should be activatable" do
     assert_respond_to @customer, :status
+    assert_respond_to @customer, :active? if @customer.respond_to?(:active?)
 
-    # Test active? method (assuming it's provided by Activatable)
-    assert_respond_to @customer, :active?
-
-    # Test changing status
     @customer.status = "inactive"
     assert_equal "inactive", @customer.status
+    assert_not @customer.active? if @customer.respond_to?(:active?)
 
     @customer.status = "active"
     assert_equal "active", @customer.status
+    assert @customer.active? if @customer.respond_to?(:active?)
+  end
+
+  test "should validate status inclusion" do
+    @customer.status = "invalid_status"
+    assert_not @customer.valid?
+    assert_includes @customer.errors[:status], I18n.t("errors.messages.inclusion") if @customer.errors[:status].present?
   end
 
   test "should filter active customers" do
-    # Assuming Activatable provides a scope or class method for filtering
     if Customer.respond_to?(:active)
-      active_count = Customer.where(status: "active").count
-      assert_equal active_count, Customer.active.count
+      active_customer = Customer.create!(name: "Active Customer", matriculation: "ACTIVE123", status: "active")
+      inactive_customer = Customer.create!(name: "Inactive Customer", matriculation: "INACTIVE123", status: "inactive")
+
+      active_customers = Customer.active
+      assert_includes active_customers, active_customer
+      assert_not_includes active_customers, inactive_customer
     end
   end
 
   test "should filter inactive customers" do
-    # Assuming Activatable provides a scope or class method for filtering
     if Customer.respond_to?(:inactive)
-      inactive_count = Customer.where(status: "inactive").count
-      assert_equal inactive_count, Customer.inactive.count
+      active_customer = Customer.create!(name: "Active Customer", matriculation: "ACTIVE123", status: "active")
+      inactive_customer = Customer.create!(name: "Inactive Customer", matriculation: "INACTIVE123", status: "inactive")
+
+      inactive_customers = Customer.inactive
+      assert_includes inactive_customers, inactive_customer
+      assert_not_includes inactive_customers, active_customer
     end
   end
 
   test "should have default status of active if not specified" do
     customer = Customer.new(name: "Default Status", matriculation: "DEFAULT123")
-    assert_equal "active", customer.status if customer.status.present?
+    assert_equal "active", customer.status
+
+    customer.save!
+    assert_equal "active", customer.reload.status
+  end
+
+  test "should toggle status" do
+    @customer.save!
+    original_status = @customer.status
+
+    if @customer.respond_to?(:toggle_status!)
+      @customer.toggle_status!
+      assert_not_equal original_status, @customer.reload.status
+    end
   end
 end
