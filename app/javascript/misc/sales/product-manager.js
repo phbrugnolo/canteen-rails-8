@@ -1,14 +1,17 @@
+import { FilterManager } from '../../shared/filter-manager.js';
+
 export class ProductManager {
   constructor() {
     this.products = [];
     this.container = document.getElementById("products");
+    this.filterManager = null;
   }
 
   initialize(products) {
     this.products = products;
     this.onAddProduct = null;
     this.render();
-    this.setupSearch();
+    this.setupFilter();
     this.setupEvents();
   }
 
@@ -53,27 +56,27 @@ export class ProductManager {
     }).join('');
   }
 
-  setupSearch() {
-    const searchInput = document.getElementById("search-input");
-    if (!searchInput) return;
-
-    searchInput.addEventListener("keyup", (event) => {
-      this.performSearch(event.target.value);
+  setupFilter() {
+    this.filterManager = new FilterManager({
+      container: '#products-table',
+      items: 'tr',
+      noResultsMessage: 'Nenhum produto encontrado',
+      noResultsIcon: 'bi-box-seam',
+      filters: [
+        {
+          input: '#search-input',
+          getText: (row) => {
+            const nameCell = row.querySelector('td:nth-child(2)');
+            return nameCell ? nameCell.textContent : '';
+          },
+          matchType: 'includes'
+        }
+      ]
     });
 
-    this.adjustTableSize();
-  }
-
-  performSearch(searchValue) {
-    const value = searchValue.toLowerCase().trim();
-    const rows = document.querySelectorAll("#products-table tr");
-
-    rows.forEach(row => {
-      const isVisible = row.textContent.toLowerCase().includes(value);
-      row.style.display = isVisible ? "" : "none";
-    });
-
-    this.adjustTableSize();
+    this.filterManager.onFilter = () => {
+      this.adjustTableSize();
+    };
   }
 
   adjustTableSize() {
@@ -124,6 +127,11 @@ export class ProductManager {
     if (this.handleAddProduct && this.container) {
       this.container.removeEventListener('click', this.handleAddProduct);
       this.handleAddProduct = null;
+    }
+
+    // Limpar o FilterManager se existir
+    if (this.filterManager) {
+      this.filterManager = null;
     }
   }
 }
