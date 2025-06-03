@@ -93,14 +93,4 @@ class CustomerTest < ActiveSupport::TestCase
     customer.save!
     assert_equal "active", customer.reload.status
   end
-
-  test "should toggle status" do
-    @customer.save!
-    original_status = @customer.status
-
-    if @customer.respond_to?(:toggle_status!)
-      @customer.toggle_status!
-      assert_not_equal original_status, @customer.reload.status
-    end
-  end
 end

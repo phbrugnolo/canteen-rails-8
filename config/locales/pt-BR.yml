@@ -101,6 +101,7 @@ pt-BR:
       equal_to: "Deve ser igual a %{count}"
       less_than: "Deve ser menor que %{count}"
       less_than_or_equal_to: "Deve ser menor ou igual a %{count}"
+      inclusion: "Não está incluído na lista"
   form:
     actions:
       back: "Voltar"

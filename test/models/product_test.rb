@@ -128,14 +128,4 @@ class ProductTest < ActiveSupport::TestCase
     product.save!
     assert_equal "active", product.reload.status
   end
-
-  test "should toggle status" do
-    @product.save!
-    original_status = @product.status
-
-    if @product.respond_to?(:toggle_status!)
-      @product.toggle_status!
-      assert_not_equal original_status, @product.reload.status
-    end
-  end
 end

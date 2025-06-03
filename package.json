@@ -2,9 +2,9 @@
   "name": "app",
   "private": true,
   "devDependencies": {
-    "@eslint/js": "^9.27.0",
+    "@eslint/js": "^9.28.0",
     "esbuild": "^0.25.5",
-    "eslint": "^9.27.0",
+    "eslint": "^9.28.0",
     "globals": "^16.2.0"
   },
   "scripts": {
@@ -23,7 +23,7 @@
     "nodemon": "^3.1.10",
     "postcss": "^8.5.4",
     "postcss-cli": "^11.0.1",
-    "sass": "^1.89.0",
+    "sass": "^1.89.1",
     "sweetalert2": "^11.22.0",
     "tom-select": "^2.4.3"
   },
