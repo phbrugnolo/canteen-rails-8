@@ -1,20 +1,10 @@
-# app/helpers/confirmation_helper.rb
-# Rails Helper for Confirmation Decorators
-# Provides methods to generate buttons with confirmation behaviors
-
 module ConfirmationHelper
-  # Generate a confirmation button with decorator pattern
   def confirmation_button(text, url, action, options = {})
     entity_name = options[:entity_name] || "item"
     entity_type = options[:entity_type] || "item"
     method = options[:method] || (action == "delete" ? "DELETE" : "PATCH")
     html_class = options[:class] || default_button_class(action)
-    confirm_text = options[:confirm_text]
-    title = options[:title]
-    icon = options[:icon]
-    button_text = options[:button_text]
-    on_success = options[:on_success]
-    redirect_url = options[:redirect_url]
+    enhanced = options[:enhanced] || false
 
     data_attrs = {
       confirmation: true,
@@ -25,18 +15,33 @@ module ConfirmationHelper
       entity_type: entity_type
     }
 
-    data_attrs[:confirm_text] = confirm_text if confirm_text
-    data_attrs[:title] = title if title
-    data_attrs[:icon] = icon if icon
-    data_attrs[:button_text] = button_text if button_text
-    data_attrs[:on_success] = on_success if on_success
-    data_attrs[:redirect_url] = redirect_url if redirect_url
+    add_optional_data_attr(data_attrs, :confirm_text, options[:confirm_text])
+    add_optional_data_attr(data_attrs, :title, options[:title])
+    add_optional_data_attr(data_attrs, :icon, options[:icon])
+    add_optional_data_attr(data_attrs, :button_text, options[:button_text])
+    add_optional_data_attr(data_attrs, :redirect_url, options[:redirect_url])
+
+    if enhanced
+      add_optional_data_attr(data_attrs, :success_message, options[:success_message])
+      add_optional_data_attr(data_attrs, :error_message, options[:error_message])
+      data_attrs[:enhanced] = true
+    end
+
+    if options[:confirmation_config]
+      data_attrs[:confirmation_config] = options[:confirmation_config].to_json
+    end
+
+    data_attrs[:confirmation_initialized] = false
 
     content_tag :button, text, {
       type: "button",
       class: html_class,
       data: data_attrs
     }
+  end
+
+  def enhanced_confirmation_button(text, url, action, options = {})
+    confirmation_button(text, url, action, options.merge(enhanced: true))
   end
 
   def activation_button(entity, options = {})
@@ -49,11 +54,14 @@ module ConfirmationHelper
       title: I18n.t("confirmations.activate.title"),
       confirm_text: I18n.t("confirmations.activate.text", entity: entity_name),
       button_text: I18n.t("confirmations.activate.button"),
-      icon: "question"
+      icon: "question",
+      success_message: I18n.t("confirmations.activate.success", entity: entity_name),
+      error_message: I18n.t("confirmations.activate.error", entity: entity_name)
     }
 
     url = generate_activation_url(entity)
-    confirmation_button(I18n.t(:activate), url, "activate", default_options.merge(options))
+    method_name = options[:enhanced] ? :enhanced_confirmation_button : :confirmation_button
+    send(method_name, I18n.t(:activate), url, "activate", default_options.merge(options))
   end
 
   def deactivation_button(entity, options = {})
@@ -66,11 +74,14 @@ module ConfirmationHelper
       title: I18n.t("confirmations.deactivate.title"),
       confirm_text: I18n.t("confirmations.deactivate.text", entity: entity_name),
       button_text: I18n.t("confirmations.deactivate.button"),
-      icon: "warning"
+      icon: "warning",
+      success_message: I18n.t("confirmations.deactivate.success", entity: entity_name),
+      error_message: I18n.t("confirmations.deactivate.error", entity: entity_name)
     }
 
     url = generate_deactivation_url(entity)
-    confirmation_button(I18n.t(:deactivate), url, "deactivate", default_options.merge(options))
+    method_name = options[:enhanced] ? :enhanced_confirmation_button : :confirmation_button
+    send(method_name, I18n.t(:deactivate), url, "deactivate", default_options.merge(options))
   end
 
   def delete_button(entity, options = {})
@@ -84,11 +95,14 @@ module ConfirmationHelper
       title: I18n.t("confirmations.delete.title"),
       confirm_text: I18n.t("confirmations.delete.text", entity: entity_name),
       button_text: I18n.t("confirmations.delete.button"),
-      icon: "error"
+      icon: "error",
+      success_message: I18n.t("confirmations.delete.success", entity: entity_name),
+      error_message: I18n.t("confirmations.delete.error", entity: entity_name)
     }
 
     url = polymorphic_path(entity_path_parts(entity) + [ entity ])
-    confirmation_button(I18n.t(:delete), url, "delete", default_options.merge(options))
+    method_name = options[:enhanced] ? :enhanced_confirmation_button : :confirmation_button
+    send(method_name, I18n.t(:delete), url, "delete", default_options.merge(options))
   end
 
   def status_toggle_button(entity, options = {})
@@ -99,27 +113,44 @@ module ConfirmationHelper
     end
   end
 
+  def enhanced_status_toggle_button(entity, options = {})
+    status_toggle_button(entity, options.merge(enhanced: true))
+  end
+
+  def custom_confirmation_button(text, url, custom_config, options = {})
+    confirmation_button(text, url, custom_config[:action] || "custom",
+      options.merge(confirmation_config: custom_config))
+  end
+
   def confirmation_translations_for_js
     {
       activate: {
         title: I18n.t("confirmations.activate.title"),
+        text: I18n.t("confirmations.activate.text", entity: "{{entityName}}"),
         button: I18n.t("confirmations.activate.button"),
-        success: I18n.t("confirmations.activate.success", entity: "{{entity}}")
+        success: I18n.t("confirmations.activate.success", entity: "{{entityName}}"),
+        error: I18n.t("confirmations.activate.error", entity: "{{entityName}}")
       },
       deactivate: {
         title: I18n.t("confirmations.deactivate.title"),
+        text: I18n.t("confirmations.deactivate.text", entity: "{{entityName}}"),
         button: I18n.t("confirmations.deactivate.button"),
-        success: I18n.t("confirmations.deactivate.success", entity: "{{entity}}")
+        success: I18n.t("confirmations.deactivate.success", entity: "{{entityName}}"),
+        error: I18n.t("confirmations.deactivate.error", entity: "{{entityName}}")
       },
       delete: {
         title: I18n.t("confirmations.delete.title"),
+        text: I18n.t("confirmations.delete.text", entity: "{{entityName}}"),
         button: I18n.t("confirmations.delete.button"),
-        success: I18n.t("confirmations.delete.success", entity: "{{entity}}")
+        success: I18n.t("confirmations.delete.success", entity: "{{entityName}}"),
+        error: I18n.t("confirmations.delete.error", entity: "{{entityName}}")
       },
       default: {
         title: I18n.t("confirmations.default.title"),
+        text: I18n.t("confirmations.default.text", entity: "{{entityName}}"),
         button: I18n.t("confirmations.default.button"),
-        success: I18n.t("confirmations.default.success", entity: "{{entity}}")
+        success: I18n.t("confirmations.default.success", entity: "{{entityName}}"),
+        error: I18n.t("confirmations.default.error", entity: "{{entityName}}")
       },
       cancel: I18n.t(:cancel),
       entities: {
@@ -131,7 +162,17 @@ module ConfirmationHelper
     }
   end
 
+  def confirmation_config_for_js
+    content_tag :script, type: "application/json", id: "confirmation-config" do
+      confirmation_translations_for_js.to_json.html_safe
+    end
+  end
+
   private
+
+  def add_optional_data_attr(data_attrs, key, value)
+    data_attrs[key] = value if value.present?
+  end
 
   def default_button_class(action)
     case action
