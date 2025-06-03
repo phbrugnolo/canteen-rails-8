@@ -83,7 +83,6 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", async () => {
-    // Initialize time display
     function updateTime() {
       const now = new Date();
       const timeString = now.toLocaleTimeString('pt-BR', {
@@ -91,15 +90,12 @@
         minute: '2-digit'
       });
       const timeElement = document.getElementById('current-time');
-      if (timeElement) {
-        timeElement.textContent = timeString;
-      }
+      if (timeElement) timeElement.textContent = timeString;
     }
 
     updateTime();
-    setInterval(updateTime, 60000); // Update every minute
+    setInterval(updateTime, 60000);
 
-    // Initialize sales manager
     const salesManager = new SalesManager();
     const apiEndpoint = "<%= new_main_sale_path(format: :json) %>";
 
@@ -112,18 +108,12 @@
       });
     }
 
-    // Cleanup ao sair da página
     window.addEventListener('beforeunload', () => {
-      if (salesManager && typeof salesManager.destroy === 'function') {
-        salesManager.destroy();
-      }
+      if (salesManager && typeof salesManager.destroy === 'function') salesManager.destroy();
     });
 
-    // Também fazer cleanup quando navegar para outra página
     window.addEventListener('pagehide', () => {
-      if (salesManager && typeof salesManager.destroy === 'function') {
-        salesManager.destroy();
-      }
+      if (salesManager && typeof salesManager.destroy === 'function') salesManager.destroy();
     });
   });
 </script>
