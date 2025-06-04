@@ -1,9 +1,10 @@
-import { defineConfig } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import js from "@eslint/js";
 
 
 export default defineConfig([
+  globalIgnores(["assets/builds/**/*", "public/assets/**/*"]),
   { files: ["**/*.{js,mjs,cjs}"] },
   { files: ["**/*.{js,mjs,cjs}"], languageOptions: { globals: globals.browser } },
   { files: ["esbuild.config.mjs"], languageOptions: { globals: globals.node } },

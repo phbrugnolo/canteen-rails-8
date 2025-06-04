@@ -249,7 +249,6 @@ Most controllers support JSON responses for AJAX interactions:
 - Real-time search and filtering
 - Tabbed interfaces for complex forms
 - Progress indicators for long operations
-- Toast notifications for user feedback
 
 ## 🤝 Contributing
 

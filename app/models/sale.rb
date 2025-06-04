@@ -2,7 +2,7 @@ class Sale < ApplicationRecord
   belongs_to :customer
 
   validates :cart, presence: true
-  validates :total_price, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :total_price, presence: true, numericality: { greater_than: 0 }
 
   scope :recent, -> { order(created_at: :desc) }
   scope :this_month, -> { where(created_at: Date.current.beginning_of_month..Date.current.end_of_month) }

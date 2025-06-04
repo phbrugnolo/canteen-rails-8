@@ -1,215 +1,112 @@
-<div class="container">
-  <h1 class="m-3"><%= I18n.t(:sale, scope: %i[activerecord models], count: 1) %></h1>
-  <hr>
-  <div id="products"></div>
-  <div>
-    <div>
-      <div id="cart"></div>
-    </div>
-    <div>
-      <%= render "form", sale: @sale %>
+<div class="container-fluid px-4 py-3">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex align-items-center justify-content-between">
+        <h1 class="h3 mb-0 text-primary fw-bold">
+          <i class="bi bi-cart-plus me-2"></i>
+          <%= I18n.t(:sale, scope: %i[activerecord models], count: 1) %>
+        </h1>
+        <div class="badge bg-light text-dark fs-6 px-3 py-2">
+          <i class="bi bi-clock me-1"></i>
+          <span id="current-time"></span>
+        </div>
+      </div>
     </div>
   </div>
-  <br>
-</div>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    fetch("<%= new_main_sale_path(format: :json) %>")
-      .then(response => response.json())
-      .then(data => {
-        initializeStore(data.products);
-        mapLinks(data.products);
-        productSearch();
-      });
 
-    function productSearch() {
-      const inputBusca = document.getElementById("search-input");
-      inputBusca.addEventListener("keyup", function () {
-        const value = this.value.toLowerCase().trim();
-        const rows = document.querySelectorAll("#products-table tr");
-        rows.forEach(row => {
-          if (row.textContent.toLowerCase().includes(value)) {
-            row.style.display = "";
-          } else {
-            row.style.display = "none";
-          }
-        });
-        adjustTableSize();
-      });
+  <!-- Main Content -->
+  <div class="row g-4">
+    <!-- Products Section -->
+    <div class="col-xl-8 col-lg-7">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-header bg-white border-bottom-0 py-3">
+          <h5 class="mb-0 text-dark fw-semibold">
+            <i class="bi bi-grid-3x3-gap me-2"></i>
+            <%= I18n.t(:available_products) %>
+          </h5>
+        </div>
+        <div class="card-body p-0">
+          <div id="products"></div>
+        </div>
+      </div>
+    </div>
 
-      adjustTableSize();
-    }
-
-    function adjustTableSize() {
-      const rows = Array.from(document.querySelectorAll("#products-table tr"));
-      const visibleRows = rows.filter(row => row.style.display !== "none");
-      const tableWrapper = document.querySelector("#products .table-wrapper-scroll-y");
-      if (visibleRows.length <= 5) {
-        tableWrapper.style.maxHeight = "none";
-      } else {
-        tableWrapper.style.maxHeight = "400px";
-      }
-    }
-
-    var selectedProducts = [];
-
-    function listOfProducts(products) {
-      let html = "";
-      products.forEach((product, index) => {
-        let formattedPrice = parseFloat(product.price).toFixed(2);
-        html += `
-            <tr>
-              <td scope="row" class="col-2">
-                <img src="${product.image_url}" height="55" alt="<%= I18n.t(:alt_image, scope: %i[activerecord], model: Product.model_name.human) %>"/>
-              </td>
-              <td class="col-6">${product.name}</td>
-              <td class="col-2">${formattedPrice}</td>
-              <td class="col-2 text-center">
-                <input type="button" class="btn btn-success add" data-key="${index}" value="<%= I18n.t(:add) %>">
-              </td>
-            </tr>
-          `;
-      });
-      return html;
-    }
-
-    function initializeStore(products) {
-      const containerProducts = document.getElementById("products");
-      containerProducts.innerHTML = `
-          <input id="search-input" type="text" placeholder="<%= I18n.t(:search_product) %>" class="mx-4">
-          <div class="text-center table-wrapper-scroll-y">
-            <table class="table table-bordered table-hover my-4 mx-6 my-custom-scrollbar">
-              <thead class="table-size">
-                <tr>
-                  <th scope="col" class="col-2"></th>
-                  <th scope="col" class="col-6"><%= I18n.t(:product, scope: %i[activerecord attributes sale]) %></th>
-                  <th scope="col" class="col-2"><%= I18n.t(:price) %> (R$)</th>
-                  <th scope="col" class="col-2"></th>
-                </tr>
-              </thead>
-              <tbody id="products-table" class="table-size">
-                ${listOfProducts(products)}
-              </tbody>
-            </table>
+    <!-- Cart and Form Section -->
+    <div class="col-xl-4 col-lg-5">
+      <div class="row g-4 h-100">
+        <!-- Cart Section -->
+        <div class="col-12">
+          <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white py-3">
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <h5 class="mb-0 fw-semibold">
+                  <i class="bi bi-cart3 me-2"></i>
+                  <%= I18n.t(:cart) %>
+                </h5>
+                <div class="cart-summary d-flex gap-2 flex-wrap">
+                  <span class="badge bg-light text-primary px-2 py-1 small">
+                    <i class="bi bi-box me-1"></i>
+                    <span id="cart-item-count">0</span> <%= I18n.t(:items) %>
+                  </span>
+                  <span class="badge bg-light text-primary px-2 py-1 small">
+                    <i class="bi bi-currency-dollar me-1"></i>
+                    R$ <span id="cart-total">0,00</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div id="cart"></div>
+            </div>
           </div>
-        `;
-    }
+        </div>
 
-    window.removeProduct = function (index) {
-      let product = selectedProducts[index];
-      product.quantity = 0;
-      selectedProducts.splice(index, 1);
-      updateCart();
-    };
+        <!-- Form Section -->
+        <div class="col-12">
+          <div class="card shadow-sm border-0">
+            <div class="card-header bg-success text-white py-3">
+              <h5 class="mb-0 fw-semibold">
+                <i class="bi bi-check-circle me-2"></i>
+                <%= I18n.t(:finalize_sale) %>
+              </h5>
+            </div>
+            <div class="card-body">
+              <%= render "form", sale: @sale %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    window.addItem = function (index) {
-      let product = selectedProducts[index];
-      product.quantity++;
-      updateCart();
-    };
-
-    window.removeItem = function (index) {
-      let product = selectedProducts[index];
-      if (product.quantity <= 1) {
-        removeProduct(index);
-      } else {
-        product.quantity--;
-        updateCart();
-      }
-    };
-
-    function totalValue() {
-      let total = 0.0;
-      selectedProducts.forEach(product => {
-        if (typeof product.quantity === "number") {
-          total += product.quantity * product.price;
-        }
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    function updateTime() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('pt-BR', {
+        hour: '2-digit',
+        minute: '2-digit'
       });
-      return total;
+      const timeElement = document.getElementById('current-time');
+      if (timeElement) timeElement.textContent = timeString;
     }
 
-    function updateTotalValue() {
-      const cartContainer = document.getElementById("sale_total_price");
-      cartContainer.value = totalValue().toFixed(2);
-    }
+    updateTime();
+    setInterval(updateTime, 60000);
 
-    function updateCartValue() {
-      const cartContainer = document.getElementById("sale_cart");
-      const cartData = selectedProducts.map(product => ({
-        name: product.name,
-        price: product.price,
-        id: product.id,
-        quantity: product.quantity
-      }));
-      cartContainer.value = JSON.stringify(cartData);
-    }
+    const salesManager = new SalesManager();
+    const apiEndpoint = "<%= new_main_sale_path(format: :json) %>";
 
-    function updateCart() {
-      const cartContainer = document.getElementById("cart");
-      let listOfSelectedProducts = "";
-      selectedProducts.forEach((product, index) => {
-        let formattedPrice = parseFloat(product.price).toFixed(2);
-        let subTotal = (parseFloat(product.price) * product.quantity).toFixed(2);
-        if (product !== undefined) {
-          listOfSelectedProducts += `
-              <tr class="row">
-                <td class="col-4">${product.name}</td>
-                <td class="col-2">${product.quantity}</td>
-                <td class="col-2"> R$ ${formattedPrice}</td>
-                <td class="col-2"> R$ ${subTotal}</td>
-                <td class="col-2 m-auto text-center">
-                  <button type="button" class="btn btn-primary" onclick="addItem(${index})">
-                    <i class="bi bi-plus-circle"></i>
-                  </button>
-                  <button type="button" class="btn btn-primary" onclick="removeItem(${index})">
-                    <i class="bi bi-dash-circle"></i>
-                  </button>
-                  <button type="button" class="btn btn-danger" onclick="removeProduct(${index})">
-                    <i class="bi bi-trash3"></i>
-                  </button>
-                </td>
-              </tr>
-            `;
-        }
-      });
+    await salesManager.initialize(apiEndpoint);
 
-      cartContainer.innerHTML = `
-          <table class="table table-bordered table-hover table-sm my-4 m-auto">
-            <thead>
-              <tr class="row">
-                <th class="col-4 text-center"><%= I18n.t(:product, scope: %i[activerecord attributes sale]) %></th>
-                <th class="col-2 text-center"><%= I18n.t(:quantity, scope: %i[activerecord attributes sale]) %></th>
-                <th class="col-2 text-center"><%= I18n.t(:price_per_unit) %></th>
-                <th class="col-2 text-center"><%= I18n.t(:subtotal) %></th>
-              </tr>
-            </thead>
-            <tbody>
-              ${listOfSelectedProducts}
-            </tbody>
-          </table>
-        `;
+    window.addEventListener('beforeunload', () => {
+      if (salesManager && typeof salesManager.destroy === 'function') salesManager.destroy();
+    });
 
-      updateTotalValue();
-      updateCartValue();
-    }
-
-    function mapLinks(products) {
-      const links = document.getElementsByClassName("add");
-      for (let i = 0; i < links.length; i++) {
-        links[i].addEventListener("click", function () {
-          let key = this.getAttribute("data-key");
-          let product = products[key];
-          if (!product.quantity) {
-            product.quantity = 1;
-          } else {
-            product.quantity++;
-          }
-          if (!selectedProducts.includes(product)) {
-            selectedProducts.push(product);
-          }
-          updateCart();
-        });
-      }
-    }
+    window.addEventListener('pagehide', () => {
+      if (salesManager && typeof salesManager.destroy === 'function') salesManager.destroy();
+    });
   });
 </script>

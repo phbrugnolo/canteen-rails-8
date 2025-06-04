@@ -1,4 +1,4 @@
-import { FilterManager } from '../shared/filter_manager.js';
+import { FilterManager } from '../../shared/filter-manager.js';
 
 export class CustomersFilters {
   constructor() {
