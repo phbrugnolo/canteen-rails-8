@@ -28,7 +28,7 @@
         position: absolute;
         top: 0.25cm;
         left: 1cm;
-        width: 3cm;
+        width: 3.5cm;
         height: 3cm;
       }
 
@@ -85,53 +85,55 @@
     </style>
   </head>
   <body>
-    <div class="promissory">
-      <div class="header">
-        <img src='<%= "file://#{Rails.root.join('app/assets/images/logo-lbv.png')}" %>' class='logo'>
-        <div>
-          <h3>ADIANTAMENTO SALARIAL</h3>
-          <div class="code">Código: 1613</div>
+    <% @customers.each do |customer| %>
+      <div class="promissory">
+        <div class="header">
+          <%= wicked_pdf_image_tag "logo-lbv.png", class: 'logo' %>
+          <div>
+            <h3>ADIANTAMENTO SALARIAL</h3>
+            <div class="code">Código: 1613</div>
+          </div>
         </div>
-      </div>
 
-      <div class="field-line">
-        <span>R$</span>
-        <span class="underline" style="width: 8cm;"></span>
-        (<span class="underline" style="width: 26cm;"></span>)
-      </div>
-
-      <div class="field-line">
-        <span>Desconto mês:</span>
-        <span class="underline" style="width: 9cm;"></span>
-        <span>/</span>
-        <span class="underline" style="width: 2cm;"></span>
-      </div>
-
-      <div class="field-line">
-        <span>Nome:</span>
-        <span class="underline" style="width: 32cm;"></span>
-      </div>
-
-      <div class="field-group">
         <div class="field-line">
-          <span>Matrícula:</span>
-          <span class="underline" style="width: 10cm;"></span>
-          <span style="margin-left: 3cm;">CPF:</span>
-          <span class="underline" style="width: 10cm;"></span>
+          <span>R$</span>
+          <span class="underline" style="width: 8cm;"><%= number_to_currency(customer.monthly_sales_total, unit: "") %></span>
+          (<span class="underline" style="width: 26cm;"><%= number_to_words(customer.monthly_sales_total) %></span>)
+        </div>
+
+        <div class="field-line">
+          <span>Desconto mês:</span>
+          <span class="underline" style="width: 9cm;"></span>
+          <span>/</span>
+          <span class="underline" style="width: 2cm;"></span>
+        </div>
+
+        <div class="field-line">
+          <span>Nome:</span>
+          <span class="underline" style="width: 32cm;"><%= customer.name %></span>
+        </div>
+
+        <div class="field-group">
+          <div class="field-line">
+            <span>Matrícula:</span>
+            <span class="underline" style="width: 10cm;"><%= customer.matriculation %></span>
+            <span style="margin-left: 3cm;">CPF:</span>
+            <span class="underline" style="width: 10cm;"></span>
+          </div>
+        </div>
+
+        <div class="field-line">
+          <span>Data:</span>
+          <span class="underline" style="width: 1cm;"></span>/
+          <span class="underline" style="width: 1cm;"></span>/
+          <span class="underline" style="width: 1cm;"></span>
+        </div>
+
+        <div class="signature">
+          <div class="signature-line"></div>
+          <div>Assinatura</div>
         </div>
       </div>
-
-      <div class="field-line">
-        <span>Data:</span>
-        <span class="underline" style="width: 1cm;"></span>/
-        <span class="underline" style="width: 1cm;"></span>/
-        <span class="underline" style="width: 1cm;"></span>
-      </div>
-
-      <div class="signature">
-        <div class="signature-line"></div>
-        <div>Assinatura</div>
-      </div>
-    </div>
+    <% end %>
   </body>
 </html>
