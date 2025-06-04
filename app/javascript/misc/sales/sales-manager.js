@@ -50,8 +50,22 @@ export class SalesManager {
   }
 
   hideLoadingState() {
-    // Loading states will be replaced by the actual content
-    // when managers are initialized
+    const productsContainer = document.getElementById('products');
+    const cartContainer = document.getElementById('cart');
+
+    if (productsContainer) {
+      const spinner = productsContainer.querySelector('.spinner-border');
+      if (spinner) {
+        productsContainer.innerHTML = '';
+      }
+    }
+
+    if (cartContainer) {
+      const spinner = cartContainer.querySelector('.spinner-border');
+      if (spinner) {
+        cartContainer.innerHTML = '';
+      }
+    }
   }
 
   async fetchProducts() {

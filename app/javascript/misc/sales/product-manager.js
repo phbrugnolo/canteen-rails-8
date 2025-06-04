@@ -3,6 +3,11 @@ export class ProductManager {
     this.products = [];
     this.container = document.getElementById("products");
     this.filterManager = null;
+    // Store event handlers for proper cleanup
+    this.handleMouseEnter = null;
+    this.handleMouseLeave = null;
+    this.handleSearch = null;
+    this.handleAddProduct = null;
   }
 
   initialize(products) {
@@ -87,7 +92,8 @@ export class ProductManager {
 
     if (!searchInput || !productsGrid) return;
 
-    searchInput.addEventListener('input', (e) => {
+    // Store the search handler for later cleanup
+    this.handleSearch = (e) => {
       const searchTerm = e.target.value.toLowerCase().trim();
       const productCards = productsGrid.querySelectorAll('.product-card');
       let visibleCount = 0;
@@ -103,27 +109,33 @@ export class ProductManager {
       if (noResults) {
         noResults.classList.toggle('d-none', visibleCount > 0);
       }
-    });
+    };
+
+    searchInput.addEventListener('input', this.handleSearch);
 
     this.addHoverEffects();
   }
 
   addHoverEffects() {
-    this.container.addEventListener('mouseenter', (e) => {
+    // Store handlers for proper cleanup
+    this.handleMouseEnter = (e) => {
       if (e.target.closest('.product-item')) {
         const card = e.target.closest('.product-item');
         card.style.transform = 'translateY(-4px)';
         card.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
       }
-    }, true);
+    };
 
-    this.container.addEventListener('mouseleave', (e) => {
+    this.handleMouseLeave = (e) => {
       if (e.target.closest('.product-item')) {
         const card = e.target.closest('.product-item');
         card.style.transform = 'translateY(0)';
         card.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
       }
-    }, true);
+    };
+
+    this.container.addEventListener('mouseenter', this.handleMouseEnter, true);
+    this.container.addEventListener('mouseleave', this.handleMouseLeave, true);
   }
 
   adjustTableSize() {
@@ -175,19 +187,28 @@ export class ProductManager {
   }
 
   destroy() {
+    // Remove click handler
     if (this.handleAddProduct && this.container) {
       this.container.removeEventListener('click', this.handleAddProduct);
       this.handleAddProduct = null;
     }
 
-    if (this.container) {
+    // Remove hover handlers
+    if (this.handleMouseEnter && this.container) {
       this.container.removeEventListener('mouseenter', this.handleMouseEnter, true);
-      this.container.removeEventListener('mouseleave', this.handleMouseLeave, true);
+      this.handleMouseEnter = null;
     }
 
+    if (this.handleMouseLeave && this.container) {
+      this.container.removeEventListener('mouseleave', this.handleMouseLeave, true);
+      this.handleMouseLeave = null;
+    }
+
+    // Remove search handler
     const searchInput = document.getElementById('search-input');
-    if (searchInput) {
+    if (this.handleSearch && searchInput) {
       searchInput.removeEventListener('input', this.handleSearch);
+      this.handleSearch = null;
     }
   }
 }
