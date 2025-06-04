@@ -15,11 +15,30 @@
     "activatable",
     "Activatable",
     "activerecord",
+    "beforeunload",
     "csrf",
     "onclick",
+    "pagehide",
+    "rgba",
     "swal",
     "Swal",
     "sweetalert",
     "sweetalert2"
-  ]
+  ],
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.yarn": true,
+    "**/vendor": true,
+    "**/tmp": true,
+    "**/log": true,
+    "**/storage": true,
+    "**/.git": true,
+    "**/coverage": true,
+    "**/*.log": true,
+    "**/app/assets/builds": true,
+    "**/.bundle": true,
+    "**/Gemfile.lock": true,
+    "**/package-lock.json": true,
+    "**/yarn.lock": true
+  }
 }
