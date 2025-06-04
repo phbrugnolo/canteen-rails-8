@@ -11,7 +11,9 @@ class Main::ReportsController < ApplicationController
       format.pdf do
         render pdf: "promissory",
                page_size: 'A4',
-               orientation: 'Portrait'
+               orientation: 'Portrait',
+               encoding: 'UTF-8',
+               enable_local_file_access: true
       end
     end
   end
