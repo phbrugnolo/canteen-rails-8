@@ -280,13 +280,11 @@ export class CartManager {
   updateCartSummaryDisplay() {
     const summary = this.getCartSummary();
 
-    // Update item count
     const itemCountElement = document.getElementById('cart-item-count');
     if (itemCountElement) {
       itemCountElement.textContent = summary.totalQuantity;
     }
 
-    // Update total value
     const totalElement = document.getElementById('cart-total');
     if (totalElement) {
       totalElement.textContent = summary.totalValue.toFixed(2).replace('.', ',');

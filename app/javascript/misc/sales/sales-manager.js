@@ -1,30 +1,25 @@
 import { ProductManager } from './product-manager.js';
 import { CartManager } from './cart-manager.js';
-import { ToastManager } from './toast-manager.js';
 
 export class SalesManager {
   constructor() {
     this.productManager = new ProductManager();
     this.cartManager = new CartManager();
-    this.toastManager = new ToastManager();
     this.apiEndpoint = null;
   }
 
   async initialize(apiEndpoint) {
     this.apiEndpoint = apiEndpoint;
 
-    // Show loading state
     this.showLoadingState();
 
     try {
       const products = await this.fetchProducts();
       this.setupManagers(products);
       this.hideLoadingState();
-      this.toastManager.success('Sistema de vendas carregado com sucesso!');
     } catch (error) {
       console.error('Erro ao inicializar vendas:', error);
       this.hideLoadingState();
-      this.toastManager.error('Erro ao carregar produtos. Tente recarregar a página.');
     }
   }
 
@@ -75,7 +70,6 @@ export class SalesManager {
 
     this.productManager.bindAddEvents((product) => {
       this.cartManager.addProduct(product);
-      this.toastManager.success(`${product.name} adicionado ao carrinho!`);
     });
   }
 
@@ -106,9 +100,6 @@ export class SalesManager {
     }
 
     if (errors.length > 0) {
-      this.toastManager.error(errors.join(' '), 5000);
-
-      // Highlight form fields with errors
       if (this.cartManager.isEmpty()) {
         const cartCard = document.querySelector('#cart').closest('.card');
         if (cartCard) {
@@ -129,7 +120,6 @@ export class SalesManager {
       return false;
     }
 
-    this.toastManager.success('Validação concluída! Finalizando venda...');
     return true;
   }
 

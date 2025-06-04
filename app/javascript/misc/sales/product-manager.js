@@ -100,18 +100,15 @@ export class ProductManager {
         if (isVisible) visibleCount++;
       });
 
-      // Show/hide no results message
       if (noResults) {
         noResults.classList.toggle('d-none', visibleCount > 0);
       }
     });
 
-    // Add hover effects to product cards
     this.addHoverEffects();
   }
 
   addHoverEffects() {
-    // Use event delegation for hover effects
     this.container.addEventListener('mouseenter', (e) => {
       if (e.target.closest('.product-item')) {
         const card = e.target.closest('.product-item');
@@ -153,12 +150,10 @@ export class ProductManager {
         const product = this.products[productIndex];
 
         if (product && this.onAddProduct) {
-          // Add visual feedback
           button.classList.add('animate-success');
           button.innerHTML = '<i class="bi bi-check-circle me-1"></i>Adicionado!';
           button.disabled = true;
 
-          // Reset button after animation
           setTimeout(() => {
             button.classList.remove('animate-success');
             button.innerHTML = '<i class="bi bi-plus-circle me-1"></i>Adicionar';
@@ -185,13 +180,11 @@ export class ProductManager {
       this.handleAddProduct = null;
     }
 
-    // Remove hover event listeners
     if (this.container) {
       this.container.removeEventListener('mouseenter', this.handleMouseEnter, true);
       this.container.removeEventListener('mouseleave', this.handleMouseLeave, true);
     }
 
-    // Clear search input
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
       searchInput.removeEventListener('input', this.handleSearch);
