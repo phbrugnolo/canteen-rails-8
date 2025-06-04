@@ -23,7 +23,7 @@
         <div class="card-header bg-white border-bottom-0 py-3">
           <h5 class="mb-0 text-dark fw-semibold">
             <i class="bi bi-grid-3x3-gap me-2"></i>
-            Produtos Disponíveis
+            <%= I18n.t(:available_products) %>
           </h5>
         </div>
         <div class="card-body p-0">
@@ -42,12 +42,12 @@
               <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <h5 class="mb-0 fw-semibold">
                   <i class="bi bi-cart3 me-2"></i>
-                  Carrinho
+                  <%= I18n.t(:cart) %>
                 </h5>
                 <div class="cart-summary d-flex gap-2 flex-wrap">
                   <span class="badge bg-light text-primary px-2 py-1 small">
                     <i class="bi bi-box me-1"></i>
-                    <span id="cart-item-count">0</span> itens
+                    <span id="cart-item-count">0</span> <%= I18n.t(:items) %>
                   </span>
                   <span class="badge bg-light text-primary px-2 py-1 small">
                     <i class="bi bi-currency-dollar me-1"></i>
@@ -68,7 +68,7 @@
             <div class="card-header bg-success text-white py-3">
               <h5 class="mb-0 fw-semibold">
                 <i class="bi bi-check-circle me-2"></i>
-                Finalizar Venda
+                <%= I18n.t(:finalize_sale) %>
               </h5>
             </div>
             <div class="card-body">

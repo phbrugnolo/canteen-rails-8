@@ -6,7 +6,7 @@
   <div class="mb-4">
     <label class="form-label fw-semibold text-dark mb-2">
       <i class="bi bi-person me-1"></i>
-      Cliente
+      <%= I18n.t(:customer) %>
     </label>
     <%= f.association :customer,
           collection: @customers,
@@ -40,7 +40,7 @@
     </div>
     <small class="text-muted mt-1 d-block">
       <i class="bi bi-info-circle me-1"></i>
-      Valor calculado automaticamente
+      <%= I18n.t(:automatically_calculated_value) %>
     </small>
   </div>
 
@@ -60,16 +60,16 @@
         field: "text",
         direction: "asc"
       },
-      placeholder: "Selecione um cliente...",
+      placeholder: "<%= I18n.t(:select_customer_placeholder) %>",
       searchField: ['text'],
       render: {
-        option: function(data, escape) {
+        option: (data, escape) => {
           return '<div class="py-2 px-1">' +
                    '<i class="bi bi-person-circle me-2 text-primary"></i>' +
                    '<span>' + escape(data.text) + '</span>' +
                  '</div>';
         },
-        item: function(data, escape) {
+        item: (data, escape) => {
           return '<div>' +
                    '<i class="bi bi-person-check me-2 text-success"></i>' +
                    '<span>' + escape(data.text) + '</span>' +
