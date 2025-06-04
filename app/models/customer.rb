@@ -14,6 +14,7 @@ class Customer < ApplicationRecord
   def self.top_customers_data
     joins(:sales)
       .select("customers.id, customers.name, SUM(sales.total_price) AS total_sales")
+      .where(sales: { created_at: Time.current.beginning_of_month..Time.current.end_of_month })
       .group("customers.id, customers.name")
       .order("total_sales DESC")
       .limit(5)
