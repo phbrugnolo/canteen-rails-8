@@ -73,56 +73,6 @@ export class SalesManager {
     });
   }
 
-  showError(message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'alert alert-danger alert-dismissible fade show';
-    errorDiv.innerHTML = `
-      ${message}
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    `;
-
-    const container = document.querySelector('.container');
-    if (container) {
-      container.insertBefore(errorDiv, container.firstChild);
-    }
-  }
-
-  validateForm() {
-    const errors = [];
-
-    if (this.cartManager.isEmpty()) {
-      errors.push('Adicione pelo menos um produto ao carrinho.');
-    }
-
-    const customerSelect = document.getElementById('customer-id');
-    if (!customerSelect || !customerSelect.value) {
-      errors.push('Selecione um cliente.');
-    }
-
-    if (errors.length > 0) {
-      if (this.cartManager.isEmpty()) {
-        const cartCard = document.querySelector('#cart').closest('.card');
-        if (cartCard) {
-          cartCard.style.border = '2px solid #dc3545';
-          setTimeout(() => {
-            cartCard.style.border = '';
-          }, 3000);
-        }
-      }
-
-      if (!customerSelect || !customerSelect.value) {
-        customerSelect.style.border = '2px solid #dc3545';
-        setTimeout(() => {
-          customerSelect.style.border = '';
-        }, 3000);
-      }
-
-      return false;
-    }
-
-    return true;
-  }
-
   reset() {
     this.cartManager.clear();
 

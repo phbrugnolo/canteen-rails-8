@@ -101,13 +101,6 @@
 
     await salesManager.initialize(apiEndpoint);
 
-    const form = document.querySelector('form');
-    if (form) {
-      form.addEventListener('submit', (event) => {
-        if (!salesManager.validateForm()) event.preventDefault();
-      });
-    }
-
     window.addEventListener('beforeunload', () => {
       if (salesManager && typeof salesManager.destroy === 'function') salesManager.destroy();
     });
