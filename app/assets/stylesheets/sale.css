@@ -1,4 +1,3 @@
-
 /* Modern Sales Interface Styles */
 .sales-container {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -152,6 +151,7 @@
 .text-truncate-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -248,4 +248,64 @@
 .ts-dropdown .option.active {
   background-color: #0d6efd !important;
   color: white !important;
+}
+
+/* Cart Quantity Input Styling */
+.quantity-input {
+  transition: all 0.2s ease;
+  border: 1px solid #dee2e6 !important;
+  font-weight: 600 !important;
+}
+
+.quantity-input:focus {
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25) !important;
+  outline: none;
+}
+
+.quantity-input:hover {
+  border-color: #adb5bd !important;
+}
+
+.quantity-input.is-updating {
+  border-color: #ffc107 !important;
+  background-color: #fffbf0 !important;
+}
+
+/* Remove spinner arrows from number input */
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.quantity-input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Quantity update feedback animation */
+.cart-item.quantity-updated {
+  background-color: #e8f5e8 !important;
+  transition: background-color 0.3s ease;
+}
+
+.cart-item.quantity-updated .quantity-input {
+  border-color: #28a745 !important;
+  background-color: #f8fff8 !important;
+}
+
+/* Cart item container styling */
+.cart-item {
+  transition: background-color 0.2s ease;
+}
+
+.cart-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* Min width utility class */
+.min-width-30 {
+  min-width: 60px;
 }

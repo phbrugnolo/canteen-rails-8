@@ -3,7 +3,6 @@ export class ProductManager {
     this.products = [];
     this.container = document.getElementById("products");
     this.filterManager = null;
-    // Store event handlers for proper cleanup
     this.handleMouseEnter = null;
     this.handleMouseLeave = null;
     this.handleSearch = null;
@@ -92,7 +91,6 @@ export class ProductManager {
 
     if (!searchInput || !productsGrid) return;
 
-    // Store the search handler for later cleanup
     this.handleSearch = (e) => {
       const searchTerm = e.target.value.toLowerCase().trim();
       const productCards = productsGrid.querySelectorAll('.product-card');
@@ -117,7 +115,6 @@ export class ProductManager {
   }
 
   addHoverEffects() {
-    // Store handlers for proper cleanup
     this.handleMouseEnter = (e) => {
       if (e.target.closest('.product-item')) {
         const card = e.target.closest('.product-item');
@@ -136,11 +133,6 @@ export class ProductManager {
 
     this.container.addEventListener('mouseenter', this.handleMouseEnter, true);
     this.container.addEventListener('mouseleave', this.handleMouseLeave, true);
-  }
-
-  adjustTableSize() {
-    // This method is no longer needed with the card layout
-    // Keeping for compatibility
   }
 
   bindAddEvents(onAddProduct) {
@@ -187,13 +179,11 @@ export class ProductManager {
   }
 
   destroy() {
-    // Remove click handler
     if (this.handleAddProduct && this.container) {
       this.container.removeEventListener('click', this.handleAddProduct);
       this.handleAddProduct = null;
     }
 
-    // Remove hover handlers
     if (this.handleMouseEnter && this.container) {
       this.container.removeEventListener('mouseenter', this.handleMouseEnter, true);
       this.handleMouseEnter = null;
@@ -204,7 +194,6 @@ export class ProductManager {
       this.handleMouseLeave = null;
     }
 
-    // Remove search handler
     const searchInput = document.getElementById('search-input');
     if (this.handleSearch && searchInput) {
       searchInput.removeEventListener('input', this.handleSearch);

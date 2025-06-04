@@ -6,6 +6,10 @@ export class CartManager {
     this.cartInput = null;
     this.boundEventHandler = null;
     this.isInitialized = false;
+
+    this.DEBOUNCE_DELAY = 300;
+    this.MAX_QUANTITY = 999;
+    this.MIN_QUANTITY = 1;
   }
 
   initialize() {
@@ -29,10 +33,34 @@ export class CartManager {
       this.container.removeEventListener('click', this.boundEventHandler);
     }
 
+    if (this.boundInputHandler && this.container) {
+      this.container.removeEventListener('input', this.boundInputHandler);
+    }
+
+    if (this.boundBlurHandler && this.container) {
+      this.container.removeEventListener('blur', this.boundBlurHandler, true);
+    }
+
+    if (this.boundKeyHandler && this.container) {
+      this.container.removeEventListener('keydown', this.boundKeyHandler);
+    }
+
+    if (this.boundFocusHandler && this.container) {
+      this.container.removeEventListener('focus', this.boundFocusHandler, true);
+    }
+
     this.boundEventHandler = this.handleCartAction.bind(this);
+    this.boundInputHandler = this.handleQuantityInput.bind(this);
+    this.boundBlurHandler = this.handleQuantityBlur.bind(this);
+    this.boundKeyHandler = this.handleQuantityKeydown.bind(this);
+    this.boundFocusHandler = this.handleQuantityFocus.bind(this);
 
     if (this.container) {
       this.container.addEventListener('click', this.boundEventHandler);
+      this.container.addEventListener('input', this.boundInputHandler);
+      this.container.addEventListener('blur', this.boundBlurHandler, true);
+      this.container.addEventListener('keydown', this.boundKeyHandler);
+      this.container.addEventListener('focus', this.boundFocusHandler, true);
     }
   }
 
@@ -96,6 +124,39 @@ export class CartManager {
     }
   }
 
+  setQuantity(productId, newQuantity) {
+    const product = this.selectedProducts.find(p => p.id === productId);
+    if (!product) {
+      console.warn('Product not found in cart:', productId);
+      return;
+    }
+
+    let quantity = parseInt(newQuantity);
+
+    if (isNaN(quantity)) {
+      console.warn('Invalid quantity provided:', newQuantity);
+      return;
+    }
+
+    if (quantity <= 0) {
+      this.removeProduct(productId);
+      return;
+    }
+
+    if (quantity > this.MAX_QUANTITY) {
+      quantity = this.MAX_QUANTITY;
+    }
+
+    const oldQuantity = product.quantity;
+    product.quantity = quantity;
+
+    if (Math.abs(quantity - oldQuantity) > 1) {
+      this.showQuantityUpdateFeedback(productId);
+    }
+
+    this.update();
+  }
+
   calculateTotal() {
     return this.selectedProducts.reduce((total, product) => {
       const price = parseFloat(product.price) || 0;
@@ -147,7 +208,17 @@ export class CartManager {
                     <i class="bi bi-dash small"></i>
                   </button>
 
-                  <span class="fw-bold px-2 min-width-30 text-center">${quantity}</span>
+                  <input type="number"
+                         class="form-control form-control-sm text-center fw-bold quantity-input"
+                         value="${quantity}"
+                         min="${this.MIN_QUANTITY}"
+                         max="${this.MAX_QUANTITY}"
+                         data-product-id="${product.id}"
+                         style="width: 60px; padding: 2px 4px; border-radius: 4px;"
+                         title="Digite a quantidade desejada (Enter para confirmar, Esc para cancelar)"
+                         aria-label="Quantidade do produto ${this.escapeHtml(product.name)}"
+                         autocomplete="off"
+                         inputmode="numeric">
 
                   <button type="button" class="btn btn-outline-secondary btn-sm"
                           data-action="add" data-product-id="${product.id}"
@@ -246,6 +317,147 @@ export class CartManager {
     }
   }
 
+  handleQuantityInput(event) {
+    if (!event.target.classList.contains('quantity-input')) return;
+
+    const input = event.target;
+    const productId = parseInt(input.dataset.productId);
+
+    if (!productId || isNaN(productId)) return;
+
+    // Add visual feedback that changes are being processed
+    input.classList.add('is-updating');
+
+    // Clear any previous timeout
+    if (this.quantityUpdateTimeout) {
+      clearTimeout(this.quantityUpdateTimeout);
+    }
+
+    // Use faster debounce for better UX
+    this.quantityUpdateTimeout = setTimeout(() => {
+      const newQuantity = parseInt(input.value);
+
+      if (!isNaN(newQuantity)) {
+        this.setQuantity(productId, newQuantity);
+      }
+
+      input.classList.remove('is-updating');
+    }, this.DEBOUNCE_DELAY);
+  }
+
+  handleQuantityBlur(event) {
+    if (!event.target.classList.contains('quantity-input')) return;
+
+    const input = event.target;
+    const productId = parseInt(input.dataset.productId);
+
+    if (!productId || isNaN(productId)) return;
+
+    // Clear timeout since user left the field
+    if (this.quantityUpdateTimeout) {
+      clearTimeout(this.quantityUpdateTimeout);
+    }
+
+    // Remove visual feedback
+    input.classList.remove('is-updating');
+
+    const newQuantity = parseInt(input.value);
+    const product = this.selectedProducts.find(p => p.id === productId);
+
+    if (!product) return;
+
+    if (isNaN(newQuantity) || newQuantity <= 0) {
+      // Show confirmation before removing
+      if (confirm('Remover este item do carrinho?')) {
+        this.removeProduct(productId);
+      } else {
+        // Restore previous quantity
+        input.value = product.quantity;
+      }
+    } else if (newQuantity > this.MAX_QUANTITY) {
+      // Auto-correct to maximum and update
+      this.setQuantity(productId, this.MAX_QUANTITY);
+    } else {
+      // Update with the new quantity
+      this.setQuantity(productId, newQuantity);
+    }
+  }
+
+  handleQuantityKeydown(event) {
+    if (!event.target.classList.contains('quantity-input')) return;
+
+    const input = event.target;
+    const productId = parseInt(input.dataset.productId);
+
+    if (!productId || isNaN(productId)) return;
+
+    const key = event.key;
+
+    switch (key) {
+      case 'Enter':
+        event.preventDefault();
+        input.blur();
+        break;
+
+      case 'Escape':
+        event.preventDefault();
+        {
+          const product = this.selectedProducts.find(p => p.id === productId);
+          if (product) {
+            input.value = product.quantity;
+            input.blur();
+          }
+        }
+        break;
+
+      case 'ArrowUp':
+        event.preventDefault();
+        this.incrementQuantity(productId, 1);
+        break;
+
+      case 'ArrowDown':
+        event.preventDefault();
+        this.incrementQuantity(productId, -1);
+        break;
+
+      default:
+        if (!/^[0-9]$/.test(key) &&
+          !['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(key)) {
+          event.preventDefault();
+        }
+        break;
+    }
+  }
+
+  handleQuantityFocus(event) {
+    if (!event.target.classList.contains('quantity-input')) return;
+
+    const input = event.target;
+    setTimeout(() => input.select(), 0);
+  }
+
+  incrementQuantity(productId, delta) {
+    const product = this.selectedProducts.find(p => p.id === productId);
+    if (!product) return;
+
+    const newQuantity = Math.max(this.MIN_QUANTITY,
+      Math.min(this.MAX_QUANTITY, product.quantity + delta));
+
+    if (newQuantity !== product.quantity) {
+      this.setQuantity(productId, newQuantity);
+    }
+  }
+
+  showQuantityUpdateFeedback(productId) {
+    const cartItem = this.container.querySelector(`[data-product-id="${productId}"]`);
+    if (cartItem) {
+      cartItem.classList.add('quantity-updated');
+      setTimeout(() => {
+        cartItem.classList.remove('quantity-updated');
+      }, 500);
+    }
+  }
+
   updateTotalPrice() {
     try {
       const total = this.calculateTotal();
@@ -305,6 +517,32 @@ export class CartManager {
       this.container.removeEventListener('click', this.boundEventHandler);
       this.boundEventHandler = null;
     }
+
+    if (this.boundInputHandler && this.container) {
+      this.container.removeEventListener('input', this.boundInputHandler);
+      this.boundInputHandler = null;
+    }
+
+    if (this.boundBlurHandler && this.container) {
+      this.container.removeEventListener('blur', this.boundBlurHandler, true);
+      this.boundBlurHandler = null;
+    }
+
+    if (this.boundKeyHandler && this.container) {
+      this.container.removeEventListener('keydown', this.boundKeyHandler);
+      this.boundKeyHandler = null;
+    }
+
+    if (this.boundFocusHandler && this.container) {
+      this.container.removeEventListener('focus', this.boundFocusHandler, true);
+      this.boundFocusHandler = null;
+    }
+
+    if (this.quantityUpdateTimeout) {
+      clearTimeout(this.quantityUpdateTimeout);
+      this.quantityUpdateTimeout = null;
+    }
+
     this.isInitialized = false;
   }
 
