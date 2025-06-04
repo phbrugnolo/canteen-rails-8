@@ -7,29 +7,29 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  font-size: 26px;
+  font-size: 27px;
 }
 
 .promissory {
   width: 36cm;
-  height: 14cm;
-  margin: 1cm auto;
+  height: 17cm;
+  margin: 0.6cm auto;
   border: 1px solid #000;
   position: relative;
-  padding: 0.25cm;
+  padding: 0.4cm;
 }
 
 .logo {
   position: absolute;
-  top: 0.25cm;
+  top: 0.4cm;
   left: 1cm;
-  width: 3.5cm;
-  height: 3cm;
+  width: 3.2cm;
+  height: 2.8cm;
 }
 
 .header {
   text-align: center;
-  margin-bottom: 1.75cm;
+  margin-bottom: 2.2cm;
 }
 
 .header h3 {
@@ -38,21 +38,21 @@ body {
 
 .header .code {
   top: 0.3cm;
-  left: 5.5cm;
+  left: 5cm;
   position: relative;
   margin-top: 0.2cm;
   font-weight: bold;
 }
 
 .field {
-  margin-bottom: 0.5cm;
+  margin-bottom: 0.6cm;
 }
 
 .field-line {
   display: flex;
   align-items: center;
   gap: 0.2cm;
-  margin-bottom: 0.5cm;
+  margin-bottom: 0.9cm;
 }
 
 .field-group {
@@ -64,16 +64,16 @@ body {
   border-bottom: 1px solid #000;
   min-width: 3cm;
   display: inline-block;
-  height: 1.2em;
+  height: 1.5em;
 }
 
 .signature {
-  margin-top: 1.5cm;
+  margin-top: 2.5cm;
   text-align: center;
 }
 
 .signature-line {
-  width: 24cm;
+  width: 22cm;
   border-bottom: 1px solid #000;
   margin: 0 auto;
 }
