@@ -6,8 +6,8 @@ module NumberToWordsHelper
     integer_words = integer_part.to_words(locale: :'pt-BR').upcase
     fractional_words = fractional_part.to_words(locale: :'pt-BR').upcase
 
-    integer_unit = integer_part == 1 ? 'REAL' : 'REAIS'
-    fractional_unit = fractional_part == 1 ? 'CENTAVO' : 'CENTAVOS'
+    integer_unit = integer_part == 1 ? "REAL" : "REAIS"
+    fractional_unit = fractional_part == 1 ? "CENTAVO" : "CENTAVOS"
 
     if integer_part == 0 && fractional_part > 0
       "#{fractional_words} #{fractional_unit}"
