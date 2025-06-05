@@ -23,7 +23,9 @@
     "swal",
     "Swal",
     "sweetalert",
-    "sweetalert2"
+    "sweetalert2",
+    "tbody",
+    "thead"
   ],
   "search.exclude": {
     "**/node_modules": true,
