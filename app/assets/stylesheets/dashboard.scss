@@ -1,0 +1,206 @@
+// Variables for colors
+$primary-color: #2c3e50;
+$secondary-color: #6c757d;
+$light-gray: #f8f9fa;
+$border-color: #e9ecef;
+$white: white;
+$blue: #007bff;
+
+// Variables for spacing
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+// Variables for border radius
+$border-radius-sm: 12px;
+$border-radius-circle: 50%;
+
+// Variables for box shadows
+$box-shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
+$box-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
+
+// Variables for breakpoints
+$mobile-breakpoint: 768px;
+
+// Variables for gradients
+$gradient-customers: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$gradient-products: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+$gradient-sales: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+$gradient-revenue: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: $spacing-xl;
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $primary-color;
+  margin-bottom: $spacing-sm;
+}
+
+.dashboard-subtitle {
+  font-size: 1.1rem;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+}
+
+.metric-card {
+  background: $white;
+  border-radius: $border-radius-sm;
+  padding: $spacing-lg;
+  box-shadow: $box-shadow-light;
+  border: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $box-shadow-hover;
+  }
+}
+
+.metric-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: $border-radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-md;
+  font-size: 1.5rem;
+  color: $white;
+
+  &.customers {
+    background: $gradient-customers;
+  }
+
+  &.products {
+    background: $gradient-products;
+  }
+
+  &.sales {
+    background: $gradient-sales;
+  }
+
+  &.revenue {
+    background: $gradient-revenue;
+  }
+}
+
+.metric-content {
+  flex-grow: 1;
+}
+
+.metric-value {
+  font-weight: 700;
+  margin-bottom: $spacing-xs;
+  color: $primary-color;
+
+  &.h3,
+  h3 {
+    font-size: 2rem;
+  }
+
+  &.h4,
+  h4 {
+    font-size: 1.5rem;
+  }
+}
+
+.metric-label {
+  font-size: 0.9rem;
+  color: $secondary-color;
+  margin-bottom: $spacing-xs;
+  font-weight: 500;
+}
+
+.metric-detail {
+  font-size: 0.8rem;
+}
+
+.dashboard-content {
+  margin-top: $spacing-xl;
+}
+
+.dashboard-card {
+  border: none;
+  border-radius: $border-radius-sm;
+  box-shadow: $box-shadow-light;
+  overflow: hidden;
+
+  .card-header {
+    background: $light-gray;
+    border-bottom: 1px solid $border-color;
+    padding: $spacing-md $spacing-lg;
+  }
+
+  .card-title {
+    color: $primary-color;
+    font-weight: 600;
+  }
+}
+
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  background: $blue;
+  border-radius: $border-radius-circle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $white;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.rank-badge {
+  width: 30px;
+  height: 30px;
+  background: $gradient-customers;
+  border-radius: $border-radius-circle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $white;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+// Mobile responsive styles
+@media (max-width: $mobile-breakpoint) {
+  .dashboard-title {
+    font-size: 2rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-card {
+    padding: $spacing-md;
+  }
+
+  .metric-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+
+  .metric-value {
+    font-size: 1.5rem;
+  }
+}
