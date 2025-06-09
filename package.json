@@ -23,12 +23,12 @@
     "nodemon": "^3.1.10",
     "postcss": "^8.5.4",
     "postcss-cli": "^11.0.1",
-    "sass": "^1.89.1",
+    "sass": "^1.89.2",
     "sweetalert2": "^11.22.0",
     "tom-select": "^2.4.3"
   },
   "browserslist": [
     "defaults"
   ],
-  "packageManager": "yarn@4.9.1"
+  "packageManager": "yarn@4.9.2"
 }
