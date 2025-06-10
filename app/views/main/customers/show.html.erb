@@ -13,7 +13,7 @@
   <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
     <p style="color: green"><%= notice %></p>
     <div class="card px-4 py-5 d-flex justify-content-center" style="background-color: #EEF5FF; margin-top: 2rem">
-      <div class="dashboard-container">
+      <div class="container">
         <div class="d-flex w-100 h-100 justify-content-center align-items-center">
           <div class="m-auto">
             <div class="card" style="width: 720px;">
@@ -56,7 +56,7 @@
     <h1 class="mx-2 mt-2"><%= I18n.t(:recent_purchases) %></h1>
     <hr>
     <div class="card p-2 mt-4" style="background-color: #EEF5FF">
-      <div class="dashboard-container">
+      <div class="container">
         <div class="row">
           <% if @customer.sales.size > 0 %>
             <% @customer.sales.order(created_at: :desc).each do |sale| %>

@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 <h1 class="mx-2"><%= I18n.t(:product, scope: %i[activerecord models], count: 2) %></h1>
 <hr>
-<div class="dashboard-container">
+<div class="container">
   <div class="card p-2 mt-4" style="background-color: #EEF5FF">
     <div class="d-flex justify-content-end flex-wrap">
       <%= link_to I18n.t(:add, scope: %i[activerecord], model: Product.model_name.human), new_main_product_path, class: "btn btn-primary mt-3 me-5" %>
