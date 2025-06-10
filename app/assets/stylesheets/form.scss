@@ -1,0 +1,329 @@
+// ===========================================
+// FORM-SPECIFIC STYLES
+// ===========================================
+// All global variables are imported from _variables.scss
+// This prevents conflicts with other stylesheets
+
+// Form-specific color overrides
+$form-bg-color: #EEF5FF;
+$form-input-focus: #0d6efd;
+$form-input-border: #ced4da;
+$form-input-border-focus: #86b7fe;
+$form-label-color: #495057;
+$form-error-color: #dc3545;
+
+// Form-specific spacing
+$form-input-padding: 0.75rem;
+$form-group-margin: 1.5rem;
+
+// ===========================================
+// MIXINS
+// ===========================================
+
+@mixin form-transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+@mixin form-focus-styles($color: $form-input-focus) {
+  border-color: $color;
+  box-shadow: 0 0 0 0.2rem rgba(red($color), green($color), blue($color), 0.25);
+  outline: none;
+}
+
+@mixin form-hover-transform($scale: 1.02) {
+  transform: scale($scale);
+}
+
+// ===========================================
+// FORM CONTAINER STYLES
+// ===========================================
+
+.form-container {
+  .container {
+    max-width: 100%;
+
+    .card {
+      background-color: $form-bg-color !important;
+      border: none;
+      border-radius: $border-radius-lg;
+      box-shadow: $box-shadow-md;
+      @include form-transition();
+
+      &:hover {
+        box-shadow: $box-shadow-lg;
+        @include form-hover-transform();
+      }
+    }
+  }
+}
+
+// ===========================================
+// FORM INPUT STYLES
+// ===========================================
+
+.form-inputs {
+  .form-group {
+    margin-bottom: $form-group-margin;
+
+    label {
+      color: $form-label-color;
+      font-weight: $font-weight-semibold;
+      margin-bottom: $spacing-sm;
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      border: 2px solid $form-input-border;
+      border-radius: $border-radius-md;
+      padding: $form-input-padding;
+      font-size: 1rem;
+      @include form-transition(border-color, box-shadow);
+
+      &:focus {
+        @include form-focus-styles();
+      }
+
+      &:hover:not(:focus) {
+        border-color: $form-input-border-focus;
+      }
+
+      &::placeholder {
+        color: $color-text-secondary;
+        font-style: italic;
+      }
+    }
+
+    // File input specific styles
+    input[type="file"] {
+      border: 2px dashed $form-input-border;
+      background-color: $color-white;
+      padding: $spacing-md;
+      border-radius: $border-radius-md;
+      @include form-transition();
+
+      &:hover {
+        border-color: $form-input-focus;
+        background-color: rgba($form-input-focus, 0.05);
+      }
+
+      &:focus {
+        @include form-focus-styles();
+      }
+    }
+
+    // Text area specific styles
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+  }
+
+  // Input group for price field
+  .input-group {
+    .input-group-text {
+      background-color: $color-success;
+      color: $color-white;
+      border: 2px solid $color-success;
+      font-weight: $font-weight-bold;
+      border-radius: $border-radius-md 0 0 $border-radius-md;
+    }
+
+    .form-control {
+      border-left: none;
+      border-radius: 0 $border-radius-md $border-radius-md 0;
+
+      &:focus {
+        border-color: $form-input-border-focus;
+        box-shadow: none;
+      }
+    }
+  }
+
+  // Error styles
+  .has-error {
+    .form-control {
+      border-color: $form-error-color;
+
+      &:focus {
+        @include form-focus-styles($form-error-color);
+      }
+    }
+  }
+
+  .invalid-feedback {
+    color: $form-error-color;
+    font-size: 0.875rem;
+    margin-top: $spacing-xs;
+  }
+}
+
+// ===========================================
+// ERROR NOTIFICATION STYLES
+// ===========================================
+
+.alert-danger {
+  background-color: rgba($form-error-color, 0.1);
+  border: 1px solid rgba($form-error-color, 0.3);
+  color: $form-error-color;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+// ===========================================
+// FORM ACTIONS STYLES
+// ===========================================
+
+.form-actions {
+  margin-top: $spacing-xl;
+  padding-top: $spacing-lg;
+  border-top: 1px solid rgba($color-border, 0.5);
+
+  .btn {
+    padding: $spacing-sm $spacing-lg;
+    font-weight: $font-weight-semibold;
+    border-radius: $border-radius-md;
+    @include form-transition();
+    border: 2px solid transparent;
+
+    &.btn-primary {
+      background-color: $color-sale-primary;
+      border-color: $color-sale-primary;
+
+      &:hover {
+        background-color: darken($color-sale-primary, 10%);
+        border-color: darken($color-sale-primary, 10%);
+        @include form-hover-transform();
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba($color-sale-primary, 0.25);
+      }
+    }
+
+    &.btn-secondary {
+      background-color: transparent;
+      border-color: $color-secondary;
+      color: $color-secondary;
+
+      &:hover {
+        background-color: $color-secondary;
+        color: $color-white;
+        @include form-hover-transform();
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba($color-secondary, 0.25);
+      }
+    }
+  }
+}
+
+// ===========================================
+// RESPONSIVE DESIGN
+// ===========================================
+
+@media (max-width: 768px) {
+  .form-container {
+    .container {
+      width: 95% !important;
+      margin: $spacing-md auto;
+
+      .card {
+        margin-top: $spacing-md !important;
+      }
+    }
+  }
+
+  .form-actions {
+    text-align: center;
+
+    .btn {
+      width: 100%;
+      margin: $spacing-xs 0;
+    }
+  }
+
+  .input-group {
+    flex-direction: column;
+
+    .input-group-text {
+      border-radius: $border-radius-md $border-radius-md 0 0 !important;
+      text-align: center;
+    }
+
+    .form-control {
+      border-radius: 0 0 $border-radius-md $border-radius-md !important;
+      border-left: 2px solid $form-input-border !important;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .form-container {
+    .container {
+      width: 100% !important;
+      padding: $spacing-sm;
+
+      .card {
+        margin-top: $spacing-sm !important;
+        padding: $spacing-md !important;
+      }
+    }
+  }
+
+  .form-inputs {
+    .form-group {
+      margin-bottom: $spacing-md;
+    }
+  }
+}
+
+// ===========================================
+// ANIMATION STYLES
+// ===========================================
+
+@keyframes formFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-container {
+  animation: formFadeIn 0.5s ease-out;
+}
+
+// ===========================================
+// ACCESSIBILITY IMPROVEMENTS
+// ===========================================
+
+.form-control:focus,
+.btn:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .form-control {
+    border-width: 3px;
+  }
+
+  .btn {
+    border-width: 3px;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
