@@ -1,27 +1,20 @@
-// Variables
+// ===========================================
+// SIDEBAR-SPECIFIC STYLES
+// ===========================================
+// All global variables are now imported from _variables.scss
+
+// Sidebar-specific variables
 $sidebar-width: 280px;
 $sidebar-collapsed-width: 70px;
-$sidebar-bg: #f8f9fa;
-$sidebar-border: #e9ecef;
-$nav-link-hover: #e9ecef;
-$nav-link-active: #0d6efd;
-$text-primary: #212529;
-$text-secondary: #6c757d;
-$transition-duration: 0.3s;
-$border-radius: 0.5rem;
-$shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-$white: #ffffff;
-
-// Typography
-$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
-// Mobile breakpoint
-$mobile-breakpoint: 768px;
+$sidebar-bg: $color-light-gray;
+$sidebar-border: $color-medium-gray;
+$nav-link-hover: $color-medium-gray;
+$nav-link-active: $color-sale-primary;
 
 html, body {
   height: 100%;
   margin: 0;
-  font-family: $font-family;
+  font-family: $font-family-base;
 }
 
 .app-container {
@@ -37,10 +30,10 @@ html, body {
   border-right: 1px solid $sidebar-border;
   display: flex;
   flex-direction: column;
-  transition: width $transition-duration ease;
+  transition: width $transition-base;
   position: relative;
-  z-index: 1000;
-  box-shadow: $shadow;
+  z-index: $z-index-sticky;
+  box-shadow: $box-shadow-sm;
 
   /* === COLLAPSED STATE === */
   &.collapsed {
@@ -124,11 +117,11 @@ html, body {
   background: none;
   border: none;
   font-size: 1.25rem;
-  color: $text-primary;
+  color: $color-text-primary;
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: $border-radius;
-  transition: all $transition-duration ease;
+  border-radius: $border-radius-md;
+  transition: all $transition-base ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,16 +150,16 @@ html, body {
 .brand-logo {
   width: 40px;
   height: 40px;
-  border-radius: $border-radius;
-  transition: transform $transition-duration ease;
+  border-radius: $border-radius-md;
+  transition: transform $transition-base ease;
 }
 
 .brand-text {
   font-size: 1.25rem;
   font-weight: 600;
-  color: $text-primary;
+  color: $color-text-primary;
   white-space: nowrap;
-  transition: opacity $transition-duration ease;
+  transition: opacity $transition-base ease;
 }
 
 /* === NAVIGATION === */
@@ -190,9 +183,9 @@ html, body {
   display: flex;
   align-items: center;
   padding: 0.75rem 1.5rem;
-  color: $text-primary;
+  color: $color-text-primary;
   text-decoration: none;
-  transition: all $transition-duration ease;
+  transition: all $transition-base ease;
   border-radius: 0;
   position: relative;
   gap: 0.75rem;
@@ -219,12 +212,12 @@ html, body {
   font-size: 1.25rem;
   min-width: 24px;
   text-align: center;
-  transition: transform $transition-duration ease;
+  transition: transform $transition-base ease;
 }
 
 .nav-text {
   white-space: nowrap;
-  transition: opacity $transition-duration ease;
+  transition: opacity $transition-base ease;
   font-weight: 500;
 }
 
@@ -247,9 +240,9 @@ html, body {
   padding: 0.75rem;
   background: none;
   border: none;
-  border-radius: $border-radius;
+  border-radius: $border-radius-md;
   cursor: pointer;
-  transition: background $transition-duration ease;
+  transition: background $transition-base ease;
 
   &:hover {
     background: $nav-link-hover;
@@ -282,22 +275,22 @@ html, body {
 
 .user-name {
   font-weight: 500;
-  color: $text-primary;
+  color: $color-text-primary;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .dropdown-arrow {
-  transition: transform $transition-duration ease;
-  color: $text-secondary;
+  transition: transform $transition-base ease;
+  color: $color-text-secondary;
 }
 
 .user-dropdown {
   bottom: 100%;
   top: auto;
   margin-bottom: 0.5rem;
-  border-radius: $border-radius;
+  border-radius: $border-radius-md;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
@@ -305,8 +298,8 @@ html, body {
 .main-content {
   flex: 1;
   overflow-y: auto;
-  background: $white;
-  transition: all $transition-duration ease;
+  background: $color-white;
+  transition: all $transition-base ease;
 
   &.expanded {
     margin-left: 0;
@@ -320,11 +313,11 @@ html, body {
 .content-wrapper {
   padding: 2rem;
   max-width: 100%;
-  transition: padding $transition-duration ease;
+  transition: padding $transition-base ease;
 }
 
 /* === RESPONSIVE DESIGN === */
-@media (max-width: $mobile-breakpoint) {
+@media (max-width: $breakpoint-md) {
   .sidebar {
     position: fixed;
     left: 0;
@@ -332,7 +325,7 @@ html, body {
     height: 100vh;
     z-index: 1050;
     transform: translateX(-100%);
-    transition: transform $transition-duration ease;
+    transition: transform $transition-base ease;
 
     &.show {
       transform: translateX(0);

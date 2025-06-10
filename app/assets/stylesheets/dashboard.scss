@@ -1,35 +1,17 @@
-// Variables for colors
-$primary-color: #2c3e50;
-$secondary-color: #6c757d;
-$light-gray: #f8f9fa;
-$border-color: #e9ecef;
-$white: white;
-$blue: #007bff;
 
-// Variables for spacing
-$spacing-xs: 0.25rem;
-$spacing-sm: 0.5rem;
-$spacing-md: 1rem;
-$spacing-lg: 1.5rem;
-$spacing-xl: 2rem;
+// ===========================================
+// DASHBOARD-SPECIFIC STYLES
+// ===========================================
+// All variables are now imported from _variables.scss
+// This prevents conflicts with other stylesheets
 
-// Variables for border radius
-$border-radius-sm: 12px;
-$border-radius-circle: 50%;
-
-// Variables for box shadows
-$box-shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
-$box-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
-
-// Variables for breakpoints
-$mobile-breakpoint: 768px;
-
-// Variables for gradients
+// Dashboard-specific gradients (using centralized colors)
 $gradient-customers: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 $gradient-products: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
 $gradient-sales: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
 $gradient-revenue: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
 
+// Dashboard container with proper scoping
 .dashboard-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -41,8 +23,8 @@ $gradient-revenue: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
 
 .dashboard-title {
   font-size: 2.5rem;
-  font-weight: 700;
-  color: $primary-color;
+  font-weight: $font-weight-bold;
+  color: $color-dashboard-primary;
   margin-bottom: $spacing-sm;
 }
 
@@ -58,31 +40,31 @@ $gradient-revenue: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
 }
 
 .metric-card {
-  background: $white;
-  border-radius: $border-radius-sm;
+  background: $color-white;
+  border-radius: $border-radius-lg;
   padding: $spacing-lg;
-  box-shadow: $box-shadow-light;
-  border: 1px solid $border-color;
+  box-shadow: $box-shadow-sm;
+  border: 1px solid $color-border;
   display: flex;
   align-items: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: $box-shadow-hover;
+    box-shadow: $box-shadow-lg;
   }
 }
 
-.metric-icon {
+.dashboard-metric-icon {
   width: 60px;
   height: 60px;
-  border-radius: $border-radius-sm;
+  border-radius: $border-radius-lg;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: $spacing-md;
   font-size: 1.5rem;
-  color: $white;
+  color: $color-white;
 
   &.customers {
     background: $gradient-customers;
@@ -101,14 +83,14 @@ $gradient-revenue: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
   }
 }
 
-.metric-content {
+.dashboard-metric-content {
   flex-grow: 1;
 }
 
-.metric-value {
-  font-weight: 700;
+.dashboard-metric-value {
+  font-weight: $font-weight-bold;
   margin-bottom: $spacing-xs;
-  color: $primary-color;
+  color: $color-dashboard-primary;
 
   &.h3,
   h3 {
@@ -123,7 +105,7 @@ $gradient-revenue: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
 
 .metric-label {
   font-size: 0.9rem;
-  color: $secondary-color;
+  color: $color-secondary;
   margin-bottom: $spacing-xs;
   font-weight: 500;
 }
@@ -138,18 +120,18 @@ $gradient-revenue: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
 
 .dashboard-card {
   border: none;
-  border-radius: $border-radius-sm;
-  box-shadow: $box-shadow-light;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-sm;
   overflow: hidden;
 
   .card-header {
-    background: $light-gray;
-    border-bottom: 1px solid $border-color;
+    background: $color-light-gray;
+    border-bottom: 1px solid $color-border;
     padding: $spacing-md $spacing-lg;
   }
 
   .card-title {
-    color: $primary-color;
+    color: $color-dashboard-primary;
     font-weight: 600;
   }
 }
@@ -157,12 +139,12 @@ $gradient-revenue: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
 .avatar-sm {
   width: 32px;
   height: 32px;
-  background: $blue;
+  background: $color-dashboard-primary;
   border-radius: $border-radius-circle;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $white;
+  color: $color-white;
   font-weight: 600;
   font-size: 0.8rem;
 }
@@ -175,13 +157,13 @@ $gradient-revenue: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $white;
+  color: $color-white;
   font-weight: 600;
   font-size: 0.8rem;
 }
 
 // Mobile responsive styles
-@media (max-width: $mobile-breakpoint) {
+@media (max-width: $breakpoint-md) {
   .dashboard-title {
     font-size: 2rem;
   }

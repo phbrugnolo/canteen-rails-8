@@ -1,0 +1,519 @@
+/* Modern Sales Interface Styles - SCSS Version */
+
+// ===========================================
+// SALES-SPECIFIC STYLES
+// ===========================================
+// All global variables are now imported from _variables.scss
+// This prevents conflicts with other stylesheets
+
+// Sales-specific color overrides (when needed)
+$sales-success-alt: #28a745;
+
+// Loading & Skeleton colors (sales-specific)
+$sales-skeleton-light: #f0f0f0;
+$sales-skeleton-dark: #e0e0e0;
+
+// Scrollbar colors (sales-specific)
+$sales-scrollbar-track: #f1f1f1;
+$sales-scrollbar-thumb: #c1c1c1;
+$sales-scrollbar-thumb-hover: #a1a1a1;
+$mobile-breakpoint: 768px;
+
+// Opacity values
+$opacity-light: 0.3;
+$opacity-medium: 0.5;
+
+// ==========================================
+// MIXINS
+// ==========================================
+
+@mixin transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+@mixin border-radius($radius: $border-radius) {
+  border-radius: $radius;
+}
+
+@mixin box-shadow($shadow: $box-shadow-sm) {
+  box-shadow: $shadow;
+}
+
+@mixin focus-styles($color: $primary-color) {
+  border-color: $color;
+  box-shadow: 0 0 0 0.2rem rgba(red($color), green($color), blue($color), 0.25);
+  outline: none;
+}
+
+@mixin hover-transform($scale: 1.05, $translateY: 0px) {
+  transform: scale($scale) translateY($translateY);
+}
+
+@mixin mobile {
+  @media (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+// ==========================================
+// KEYFRAMES & ANIMATIONS
+// ==========================================
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: $opacity-medium;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes success {
+  0% {
+    transform: scale(1);
+    background-color: $success-color;
+  }
+  50% {
+    transform: scale(1.1);
+    background-color: $success-gradient;
+  }
+  100% {
+    transform: scale(1);
+    background-color: $success-color;
+  }
+}
+
+// ==========================================
+// BASE STYLES
+// ==========================================
+
+* {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+// ==========================================
+// LAYOUT
+// ==========================================
+
+.sales-container {
+  background: linear-gradient(135deg, $light-gray 0%, $medium-gray 100%);
+  min-height: 100vh;
+}
+
+// ==========================================
+// COMPONENTS
+// ==========================================
+
+// Cards
+.card {
+  @include border-radius($border-radius-lg);
+  @include transition();
+  @include box-shadow();
+
+  &:hover {
+    @include box-shadow($box-shadow-md);
+  }
+
+  &-header {
+    border-radius: $border-radius-lg $border-radius-lg 0 0 !important;
+    border-bottom: 1px solid rgba($black, 0.05) !important;
+    font-weight: 600;
+  }
+
+  &-body {
+    padding: 1rem;
+
+    @include mobile {
+      padding: 1rem 0.75rem;
+    }
+  }
+}
+
+// Product Items
+.product-item {
+  cursor: pointer;
+  @include border-radius($border-radius-lg);
+  overflow: hidden;
+  @include transition();
+
+  &:hover {
+    transform: translateY(-4px);
+    @include box-shadow($box-shadow-md);
+  }
+
+  .card-body {
+    padding: 1rem;
+
+    @include mobile {
+      padding: 0.75rem;
+    }
+  }
+
+  .btn {
+    @include transition();
+    font-size: 0.875rem;
+
+    &:hover {
+      @include hover-transform();
+    }
+  }
+}
+
+// Product Cards with Animation
+.product-card {
+  animation: fadeIn 0.6s ease-out;
+  animation-fill-mode: both;
+
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+// Search Input
+#search-input {
+  border: 1px solid $medium-gray;
+  @include border-radius();
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  @include transition();
+
+  &:focus {
+    @include focus-styles();
+  }
+}
+
+// ==========================================
+// CART COMPONENTS
+// ==========================================
+
+// Cart Styles
+.cart-content {
+  background: $white;
+}
+
+.cart-item {
+  @include transition(background-color, 0.2s, ease);
+  animation: slideInRight 0.4s ease-out;
+
+  &:hover {
+    background-color: $light-gray;
+  }
+
+  &:last-child {
+    border-bottom: none !important;
+  }
+
+  &.new-item {
+    animation: bounceIn 0.6s ease-out;
+  }
+
+  &.quantity-updated {
+    background-color: $success-light !important;
+    @include transition(background-color, 0.3s, ease);
+
+    .quantity-input {
+      border-color: $success-alt !important;
+      background-color: $success-bg !important;
+    }
+  }
+
+  // Cart Action Buttons
+  .btn {
+    @include transition();
+    border-width: 1px;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &.btn-outline-secondary:hover {
+      background-color: $secondary-color;
+      border-color: $secondary-color;
+      color: white;
+    }
+
+    &.btn-outline-danger:hover {
+      background-color: $danger-color;
+      border-color: $danger-color;
+      color: white;
+    }
+  }
+
+  .row > div {
+    @include mobile {
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+.cart-summary {
+  .badge {
+    @include transition();
+
+    &.updated {
+      animation: pulse 0.6s ease-out;
+    }
+  }
+}
+
+// ==========================================
+// FORM ELEMENTS
+// ==========================================
+
+// Form Elements
+.form-label {
+  font-weight: 600;
+  color: $dark-gray;
+  margin-bottom: 0.5rem;
+}
+
+.form-control,
+.form-select {
+  border: 1px solid $border-color;
+  @include border-radius();
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  @include transition();
+
+  &:focus {
+    @include focus-styles();
+  }
+}
+
+// Quantity Input
+.quantity-input {
+  @include transition(all, 0.2s, ease);
+  border: 1px solid $border-color !important;
+  font-weight: 600 !important;
+
+  &:focus {
+    border-color: $primary-color !important;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25) !important;
+    outline: none;
+  }
+
+  &:hover {
+    border-color: $border-hover !important;
+  }
+
+  &.is-updating {
+    border-color: $warning-color !important;
+    background-color: $warning-bg !important;
+  }
+
+  // Remove spinner arrows
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+
+  &[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}
+
+// ==========================================
+// BUTTONS
+// ==========================================
+
+// Buttons
+.btn {
+  @include border-radius();
+  font-weight: 500;
+  @include transition();
+
+  &-success {
+    background: linear-gradient(135deg, $success-color 0%, $success-gradient 100%);
+    border: none;
+
+    &:hover {
+      background: linear-gradient(135deg, $success-hover 0%, $success-gradient-hover 100%);
+      transform: translateY(-2px);
+    }
+
+    &.animate-success {
+      animation: success 0.6s ease-out;
+    }
+  }
+
+  &-lg {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+
+    @include mobile {
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+  }
+}
+
+// ==========================================
+// UI COMPONENTS
+// ==========================================
+
+// Badge
+.badge {
+  @include border-radius($border-radius-pill);
+  font-weight: 500;
+}
+
+// ==========================================
+// THIRD-PARTY COMPONENTS
+// ==========================================
+
+// TomSelect Customization
+.ts-control {
+  border-radius: $border-radius !important;
+  border: 1px solid $border-color !important;
+  min-height: 48px !important;
+
+  &.focus {
+    border-color: $primary-color !important;
+    box-shadow: $box-shadow-focus !important;
+  }
+}
+
+.ts-dropdown {
+  border-radius: $border-radius !important;
+  border: 1px solid $border-color !important;
+  box-shadow: $box-shadow-md !important;
+
+  .option {
+    border-radius: 4px !important;
+    margin: 2px 4px !important;
+
+    &.active {
+      background-color: $primary-color !important;
+      color: white !important;
+    }
+  }
+}
+
+// ==========================================
+// LOADING STATES & ANIMATIONS
+// ==========================================
+
+// Loading States
+.loading {
+  animation: pulse 1.5s ease-in-out infinite;
+
+  &-skeleton {
+    background: linear-gradient(90deg, $skeleton-light 25%, $skeleton-dark 50%, $skeleton-light 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+}
+
+// ==========================================
+// EMPTY STATES
+// ==========================================
+
+// No Results
+#no-results {
+  i {
+    opacity: $opacity-light;
+  }
+
+  p {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}
+
+// ==========================================
+// UTILITY CLASSES
+// ==========================================
+
+.min-width-30 {
+  min-width: 60px;
+}
+
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ==========================================
+// BROWSER SPECIFIC STYLES
+// ==========================================
+
+// Scrollbar Styling
+::-webkit-scrollbar {
+  width: 6px;
+
+  &-track {
+    background: $scrollbar-track;
+    @include border-radius(3px);
+  }
+
+  &-thumb {
+    background: $scrollbar-thumb;
+    @include border-radius(3px);
+
+    &:hover {
+      background: $scrollbar-thumb-hover;
+    }
+  }
+}

@@ -1,9 +1,17 @@
-// node_modules stylesheets
+
+// ===========================================
+// IMPORT ORDER IS IMPORTANT!
+// ===========================================
+
+// 1. Global variables first (must be imported before everything else)
+@import "variables";
+
+// 2. External libraries
 @import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons";
 @import "tom-select/dist/scss/tom-select";
 
-// Project stylesheets
+// 3. Project stylesheets (now using centralized variables)
 @import "authentication";
 @import "dashboard";
 @import "sale";

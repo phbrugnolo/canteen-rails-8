@@ -1,41 +1,47 @@
+
+// ===========================================
+// AUTHENTICATION-SPECIFIC STYLES
+// ===========================================
+// Uses centralized variables from _variables.scss
+
 .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f8f9fa;
+  background-color: $color-light-gray;
 }
 
 .auth-form-container {
   width: 100%;
   max-width: 420px;
-  padding: 2rem;
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  padding: $spacing-xl;
+  background-color: $color-white;
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow-lg;
 }
 
 .auth-heading {
   text-align: center;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
-  color: #212529;
+  margin-bottom: $spacing-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
 }
 
 .auth-btn {
   width: 100%;
-  padding: 0.75rem;
-  margin-top: 1rem;
+  padding: $spacing-sm $spacing-md;
+  margin-top: $spacing-md;
 }
 
 .auth-links {
-  margin-top: 1.5rem;
+  margin-top: $spacing-lg;
   text-align: center;
 
   a {
-    color: #0d6efd;
+    color: $color-auth-primary;
     text-decoration: none;
-    margin: 0 0.5rem;
+    margin: 0 $spacing-sm;
 
     &:hover {
       text-decoration: underline;
@@ -44,8 +50,8 @@
 }
 
 .auth-form-container .alert {
-  margin-bottom: 1.5rem;
-  padding: 0.75rem;
-  border-radius: 0.25rem;
-  font-size: 0.9rem;
+  margin-bottom: $spacing-lg;
+  padding: $spacing-sm;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-sm;
 }
