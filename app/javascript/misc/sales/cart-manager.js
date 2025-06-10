@@ -193,7 +193,7 @@ export class CartManager {
         const subTotal = (price * quantity).toFixed(2);
 
         return `
-          <div class="cart-item border-bottom py-3 px-3" data-product-id="${product.id}">
+          <div class="sales-cart-item border-bottom py-3 px-3" data-product-id="${product.id}">
             <div class="row align-items-center">
               <div class="col-7">
                 <h6 class="mb-1 fw-semibold text-truncate">${this.escapeHtml(product.name || 'Produto sem nome')}</h6>
@@ -209,7 +209,7 @@ export class CartManager {
                   </button>
 
                   <input type="number"
-                         class="form-control form-control-sm text-center fw-bold quantity-input"
+                         class="form-control form-control-sm text-center fw-bold sales-quantity-input"
                          value="${quantity}"
                          min="${this.MIN_QUANTITY}"
                          max="${this.MAX_QUANTITY}"
@@ -244,8 +244,8 @@ export class CartManager {
       }).join('');
 
       this.container.innerHTML = `
-        <div class="cart-content">
-          <div class="cart-items" style="max-height: 400px; overflow-y: auto;">
+        <div class="sales-cart-content">
+          <div class="sales-sales-cart-items" style="max-height: 400px; overflow-y: auto;">
             ${cartRows}
           </div>
         </div>
@@ -318,7 +318,7 @@ export class CartManager {
   }
 
   handleQuantityInput(event) {
-    if (!event.target.classList.contains('quantity-input')) return;
+    if (!event.target.classList.contains('sales-quantity-input')) return;
 
     const input = event.target;
     const productId = parseInt(input.dataset.productId);
@@ -346,7 +346,7 @@ export class CartManager {
   }
 
   handleQuantityBlur(event) {
-    if (!event.target.classList.contains('quantity-input')) return;
+    if (!event.target.classList.contains('sales-quantity-input')) return;
 
     const input = event.target;
     const productId = parseInt(input.dataset.productId);
@@ -384,7 +384,7 @@ export class CartManager {
   }
 
   handleQuantityKeydown(event) {
-    if (!event.target.classList.contains('quantity-input')) return;
+    if (!event.target.classList.contains('sales-quantity-input')) return;
 
     const input = event.target;
     const productId = parseInt(input.dataset.productId);
@@ -430,7 +430,7 @@ export class CartManager {
   }
 
   handleQuantityFocus(event) {
-    if (!event.target.classList.contains('quantity-input')) return;
+    if (!event.target.classList.contains('sales-quantity-input')) return;
 
     const input = event.target;
     setTimeout(() => input.select(), 0);
@@ -492,7 +492,7 @@ export class CartManager {
   updateCartSummaryDisplay() {
     const summary = this.getCartSummary();
 
-    const itemCountElement = document.getElementById('cart-item-count');
+    const itemCountElement = document.getElementById('sales-cart-item-count');
     if (itemCountElement) {
       itemCountElement.textContent = summary.totalQuantity;
     }

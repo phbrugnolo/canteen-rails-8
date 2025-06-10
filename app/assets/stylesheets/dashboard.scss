@@ -39,7 +39,7 @@ $gradient-revenue: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
   margin-bottom: $spacing-xl;
 }
 
-.metric-card {
+.dashboard-metric-card {
   background: $color-white;
   border-radius: $border-radius-lg;
   padding: $spacing-lg;
@@ -103,14 +103,14 @@ $gradient-revenue: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
   }
 }
 
-.metric-label {
+.dashboard-metric-label {
   font-size: 0.9rem;
   color: $color-secondary;
   margin-bottom: $spacing-xs;
   font-weight: 500;
 }
 
-.metric-detail {
+.dashboard-metric-detail {
   font-size: 0.8rem;
 }
 

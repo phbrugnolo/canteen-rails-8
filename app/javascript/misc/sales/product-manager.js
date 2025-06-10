@@ -25,7 +25,7 @@ export class ProductManager {
           <span class="input-group-text bg-white border-end-0">
             <i class="bi bi-search text-muted"></i>
           </span>
-          <input id="search-input"
+          <input id="sales-search-input"
                  type="text"
                  placeholder="Buscar produto..."
                  class="form-control border-start-0"
@@ -38,7 +38,7 @@ export class ProductManager {
         <div id="products-grid" class="row g-3">
           ${this.generateProductCards()}
         </div>
-        <div id="no-results" class="text-center py-5 d-none">
+        <div id="sales-no-results" class="sales-no-results text-center py-5 d-none">
           <i class="bi bi-search display-1 text-muted"></i>
           <p class="text-muted mt-3">Nenhum produto encontrado</p>
           <small class="text-muted">Tente buscar com outras palavras</small>
@@ -53,8 +53,8 @@ export class ProductManager {
     return this.products.map((product, index) => {
       const formattedPrice = parseFloat(product.price).toFixed(2);
       return `
-        <div class="col-md-6 col-lg-4 product-card" data-name="${product.name.toLowerCase()}">
-          <div class="card h-100 shadow-sm border-0 product-item" style="transition: all 0.3s ease;">
+        <div class="col-md-6 col-lg-4 sales-product-card" data-name="${product.name.toLowerCase()}">
+          <div class="card h-100 shadow-sm border-0 sales-product-item" style="transition: all 0.3s ease;">
             <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                  style="height: 120px; overflow: hidden;">
               <img src="${product.image_url}"
@@ -85,15 +85,15 @@ export class ProductManager {
   }
 
   setupFilter() {
-    const searchInput = document.getElementById('search-input');
+    const searchInput = document.getElementById('sales-search-input');
     const productsGrid = document.getElementById('products-grid');
-    const noResults = document.getElementById('no-results');
+    const noResults = document.getElementById('sales-no-results');
 
     if (!searchInput || !productsGrid) return;
 
     this.handleSearch = (e) => {
       const searchTerm = e.target.value.toLowerCase().trim();
-      const productCards = productsGrid.querySelectorAll('.product-card');
+      const productCards = productsGrid.querySelectorAll('.sales-product-card');
       let visibleCount = 0;
 
       productCards.forEach(card => {
@@ -194,7 +194,7 @@ export class ProductManager {
       this.handleMouseLeave = null;
     }
 
-    const searchInput = document.getElementById('search-input');
+    const searchInput = document.getElementById('sales-search-input');
     if (this.handleSearch && searchInput) {
       searchInput.removeEventListener('input', this.handleSearch);
       this.handleSearch = null;
