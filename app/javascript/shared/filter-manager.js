@@ -154,12 +154,24 @@ export class FilterManager {
 
       const wrapper = item.closest('.col-6') || item;
       if (wrapper) {
-        wrapper.style.display = shouldShow ? '' : 'none';
-        if (shouldShow) visibleCount++;
+        if (shouldShow) {
+          wrapper.classList.remove('filter-item-hidden');
+          wrapper.classList.add('filter-item-visible');
+          visibleCount++;
+        } else {
+          wrapper.classList.remove('filter-item-visible');
+          wrapper.classList.add('filter-item-hidden');
+        }
       }
     });
 
-    this.noResultsElement.style.display = visibleCount === 0 ? '' : 'none';
+    if (visibleCount === 0) {
+      this.noResultsElement.classList.remove('filter-no-results-hidden');
+      this.noResultsElement.classList.add('filter-no-results-visible');
+    } else {
+      this.noResultsElement.classList.remove('filter-no-results-visible');
+      this.noResultsElement.classList.add('filter-no-results-hidden');
+    }
 
     if (this.onFilter) {
       this.onFilter(visibleCount);

@@ -28,8 +28,7 @@ export class ProductManager {
           <input id="sales-search-input"
                  type="text"
                  placeholder="Buscar produto..."
-                 class="form-control border-start-0"
-                 style="box-shadow: none;">
+                 class="form-control border-start-0 sales-search-input sales-search-input-no-shadow">
         </div>
       </div>
 
@@ -54,13 +53,11 @@ export class ProductManager {
       const formattedPrice = parseFloat(product.price).toFixed(2);
       return `
         <div class="col-md-6 col-lg-4 sales-product-card" data-name="${product.name.toLowerCase()}">
-          <div class="card h-100 shadow-sm border-0 sales-product-item" style="transition: all 0.3s ease;">
-            <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
-                 style="height: 120px; overflow: hidden;">
+          <div class="card h-100 shadow-sm border-0 sales-product-item sales-product-card-container">
+            <div class="card-img-top d-flex align-items-center justify-content-center bg-light sales-product-image-container">
               <img src="${product.image_url}"
                    alt="Imagem do produto ${product.name}"
-                   class="img-fluid"
-                   style="max-height: 100px; max-width: 100%; object-fit: contain;"
+                   class="img-fluid sales-product-image"
                    onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjRjhGOUZBIi8+CjxwYXRoIGQ9Ik0yMCAyMEg0MFY0MEgyMFYyMFoiIGZpbGw9IiNEMUQ1REIiLz4KPC9zdmc+Cg=='"/>
             </div>
             <div class="card-body p-3">
@@ -70,9 +67,8 @@ export class ProductManager {
               <div class="d-flex justify-content-between align-items-center">
                 <span class="h5 mb-0 text-success fw-bold">R$ ${formattedPrice}</span>
                 <button type="button"
-                        class="btn btn-success btn-sm add fw-semibold px-3"
-                        data-key="${index}"
-                        style="border-radius: 20px; box-shadow: 0 2px 8px rgba(25, 135, 84, 0.3);">
+                        class="btn btn-success btn-sm add fw-semibold px-3 sales-product-add-btn"
+                        data-key="${index}">
                   <i class="bi bi-plus-circle me-1"></i>
                   Adicionar
                 </button>
@@ -100,8 +96,14 @@ export class ProductManager {
         const productName = card.dataset.name;
         const isVisible = productName.includes(searchTerm);
 
-        card.style.display = isVisible ? 'block' : 'none';
-        if (isVisible) visibleCount++;
+        if (isVisible) {
+          card.classList.add('sales-product-card-visible');
+          card.classList.remove('sales-product-card-hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('sales-product-card-hidden');
+          card.classList.remove('sales-product-card-visible');
+        }
       });
 
       if (noResults) {
@@ -116,18 +118,18 @@ export class ProductManager {
 
   addHoverEffects() {
     this.handleMouseEnter = (e) => {
-      if (e.target.closest('.product-item')) {
-        const card = e.target.closest('.product-item');
-        card.style.transform = 'translateY(-4px)';
-        card.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+      if (e.target.closest('.sales-product-item')) {
+        const card = e.target.closest('.sales-product-item');
+        card.classList.add('sales-product-item-hover');
+        card.classList.remove('sales-product-item-normal');
       }
     };
 
     this.handleMouseLeave = (e) => {
-      if (e.target.closest('.product-item')) {
-        const card = e.target.closest('.product-item');
-        card.style.transform = 'translateY(0)';
-        card.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+      if (e.target.closest('.sales-product-item')) {
+        const card = e.target.closest('.sales-product-item');
+        card.classList.add('sales-product-item-normal');
+        card.classList.remove('sales-product-item-hover');
       }
     };
 

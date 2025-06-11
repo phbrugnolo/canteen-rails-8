@@ -201,39 +201,35 @@ export class CartManager {
               </div>
               <div class="col-5 text-end">
                 <div class="d-flex align-items-center justify-content-end gap-2 mb-2">
-                  <button type="button" class="btn btn-outline-secondary btn-sm"
+                  <button type="button" class="btn btn-outline-secondary btn-sm sales-cart-action-btn"
                           data-action="remove" data-product-id="${product.id}"
-                          title="Remover um"
-                          style="width: 28px; height: 28px; padding: 0; border-radius: 50%;">
+                          title="Remover um">
                     <i class="bi bi-dash small"></i>
                   </button>
 
                   <input type="number"
-                         class="form-control form-control-sm text-center fw-bold sales-quantity-input"
+                         class="form-control form-control-sm text-center fw-bold sales-quantity-input sales-quantity-input-container"
                          value="${quantity}"
                          min="${this.MIN_QUANTITY}"
                          max="${this.MAX_QUANTITY}"
                          data-product-id="${product.id}"
-                         style="width: 60px; padding: 2px 4px; border-radius: 4px;"
                          title="Digite a quantidade desejada (Enter para confirmar, Esc para cancelar)"
                          aria-label="Quantidade do produto ${this.escapeHtml(product.name)}"
                          autocomplete="off"
                          inputmode="numeric">
 
-                  <button type="button" class="btn btn-outline-secondary btn-sm"
+                  <button type="button" class="btn btn-outline-secondary btn-sm sales-cart-action-btn"
                           data-action="add" data-product-id="${product.id}"
-                          title="Adicionar mais um"
-                          style="width: 28px; height: 28px; padding: 0; border-radius: 50%;">
+                          title="Adicionar mais um">
                     <i class="bi bi-plus small"></i>
                   </button>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">
                   <strong class="text-success">R$ ${subTotal}</strong>
-                  <button type="button" class="btn btn-outline-danger btn-sm"
+                  <button type="button" class="btn btn-outline-danger btn-sm sales-cart-action-btn"
                           data-action="delete" data-product-id="${product.id}"
-                          title="Remover do carrinho"
-                          style="width: 28px; height: 28px; padding: 0; border-radius: 50%;">
+                          title="Remover do carrinho">
                     <i class="bi bi-trash3 small"></i>
                   </button>
                 </div>
@@ -245,7 +241,7 @@ export class CartManager {
 
       this.container.innerHTML = `
         <div class="sales-cart-content">
-          <div class="sales-sales-cart-items" style="max-height: 400px; overflow-y: auto;">
+          <div class="sales-cart-items">
             ${cartRows}
           </div>
         </div>
@@ -260,7 +256,7 @@ export class CartManager {
     this.container.innerHTML = `
       <div class="text-center p-5">
         <div class="mb-3">
-          <i class="bi bi-cart-x" style="font-size: 3rem; color: #dee2e6;"></i>
+          <i class="bi bi-cart-x sales-empty-cart-icon"></i>
         </div>
         <h6 class="text-muted mb-2">Carrinho vazio</h6>
         <small class="text-muted">Adicione produtos para começar sua venda</small>
@@ -492,7 +488,7 @@ export class CartManager {
   updateCartSummaryDisplay() {
     const summary = this.getCartSummary();
 
-    const itemCountElement = document.getElementById('sales-cart-item-count');
+    const itemCountElement = document.getElementById('cart-item-count');
     if (itemCountElement) {
       itemCountElement.textContent = summary.totalQuantity;
     }
