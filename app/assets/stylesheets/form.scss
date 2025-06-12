@@ -227,8 +227,8 @@ textarea.form-control {
   font-weight: $font-weight-medium;
 
   &::before {
-    content: "\f071";
-    font-family: "Bootstrap Icons";
+    content: "\f33b";
+    font-family: "bootstrap-icons";
     margin-right: $spacing-xs;
   }
 }
@@ -242,7 +242,7 @@ textarea.form-control {
 
   &::before {
     content: "\f26a";
-    font-family: "Bootstrap Icons";
+    font-family: "bootstrap-icons";
     margin-right: $spacing-xs;
   }
 }
@@ -488,8 +488,8 @@ textarea.form-control {
     color: darken($color-danger, 10%);
 
     .notification-icon::before {
-      content: "\f071";
-      font-family: "Bootstrap Icons";
+      content: "\f33b";
+      font-family: "bootstrap-icons";
       margin-right: $spacing-sm;
     }
   }
@@ -501,7 +501,7 @@ textarea.form-control {
 
     .notification-icon::before {
       content: "\f26a";
-      font-family: "Bootstrap Icons";
+      font-family: "bootstrap-icons";
       margin-right: $spacing-sm;
     }
   }
@@ -512,8 +512,8 @@ textarea.form-control {
     color: darken($color-warning, 30%);
 
     .notification-icon::before {
-      content: "\f071";
-      font-family: "Bootstrap Icons";
+      content: "\f33b";
+      font-family: "bootstrap-icons";
       margin-right: $spacing-sm;
     }
   }
