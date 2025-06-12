@@ -31,7 +31,7 @@
                     <ul class="list-group list-group-flush mt-2">
                       <li class="list-group-item"><%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>: <%= @customer.matriculation %></li>
                       <li class="list-group-item"><%= I18n.t(:status, scope: %i[activerecord attributes customer]) %>:
-                        <% if @customer.status == "active" %>
+                        <% if @customer.active? %>
                           <span class="text-success border rounded border-success px-2 bg-success-subtle"><%= I18n.t(:active) %></span>
                         <% else %>
                           <span class="text-danger border rounded border-danger px-2 bg-danger-subtle"><%= I18n.t(:inactive) %></span>

@@ -46,14 +46,12 @@ class Main::CustomersController < ApplicationController
   end
 
   def activate
-    @customer.update(status: "active")
-    @customer.save!
+    @customer.activate!
     redirect_to main_customers_path
   end
 
   def deactivate
-    @customer.update(status: "inactive")
-    @customer.save!
+    @customer.deactivate!
     redirect_to main_customers_path
   end
 

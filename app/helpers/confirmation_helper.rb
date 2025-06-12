@@ -106,7 +106,7 @@ module ConfirmationHelper
   end
 
   def status_toggle_button(entity, options = {})
-    if entity.status == "active"
+    if entity.active?
       deactivation_button(entity, options)
     else
       activation_button(entity, options)
