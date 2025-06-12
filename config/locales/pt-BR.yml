@@ -117,7 +117,7 @@ pt-BR:
       found_problems: "Ops! Encontramos alguns problemas:"
     placeholders:
       product:
-        name: "Ex: Hambúrguer Artesanal"
+        name: "Ex: Pastel de Queijo"
         description: "Descreva o produto detalhadamente..."
         price: "0,00"
       customer:
