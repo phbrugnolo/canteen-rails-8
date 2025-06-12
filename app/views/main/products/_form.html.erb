@@ -5,10 +5,10 @@
         <div class="form-icon">
           <i class="bi bi-box-seam"></i>
         </div>
-        <%= @product.persisted? ? "Editar Produto" : "Novo Produto" %>
+        <%= @product.persisted? ? I18n.t(:edit, scope: %i[form titles product]) : I18n.t(:new, scope: %i[form titles product]) %>
       </h2>
       <p class="form-subtitle">
-        <%= @product.persisted? ? "Atualize as informações do produto" : "Preencha os dados do novo produto" %>
+        <%= @product.persisted? ? I18n.t(:edit, scope: %i[form subtitles product]) : I18n.t(:new, scope: %i[form subtitles product]) %>
       </p>
     </div>
 
@@ -18,7 +18,7 @@
         <div class="form-notification error">
           <div class="notification-icon"></div>
           <div>
-            <strong>Ops! Encontramos alguns problemas:</strong>
+            <strong><%= I18n.t(:found_problems, scope: %i[form errors]) %></strong>
             <ul class="mb-0 mt-2">
               <% @product.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
@@ -35,7 +35,7 @@
         <% end %>
         <%= f.input_field :name,
             class: "form-control",
-            placeholder: "Ex: Hambúrguer Artesanal",
+            placeholder: I18n.t(:name, scope: %i[form placeholders product]),
             required: true,
             autofocus: true %>
         <i class="form-icon bi bi-tag"></i>
@@ -49,7 +49,7 @@
         <%= f.input_field :description,
             as: :text,
             class: "form-control",
-            placeholder: "Descreva o produto detalhadamente...",
+            placeholder: I18n.t(:description, scope: %i[form placeholders product]),
             required: true,
             rows: 4 %>
       </div>
@@ -66,15 +66,15 @@
               accept: "image/*" %>
           <label class="file-upload-label">
             <i class="upload-icon bi bi-cloud-upload"></i>
-            <div class="upload-text">Clique para selecionar uma imagem</div>
-            <div class="upload-hint">PNG, JPG ou JPEG (máx. 5MB)</div>
+            <div class="upload-text"><%= I18n.t(:click_to_select_image, scope: %i[form uploads product]) %></div>
+            <div class="upload-hint"><%= I18n.t(:image_formats, scope: %i[form uploads product]) %></div>
           </label>
         </div>
         <% if @product.image.attached? %>
           <div class="mt-2">
             <small class="text-muted">
               <i class="bi bi-check-circle text-success"></i>
-              Imagem atual: <%= @product.image.filename %>
+              <%= I18n.t(:current_image, scope: %i[form uploads product]) %> <%= @product.image.filename %>
             </small>
           </div>
         <% end %>
@@ -87,7 +87,7 @@
         <% end %>
         <%= f.input_field :price,
             class: "form-control",
-            placeholder: "0,00",
+            placeholder: I18n.t(:price, scope: %i[form placeholders product]),
             required: true,
             step: 0.01,
             min: 0,
@@ -102,9 +102,9 @@
           <%= I18n.t(:back, scope: %i[form actions]) %>
         <% end %>
 
-        <%= f.button :submit, class: "btn btn-form-primary" do %>
+        <%= f.button :button, :submit, class: "btn btn-form-primary" do %>
           <i class="btn-icon bi bi-check-lg"></i>
-          <%= @product.persisted? ? "Atualizar Produto" : I18n.t(:submit, scope: %i[form actions]) %>
+          <%= @product.persisted? ? I18n.t(:update, scope: %i[form buttons product]) : I18n.t(:submit, scope: %i[form actions]) %>
         <% end %>
       </div>
     <% end %>

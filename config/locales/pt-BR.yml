@@ -113,6 +113,44 @@ pt-BR:
     actions:
       back: "Voltar"
       submit: "Enviar"
+    errors:
+      found_problems: "Ops! Encontramos alguns problemas:"
+    placeholders:
+      product:
+        name: "Ex: Hambúrguer Artesanal"
+        description: "Descreva o produto detalhadamente..."
+        price: "0,00"
+      customer:
+        name: "Ex: João Silva"
+        matriculation: "Ex: 2024001234"
+    uploads:
+      product:
+        click_to_select_image: "Clique para selecionar uma imagem"
+        image_formats: "PNG, JPG ou JPEG (máx. 5MB)"
+        current_image: "Imagem atual:"
+      customer:
+        click_to_select_avatar: "Clique para selecionar uma foto"
+        avatar_formats: "PNG, JPG ou JPEG (máx. 2MB)"
+        current_avatar: "Foto atual:"
+    titles:
+      product:
+        edit: "Editar Produto"
+        new: "Novo Produto"
+      customer:
+        edit: "Editar Cliente"
+        new: "Novo Cliente"
+    subtitles:
+      product:
+        edit: "Atualize as informações do produto"
+        new: "Preencha os dados do novo produto"
+      customer:
+        edit: "Atualize as informações do cliente"
+        new: "Cadastre um novo cliente no sistema"
+    buttons:
+      product:
+        update: "Atualizar Produto"
+      customer:
+        update: "Atualizar Cliente"
   activerecord:
     add: "Adicionar %{model}"
     edit: "Editar %{model}"
@@ -134,7 +172,7 @@ pt-BR:
         matriculation: "Matrícula"
         password: "Senha"
         status: "Status"
-        avatar: "Avatar"
+        avatar: "Foto"
       sale:
         product: "Produto"
         customer: "Cliente"

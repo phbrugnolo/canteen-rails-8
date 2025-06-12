@@ -5,10 +5,10 @@
         <div class="form-icon">
           <i class="bi bi-person-plus"></i>
         </div>
-        <%= @customer.persisted? ? "Editar Cliente" : "Novo Cliente" %>
+        <%= @customer.persisted? ? I18n.t(:edit, scope: %i[form titles customer]) : I18n.t(:new, scope: %i[form titles customer]) %>
       </h2>
       <p class="form-subtitle">
-        <%= @customer.persisted? ? "Atualize as informações do cliente" : "Cadastre um novo cliente no sistema" %>
+        <%= @customer.persisted? ? I18n.t(:edit, scope: %i[form subtitles customer]) : I18n.t(:new, scope: %i[form subtitles customer]) %>
       </p>
     </div>
 
@@ -18,7 +18,7 @@
         <div class="form-notification error">
           <div class="notification-icon"></div>
           <div>
-            <strong>Ops! Encontramos alguns problemas:</strong>
+            <strong><%= I18n.t(:found_problems, scope: %i[form errors]) %></strong>
             <ul class="mb-0 mt-2">
               <% @customer.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
@@ -35,7 +35,7 @@
         <% end %>
         <%= f.input_field :name,
             class: "form-control",
-            placeholder: "Ex: João Silva",
+            placeholder: I18n.t(:name, scope: %i[form placeholders customer]),
             required: true,
             autofocus: true %>
         <i class="form-icon bi bi-person"></i>
@@ -48,7 +48,7 @@
         <% end %>
         <%= f.input_field :matriculation,
             class: "form-control",
-            placeholder: "Ex: 2024001234",
+            placeholder: I18n.t(:matriculation, scope: %i[form placeholders customer]),
             required: true %>
         <i class="form-icon bi bi-card-text"></i>
       </div>
@@ -65,15 +65,15 @@
               accept: "image/*" %>
           <label class="file-upload-label">
             <i class="upload-icon bi bi-person-circle"></i>
-            <div class="upload-text">Clique para selecionar um avatar</div>
-            <div class="upload-hint">PNG, JPG ou JPEG (máx. 2MB)</div>
+            <div class="upload-text"><%= I18n.t(:click_to_select_avatar, scope: %i[form uploads customer]) %></div>
+            <div class="upload-hint"><%= I18n.t(:avatar_formats, scope: %i[form uploads customer]) %></div>
           </label>
         </div>
         <% if @customer.avatar.attached? %>
           <div class="mt-2">
             <small class="text-muted">
               <i class="bi bi-check-circle text-success"></i>
-              Avatar atual: <%= @customer.avatar.filename %>
+              <%= I18n.t(:current_avatar, scope: %i[form uploads customer]) %> <%= @customer.avatar.filename %>
             </small>
           </div>
         <% end %>
@@ -86,9 +86,9 @@
           <%= I18n.t(:back, scope: %i[form actions]) %>
         <% end %>
 
-        <%= f.button :submit, class: "btn btn-form-primary" do %>
+        <%= f.button :button, :submit, class: "btn btn-form-primary" do %>
           <i class="btn-icon bi bi-check-lg"></i>
-          <%= @customer.persisted? ? "Atualizar Cliente" : I18n.t(:submit, scope: %i[form actions]) %>
+          <%= @customer.persisted? ? I18n.t(:update, scope: %i[form buttons customer]) : I18n.t(:submit, scope: %i[form actions]) %>
         <% end %>
       </div>
     <% end %>
