@@ -486,36 +486,18 @@ textarea.form-control {
     border-left-color: $color-danger;
     background: mix($color-danger, $color-white, 5%);
     color: darken($color-danger, 10%);
-
-    .notification-icon::before {
-      content: "\f33b";
-      font-family: "bootstrap-icons";
-      margin-right: $spacing-sm;
-    }
   }
 
   &.success {
     border-left-color: $color-success;
     background: mix($color-success, $color-white, 5%);
     color: darken($color-success, 10%);
-
-    .notification-icon::before {
-      content: "\f26a";
-      font-family: "bootstrap-icons";
-      margin-right: $spacing-sm;
-    }
   }
 
   &.warning {
     border-left-color: $color-warning;
     background: $color-warning-bg;
     color: darken($color-warning, 30%);
-
-    .notification-icon::before {
-      content: "\f33b";
-      font-family: "bootstrap-icons";
-      margin-right: $spacing-sm;
-    }
   }
 }
 

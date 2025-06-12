@@ -16,9 +16,8 @@
       <!-- Error notification with enhanced styling -->
       <% if @customer.errors.any? %>
         <div class="form-notification error">
-          <div class="notification-icon"></div>
           <div>
-            <strong><%= I18n.t(:found_problems, scope: %i[form errors]) %></strong>
+            <strong><%= "<i class='bi bi-exclamation-triangle'></i> #{I18n.t(:found_problems, scope: %i[form errors])}".html_safe %></strong>
             <ul class="mb-0 mt-2">
               <% @customer.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
