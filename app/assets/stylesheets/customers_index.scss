@@ -3,6 +3,7 @@
 // ===========================================
 // Uses centralized variables from _variables.scss
 // Follows the same design patterns as dashboard and form components
+// All classes are prefixed with 'customers-index-' to prevent conflicts
 
 // Customers-specific color palette
 $customers-primary: #667eea;
@@ -14,50 +15,53 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // MIXINS
 // ===========================================
 
-@mixin customers-transition($properties: all, $duration: 0.3s, $timing: ease) {
+@mixin customers-index-transition($properties: all, $duration: 0.3s, $timing: ease) {
   transition: $properties $duration $timing;
 }
 
-@mixin customers-hover-effect($translateY: -2px) {
+@mixin customers-index-hover-effect($translateY: -2px) {
   transform: translateY($translateY);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-@mixin customers-card-style {
+@mixin customers-index-card-style {
   background: $color-white;
   border-radius: $border-radius-lg;
   box-shadow: $box-shadow-sm;
   border: 1px solid $color-border;
-  @include customers-transition();
+  @include customers-index-transition();
 }
 
 // ===========================================
 // MAIN CONTAINER
 // ===========================================
 
-.customers-container {
+.customers-index-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: $spacing-lg;
 
-  // Ensure proper table rendering by resetting any conflicting styles
-  table {
-    display: table !important;
+  // Ensure proper table rendering with specific table elements
+  .customers-index-table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
 
-    thead {
-      display: table-header-group !important;
+    .customers-index-thead {
+      display: table-header-group;
     }
 
-    tbody {
-      display: table-row-group !important;
+    .customers-index-tbody {
+      display: table-row-group;
     }
 
-    tr {
-      display: table-row !important;
+    .customers-index-tr {
+      display: table-row;
     }
 
-    th, td {
-      display: table-cell !important;
+    .customers-index-th,
+    .customers-index-td {
+      display: table-cell;
     }
   }
 }
@@ -66,7 +70,7 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // PAGE HEADER
 // ===========================================
 
-.customers-header {
+.customers-index-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -81,11 +85,11 @@ $customers-light: rgba(102, 126, 234, 0.1);
   }
 }
 
-.customers-title-section {
+.customers-index-title-section {
   flex: 1;
 }
 
-.customers-title {
+.customers-index-title {
   font-size: 2.5rem;
   font-weight: 700;
   color: $customers-primary;
@@ -94,7 +98,7 @@ $customers-light: rgba(102, 126, 234, 0.1);
   align-items: center;
   gap: $spacing-md;
 
-  i {
+  .customers-index-title-icon {
     font-size: 2.2rem;
     background: $customers-gradient;
     -webkit-background-clip: text;
@@ -107,13 +111,13 @@ $customers-light: rgba(102, 126, 234, 0.1);
   }
 }
 
-.customers-subtitle {
+.customers-index-subtitle {
   font-size: 1.1rem;
   color: $color-text-secondary;
   margin: 0;
 }
 
-.customers-actions {
+.customers-index-actions {
   display: flex;
   gap: $spacing-md;
 }
@@ -122,7 +126,7 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // BUTTONS
 // ===========================================
 
-.btn-customers-primary {
+.customers-index-btn-primary {
   background: $customers-gradient;
   color: $color-white;
   border: none;
@@ -133,14 +137,14 @@ $customers-light: rgba(102, 126, 234, 0.1);
   display: inline-flex;
   align-items: center;
   gap: $spacing-sm;
-  @include customers-transition();
+  @include customers-index-transition();
 
   &:hover {
     color: $color-white;
-    @include customers-hover-effect();
+    @include customers-index-hover-effect();
   }
 
-  i {
+  .customers-index-btn-icon {
     font-size: 1.1rem;
   }
 }
@@ -149,19 +153,19 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // FILTERS SECTION
 // ===========================================
 
-.customers-filters-card {
-  @include customers-card-style();
+.customers-index-filters-card {
+  @include customers-index-card-style();
   padding: $spacing-lg;
   margin-bottom: $spacing-xl;
 }
 
-.filters-header {
+.customers-index-filters-header {
   margin-bottom: $spacing-lg;
   padding-bottom: $spacing-md;
   border-bottom: 1px solid $color-border;
 }
 
-.filters-title {
+.customers-index-filters-title {
   font-size: 1.3rem;
   font-weight: 600;
   color: $color-text-primary;
@@ -170,25 +174,25 @@ $customers-light: rgba(102, 126, 234, 0.1);
   align-items: center;
   gap: $spacing-sm;
 
-  i {
+  .customers-index-filters-icon {
     color: $customers-primary;
     font-size: 1.2rem;
   }
 }
 
-.filters-grid {
+.customers-index-filters-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: $spacing-lg;
 }
 
-.filter-group {
+.customers-index-filter-group {
   display: flex;
   flex-direction: column;
   gap: $spacing-sm;
 }
 
-.filter-label {
+.customers-index-filter-label {
   font-weight: 600;
   color: $color-text-primary;
   font-size: 0.9rem;
@@ -196,19 +200,19 @@ $customers-light: rgba(102, 126, 234, 0.1);
   align-items: center;
   gap: $spacing-sm;
 
-  i {
+  .customers-index-filter-label-icon {
     color: $customers-primary;
     font-size: 1rem;
   }
 }
 
-.filter-input,
-.filter-select {
+.customers-index-filter-input,
+.customers-index-filter-select {
   padding: $spacing-sm $spacing-md;
   border: 2px solid $color-border;
   border-radius: $border-radius-md;
   font-size: 1rem;
-  @include customers-transition();
+  @include customers-index-transition();
 
   &:focus {
     outline: none;
@@ -225,23 +229,22 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // TABLE SECTION
 // ===========================================
 
-.customers-table-card {
-  @include customers-card-style();
+.customers-index-table-card {
+  @include customers-index-card-style();
   overflow: hidden;
 
-  // Reset any Bootstrap table styles that might interfere
-  .table-responsive {
+  .customers-index-table-responsive {
     overflow-x: auto;
   }
 }
 
-.table-header {
+.customers-index-table-header {
   padding: $spacing-lg;
   background: linear-gradient(135deg, $customers-light 0%, rgba(118, 75, 162, 0.05) 100%);
   border-bottom: 1px solid $color-border;
 }
 
-.table-title {
+.customers-index-table-title {
   font-size: 1.3rem;
   font-weight: 600;
   color: $color-text-primary;
@@ -250,244 +253,185 @@ $customers-light: rgba(102, 126, 234, 0.1);
   align-items: center;
   gap: $spacing-sm;
 
-  i {
+  .customers-index-table-title-icon {
     color: $customers-primary;
     font-size: 1.2rem;
   }
 }
 
-.customers-table {
+.customers-index-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
-  table-layout: fixed; // Add fixed table layout for better column control
+  table-layout: fixed;
+  display: table;
 
-  thead {
+  .customers-index-thead {
     background: $color-light-gray;
+    display: table-header-group;
   }
 
-  th {
+  .customers-index-tbody {
+    display: table-row-group;
+  }
+
+  .customers-index-tr {
+    display: table-row;
+  }
+
+  .customers-index-th {
     padding: $spacing-md $spacing-lg;
     text-align: left;
     font-weight: 600;
     color: $color-text-primary;
     border-bottom: 2px solid $color-border;
     white-space: nowrap;
+    display: table-cell;
 
-    i {
+    .customers-index-th-icon {
       margin-right: $spacing-sm;
       color: $customers-primary;
     }
 
-    &.th-id {
+    &.customers-index-th-id {
       width: 80px;
     }
 
-    &.th-name {
-      width: 50%; // Changed from min-width to width percentage
+    &.customers-index-th-name {
+      width: 50%;
     }
 
-    &.th-status {
+    &.customers-index-th-status {
       width: 150px;
     }
 
-    &.th-actions {
+    &.customers-index-th-actions {
       width: 120px;
     }
   }
 
-  // Ensure tbody and td elements render correctly
-  tbody {
-    tr {
-      display: table-row;
-    }
-
-    td {
-      display: table-cell;
-      padding: $spacing-md $spacing-lg;
-      border-bottom: 1px solid $color-border;
-      vertical-align: middle;
-    }
-  }
-}
-
-// ===========================================
-// TABLE FIXES & OVERRIDES
-// ===========================================
-
-// Specific fixes for table rendering issues
-.customers-table {
-  // Force proper table display model
-  display: table !important;
-  width: 100% !important;
-  border-collapse: collapse !important;
-
-  // Ensure all table elements display correctly
-  thead {
-    display: table-header-group !important;
-  }
-
-  tbody {
-    display: table-row-group !important;
-
-    // Ensure tbody doesn't have flex properties
-    flex-direction: unset !important;
-    flex-wrap: unset !important;
-    align-items: unset !important;
-    justify-content: unset !important;
-  }
-
-  tr {
-    display: table-row !important;
-
-    // Ensure tr doesn't have flex properties
-    flex-direction: unset !important;
-    flex-wrap: unset !important;
-    align-items: unset !important;
-    justify-content: unset !important;
-  }
-
-  th,
-  td {
-    display: table-cell !important;
-    box-sizing: border-box;
-
-    // Ensure cells don't have flex properties
-    flex: unset !important;
-    flex-direction: unset !important;
-    flex-wrap: unset !important;
-    align-items: unset !important;
-    justify-content: unset !important;
-  }
-
-  // Reset any conflicting display properties that might interfere with table layout
-  .customer-info,
-  .customer-details,
-  .action-buttons {
-    display: flex !important;
-  }
-
-  .status-badge {
-    display: inline-flex !important;
-  }
-
-  // Override Bootstrap's potential table-responsive issues
-  .table-responsive & {
-    min-width: 100%;
-  }
-}
-
-// Ensure proper cell content alignment
-.customer-row {
-  &:hover {
-    background: $customers-light;
-  }
-
-  td {
-    vertical-align: middle;
+  .customers-index-td {
+    display: table-cell;
     padding: $spacing-md $spacing-lg;
     border-bottom: 1px solid $color-border;
+    vertical-align: middle;
   }
 }
 
 // ===========================================
-// ADDITIONAL TABLE FIXES FOR LAYOUT ISSUES
+// TABLE ENHANCED SPECIFICITY (Replaces all !important declarations)
 // ===========================================
 
-// Force table layout to behave correctly even with Bootstrap interference
-.customers-table-card {
-  .table-responsive {
-    overflow-x: auto;
+.customers-index-container {
+  .customers-index-table-card {
+    .customers-index-table-responsive {
+      .customers-index-table {
+        display: table;
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 0;
 
-    // Ensure the table wrapper doesn't interfere with table layout
-    .customers-table {
-      margin-bottom: 0 !important;
+        .customers-index-thead {
+          display: table-header-group;
+        }
 
-      // Force table cells to maintain proper dimensions
-      tbody {
-        td {
-          // Prevent content from collapsing into a single column
-          min-width: 0;
-          word-wrap: break-word;
+        .customers-index-tbody {
+          display: table-row-group;
+          flex-direction: unset;
+          flex-wrap: unset;
+          align-items: unset;
+          justify-content: unset;
 
-          // Ensure each column maintains its designated space
-          &.td-id {
-            width: 80px !important;
-            min-width: 80px !important;
+          .customers-index-tr {
+            display: table-row;
+            flex-direction: unset;
+            flex-wrap: unset;
+            align-items: unset;
+            justify-content: unset;
+
+            .customers-index-td {
+              display: table-cell;
+              box-sizing: border-box;
+              flex: unset;
+              flex-direction: unset;
+              flex-wrap: unset;
+              align-items: unset;
+              justify-content: unset;
+              min-width: 0;
+              word-wrap: break-word;
+
+              &.customers-index-td-id {
+                width: 80px;
+                min-width: 80px;
+              }
+
+              &.customers-index-td-name {
+                width: 50%;
+                min-width: 200px;
+              }
+
+              &.customers-index-td-status {
+                width: 150px;
+                min-width: 150px;
+              }
+
+              &.customers-index-td-actions {
+                width: 120px;
+                min-width: 120px;
+              }
+            }
           }
+        }
 
-          &.td-name {
-            width: 50% !important;
-            min-width: 200px !important;
-          }
-
-          &.td-status {
-            width: 150px !important;
-            min-width: 150px !important;
-          }
-
-          &.td-actions {
-            width: 120px !important;
-            min-width: 120px !important;
-          }
+        .customers-index-th {
+          display: table-cell;
+          box-sizing: border-box;
+          flex: unset;
+          flex-direction: unset;
+          flex-wrap: unset;
+          align-items: unset;
+          justify-content: unset;
         }
       }
     }
   }
 }
 
-// Ensure content inside table cells doesn't break layout
-.customer-info {
-  // Prevent flex items from shrinking too much
-  min-width: 0;
-  width: 100%;
-}
-
-.customer-details {
-  // Prevent text overflow from breaking table layout
-  min-width: 0;
-  overflow: hidden;
-
-  .customer-name,
-  .customer-matriculation {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-}
-
 // ===========================================
-// TABLE ROWS
+// TABLE ROWS & INTERACTION
 // ===========================================
 
-.customer-row {
-  @include customers-transition();
+.customers-index-tr {
+  @include customers-index-transition();
 
-  &:hover {
+  &.customers-index-row-hover:hover {
     background: $customers-light;
   }
 }
 
 // ===========================================
-// TABLE CELLS
+// TABLE CELLS CONTENT
 // ===========================================
 
-.td-id {
-  .customer-id {
-    font-weight: 600;
-    color: $color-text-secondary;
-    font-family: 'Courier New', monospace;
+.customers-index-td {
+  &.customers-index-td-id {
+    .customers-index-customer-id {
+      font-weight: 600;
+      color: $color-text-secondary;
+      font-family: 'Courier New', monospace;
+    }
   }
 }
 
-.customer-info {
+.customers-index-customer-info {
   display: flex;
   align-items: center;
   gap: $spacing-md;
+  min-width: 0;
+  width: 100%;
 }
 
-.customer-avatar {
+.customers-index-customer-avatar {
   width: 45px;
   height: 45px;
   border-radius: $border-radius-circle;
@@ -498,31 +442,41 @@ $customers-light: rgba(102, 126, 234, 0.1);
   justify-content: center;
   flex-shrink: 0;
 
-  .avatar-img {
+  .customers-index-avatar-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  i {
+  .customers-index-avatar-icon {
     font-size: 2rem;
     color: $customers-primary;
   }
 }
 
-.customer-details {
+.customers-index-customer-details {
   display: flex;
   flex-direction: column;
   gap: $spacing-xs;
+  min-width: 0;
+  overflow: hidden;
+
+  .customers-index-customer-name,
+  .customers-index-customer-matriculation {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
-.customer-name {
+.customers-index-customer-name {
   font-weight: 600;
   color: $color-text-primary;
   line-height: 1.3;
 }
 
-.customer-matriculation {
+.customers-index-customer-matriculation {
   font-size: 0.85rem;
   color: $color-text-secondary;
   font-family: 'Courier New', monospace;
@@ -532,7 +486,7 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // STATUS BADGES
 // ===========================================
 
-.status-badge {
+.customers-index-status-badge {
   display: inline-flex;
   align-items: center;
   gap: $spacing-xs;
@@ -543,26 +497,26 @@ $customers-light: rgba(102, 126, 234, 0.1);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 
-  i {
+  .customers-index-status-icon {
     font-size: 0.9rem;
   }
 
-  &.status-active {
+  &.customers-index-status-active {
     background: $color-success-light;
     color: $color-success;
     border: 1px solid rgba(25, 135, 84, 0.2);
 
-    i {
+    .customers-index-status-icon {
       color: $color-success;
     }
   }
 
-  &.status-inactive {
+  &.customers-index-status-inactive {
     background: rgba(220, 53, 69, 0.1);
     color: $color-danger;
     border: 1px solid rgba(220, 53, 69, 0.2);
 
-    i {
+    .customers-index-status-icon {
       color: $color-danger;
     }
   }
@@ -572,12 +526,12 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // ACTION BUTTONS
 // ===========================================
 
-.action-buttons {
+.customers-index-action-buttons {
   display: flex;
   gap: $spacing-sm;
 }
 
-.btn-action {
+.customers-index-btn-action {
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-md;
   font-size: 0.85rem;
@@ -587,9 +541,9 @@ $customers-light: rgba(102, 126, 234, 0.1);
   display: inline-flex;
   align-items: center;
   gap: $spacing-xs;
-  @include customers-transition();
+  @include customers-index-transition();
 
-  &.btn-view {
+  &.customers-index-btn-view {
     background: $color-white;
     color: $customers-primary;
     border-color: $customers-primary;
@@ -601,7 +555,7 @@ $customers-light: rgba(102, 126, 234, 0.1);
     }
   }
 
-  i {
+  .customers-index-btn-action-icon {
     font-size: 0.8rem;
   }
 }
@@ -611,62 +565,65 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // ===========================================
 
 @media (max-width: 992px) {
-  .customers-container {
+  .customers-index-container {
     padding: $spacing-md;
   }
 
-  .filters-grid {
+  .customers-index-filters-grid {
     grid-template-columns: 1fr;
   }
 
-  .customers-table {
+  .customers-index-table {
     font-size: 0.9rem;
 
-    th, td {
+    .customers-index-th,
+    .customers-index-td {
       padding: $spacing-sm;
     }
   }
 
-  .customer-info {
+  .customers-index-customer-info {
     gap: $spacing-sm;
   }
 
-  .customer-avatar {
+  .customers-index-customer-avatar {
     width: 35px;
     height: 35px;
   }
 }
 
 @media (max-width: 768px) {
-  .customers-title {
+  .customers-index-title {
     font-size: 2rem;
   }
 
-  .customers-table {
-    th {
-      &.th-id {
+  .customers-index-table {
+    .customers-index-th {
+      &.customers-index-th-id {
         display: none;
       }
     }
 
-    .td-id {
-      display: none;
+    .customers-index-td {
+      &.customers-index-td-id {
+        display: none;
+      }
     }
 
-    .customer-matriculation {
+    .customers-index-customer-matriculation {
       display: none;
     }
   }
 
-  .action-buttons {
+  .customers-index-action-buttons {
     flex-direction: column;
   }
 
-  .btn-action {
+  .customers-index-btn-action {
     font-size: 0.8rem;
     padding: $spacing-xs;
 
-    span {
+    .customers-index-btn-action-text {
       display: none;
     }
   }
@@ -676,7 +633,7 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // ANIMATIONS
 // ===========================================
 
-@keyframes fadeInUp {
+@keyframes customers-index-fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -687,12 +644,12 @@ $customers-light: rgba(102, 126, 234, 0.1);
   }
 }
 
-.customers-container {
-  animation: fadeInUp 0.6s ease-out;
+.customers-index-container {
+  animation: customers-index-fadeInUp 0.6s ease-out;
 }
 
-.customer-row {
-  animation: fadeInUp 0.4s ease-out;
+.customers-index-tr {
+  animation: customers-index-fadeInUp 0.4s ease-out;
   animation-fill-mode: both;
 
   @for $i from 1 through 10 {
@@ -706,24 +663,24 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // EMPTY STATE
 // ===========================================
 
-.customers-empty-state {
+.customers-index-empty-state {
   text-align: center;
   padding: $spacing-xxl;
   color: $color-text-secondary;
 
-  i {
+  .customers-index-empty-icon {
     font-size: 4rem;
     color: $customers-primary;
     margin-bottom: $spacing-lg;
     opacity: 0.5;
   }
 
-  h3 {
+  .customers-index-empty-title {
     margin-bottom: $spacing-md;
     color: $color-text-primary;
   }
 
-  p {
+  .customers-index-empty-description {
     margin-bottom: $spacing-lg;
   }
 }
@@ -732,19 +689,21 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // FILTER MANAGER STYLES
 // ===========================================
 
-// Filter visibility classes
-.filter-item-visible {
-  display: table-row !important;
-}
+// Filter visibility classes with enhanced specificity
+.customers-index-container {
+  .customers-index-filter-item-visible {
+    display: table-row;
+  }
 
-.filter-item-hidden {
-  display: none !important;
-}
+  .customers-index-filter-item-hidden {
+    display: none;
+  }
 
-.filter-no-results-visible {
-  display: block !important;
-}
+  .customers-index-filter-no-results-visible {
+    display: block;
+  }
 
-.filter-no-results-hidden {
-  display: none !important;
+  .customers-index-filter-no-results-hidden {
+    display: none;
+  }
 }

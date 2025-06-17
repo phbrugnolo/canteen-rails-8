@@ -1,4 +1,4 @@
-<div class="customers-container">
+<div class="customers-index-container">
   <!-- Success/Notice Alert -->
   <% if notice %>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -9,51 +9,51 @@
   <% end %>
 
   <!-- Page Header -->
-  <div class="customers-header">
-    <div class="customers-title-section">
-      <h1 class="customers-title">
-        <i class="bi bi-people-fill"></i>
+  <div class="customers-index-header">
+    <div class="customers-index-title-section">
+      <h1 class="customers-index-title">
+        <i class="bi bi-people-fill customers-index-title-icon"></i>
         <%= I18n.t(:customer, scope: %i[activerecord models], count: 2) %>
       </h1>
-      <p class="customers-subtitle">Gerencie todos os clientes cadastrados no sistema</p>
+      <p class="customers-index-subtitle">Gerencie todos os clientes cadastrados no sistema</p>
     </div>
-    <div class="customers-actions">
-      <%= link_to new_main_customer_path, class: "btn btn-customers-primary" do %>
-        <i class="bi bi-plus-circle"></i>
+    <div class="customers-index-actions">
+      <%= link_to new_main_customer_path, class: "customers-index-btn-primary" do %>
+        <i class="bi bi-plus-circle customers-index-btn-icon"></i>
         <%= I18n.t(:add, scope: %i[activerecord], model: Customer.model_name.human) %>
       <% end %>
     </div>
   </div>
 
   <!-- Filters Section -->
-  <div class="customers-filters-card">
-    <div class="filters-header">
-      <h3 class="filters-title">
-        <i class="bi bi-funnel"></i>
+  <div class="customers-index-filters-card">
+    <div class="customers-index-filters-header">
+      <h3 class="customers-index-filters-title">
+        <i class="bi bi-funnel customers-index-filters-icon"></i>
         Filtros de Busca
       </h3>
     </div>
-    <div class="filters-grid">
-      <div class="filter-group">
-        <label for="search_name" class="filter-label">
-          <i class="bi bi-person"></i>
+    <div class="customers-index-filters-grid">
+      <div class="customers-index-filter-group">
+        <label for="search_name" class="customers-index-filter-label">
+          <i class="bi bi-person customers-index-filter-label-icon"></i>
           <%= I18n.t(:search_by_name) %>
         </label>
-        <input type="text" id="search_name" class="filter-input" placeholder="Digite o nome do cliente">
+        <input type="text" id="search_name" class="customers-index-filter-input" placeholder="Digite o nome do cliente">
       </div>
-      <div class="filter-group">
-        <label for="search_id" class="filter-label">
-          <i class="bi bi-card-text"></i>
+      <div class="customers-index-filter-group">
+        <label for="search_id" class="customers-index-filter-label">
+          <i class="bi bi-card-text customers-index-filter-label-icon"></i>
           <%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>
         </label>
-        <input type="text" id="search_id" class="filter-input" placeholder="Digite a matrícula">
+        <input type="text" id="search_id" class="customers-index-filter-input" placeholder="Digite a matrícula">
       </div>
-      <div class="filter-group">
-        <label for="search_status" class="filter-label">
-          <i class="bi bi-toggle-on"></i>
+      <div class="customers-index-filter-group">
+        <label for="search_status" class="customers-index-filter-label">
+          <i class="bi bi-toggle-on customers-index-filter-label-icon"></i>
           Status
         </label>
-        <select id="search_status" class="filter-select">
+        <select id="search_status" class="customers-index-filter-select">
           <option value=""><%= I18n.t(:select_status) %></option>
           <option value="active"><%= I18n.t(:active) %></option>
           <option value="inactive"><%= I18n.t(:inactive) %></option>
@@ -63,89 +63,89 @@
   </div>
 
   <!-- Customers Table -->
-  <div class="customers-table-card">
-    <div class="table-header">
-      <h3 class="table-title">
-        <i class="bi bi-table"></i>
+  <div class="customers-index-table-card">
+    <div class="customers-index-table-header">
+      <h3 class="customers-index-table-title">
+        <i class="bi bi-table customers-index-table-title-icon"></i>
         Lista de Clientes
       </h3>
     </div>
-    <div class="table-responsive">
-      <table class="customers-table">
-        <thead>
-          <tr>
-            <th class="th-id">
-              <i class="bi bi-hash"></i>
+    <div class="customers-index-table-responsive">
+      <table class="customers-index-table">
+        <thead class="customers-index-thead">
+          <tr class="customers-index-tr">
+            <th class="customers-index-th customers-index-th-id">
+              <i class="bi bi-hash customers-index-th-icon"></i>
               ID
             </th>
-            <th class="th-name">
-              <i class="bi bi-person"></i>
+            <th class="customers-index-th customers-index-th-name">
+              <i class="bi bi-person customers-index-th-icon"></i>
               <%= I18n.t(:name, scope: %i[activerecord attributes customer]) %>
             </th>
-            <th class="th-status">
-              <i class="bi bi-toggle-on"></i>
+            <th class="customers-index-th customers-index-th-status">
+              <i class="bi bi-toggle-on customers-index-th-icon"></i>
               <%= I18n.t(:status, scope: %i[activerecord attributes customer]) %>
             </th>
-            <th class="th-actions">
-              <i class="bi bi-gear"></i>
+            <th class="customers-index-th customers-index-th-actions">
+              <i class="bi bi-gear customers-index-th-icon"></i>
               <%= I18n.t(:actions) %>
             </th>
           </tr>
         </thead>
-        <tbody id="customers">
+        <tbody class="customers-index-tbody" id="customers">
           <% if @customers.any? %>
             <% @customers.each do |customer| %>
-              <tr class="customer-row">
-                <td class="td-id">
-                  <span class="customer-id">#<%= customer.id %></span>
+              <tr class="customers-index-tr customer-row">
+                <td class="customers-index-td customers-index-td-id">
+                  <span class="customers-index-customer-id">#<%= customer.id %></span>
                 </td>
-                <td class="td-name">
-                  <div class="customer-info">
-                    <div class="customer-avatar">
+                <td class="customers-index-td customers-index-td-name">
+                  <div class="customers-index-customer-info">
+                    <div class="customers-index-customer-avatar">
                       <% if customer.avatar.attached? %>
-                        <%= image_tag customer.avatar, class: "avatar-img" %>
+                        <%= image_tag customer.avatar, class: "customers-index-avatar-img" %>
                       <% else %>
-                        <i class="bi bi-person-circle"></i>
+                        <i class="bi bi-person-circle customers-index-avatar-icon"></i>
                       <% end %>
                     </div>
-                    <div class="customer-details">
-                      <span class="customer-name"><%= customer.name %></span>
-                      <span class="customer-matriculation">Mat: <%= customer.matriculation %></span>
+                    <div class="customers-index-customer-details">
+                      <span class="customers-index-customer-name"><%= customer.name %></span>
+                      <span class="customers-index-customer-matriculation">Mat: <%= customer.matriculation %></span>
                     </div>
                   </div>
                 </td>
-                <td class="td-status">
+                <td class="customers-index-td customers-index-td-status">
                   <% if customer.active? %>
-                    <span class="status-badge status-active">
-                      <i class="bi bi-check-circle-fill"></i>
+                    <span class="customers-index-status-badge customers-index-status-active">
+                      <i class="bi bi-check-circle-fill customers-index-status-icon"></i>
                       <%= I18n.t(:active) %>
                     </span>
                   <% else %>
-                    <span class="status-badge status-inactive">
-                      <i class="bi bi-x-circle-fill"></i>
+                    <span class="customers-index-status-badge customers-index-status-inactive">
+                      <i class="bi bi-x-circle-fill customers-index-status-icon"></i>
                       <%= I18n.t(:inactive) %>
                     </span>
                   <% end %>
                 </td>
-                <td class="td-actions">
-                  <div class="action-buttons">
-                    <%= link_to main_customer_path(customer), class: "btn btn-action btn-view" do %>
-                      <i class="bi bi-eye"></i>
-                      <span>Visualizar</span>
+                <td class="customers-index-td customers-index-td-actions">
+                  <div class="customers-index-action-buttons">
+                    <%= link_to main_customer_path(customer), class: "customers-index-btn-action customers-index-btn-view" do %>
+                      <i class="bi bi-eye customers-index-btn-action-icon"></i>
+                      <span class="customers-index-btn-action-text">Visualizar</span>
                     <% end %>
                   </div>
                 </td>
               </tr>
             <% end %>
           <% else %>
-            <tr>
-              <td colspan="4" class="text-center">
-                <div class="customers-empty-state">
-                  <i class="bi bi-people"></i>
-                  <h3>Nenhum cliente encontrado</h3>
-                  <p>Adicione o primeiro cliente para começar a gerenciar sua base de clientes.</p>
-                  <%= link_to new_main_customer_path, class: "btn btn-customers-primary" do %>
-                    <i class="bi bi-plus-circle"></i>
+            <tr class="customers-index-tr">
+              <td colspan="4" class="customers-index-td text-center">
+                <div class="customers-index-empty-state">
+                  <i class="bi bi-people customers-index-empty-icon"></i>
+                  <h3 class="customers-index-empty-title">Nenhum cliente encontrado</h3>
+                  <p class="customers-index-empty-description">Adicione o primeiro cliente para começar a gerenciar sua base de clientes.</p>
+                  <%= link_to new_main_customer_path, class: "customers-index-btn-primary" do %>
+                    <i class="bi bi-plus-circle customers-index-btn-icon"></i>
                     Adicionar Primeiro Cliente
                   <% end %>
                 </div>
