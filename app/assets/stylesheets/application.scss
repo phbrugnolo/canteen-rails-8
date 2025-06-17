@@ -13,9 +13,10 @@
 
 // 3. Project stylesheets (now using centralized variables)
 @import "authentication";
-@import "customers_index";
 @import "dashboard";
 @import "form";
 @import "sale";
 @import "sidebar";
 @import "sweetalert";
+
+@import "./customers/index";
