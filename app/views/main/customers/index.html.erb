@@ -1,38 +1,159 @@
-<p style="color: green"><%= notice %></p>
-<h1><%= I18n.t(:customer, scope: %i[activerecord models], count: 2) %></h1>
-<hr>
-<%= link_to I18n.t(:add, scope: %i[activerecord], model: Customer.model_name.human), new_main_customer_path %>
-<input type="text" id="search_name" placeholder="<%= I18n.t(:search_by_name) %>">
-<input type="text" id="search_id" placeholder="<%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>">
-<select id="search_status">
-  <option value=""><%= I18n.t(:select_status) %></option>
-  <option value="active"><%= I18n.t(:active) %></option>
-  <option value="inactive"><%= I18n.t(:inactive) %></option>
-</select>
+<div class="customers-container">
+  <!-- Success/Notice Alert -->
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle-fill"></i>
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th><%= I18n.t(:name, scope: %i[activerecord attributes customer]) %></th>
-      <th><%= I18n.t(:status, scope: %i[activerecord attributes customer]) %></th>
-      <th><%= I18n.t(:actions) %></th>
-    </tr>
-  </thead>
-  <tbody id="customers">
-    <% @customers.each do |customer| %>
-      <tr>
-        <td><%= customer.id %></td>
-        <td><%= customer.name %></td>
-        <td>
-          <% if customer.active? %>
-            <span><%= I18n.t(:active) %></span>
+  <!-- Page Header -->
+  <div class="customers-header">
+    <div class="customers-title-section">
+      <h1 class="customers-title">
+        <i class="bi bi-people-fill"></i>
+        <%= I18n.t(:customer, scope: %i[activerecord models], count: 2) %>
+      </h1>
+      <p class="customers-subtitle">Gerencie todos os clientes cadastrados no sistema</p>
+    </div>
+    <div class="customers-actions">
+      <%= link_to new_main_customer_path, class: "btn btn-customers-primary" do %>
+        <i class="bi bi-plus-circle"></i>
+        <%= I18n.t(:add, scope: %i[activerecord], model: Customer.model_name.human) %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="customers-filters-card">
+    <div class="filters-header">
+      <h3 class="filters-title">
+        <i class="bi bi-funnel"></i>
+        Filtros de Busca
+      </h3>
+    </div>
+    <div class="filters-grid">
+      <div class="filter-group">
+        <label for="search_name" class="filter-label">
+          <i class="bi bi-person"></i>
+          <%= I18n.t(:search_by_name) %>
+        </label>
+        <input type="text" id="search_name" class="filter-input" placeholder="Digite o nome do cliente">
+      </div>
+      <div class="filter-group">
+        <label for="search_id" class="filter-label">
+          <i class="bi bi-card-text"></i>
+          <%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>
+        </label>
+        <input type="text" id="search_id" class="filter-input" placeholder="Digite a matrícula">
+      </div>
+      <div class="filter-group">
+        <label for="search_status" class="filter-label">
+          <i class="bi bi-toggle-on"></i>
+          Status
+        </label>
+        <select id="search_status" class="filter-select">
+          <option value=""><%= I18n.t(:select_status) %></option>
+          <option value="active"><%= I18n.t(:active) %></option>
+          <option value="inactive"><%= I18n.t(:inactive) %></option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Customers Table -->
+  <div class="customers-table-card">
+    <div class="table-header">
+      <h3 class="table-title">
+        <i class="bi bi-table"></i>
+        Lista de Clientes
+      </h3>
+    </div>
+    <div class="table-responsive">
+      <table class="customers-table">
+        <thead>
+          <tr>
+            <th class="th-id">
+              <i class="bi bi-hash"></i>
+              ID
+            </th>
+            <th class="th-name">
+              <i class="bi bi-person"></i>
+              <%= I18n.t(:name, scope: %i[activerecord attributes customer]) %>
+            </th>
+            <th class="th-status">
+              <i class="bi bi-toggle-on"></i>
+              <%= I18n.t(:status, scope: %i[activerecord attributes customer]) %>
+            </th>
+            <th class="th-actions">
+              <i class="bi bi-gear"></i>
+              <%= I18n.t(:actions) %>
+            </th>
+          </tr>
+        </thead>
+        <tbody id="customers">
+          <% if @customers.any? %>
+            <% @customers.each do |customer| %>
+              <tr class="customer-row">
+                <td class="td-id">
+                  <span class="customer-id">#<%= customer.id %></span>
+                </td>
+                <td class="td-name">
+                  <div class="customer-info">
+                    <div class="customer-avatar">
+                      <% if customer.avatar.attached? %>
+                        <%= image_tag customer.avatar, class: "avatar-img" %>
+                      <% else %>
+                        <i class="bi bi-person-circle"></i>
+                      <% end %>
+                    </div>
+                    <div class="customer-details">
+                      <span class="customer-name"><%= customer.name %></span>
+                      <span class="customer-matriculation">Mat: <%= customer.matriculation %></span>
+                    </div>
+                  </div>
+                </td>
+                <td class="td-status">
+                  <% if customer.active? %>
+                    <span class="status-badge status-active">
+                      <i class="bi bi-check-circle-fill"></i>
+                      <%= I18n.t(:active) %>
+                    </span>
+                  <% else %>
+                    <span class="status-badge status-inactive">
+                      <i class="bi bi-x-circle-fill"></i>
+                      <%= I18n.t(:inactive) %>
+                    </span>
+                  <% end %>
+                </td>
+                <td class="td-actions">
+                  <div class="action-buttons">
+                    <%= link_to main_customer_path(customer), class: "btn btn-action btn-view" do %>
+                      <i class="bi bi-eye"></i>
+                      <span>Visualizar</span>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
           <% else %>
-            <span><%= I18n.t(:inactive) %></span>
+            <tr>
+              <td colspan="4" class="text-center">
+                <div class="customers-empty-state">
+                  <i class="bi bi-people"></i>
+                  <h3>Nenhum cliente encontrado</h3>
+                  <p>Adicione o primeiro cliente para começar a gerenciar sua base de clientes.</p>
+                  <%= link_to new_main_customer_path, class: "btn btn-customers-primary" do %>
+                    <i class="bi bi-plus-circle"></i>
+                    Adicionar Primeiro Cliente
+                  <% end %>
+                </div>
+              </td>
+            </tr>
           <% end %>
-        </td>
-        <td><%= link_to I18n.t(:show, scope: %i[activerecord], model: Customer.model_name.human), main_customer_path(customer) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
