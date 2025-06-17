@@ -39,6 +39,27 @@ $customers-light: rgba(102, 126, 234, 0.1);
   max-width: 1400px;
   margin: 0 auto;
   padding: $spacing-lg;
+
+  // Ensure proper table rendering by resetting any conflicting styles
+  table {
+    display: table !important;
+
+    thead {
+      display: table-header-group !important;
+    }
+
+    tbody {
+      display: table-row-group !important;
+    }
+
+    tr {
+      display: table-row !important;
+    }
+
+    th, td {
+      display: table-cell !important;
+    }
+  }
 }
 
 // ===========================================
@@ -207,6 +228,11 @@ $customers-light: rgba(102, 126, 234, 0.1);
 .customers-table-card {
   @include customers-card-style();
   overflow: hidden;
+
+  // Reset any Bootstrap table styles that might interfere
+  .table-responsive {
+    overflow-x: auto;
+  }
 }
 
 .table-header {
@@ -230,14 +256,11 @@ $customers-light: rgba(102, 126, 234, 0.1);
   }
 }
 
-.table-responsive {
-  overflow-x: auto;
-}
-
 .customers-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
+  table-layout: fixed; // Add fixed table layout for better column control
 
   thead {
     background: $color-light-gray;
@@ -261,7 +284,7 @@ $customers-light: rgba(102, 126, 234, 0.1);
     }
 
     &.th-name {
-      min-width: 300px;
+      width: 50%; // Changed from min-width to width percentage
     }
 
     &.th-status {
@@ -271,6 +294,166 @@ $customers-light: rgba(102, 126, 234, 0.1);
     &.th-actions {
       width: 120px;
     }
+  }
+
+  // Ensure tbody and td elements render correctly
+  tbody {
+    tr {
+      display: table-row;
+    }
+
+    td {
+      display: table-cell;
+      padding: $spacing-md $spacing-lg;
+      border-bottom: 1px solid $color-border;
+      vertical-align: middle;
+    }
+  }
+}
+
+// ===========================================
+// TABLE FIXES & OVERRIDES
+// ===========================================
+
+// Specific fixes for table rendering issues
+.customers-table {
+  // Force proper table display model
+  display: table !important;
+  width: 100% !important;
+  border-collapse: collapse !important;
+
+  // Ensure all table elements display correctly
+  thead {
+    display: table-header-group !important;
+  }
+
+  tbody {
+    display: table-row-group !important;
+
+    // Ensure tbody doesn't have flex properties
+    flex-direction: unset !important;
+    flex-wrap: unset !important;
+    align-items: unset !important;
+    justify-content: unset !important;
+  }
+
+  tr {
+    display: table-row !important;
+
+    // Ensure tr doesn't have flex properties
+    flex-direction: unset !important;
+    flex-wrap: unset !important;
+    align-items: unset !important;
+    justify-content: unset !important;
+  }
+
+  th,
+  td {
+    display: table-cell !important;
+    box-sizing: border-box;
+
+    // Ensure cells don't have flex properties
+    flex: unset !important;
+    flex-direction: unset !important;
+    flex-wrap: unset !important;
+    align-items: unset !important;
+    justify-content: unset !important;
+  }
+
+  // Reset any conflicting display properties that might interfere with table layout
+  .customer-info,
+  .customer-details,
+  .action-buttons {
+    display: flex !important;
+  }
+
+  .status-badge {
+    display: inline-flex !important;
+  }
+
+  // Override Bootstrap's potential table-responsive issues
+  .table-responsive & {
+    min-width: 100%;
+  }
+}
+
+// Ensure proper cell content alignment
+.customer-row {
+  &:hover {
+    background: $customers-light;
+  }
+
+  td {
+    vertical-align: middle;
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $color-border;
+  }
+}
+
+// ===========================================
+// ADDITIONAL TABLE FIXES FOR LAYOUT ISSUES
+// ===========================================
+
+// Force table layout to behave correctly even with Bootstrap interference
+.customers-table-card {
+  .table-responsive {
+    overflow-x: auto;
+
+    // Ensure the table wrapper doesn't interfere with table layout
+    .customers-table {
+      margin-bottom: 0 !important;
+
+      // Force table cells to maintain proper dimensions
+      tbody {
+        td {
+          // Prevent content from collapsing into a single column
+          min-width: 0;
+          word-wrap: break-word;
+
+          // Ensure each column maintains its designated space
+          &.td-id {
+            width: 80px !important;
+            min-width: 80px !important;
+          }
+
+          &.td-name {
+            width: 50% !important;
+            min-width: 200px !important;
+          }
+
+          &.td-status {
+            width: 150px !important;
+            min-width: 150px !important;
+          }
+
+          &.td-actions {
+            width: 120px !important;
+            min-width: 120px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Ensure content inside table cells doesn't break layout
+.customer-info {
+  // Prevent flex items from shrinking too much
+  min-width: 0;
+  width: 100%;
+}
+
+.customer-details {
+  // Prevent text overflow from breaking table layout
+  min-width: 0;
+  overflow: hidden;
+
+  .customer-name,
+  .customer-matriculation {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
@@ -283,12 +466,6 @@ $customers-light: rgba(102, 126, 234, 0.1);
 
   &:hover {
     background: $customers-light;
-  }
-
-  td {
-    padding: $spacing-md $spacing-lg;
-    border-bottom: 1px solid $color-border;
-    vertical-align: middle;
   }
 }
 
@@ -549,4 +726,25 @@ $customers-light: rgba(102, 126, 234, 0.1);
   p {
     margin-bottom: $spacing-lg;
   }
+}
+
+// ===========================================
+// FILTER MANAGER STYLES
+// ===========================================
+
+// Filter visibility classes
+.filter-item-visible {
+  display: table-row !important;
+}
+
+.filter-item-hidden {
+  display: none !important;
+}
+
+.filter-no-results-visible {
+  display: block !important;
+}
+
+.filter-no-results-hidden {
+  display: none !important;
 }
