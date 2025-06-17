@@ -82,7 +82,7 @@
       <!-- Product Price Field with Icon -->
       <div class="form-group form-group-with-icon">
         <%= f.label :price, class: "form-label required" do %>
-          <i class="bi bi-currency-dollar"></i> <%= I18n.t(:price, scope: %i[activerecord attributes product]) %>
+          <i class="bi bi-currency-exchange"></i> <%= I18n.t(:price, scope: %i[activerecord attributes product]) %>
         <% end %>
         <%= f.input_field :price,
             class: "form-control",
@@ -91,7 +91,7 @@
             step: 0.01,
             min: 0,
             value: @product.price ? number_with_precision(@product.price, precision: 2) : nil %>
-        <i class="form-icon bi bi-currency-dollar"></i>
+        <i class="form-icon bi bi-currency-exchange"></i>
       </div>
 
       <!-- Form Actions -->
