@@ -1,20 +1,20 @@
 // ===========================================
-// CUSTOMERS INDEX STYLES
+// VARIABLES
 // ===========================================
-// Uses centralized variables from _variables.scss
-// Follows the same design patterns as dashboard and form components
-// All classes are prefixed with 'customers-index-' to prevent conflicts
-
-// Customers-specific color palette
 $customers-primary: #667eea;
 $customers-primary-hover: #764ba2;
 $customers-gradient: linear-gradient(135deg, $customers-primary 0%, $customers-primary-hover 100%);
 $customers-light: rgba(102, 126, 234, 0.1);
 
+// Component-specific variables
+$avatar-size-default: 45px;
+$avatar-size-mobile: 35px;
+$table-font-size: 0.95rem;
+$table-font-size-mobile: 0.9rem;
+
 // ===========================================
 // MIXINS
 // ===========================================
-
 @mixin customers-index-transition($properties: all, $duration: 0.3s, $timing: ease) {
   transition: $properties $duration $timing;
 }
@@ -32,44 +32,62 @@ $customers-light: rgba(102, 126, 234, 0.1);
   @include customers-index-transition();
 }
 
+@mixin button-base {
+  border: none;
+  border-radius: $border-radius-md;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  @include customers-index-transition();
+}
+
+@mixin section-header {
+  font-weight: 600;
+  color: $color-text-primary;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  .icon {
+    color: $customers-primary;
+  }
+}
+
+// ===========================================
+// ANIMATIONS
+// ===========================================
+@keyframes customers-index-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
 // ===========================================
 // MAIN CONTAINER
 // ===========================================
-
 .customers-index-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: $spacing-lg;
-
-  // Ensure proper table rendering with specific table elements
-  .customers-index-table {
-    display: table;
-    width: 100%;
-    border-collapse: collapse;
-
-    .customers-index-thead {
-      display: table-header-group;
-    }
-
-    .customers-index-tbody {
-      display: table-row-group;
-    }
-
-    .customers-index-tr {
-      display: table-row;
-    }
-
-    .customers-index-th,
-    .customers-index-td {
-      display: table-cell;
-    }
-  }
+  animation: customers-index-fadeInUp 0.6s ease-out;
 }
 
 // ===========================================
 // PAGE HEADER
 // ===========================================
-
 .customers-index-header {
   display: flex;
   justify-content: space-between;
@@ -90,13 +108,10 @@ $customers-light: rgba(102, 126, 234, 0.1);
 }
 
 .customers-index-title {
+  @include section-header;
   font-size: 2.5rem;
-  font-weight: 700;
   color: $customers-primary;
   margin-bottom: $spacing-sm;
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
 
   .customers-index-title-icon {
     font-size: 2.2rem;
@@ -125,19 +140,11 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // ===========================================
 // BUTTONS
 // ===========================================
-
 .customers-index-btn-primary {
+  @include button-base;
   background: $customers-gradient;
   color: $color-white;
-  border: none;
   padding: $spacing-sm $spacing-lg;
-  border-radius: $border-radius-md;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-sm;
-  @include customers-index-transition();
 
   &:hover {
     color: $color-white;
@@ -149,12 +156,44 @@ $customers-light: rgba(102, 126, 234, 0.1);
   }
 }
 
+.customers-index-btn-action {
+  @include button-base;
+  padding: $spacing-xs $spacing-sm;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid;
+
+  &.customers-index-btn-view {
+    background: $color-white;
+    color: $customers-primary;
+    border-color: $customers-primary;
+
+    &:hover {
+      background: $customers-primary;
+      color: $color-white;
+      transform: translateY(-1px);
+    }
+  }
+
+  .customers-index-btn-action-icon {
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    padding: $spacing-xs;
+
+    .customers-index-btn-action-text {
+      display: none;
+    }
+  }
+}
+
 // ===========================================
 // FILTERS SECTION
 // ===========================================
-
 .customers-index-filters-card {
-  @include customers-index-card-style();
+  @include customers-index-card-style;
   padding: $spacing-lg;
   margin-bottom: $spacing-xl;
 }
@@ -166,16 +205,10 @@ $customers-light: rgba(102, 126, 234, 0.1);
 }
 
 .customers-index-filters-title {
+  @include section-header;
   font-size: 1.3rem;
-  font-weight: 600;
-  color: $color-text-primary;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: $spacing-sm;
 
   .customers-index-filters-icon {
-    color: $customers-primary;
     font-size: 1.2rem;
   }
 }
@@ -184,6 +217,10 @@ $customers-light: rgba(102, 126, 234, 0.1);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: $spacing-lg;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .customers-index-filter-group {
@@ -217,25 +254,29 @@ $customers-light: rgba(102, 126, 234, 0.1);
   &:focus {
     outline: none;
     border-color: $customers-primary;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px $customers-light;
+  }
+
+  &:hover {
+    border-color: lighten($customers-primary, 20%);
   }
 
   &::placeholder {
     color: $color-text-secondary;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 }
 
 // ===========================================
 // TABLE SECTION
 // ===========================================
-
 .customers-index-table-card {
-  @include customers-index-card-style();
+  @include customers-index-card-style;
   overflow: hidden;
-
-  .customers-index-table-responsive {
-    overflow-x: auto;
-  }
 }
 
 .customers-index-table-header {
@@ -245,30 +286,35 @@ $customers-light: rgba(102, 126, 234, 0.1);
 }
 
 .customers-index-table-title {
+  @include section-header;
   font-size: 1.3rem;
-  font-weight: 600;
-  color: $color-text-primary;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: $spacing-sm;
 
   .customers-index-table-title-icon {
-    color: $customers-primary;
     font-size: 1.2rem;
   }
 }
 
+.customers-index-table-responsive {
+  overflow-x: auto;
+}
+
+// ===========================================
+// TABLE STRUCTURE
+// ===========================================
 .customers-index-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem;
-  table-layout: fixed;
+  font-size: $table-font-size;
   display: table;
 
+  @media (max-width: 992px) {
+    font-size: $table-font-size-mobile;
+  }
+
+  // Table structure elements
   .customers-index-thead {
-    background: $color-light-gray;
     display: table-header-group;
+    background: $color-light-gray;
   }
 
   .customers-index-tbody {
@@ -277,150 +323,86 @@ $customers-light: rgba(102, 126, 234, 0.1);
 
   .customers-index-tr {
     display: table-row;
-  }
+    @include customers-index-transition();
+    animation: customers-index-fadeInUp 0.4s ease-out;
+    animation-fill-mode: both;
 
-  .customers-index-th {
-    padding: $spacing-md $spacing-lg;
-    text-align: left;
-    font-weight: 600;
-    color: $color-text-primary;
-    border-bottom: 2px solid $color-border;
-    white-space: nowrap;
-    display: table-cell;
-
-    .customers-index-th-icon {
-      margin-right: $spacing-sm;
-      color: $customers-primary;
+    &:hover {
+      background: $customers-light;
     }
 
-    &.customers-index-th-id {
-      width: 80px;
-    }
-
-    &.customers-index-th-name {
-      width: 50%;
-    }
-
-    &.customers-index-th-status {
-      width: 150px;
-    }
-
-    &.customers-index-th-actions {
-      width: 120px;
+    // Staggered animation for rows
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.05}s;
+      }
     }
   }
 
+  // Table cell base styles
+  .customers-index-th,
   .customers-index-td {
     display: table-cell;
     padding: $spacing-md $spacing-lg;
     border-bottom: 1px solid $color-border;
     vertical-align: middle;
-  }
-}
 
-// ===========================================
-// TABLE ENHANCED SPECIFICITY (Replaces all !important declarations)
-// ===========================================
-
-.customers-index-container {
-  .customers-index-table-card {
-    .customers-index-table-responsive {
-      .customers-index-table {
-        display: table;
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 0;
-
-        .customers-index-thead {
-          display: table-header-group;
-        }
-
-        .customers-index-tbody {
-          display: table-row-group;
-          flex-direction: unset;
-          flex-wrap: unset;
-          align-items: unset;
-          justify-content: unset;
-
-          .customers-index-tr {
-            display: table-row;
-            flex-direction: unset;
-            flex-wrap: unset;
-            align-items: unset;
-            justify-content: unset;
-
-            .customers-index-td {
-              display: table-cell;
-              box-sizing: border-box;
-              flex: unset;
-              flex-direction: unset;
-              flex-wrap: unset;
-              align-items: unset;
-              justify-content: unset;
-              min-width: 0;
-              word-wrap: break-word;
-
-              &.customers-index-td-id {
-                width: 80px;
-                min-width: 80px;
-              }
-
-              &.customers-index-td-name {
-                width: 50%;
-                min-width: 200px;
-              }
-
-              &.customers-index-td-status {
-                width: 150px;
-                min-width: 150px;
-              }
-
-              &.customers-index-td-actions {
-                width: 120px;
-                min-width: 120px;
-              }
-            }
-          }
-        }
-
-        .customers-index-th {
-          display: table-cell;
-          box-sizing: border-box;
-          flex: unset;
-          flex-direction: unset;
-          flex-wrap: unset;
-          align-items: unset;
-          justify-content: unset;
-        }
-      }
+    @media (max-width: 992px) {
+      padding: $spacing-sm;
     }
   }
-}
 
-// ===========================================
-// TABLE ROWS & INTERACTION
-// ===========================================
+  // Header specific styles
+  .customers-index-th {
+    text-align: left;
+    font-weight: 600;
+    color: $color-text-primary;
+    border-bottom: 2px solid $color-border;
+    white-space: nowrap;
 
-.customers-index-tr {
-  @include customers-index-transition();
-
-  &.customers-index-row-hover:hover {
-    background: $customers-light;
-  }
-}
-
-// ===========================================
-// TABLE CELLS CONTENT
-// ===========================================
-
-.customers-index-td {
-  &.customers-index-td-id {
-    .customers-index-customer-id {
-      font-weight: 600;
-      color: $color-text-secondary;
-      font-family: 'Courier New', monospace;
+    .customers-index-th-icon {
+      margin-right: $spacing-sm;
+      color: $customers-primary;
     }
   }
+
+  // Column widths
+  .customers-index-th-id,
+  .customers-index-td-id {
+    width: 80px;
+    min-width: 80px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .customers-index-th-name,
+  .customers-index-td-name {
+    width: 50%;
+    min-width: 200px;
+  }
+
+  .customers-index-th-status,
+  .customers-index-td-status {
+    width: 150px;
+    min-width: 150px;
+  }
+
+  .customers-index-th-actions,
+  .customers-index-td-actions {
+    width: 120px;
+    min-width: 120px;
+  }
+}
+
+// ===========================================
+// TABLE CELL CONTENT
+// ===========================================
+.customers-index-customer-id {
+  font-weight: 600;
+  color: $color-text-secondary;
+  font-family: 'Courier New', monospace;
 }
 
 .customers-index-customer-info {
@@ -429,11 +411,15 @@ $customers-light: rgba(102, 126, 234, 0.1);
   gap: $spacing-md;
   min-width: 0;
   width: 100%;
+
+  @media (max-width: 992px) {
+    gap: $spacing-sm;
+  }
 }
 
 .customers-index-customer-avatar {
-  width: 45px;
-  height: 45px;
+  width: $avatar-size-default;
+  height: $avatar-size-default;
   border-radius: $border-radius-circle;
   overflow: hidden;
   background: $customers-light;
@@ -441,6 +427,11 @@ $customers-light: rgba(102, 126, 234, 0.1);
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+
+  @media (max-width: 992px) {
+    width: $avatar-size-mobile;
+    height: $avatar-size-mobile;
+  }
 
   .customers-index-avatar-img {
     width: 100%;
@@ -480,12 +471,15 @@ $customers-light: rgba(102, 126, 234, 0.1);
   font-size: 0.85rem;
   color: $color-text-secondary;
   font-family: 'Courier New', monospace;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 // ===========================================
 // STATUS BADGES
 // ===========================================
-
 .customers-index-status-badge {
   display: inline-flex;
   align-items: center;
@@ -525,144 +519,18 @@ $customers-light: rgba(102, 126, 234, 0.1);
 // ===========================================
 // ACTION BUTTONS
 // ===========================================
-
 .customers-index-action-buttons {
   display: flex;
   gap: $spacing-sm;
-}
 
-.customers-index-btn-action {
-  padding: $spacing-xs $spacing-sm;
-  border-radius: $border-radius-md;
-  font-size: 0.85rem;
-  font-weight: 500;
-  text-decoration: none;
-  border: 1px solid;
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-xs;
-  @include customers-index-transition();
-
-  &.customers-index-btn-view {
-    background: $color-white;
-    color: $customers-primary;
-    border-color: $customers-primary;
-
-    &:hover {
-      background: $customers-primary;
-      color: $color-white;
-      transform: translateY(-1px);
-    }
-  }
-
-  .customers-index-btn-action-icon {
-    font-size: 0.8rem;
-  }
-}
-
-// ===========================================
-// RESPONSIVE DESIGN
-// ===========================================
-
-@media (max-width: 992px) {
-  .customers-index-container {
-    padding: $spacing-md;
-  }
-
-  .customers-index-filters-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .customers-index-table {
-    font-size: 0.9rem;
-
-    .customers-index-th,
-    .customers-index-td {
-      padding: $spacing-sm;
-    }
-  }
-
-  .customers-index-customer-info {
-    gap: $spacing-sm;
-  }
-
-  .customers-index-customer-avatar {
-    width: 35px;
-    height: 35px;
-  }
-}
-
-@media (max-width: 768px) {
-  .customers-index-title {
-    font-size: 2rem;
-  }
-
-  .customers-index-table {
-    .customers-index-th {
-      &.customers-index-th-id {
-        display: none;
-      }
-    }
-
-    .customers-index-td {
-      &.customers-index-td-id {
-        display: none;
-      }
-    }
-
-    .customers-index-customer-matriculation {
-      display: none;
-    }
-  }
-
-  .customers-index-action-buttons {
+  @media (max-width: 768px) {
     flex-direction: column;
-  }
-
-  .customers-index-btn-action {
-    font-size: 0.8rem;
-    padding: $spacing-xs;
-
-    .customers-index-btn-action-text {
-      display: none;
-    }
-  }
-}
-
-// ===========================================
-// ANIMATIONS
-// ===========================================
-
-@keyframes customers-index-fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.customers-index-container {
-  animation: customers-index-fadeInUp 0.6s ease-out;
-}
-
-.customers-index-tr {
-  animation: customers-index-fadeInUp 0.4s ease-out;
-  animation-fill-mode: both;
-
-  @for $i from 1 through 10 {
-    &:nth-child(#{$i}) {
-      animation-delay: #{$i * 0.05}s;
-    }
   }
 }
 
 // ===========================================
 // EMPTY STATE
 // ===========================================
-
 .customers-index-empty-state {
   text-align: center;
   padding: $spacing-xxl;
@@ -686,24 +554,48 @@ $customers-light: rgba(102, 126, 234, 0.1);
 }
 
 // ===========================================
-// FILTER MANAGER STYLES
+// FILTER STATES (for JavaScript integration)
 // ===========================================
+.customers-index-filter-item-visible {
+  display: table-row;
+}
 
-// Filter visibility classes with enhanced specificity
-.customers-index-container {
-  .customers-index-filter-item-visible {
-    display: table-row;
+.customers-index-filter-item-hidden {
+  display: none;
+}
+
+.customers-index-filter-no-results-visible {
+  display: block;
+}
+
+.customers-index-filter-no-results-hidden {
+  display: none;
+}
+
+// ===========================================
+// LOADING STATES (bonus enhancement)
+// ===========================================
+.customers-index-skeleton-row {
+  background: linear-gradient(90deg,
+    transparent,
+    $customers-light,
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+  height: 60px;
+}
+
+// ===========================================
+// PRINT STYLES
+// ===========================================
+@media print {
+  .customers-index-action-buttons,
+  .customers-index-filters-card,
+  .customers-index-actions {
+    display: none !important;
   }
 
-  .customers-index-filter-item-hidden {
-    display: none;
-  }
-
-  .customers-index-filter-no-results-visible {
-    display: block;
-  }
-
-  .customers-index-filter-no-results-hidden {
-    display: none;
+  .customers-index-table {
+    font-size: 0.8rem;
   }
 }

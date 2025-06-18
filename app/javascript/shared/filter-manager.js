@@ -6,6 +6,7 @@ export class FilterManager {
     this.noResultsMessage = options.noResultsMessage || 'Nenhum resultado encontrado';
     this.noResultsIcon = options.noResultsIcon || 'bi-search';
     this.debounceDelay = options.debounceDelay || 300;
+    this.cssPrefix = options.cssPrefix || '';
 
     if (!this.container) {
       console.warn(`FilterManager: Container ${options.container} not found`);
@@ -15,18 +16,16 @@ export class FilterManager {
     this.init();
   }
 
-  normalizeText(text) {
-    return text.toString()
-      .trim()
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-  }
-
   init() {
     this.createNoResultsMessage();
     this.bindEvents();
     this.filter();
+  }
+
+  bindEvents() {
+    this.filters.forEach(filterConfig => {
+      this.bindFilterEvents(filterConfig);
+    });
   }
 
   createNoResultsMessage() {
@@ -65,12 +64,6 @@ export class FilterManager {
     } else {
       this.container.appendChild(this.noResultsElement);
     }
-  }
-
-  bindEvents() {
-    this.filters.forEach(filterConfig => {
-      this.bindFilterEvents(filterConfig);
-    });
   }
 
   filter() {
@@ -152,25 +145,22 @@ export class FilterManager {
         }
       });
 
-      const wrapper = item.closest('.col-6') || item;
-      if (wrapper) {
-        if (shouldShow) {
-          wrapper.classList.remove('filter-item-hidden');
-          wrapper.classList.add('filter-item-visible');
-          visibleCount++;
-        } else {
-          wrapper.classList.remove('filter-item-visible');
-          wrapper.classList.add('filter-item-hidden');
-        }
+      if (shouldShow) {
+        item.classList.remove(`${this.cssPrefix}filter-item-hidden`);
+        item.classList.add(`${this.cssPrefix}filter-item-visible`);
+        visibleCount++;
+      } else {
+        item.classList.remove(`${this.cssPrefix}filter-item-visible`);
+        item.classList.add(`${this.cssPrefix}filter-item-hidden`);
       }
     });
 
     if (visibleCount === 0) {
-      this.noResultsElement.classList.remove('filter-no-results-hidden');
-      this.noResultsElement.classList.add('filter-no-results-visible');
+      this.noResultsElement.classList.remove(`${this.cssPrefix}filter-no-results-hidden`);
+      this.noResultsElement.classList.add(`${this.cssPrefix}filter-no-results-visible`);
     } else {
-      this.noResultsElement.classList.remove('filter-no-results-visible');
-      this.noResultsElement.classList.add('filter-no-results-hidden');
+      this.noResultsElement.classList.remove(`${this.cssPrefix}filter-no-results-visible`);
+      this.noResultsElement.classList.add(`${this.cssPrefix}filter-no-results-hidden`);
     }
 
     if (this.onFilter) {
@@ -185,6 +175,14 @@ export class FilterManager {
       return isoDate === filterDate;
     }
     return itemDate === filterDate;
+  }
+
+  normalizeText(txt) {
+    return txt.toString()
+              .trim()
+              .toLowerCase()
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '');
   }
 
   debounce(func, wait) {
