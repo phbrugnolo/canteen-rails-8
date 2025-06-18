@@ -256,7 +256,6 @@ $tab-border-radius: 0.75rem;
         0 1px 3px rgba(0, 0, 0, 0.1);
       transform: translateY(-1px);
 
-      // Optional: Add a subtle gradient for the active state
       &::before {
         content: '';
         position: absolute;
@@ -278,7 +277,6 @@ $tab-border-radius: 0.75rem;
   }
 }
 
-// Tab content containers with enhanced animations
 .tab-content {
   .tab-pane {
     opacity: 0;
@@ -292,117 +290,235 @@ $tab-border-radius: 0.75rem;
   }
 }
 
-// Optional: Add a subtle animation when switching tabs
-.customers-show-tab-indicator {
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  height: 3px;
-  background: $customers-show-gradient;
-  border-radius: 2px;
-  @include customers-show-transition(all, 0.3s, ease);
-  opacity: 0;
-
-  .nav-link.active & {
-    opacity: 1;
-  }
-}
-
 // ===========================================
 // PROFILE TAB STYLES
 // ===========================================
 .customers-show-profile-card {
   @include customers-show-card-style;
+  overflow: hidden;
 }
 
-.customers-show-profile-header {
-  background: $color-light-gray;
-  padding: $spacing-lg;
-  border-bottom: 1px solid $color-border;
-}
-
-.customers-show-profile-title {
-  @include section-header;
-}
-
-.customers-show-profile-icon {
-  color: $customers-show-primary;
-}
-
-.customers-show-profile-content {
+// Hero Section
+.customers-show-profile-hero {
+  background: linear-gradient(135deg, $color-light-gray 0%, lighten($color-light-gray, 2%) 100%);
   padding: $spacing-xl;
+  border-bottom: 1px solid $color-border;
   display: flex;
+  align-items: center;
   gap: $spacing-xl;
+  position: relative;
 
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $customers-show-primary, lighten($customers-show-primary, 20%));
+  }
 }
 
 .customers-show-profile-avatar {
+  position: relative;
   flex-shrink: 0;
 }
 
 .customers-show-avatar-image {
-  width: $avatar-size-large;
-  height: $avatar-size-large;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid $color-border;
-  box-shadow: $box-shadow-md;
+  border: 3px solid white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
 
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
-.customers-show-profile-details {
+.customers-show-avatar-overlay {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: white;
+  border-radius: 50%;
+  padding: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.customers-show-status-indicator {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+
+  &.customers-show-status-active {
+    color: $color-success;
+  }
+
+  &.customers-show-status-inactive {
+    color: $color-danger;
+  }
+}
+
+.customers-show-profile-primary {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-lg;
+  min-width: 0; // Prevents text overflow issues
 }
 
-.customers-show-detail-group {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-xs;
+.customers-show-profile-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $color-text-primary;
+  margin: 0 0 $spacing-sm 0;
+  line-height: 1.2;
 }
 
-.customers-show-detail-label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: $color-text-secondary;
+.customers-show-profile-meta {
   display: flex;
   align-items: center;
-  gap: $spacing-xs;
+  gap: $spacing-md;
+  flex-wrap: wrap;
 }
 
-.customers-show-detail-icon {
-  font-size: 1rem;
+.customers-show-matriculation {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.9rem;
+  color: $color-text-secondary;
+  background: rgba(white, 0.7);
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  border: 1px solid rgba($color-border, 0.5);
+}
+
+.customers-show-meta-icon {
+  font-size: 0.8rem;
   color: $customers-show-primary;
 }
 
-.customers-show-detail-value {
+// Details Section
+.customers-show-profile-details {
+  padding: $spacing-xl;
+}
+
+.customers-show-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $spacing-lg;
+}
+
+.customers-show-detail-item {
+  background: rgba($color-light-gray, 0.3);
+  border: 1px solid $color-border;
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: $customers-show-primary;
+  }
+}
+
+.customers-show-detail-header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-sm;
+  padding-bottom: $spacing-sm;
+  border-bottom: 1px solid rgba($color-border, 0.5);
+}
+
+.customers-show-detail-icon {
   font-size: 1.1rem;
+  color: $customers-show-primary;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.customers-show-detail-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $color-text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.customers-show-detail-content {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.customers-show-detail-value {
+  font-size: 1rem;
   font-weight: 500;
   color: $color-text-primary;
-  padding: $spacing-sm 0;
+  line-height: 1.4;
+
+  &--code {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    background: rgba($customers-show-primary, 0.1);
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    border: 1px solid rgba($customers-show-primary, 0.2);
+  }
+
+  &--muted {
+    color: $color-text-secondary;
+    font-style: italic;
+  }
+}
+
+.customers-show-status-display {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.customers-show-status-text {
+  font-weight: 600;
+
+  .customers-show-status-active & {
+    color: $color-success;
+  }
+
+  .customers-show-status-inactive & {
+    color: $color-danger;
+  }
 }
 
 .customers-show-status-badge {
   display: inline-flex;
   align-items: center;
+  gap: $spacing-xs;
   padding: $spacing-xs $spacing-sm;
-  border-radius: $border-radius-sm;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  width: fit-content;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 
   &.customers-show-status-active {
-    background: $color-success-light;
+    background: rgba($color-success, 0.15);
     color: $color-success;
-    border: 1px solid $color-success;
+    border: 1px solid rgba($color-success, 0.3);
   }
 
   &.customers-show-status-inactive {
-    background: rgba($color-danger, 0.1);
+    background: rgba($color-danger, 0.15);
     color: $color-danger;
-    border: 1px solid $color-danger;
+    border: 1px solid rgba($color-danger, 0.3);
+  }
+
+  i {
+    font-size: 0.7rem;
   }
 }
 

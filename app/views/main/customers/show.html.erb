@@ -59,43 +59,104 @@
       <!-- Profile Tab -->
       <div class="tab-pane fade show active customers-show-tab-pane" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
         <div class="customers-show-profile-card">
-          <div class="customers-show-profile-header">
-            <h3 class="customers-show-profile-title">
-              <i class="bi bi-info-circle customers-show-profile-icon"></i>
-              Informações do Cliente
-            </h3>
-          </div>
-          <div class="customers-show-profile-content">
+          <!-- Hero Section with Avatar and Key Info -->
+          <div class="customers-show-profile-hero">
             <div class="customers-show-profile-avatar">
               <%= image_tag(
                 @customer.avatar.attached? ? url_for(@customer.avatar) : asset_path("img-perfil.png"),
                 alt: I18n.t(:alt_image, scope: %i[activerecord], model: @customer.model_name.human),
                 class: "customers-show-avatar-image"
               ) %>
+              <div class="customers-show-avatar-overlay">
+                <span class="customers-show-status-indicator customers-show-status-<%= @customer.active? ? 'active' : 'inactive' %>">
+                  <i class="bi bi-circle-fill"></i>
+                </span>
+              </div>
             </div>
-            <div class="customers-show-profile-details">
-              <div class="customers-show-detail-group">
-                <label class="customers-show-detail-label">
-                  <i class="bi bi-person customers-show-detail-icon"></i>
-                  <%= I18n.t(:name, scope: %i[activerecord attributes customer]) %>
-                </label>
-                <span class="customers-show-detail-value"><%= @customer.name %></span>
-              </div>
-              <div class="customers-show-detail-group">
-                <label class="customers-show-detail-label">
-                  <i class="bi bi-hash customers-show-detail-icon"></i>
-                  <%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>
-                </label>
-                <span class="customers-show-detail-value"><%= @customer.matriculation %></span>
-              </div>
-              <div class="customers-show-detail-group">
-                <label class="customers-show-detail-label">
-                  <i class="bi bi-toggle-<%= @customer.active? ? 'on' : 'off' %> customers-show-detail-icon"></i>
-                  <%= I18n.t(:status, scope: %i[activerecord attributes customer]) %>
-                </label>
+
+            <div class="customers-show-profile-primary">
+              <h2 class="customers-show-profile-name"><%= @customer.name %></h2>
+              <div class="customers-show-profile-meta">
+                <span class="customers-show-matriculation">
+                  <i class="bi bi-hash customers-show-meta-icon"></i>
+                  <%= @customer.matriculation %>
+                </span>
                 <span class="customers-show-status-badge customers-show-status-<%= @customer.active? ? 'active' : 'inactive' %>">
+                  <i class="bi bi-toggle-<%= @customer.active? ? 'on' : 'off' %>"></i>
                   <%= I18n.t(@customer.active? ? :active : :inactive) %>
                 </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Detailed Information Grid -->
+          <div class="customers-show-profile-details">
+            <div class="customers-show-detail-grid">
+              <div class="customers-show-detail-item">
+                <div class="customers-show-detail-header">
+                  <i class="bi bi-person customers-show-detail-icon"></i>
+                  <label class="customers-show-detail-label">
+                    <%= I18n.t(:name, scope: %i[activerecord attributes customer]) %>
+                  </label>
+                </div>
+                <div class="customers-show-detail-content">
+                  <span class="customers-show-detail-value"><%= @customer.name %></span>
+                </div>
+              </div>
+
+              <div class="customers-show-detail-item">
+                <div class="customers-show-detail-header">
+                  <i class="bi bi-hash customers-show-detail-icon"></i>
+                  <label class="customers-show-detail-label">
+                    <%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>
+                  </label>
+                </div>
+                <div class="customers-show-detail-content">
+                  <span class="customers-show-detail-value customers-show-detail-value--code"><%= @customer.matriculation %></span>
+                </div>
+              </div>
+
+              <div class="customers-show-detail-item">
+                <div class="customers-show-detail-header">
+                  <i class="bi bi-calendar-check customers-show-detail-icon"></i>
+                  <label class="customers-show-detail-label">
+                    <%= I18n.t(:status, scope: %i[activerecord attributes customer]) %>
+                  </label>
+                </div>
+                <div class="customers-show-detail-content">
+                  <div class="customers-show-status-display">
+                    <span class="customers-show-status-indicator customers-show-status-<%= @customer.active? ? 'active' : 'inactive' %>">
+                      <i class="bi bi-circle-fill"></i>
+                    </span>
+                    <span class="customers-show-status-text">
+                      <%= I18n.t(@customer.active? ? :active : :inactive) %>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="customers-show-detail-item">
+                <div class="customers-show-detail-header">
+                  <i class="bi bi-clock customers-show-detail-icon"></i>
+                  <label class="customers-show-detail-label">Criado em</label>
+                </div>
+                <div class="customers-show-detail-content">
+                  <span class="customers-show-detail-value customers-show-detail-value--muted">
+                    <%= @customer&.created_at&.strftime("%d/%m/%Y às %H:%M") %>
+                  </span>
+                </div>
+              </div>
+
+              <div class="customers-show-detail-item">
+                <div class="customers-show-detail-header">
+                  <i class="bi bi-clock customers-show-detail-icon"></i>
+                  <label class="customers-show-detail-label">Última atualização</label>
+                </div>
+                <div class="customers-show-detail-content">
+                  <span class="customers-show-detail-value customers-show-detail-value--muted">
+                    <%= @customer&.updated_at&.strftime("%d/%m/%Y às %H:%M") %>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
