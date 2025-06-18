@@ -1,0 +1,659 @@
+// ===========================================
+// VARIABLES
+// ===========================================
+$customers-show-primary: #667eea;
+$customers-show-primary-hover: #764ba2;
+$customers-show-gradient: linear-gradient(135deg, $customers-show-primary 0%, $customers-show-primary-hover 100%);
+$customers-show-light: rgba(102, 126, 234, 0.1);
+
+// Component-specific variables
+$avatar-size-large: 120px;
+$avatar-size-mobile: 80px;
+$card-border-radius: 1rem;
+$tab-border-radius: 0.75rem;
+
+// ===========================================
+// MIXINS
+// ===========================================
+@mixin customers-show-transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+@mixin customers-show-hover-effect($translateY: -2px) {
+  &:hover {
+    transform: translateY($translateY);
+    box-shadow: $box-shadow-lg;
+  }
+}
+
+@mixin customers-show-card-style {
+  background: $color-white;
+  border-radius: $card-border-radius;
+  box-shadow: $box-shadow-sm;
+  border: 1px solid $color-border;
+  overflow: hidden;
+}
+
+@mixin button-base {
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  @include customers-show-transition();
+  border: 1px solid transparent;
+}
+
+@mixin section-header {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $color-text-primary;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+// ===========================================
+// ANIMATIONS
+// ===========================================
+@keyframes customers-show-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+// ===========================================
+// MAIN CONTAINER
+// ===========================================
+.customers-show-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+  animation: customers-show-fadeInUp 0.6s ease-out;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-md;
+  }
+}
+
+// ===========================================
+// ALERTS
+// ===========================================
+.customers-show-alert {
+  margin-bottom: $spacing-lg;
+  border-radius: $border-radius-md;
+  border: none;
+
+  .bi {
+    margin-right: $spacing-xs;
+  }
+}
+
+// ===========================================
+// PAGE HEADER
+// ===========================================
+.customers-show-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 2px solid $color-border;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    gap: $spacing-lg;
+    align-items: stretch;
+  }
+}
+
+.customers-show-title-section {
+  flex: 1;
+}
+
+.customers-show-title {
+  font-size: 2.5rem;
+  font-weight: $font-weight-bold;
+  color: $customers-show-primary;
+  margin-bottom: $spacing-sm;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 2rem;
+  }
+}
+
+.customers-show-title-name {
+  display: inline-block;
+  max-width: 700px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+}
+
+.customers-show-title-icon {
+  font-size: 2rem;
+  color: $customers-show-primary-hover;
+}
+
+.customers-show-subtitle {
+  font-size: 1.1rem;
+  color: $color-text-secondary;
+  margin: 0;
+}
+
+.customers-show-actions {
+  display: flex;
+  gap: $spacing-sm;
+  align-items: center;
+
+  @media (max-width: $breakpoint-md) {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+// ===========================================
+// BUTTONS
+// ===========================================
+.customers-show-btn-primary {
+  @include button-base;
+  background: $customers-show-gradient;
+  color: $color-white;
+  border-color: $customers-show-primary;
+
+  &:hover {
+    background: linear-gradient(135deg, $customers-show-primary-hover 0%, $customers-show-primary 100%);
+    color: $color-white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba($customers-show-primary, 0.3);
+  }
+}
+
+.customers-show-btn-secondary {
+  @include button-base;
+  background: $color-secondary;
+  color: $color-white;
+  border-color: $color-secondary;
+
+  &:hover {
+    background: darken($color-secondary, 10%);
+    color: $color-white;
+    transform: translateY(-1px);
+  }
+}
+
+.customers-show-btn-action {
+  @include button-base;
+  background: $color-light-gray;
+  color: $customers-show-primary;
+  border-color: $color-border;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: $customers-show-light;
+    color: $customers-show-primary-hover;
+    border-color: $customers-show-primary;
+  }
+}
+
+.customers-show-btn-icon {
+  font-size: 0.9rem;
+}
+
+// ===========================================
+// TABS SECTION
+// ===========================================
+.customers-show-tabs-card {
+  @include customers-show-card-style;
+  margin-bottom: $spacing-xl;
+}
+
+.customers-show-nav-tabs {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: $color-light-gray;
+  border-radius: $tab-border-radius $tab-border-radius 0 0;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+  }
+}
+
+.customers-show-nav-item {
+  flex: 1;
+}
+
+.customers-show-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: $spacing-md $spacing-lg;
+  color: $color-text-secondary;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  font-weight: 500;
+  @include customers-show-transition();
+  border-radius: 0;
+  cursor: pointer;
+  width: 100%;
+
+  &:hover {
+    color: $customers-show-primary;
+    background: rgba($customers-show-primary, 0.05);
+  }
+
+  &.active {
+    color: $customers-show-primary;
+    background: $color-white;
+    border-bottom: 3px solid $customers-show-primary;
+    font-weight: 600;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-sm $spacing-md;
+    font-size: 0.9rem;
+  }
+}
+
+.customers-show-tab-icon {
+  font-size: 1.1rem;
+}
+
+.customers-show-tab-content {
+  background: $color-white;
+}
+
+.customers-show-tab-pane {
+  padding: $spacing-xl;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-lg;
+  }
+}
+
+// ===========================================
+// PROFILE TAB STYLES
+// ===========================================
+.customers-show-profile-card {
+  @include customers-show-card-style;
+}
+
+.customers-show-profile-header {
+  background: $color-light-gray;
+  padding: $spacing-lg;
+  border-bottom: 1px solid $color-border;
+}
+
+.customers-show-profile-title {
+  @include section-header;
+}
+
+.customers-show-profile-icon {
+  color: $customers-show-primary;
+}
+
+.customers-show-profile-content {
+  padding: $spacing-xl;
+  display: flex;
+  gap: $spacing-xl;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-lg;
+  }
+}
+
+.customers-show-profile-avatar {
+  flex-shrink: 0;
+}
+
+.customers-show-avatar-image {
+  width: $avatar-size-large;
+  height: $avatar-size-large;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid $color-border;
+  box-shadow: $box-shadow-md;
+
+  @media (max-width: $breakpoint-md) {
+    width: $avatar-size-mobile;
+    height: $avatar-size-mobile;
+  }
+}
+
+.customers-show-profile-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.customers-show-detail-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.customers-show-detail-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $color-text-secondary;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.customers-show-detail-icon {
+  font-size: 1rem;
+  color: $customers-show-primary;
+}
+
+.customers-show-detail-value {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: $color-text-primary;
+  padding: $spacing-sm 0;
+}
+
+.customers-show-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  font-size: 0.9rem;
+  font-weight: 600;
+  width: fit-content;
+
+  &.customers-show-status-active {
+    background: $color-success-light;
+    color: $color-success;
+    border: 1px solid $color-success;
+  }
+
+  &.customers-show-status-inactive {
+    background: rgba($color-danger, 0.1);
+    color: $color-danger;
+    border: 1px solid $color-danger;
+  }
+}
+
+// ===========================================
+// PURCHASES TAB STYLES
+// ===========================================
+.customers-show-purchases-card {
+  @include customers-show-card-style;
+}
+
+.customers-show-purchases-header {
+  background: $color-light-gray;
+  padding: $spacing-lg;
+  border-bottom: 1px solid $color-border;
+}
+
+.customers-show-purchases-title {
+  @include section-header;
+}
+
+.customers-show-purchases-icon {
+  color: $customers-show-primary;
+}
+
+.customers-show-purchases-content {
+  padding: $spacing-xl;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-lg;
+  }
+}
+
+.customers-show-sales-grid {
+  display: grid;
+  gap: $spacing-lg;
+
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.customers-show-sale-card {
+  @include customers-show-card-style;
+  @include customers-show-hover-effect(-1px);
+  @include customers-show-transition();
+  position: relative;
+}
+
+.customers-show-sale-header {
+  padding: $spacing-md $spacing-lg;
+  background: $color-light-gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $color-border;
+
+  @media (max-width: $breakpoint-sm) {
+    flex-direction: column;
+    gap: $spacing-sm;
+    align-items: flex-start;
+  }
+}
+
+.customers-show-sale-date,
+.customers-show-sale-total {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  font-weight: 500;
+}
+
+.customers-show-sale-total {
+  color: $customers-show-primary;
+  font-weight: 600;
+}
+
+.customers-show-sale-icon {
+  color: $customers-show-primary;
+}
+
+.customers-show-sale-actions {
+  padding: $spacing-md $spacing-lg;
+  text-align: center;
+}
+
+.customers-show-cart-table {
+  margin: 0;
+  border-top: 1px solid $color-border;
+  background: $color-light-gray;
+  display: none;
+
+  &.hidden {
+    display: none !important;
+  }
+}
+
+.customers-show-cart-header {
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1px solid $color-border;
+  background: $color-white;
+}
+
+.customers-show-cart-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: $color-text-primary;
+  margin: 0;
+}
+
+.customers-show-cart-content {
+  padding: $spacing-md;
+}
+
+.customers-show-cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-sm;
+  background: $color-white;
+  border-radius: $border-radius-sm;
+  margin-bottom: $spacing-xs;
+  border: 1px solid $color-border;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.customers-show-item-name {
+  font-weight: 500;
+  color: $color-text-primary;
+  flex: 1;
+}
+
+.customers-show-item-details {
+  display: flex;
+  gap: $spacing-md;
+  align-items: center;
+}
+
+.customers-show-item-price {
+  font-weight: 600;
+  color: $customers-show-primary;
+}
+
+.customers-show-item-quantity {
+  font-size: 0.9rem;
+  color: $color-text-secondary;
+  background: $color-light-gray;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+}
+
+// ===========================================
+// DOCUMENTS TAB STYLES
+// ===========================================
+.customers-show-documents-card {
+  @include customers-show-card-style;
+}
+
+.customers-show-documents-header {
+  background: $color-light-gray;
+  padding: $spacing-lg;
+  border-bottom: 1px solid $color-border;
+}
+
+.customers-show-documents-title {
+  @include section-header;
+}
+
+.customers-show-documents-icon {
+  color: $customers-show-primary;
+}
+
+.customers-show-documents-content {
+  padding: $spacing-xl;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-lg;
+  }
+}
+
+// ===========================================
+// EMPTY STATES
+// ===========================================
+.customers-show-empty-state {
+  text-align: center;
+  padding: $spacing-xl;
+  color: $color-text-secondary;
+}
+
+.customers-show-empty-icon {
+  font-size: 4rem;
+  color: $color-border-hover;
+  margin-bottom: $spacing-lg;
+}
+
+.customers-show-empty-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+.customers-show-empty-text {
+  font-size: 1rem;
+  margin: 0;
+}
+
+// ===========================================
+// MOBILE RESPONSIVE STYLES
+// ===========================================
+@media (max-width: $breakpoint-md) {
+  .customers-show-title {
+    font-size: 2rem;
+  }
+
+  .customers-show-sales-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .customers-show-sale-header {
+    padding: $spacing-sm;
+  }
+
+  .customers-show-cart-content {
+    padding: $spacing-sm;
+  }
+
+  .customers-show-cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-xs;
+  }
+
+  .customers-show-item-details {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+    .customers-show-title-name {
+    max-width: 180px;
+  }
+}
+
+// ===========================================
+// ANIMATION CLASSES
+// ===========================================
+.customers-show-fade-in {
+  animation: customers-show-fadeInUp 0.4s ease-out;
+}
+
+// ===========================================
+// LOADING STATES
+// ===========================================
+.customers-show-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: $border-radius-sm;
+}

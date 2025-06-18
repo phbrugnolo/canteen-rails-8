@@ -33,7 +33,7 @@ export class CartDisplay {
     this.toggleCartDisplay(button);
   }
   toggleCartDisplay(button) {
-    const card = button.closest(".card");
+    const card = button.closest(".customers-show-sale-card") || button.closest(".card");
     if (!card) return;
 
     this.toggleCartTables(card);
@@ -41,7 +41,7 @@ export class CartDisplay {
   }
 
   toggleCartTables(card) {
-    const cartTables = card.querySelectorAll(".cart-table");
+    const cartTables = card.querySelectorAll(".customers-show-cart-table") || card.querySelectorAll(".cart-table");
 
     cartTables.forEach((cartTable) => {
       const isHidden = this.isElementHidden(cartTable);
@@ -73,10 +73,10 @@ export class CartDisplay {
   }
 
   updateButtonText(button) {
-    const card = button.closest(".card");
+    const card = button.closest(".customers-show-sale-card") || button.closest(".card");
     if (!card) return;
 
-    const cartTable = card.querySelector(".cart-table");
+    const cartTable = card.querySelector(".customers-show-cart-table") || card.querySelector(".cart-table");
     if (!cartTable) return;
 
     const isVisible = !this.isElementHidden(cartTable);
@@ -89,12 +89,12 @@ export class CartDisplay {
   }
 
   showAllCarts() {
-    const cartTables = document.querySelectorAll(".cart-table");
+    const cartTables = document.querySelectorAll(".customers-show-cart-table, .cart-table");
     cartTables.forEach(table => this.showTable(table));
   }
 
   hideAllCarts() {
-    const cartTables = document.querySelectorAll(".cart-table");
+    const cartTables = document.querySelectorAll(".customers-show-cart-table, .cart-table");
     cartTables.forEach(table => this.hideTable(table));
   }
 
