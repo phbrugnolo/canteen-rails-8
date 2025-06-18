@@ -1,22 +1,16 @@
-
-// ===========================================
-// IMPORT ORDER IS IMPORTANT!
-// ===========================================
-
-// 1. Global variables first (must be imported before everything else)
+// Global variables
 @import "variables";
 
-// 2. External libraries
+// External libraries
 @import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons";
 @import "tom-select/dist/scss/tom-select";
 
-// 3. Project stylesheets (now using centralized variables)
+// Project stylesheets
 @import "authentication";
 @import "dashboard";
 @import "form";
 @import "sale";
 @import "sidebar";
 @import "sweetalert";
-
 @import "./customers/index";
