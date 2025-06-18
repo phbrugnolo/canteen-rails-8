@@ -15,7 +15,7 @@
         <i class="bi bi-person-fill customers-show-title-icon"></i>
         <span class="customers-show-title-name"><%= @customer.name %></span>
       </h1>
-      <p class="customers-show-subtitle">Visualize e gerencie as informações do cliente</p>
+      <p class="customers-show-subtitle"><%= I18n.t(:customer_show_subtitle) %></p>
     </div>
     <div class="customers-show-actions">
       <%= link_to main_customers_path, class: "customers-show-btn-secondary" do %>
@@ -136,11 +136,11 @@
               <div class="customers-show-detail-item">
                 <div class="customers-show-detail-header">
                   <i class="bi bi-clock customers-show-detail-icon"></i>
-                  <label class="customers-show-detail-label">Criado em</label>
+                  <label class="customers-show-detail-label"><%= I18n.t(:created_at) %></label>
                 </div>
                 <div class="customers-show-detail-content">
                   <span class="customers-show-detail-value customers-show-detail-value--muted">
-                    <%= @customer&.created_at&.strftime("%d/%m/%Y às %H:%M") %>
+                    <%= @customer&.created_at&.strftime(I18n.t(:datetime_format)) %>
                   </span>
                 </div>
               </div>
@@ -148,11 +148,11 @@
               <div class="customers-show-detail-item">
                 <div class="customers-show-detail-header">
                   <i class="bi bi-clock customers-show-detail-icon"></i>
-                  <label class="customers-show-detail-label">Última atualização</label>
+                  <label class="customers-show-detail-label"><%= I18n.t(:updated_at) %></label>
                 </div>
                 <div class="customers-show-detail-content">
                   <span class="customers-show-detail-value customers-show-detail-value--muted">
-                    <%= @customer&.updated_at&.strftime("%d/%m/%Y às %H:%M") %>
+                    <%= @customer&.updated_at&.strftime(I18n.t(:datetime_format)) %>
                   </span>
                 </div>
               </div>
@@ -177,7 +177,7 @@
                     <div class="customers-show-summary-content">
                       <span class="customers-show-summary-value"><%= @customer.sales.count %></span>
                       <span class="customers-show-summary-label">
-                        <%= pluralize(@customer.sales.count, 'compra') %>
+                        <%= pluralize(@customer.sales.count, I18n.t(:purchase_one), I18n.t(:purchase_other)) %>
                       </span>
                     </div>
                   </div>
@@ -187,16 +187,16 @@
                       <span class="customers-show-summary-value">
                         <%= number_to_currency(@customer.sales.sum(:total_price)) %>
                       </span>
-                      <span class="customers-show-summary-label">total gasto</span>
+                      <span class="customers-show-summary-label"><%= I18n.t(:total_spent) %></span>
                     </div>
                   </div>
                   <div class="customers-show-summary-stat">
                     <i class="bi bi-calendar3 customers-show-summary-icon"></i>
                     <div class="customers-show-summary-content">
                       <span class="customers-show-summary-value">
-                        <%= @customer.sales.order(:created_at).first&.created_at&.strftime("%m/%Y") || "-" %>
+                        <%= @customer.sales.order(:created_at).first&.created_at&.strftime(I18n.t(:month_year_format)) || "-" %>
                       </span>
-                      <span class="customers-show-summary-label">primeira compra</span>
+                      <span class="customers-show-summary-label"><%= I18n.t(:first_purchase) %></span>
                     </div>
                   </div>
                 </div>
@@ -228,10 +228,10 @@
                               </span>
                               <div class="customers-show-date-details">
                                 <span class="customers-show-date-month">
-                                  <%= sale.created_at.strftime("%b/%Y") %>
+                                  <%= sale.created_at.strftime(I18n.t(:month_year_format)) %>
                                 </span>
                                 <span class="customers-show-date-time">
-                                  <%= sale.created_at.strftime("%H:%M") %>
+                                  <%= sale.created_at.strftime(I18n.t(:hour_minute_format)) %>
                                 </span>
                               </div>
                             </div>
@@ -240,11 +240,11 @@
                               <% cart = JSON.parse(sale.cart) %>
                               <span class="customers-show-badge customers-show-badge-items">
                                 <i class="bi bi-box"></i>
-                                <%= pluralize(cart.sum { |item| item["quantity"] }, 'item', 'itens') %>
+                                <%= pluralize(cart.sum { |item| item["quantity"] }, I18n.t(:item_one), I18n.t(:item_other)) %>
                               </span>
                               <span class="customers-show-badge customers-show-badge-status">
                                 <i class="bi bi-check-circle-fill"></i>
-                                Concluída
+                                <%= I18n.t(:completed) %>
                               </span>
                             </div>
                           </div>
@@ -252,7 +252,7 @@
 
                         <div class="customers-show-sale-total-section">
                           <div class="customers-show-total-wrapper">
-                            <span class="customers-show-total-label">Total</span>
+                            <span class="customers-show-total-label"><%= I18n.t(:total) %></span>
                             <span class="customers-show-total-value">
                               <%= number_to_currency(sale.total_price) %>
                             </span>
@@ -270,9 +270,9 @@
                         </button>
 
                         <div class="customers-show-action-buttons">
-                          <%= link_to main_sale_path(sale), class: "customers-show-btn-secondary", title: "Ver detalhes" do %>
+                          <%= link_to main_sale_path(sale), class: "customers-show-btn-secondary", title: I18n.t(:view_details) do %>
                             <i class="bi bi-info-circle"></i>
-                            <span>Detalhes</span>
+                            <span><%= I18n.t(:details) %></span>
                           <% end %>
                         </div>
                       </div>
@@ -282,10 +282,10 @@
                           <div class="customers-show-cart-title-wrapper">
                             <h5 class="customers-show-cart-title">
                               <i class="bi bi-basket2"></i>
-                              Itens da Compra
+                              <%= I18n.t(:cart_items) %>
                             </h5>
                             <span class="customers-show-items-count-badge">
-                              <%= cart.length %> produtos
+                              <%= cart.length %> <%= I18n.t(:products) %>
                             </span>
                           </div>
                         </div>
@@ -304,11 +304,11 @@
                                 <div class="customers-show-item-details">
                                   <div class="customers-show-item-info">
                                     <span class="customers-show-unit-price">
-                                      <%= number_to_currency(item["price"]) %> por unidade
+                                      <%= number_to_currency(item["price"]) %> <%= I18n.t(:per_unit) %>
                                     </span>
                                   </div>
                                   <div class="customers-show-quantity-display">
-                                    <span class="customers-show-quantity-label">Qtd:</span>
+                                    <span class="customers-show-quantity-label"><%= I18n.t(:quantity) %>:</span>
                                     <span class="customers-show-quantity-value">
                                       <%= item["quantity"] %>
                                     </span>
@@ -321,19 +321,19 @@
                           <div class="customers-show-cart-footer">
                             <div class="customers-show-summary-grid">
                               <div class="customers-show-summary-item">
-                                <span class="customers-show-summary-label">Total de itens:</span>
+                                <span class="customers-show-summary-label"><%= I18n.t(:total_items) %>:</span>
                                 <span class="customers-show-summary-value">
                                   <%= cart.sum { |item| item["quantity"] } %>
                                 </span>
                               </div>
                               <div class="customers-show-summary-item">
-                                <span class="customers-show-summary-label">Produtos únicos:</span>
+                                <span class="customers-show-summary-label"><%= I18n.t(:unique_products) %>:</span>
                                 <span class="customers-show-summary-value">
                                   <%= cart.length %>
                                 </span>
                               </div>
                               <div class="customers-show-summary-item customers-show-summary-total">
-                                <span class="customers-show-summary-label">Total Final:</span>
+                                <span class="customers-show-summary-label"><%= I18n.t(:final_total) %>:</span>
                                 <span class="customers-show-summary-value">
                                   <%= number_to_currency(sale.total_price) %>
                                 </span>
@@ -355,10 +355,10 @@
                   <div class="customers-show-empty-decoration"></div>
                 </div>
                 <div class="customers-show-empty-content">
-                  <h4 class="customers-show-empty-title">Nenhuma compra realizada</h4>
+                  <h4 class="customers-show-empty-title"><%= I18n.t(:no_purchases_made) %></h4>
                   <p class="customers-show-empty-description">
                     <%= I18n.t(:no_purchases_made) %><br>
-                    <small>Compras aparecerão aqui quando forem realizadas.</small>
+                    <small><%= I18n.t(:purchases_will_appear_here) %></small>
                   </p>
                   <!-- <div class="customers-show-empty-actions">
                     <button class="customers-show-btn-primary">
@@ -383,14 +383,14 @@
           <div class="customers-show-documents-header">
             <h3 class="customers-show-documents-title">
               <i class="bi bi-files customers-show-documents-icon"></i>
-              Documentos
+              <%= I18n.t(:documents) %>
             </h3>
           </div>
           <div class="customers-show-documents-content">
             <div class="customers-show-empty-state">
               <i class="bi bi-file-earmark-plus customers-show-empty-icon"></i>
-              <h4 class="customers-show-empty-title">Funcionalidade em desenvolvimento</h4>
-              <p class="customers-show-empty-text">Em breve você poderá visualizar e gerenciar documentos do cliente.</p>
+              <h4 class="customers-show-empty-title"><%= I18n.t(:feature_in_development) %></h4>
+              <p class="customers-show-empty-text"><%= I18n.t(:soon_you_will_manage_documents) %></p>
             </div>
           </div>
         </div>
