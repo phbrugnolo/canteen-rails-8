@@ -32,30 +32,30 @@
 
   <!-- Tabs Navigation -->
   <div class="customers-show-tabs-card">
-    <ul class="customers-show-nav-tabs" id="customerShowTabs" role="tablist">
-      <li class="customers-show-nav-item" role="presentation">
-        <button class="customers-show-nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">
-          <i class="bi bi-person-circle customers-show-tab-icon"></i>
+    <ul class="nav nav-tabs" id="customerShowTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">
+          <i class="bi bi-person-circle me-2"></i>
           <%= I18n.t(:profile) %>
         </button>
       </li>
-      <li class="customers-show-nav-item" role="presentation">
-        <button class="customers-show-nav-link" id="purchases-tab" data-bs-toggle="tab" data-bs-target="#purchases-tab-pane" type="button" role="tab" aria-controls="purchases-tab-pane" aria-selected="false">
-          <i class="bi bi-cart-fill customers-show-tab-icon"></i>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="purchases-tab" data-bs-toggle="tab" data-bs-target="#purchases-tab-pane" type="button" role="tab" aria-controls="purchases-tab-pane" aria-selected="false">
+          <i class="bi bi-cart-fill me-2"></i>
           <%= I18n.t(:purchases) %>
         </button>
       </li>
-      <li class="customers-show-nav-item" role="presentation">
-        <button class="customers-show-nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents-tab-pane" type="button" role="tab" aria-controls="documents-tab-pane" aria-selected="false">
-          <i class="bi bi-file-earmark-text customers-show-tab-icon"></i>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents-tab-pane" type="button" role="tab" aria-controls="documents-tab-pane" aria-selected="false">
+          <i class="bi bi-file-earmark-text me-2"></i>
           <%= I18n.t(:documents) %>
         </button>
       </li>
     </ul>
 
-    <div class="customers-show-tab-content" id="customerShowTabContent">
+    <div class="tab-content" id="customerShowTabContent">
       <!-- Profile Tab -->
-      <div class="customers-show-tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+      <div class="tab-pane fade show active customers-show-tab-pane" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
         <div class="customers-show-profile-card">
           <div class="customers-show-profile-header">
             <h3 class="customers-show-profile-title">
@@ -100,7 +100,7 @@
         </div>
       </div>
       <!-- Purchases Tab -->
-      <div class="customers-show-tab-pane fade" id="purchases-tab-pane" role="tabpanel" aria-labelledby="purchases-tab" tabindex="0">
+      <div class="tab-pane fade customers-show-tab-pane" id="purchases-tab-pane" role="tabpanel" aria-labelledby="purchases-tab" tabindex="0">
         <div class="customers-show-purchases-card">
           <div class="customers-show-purchases-header">
             <h3 class="customers-show-purchases-title">
@@ -163,7 +163,7 @@
       </div>
 
       <!-- Documents Tab -->
-      <div class="customers-show-tab-pane fade" id="documents-tab-pane" role="tabpanel" aria-labelledby="documents-tab" tabindex="0">
+      <div class="tab-pane fade customers-show-tab-pane" id="documents-tab-pane" role="tabpanel" aria-labelledby="documents-tab" tabindex="0">
         <div class="customers-show-documents-card">
           <div class="customers-show-documents-header">
             <h3 class="customers-show-documents-title">
