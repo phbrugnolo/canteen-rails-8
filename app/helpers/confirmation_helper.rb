@@ -50,7 +50,7 @@ module ConfirmationHelper
     default_options = {
       entity_name: entity_name,
       entity_type: entity.class.name.downcase,
-      class: "btn btn-success me-1",
+      class: "btn-status-toggle activate",
       title: I18n.t("confirmations.activate.title"),
       confirm_text: I18n.t("confirmations.activate.text", entity: entity_name),
       button_text: I18n.t("confirmations.activate.button"),
@@ -61,7 +61,9 @@ module ConfirmationHelper
 
     url = generate_activation_url(entity)
     method_name = options[:enhanced] ? :enhanced_confirmation_button : :confirmation_button
-    send(method_name, I18n.t(:activate), url, "activate", default_options.merge(options))
+
+    button_text = content_tag(:i, "", class: "bi bi-toggle-on btn-icon") + " " + I18n.t(:activate)
+    send(method_name, button_text.html_safe, url, "activate", default_options.merge(options))
   end
 
   def deactivation_button(entity, options = {})
@@ -70,7 +72,7 @@ module ConfirmationHelper
     default_options = {
       entity_name: entity_name,
       entity_type: entity.class.name.downcase,
-      class: "btn btn-danger me-1",
+      class: "btn-status-toggle deactivate",
       title: I18n.t("confirmations.deactivate.title"),
       confirm_text: I18n.t("confirmations.deactivate.text", entity: entity_name),
       button_text: I18n.t("confirmations.deactivate.button"),
@@ -81,7 +83,9 @@ module ConfirmationHelper
 
     url = generate_deactivation_url(entity)
     method_name = options[:enhanced] ? :enhanced_confirmation_button : :confirmation_button
-    send(method_name, I18n.t(:deactivate), url, "deactivate", default_options.merge(options))
+
+    button_text = content_tag(:i, "", class: "bi bi-toggle-off btn-icon") + " " + I18n.t(:deactivate)
+    send(method_name, button_text.html_safe, url, "deactivate", default_options.merge(options))
   end
 
   def delete_button(entity, options = {})
@@ -90,7 +94,7 @@ module ConfirmationHelper
     default_options = {
       entity_name: entity_name,
       entity_type: entity.class.name.downcase,
-      class: "btn btn-danger",
+      class: "btn-secondary",
       method: "DELETE",
       title: I18n.t("confirmations.delete.title"),
       confirm_text: I18n.t("confirmations.delete.text", entity: entity_name),
@@ -177,13 +181,13 @@ module ConfirmationHelper
   def default_button_class(action)
     case action
     when "activate"
-      "btn btn-activate me-1"
+      "btn-status-toggle activate"
     when "deactivate"
-      "btn btn-deactivate me-1"
+      "btn-status-toggle deactivate"
     when "delete"
-      "btn btn-delete"
+      "btn-secondary"
     else
-      "btn btn-primary"
+      "btn-primary"
     end
   end
 

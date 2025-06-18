@@ -6,6 +6,9 @@
 @import "bootstrap-icons/font/bootstrap-icons";
 @import "tom-select/dist/scss/tom-select";
 
+// Global component styles
+@import "status_button";
+
 // Project stylesheets
 @import "authentication";
 @import "dashboard";

@@ -1,0 +1,85 @@
+// ===========================================
+// STATUS BUTTON STYLES
+// ===========================================
+
+// ===========================================
+// VARIABLES
+// ===========================================
+$status-btn-activate-color: $color-success;
+$status-btn-activate-hover: $color-success-hover;
+$status-btn-activate-gradient: linear-gradient(135deg, $status-btn-activate-color 0%, $color-success-gradient 100%);
+
+// ===========================================
+// MIXINS
+// ===========================================
+@mixin status-btn-transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+@mixin status-btn-base {
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  @include status-btn-transition();
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+// ===========================================
+// STATUS TOGGLE BUTTON STYLES
+// ===========================================
+
+// Status toggle buttons with enhanced styling
+.btn-status-toggle {
+  @include status-btn-base;
+
+  &.activate {
+    background: $status-btn-activate-gradient;
+    color: $color-white;
+    border-color: $status-btn-activate-color;
+
+    &:hover {
+      background: linear-gradient(135deg, $status-btn-activate-hover 0%, $status-btn-activate-color 100%);
+      color: $color-white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($status-btn-activate-color, 0.3);
+    }
+  }
+
+  &.deactivate {
+    background: $color-danger;
+    color: $color-white;
+    border-color: $color-danger;
+
+    &:hover {
+      background: darken($color-danger, 10%);
+      color: $color-white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($color-danger, 0.3);
+    }
+  }
+
+  // Button icon styling
+  .btn-icon {
+    font-size: 0.9rem;
+  }
+}
+
+// ===========================================
+// RESPONSIVE ADJUSTMENTS
+// ===========================================
+@media (max-width: 768px) {
+  .btn-status-toggle {
+    padding: $spacing-xs $spacing-sm;
+    font-size: 0.8rem;
+
+    .btn-icon {
+      font-size: 0.8rem;
+    }
+  }
+}
