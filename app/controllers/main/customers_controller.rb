@@ -46,13 +46,27 @@ class Main::CustomersController < ApplicationController
   end
 
   def activate
-    @customer.activate!
-    redirect_to main_customers_path
+    respond_to do |format|
+      if @customer.activate!
+        format.html { redirect_to main_customer_url(@customer), notice: I18n.t(:model_was_successfully_activated, model: @customer.model_name.human) }
+        format.json { render :show, status: :ok, location: @customer }
+      else
+        format.html { redirect_to main_customer_url(@customer), status: :unprocessable_entity }
+        format.json { render json: @customer.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def deactivate
-    @customer.deactivate!
-    redirect_to main_customers_path
+    respond_to do |format|
+      if @customer.deactivate!
+        format.html { redirect_to main_customer_url(@customer), notice: I18n.t(:model_was_successfully_deactivated, model: @customer.model_name.human) }
+        format.json { render :show, status: :ok, location: @customer }
+      else
+        format.html { redirect_to main_customer_url(@customer), status: :unprocessable_entity }
+        format.json { render json: @customer.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private
