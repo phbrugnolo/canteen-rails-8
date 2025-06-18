@@ -59,7 +59,6 @@
       <!-- Profile Tab -->
       <div class="tab-pane fade show active customers-show-tab-pane" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
         <div class="customers-show-profile-card">
-          <!-- Hero Section with Avatar and Key Info -->
           <div class="customers-show-profile-hero">
             <div class="customers-show-profile-avatar">
               <%= image_tag(
@@ -89,7 +88,6 @@
             </div>
           </div>
 
-          <!-- Detailed Information Grid -->
           <div class="customers-show-profile-details">
             <div class="customers-show-detail-grid">
               <div class="customers-show-detail-item">
@@ -162,53 +160,187 @@
           </div>
         </div>
       </div>
+
       <!-- Purchases Tab -->
       <div class="tab-pane fade customers-show-tab-pane" id="purchases-tab-pane" role="tabpanel" aria-labelledby="purchases-tab" tabindex="0">
         <div class="customers-show-purchases-card">
           <div class="customers-show-purchases-header">
-            <h3 class="customers-show-purchases-title">
-              <i class="bi bi-cart-check customers-show-purchases-icon"></i>
-              <%= I18n.t(:recent_purchases) %>
-            </h3>
+            <div class="customers-show-purchases-title-section">
+              <h3 class="customers-show-purchases-title">
+                <i class="bi bi-cart-check customers-show-purchases-icon"></i>
+                <%= I18n.t(:recent_purchases) %>
+              </h3>
+              <% if @customer.sales.size > 0 %>
+                <div class="customers-show-purchases-summary">
+                  <div class="customers-show-summary-stat">
+                    <i class="bi bi-bag-check customers-show-summary-icon"></i>
+                    <div class="customers-show-summary-content">
+                      <span class="customers-show-summary-value"><%= @customer.sales.count %></span>
+                      <span class="customers-show-summary-label">
+                        <%= pluralize(@customer.sales.count, 'compra') %>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="customers-show-summary-stat">
+                    <i class="bi bi-currency-dollar customers-show-summary-icon"></i>
+                    <div class="customers-show-summary-content">
+                      <span class="customers-show-summary-value">
+                        <%= number_to_currency(@customer.sales.sum(:total_price)) %>
+                      </span>
+                      <span class="customers-show-summary-label">total gasto</span>
+                    </div>
+                  </div>
+                  <div class="customers-show-summary-stat">
+                    <i class="bi bi-calendar3 customers-show-summary-icon"></i>
+                    <div class="customers-show-summary-content">
+                      <span class="customers-show-summary-value">
+                        <%= @customer.sales.order(:created_at).first&.created_at&.strftime("%m/%Y") || "-" %>
+                      </span>
+                      <span class="customers-show-summary-label">primeira compra</span>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
           </div>
+
           <div class="customers-show-purchases-content">
             <% if @customer.sales.size > 0 %>
-              <div class="customers-show-sales-grid">
-                <% @customer.sales.order(created_at: :desc).each do |sale| %>
-                  <div class="customers-show-sale-card">
-                    <div class="customers-show-sale-header">
-                      <div class="customers-show-sale-date">
-                        <i class="bi bi-calendar3 customers-show-sale-icon"></i>
-                        <%= sale.created_at.strftime("%d/%m/%Y") %>
+              <div class="customers-show-sales-timeline">
+                <% @customer.sales.order(created_at: :desc).each_with_index do |sale, index| %>
+                  <div class="customers-show-sale-card" data-index="<%= index %>">
+                    <div class="customers-show-timeline-connector">
+                      <div class="customers-show-timeline-dot">
+                        <i class="bi bi-cart-check"></i>
                       </div>
-                      <div class="customers-show-sale-total">
-                        <i class="bi bi-currency-dollar customers-show-sale-icon"></i>
-                        <%= number_to_currency(sale.total_price) %>
-                      </div>
+                      <% unless index == @customer.sales.count - 1 %>
+                        <div class="customers-show-timeline-line"></div>
+                      <% end %>
                     </div>
-                    <div class="customers-show-sale-actions">
-                      <button class="customers-show-btn-action show-cart"
-                              data-show-text="<%= I18n.t(:show_cart) %>"
-                              data-hide-text="<%= I18n.t(:hide_cart) %>">
-                        <i class="bi bi-eye customers-show-btn-icon"></i>
-                        <%= I18n.t(:show_cart) %>
-                      </button>
-                    </div>
-                    <div class="customers-show-cart-table cart-table hidden">
-                      <div class="customers-show-cart-header">
-                        <h5 class="customers-show-cart-title">Itens do Carrinho</h5>
-                      </div>
-                      <div class="customers-show-cart-content">
-                        <% cart = JSON.parse(sale.cart) %>
-                        <% cart.each do |item| %>
-                          <div class="customers-show-cart-item">
-                            <div class="customers-show-item-name"><%= item["name"] %></div>
-                            <div class="customers-show-item-details">
-                              <span class="customers-show-item-price"><%= number_to_currency(item["price"]) %></span>
-                              <span class="customers-show-item-quantity">Qtd: <%= item["quantity"] %></span>
+
+                    <div class="customers-show-sale-content">
+                      <div class="customers-show-sale-header">
+                        <div class="customers-show-sale-primary">
+                          <div class="customers-show-sale-date-section">
+                            <div class="customers-show-sale-date">
+                              <span class="customers-show-date-day">
+                                <%= sale.created_at.strftime("%d") %>
+                              </span>
+                              <div class="customers-show-date-details">
+                                <span class="customers-show-date-month">
+                                  <%= sale.created_at.strftime("%b/%Y") %>
+                                </span>
+                                <span class="customers-show-date-time">
+                                  <%= sale.created_at.strftime("%H:%M") %>
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="customers-show-sale-badges">
+                              <% cart = JSON.parse(sale.cart) %>
+                              <span class="customers-show-badge customers-show-badge-items">
+                                <i class="bi bi-box"></i>
+                                <%= pluralize(cart.sum { |item| item["quantity"] }, 'item', 'itens') %>
+                              </span>
+                              <span class="customers-show-badge customers-show-badge-status">
+                                <i class="bi bi-check-circle-fill"></i>
+                                Concluída
+                              </span>
                             </div>
                           </div>
-                        <% end %>
+                        </div>
+
+                        <div class="customers-show-sale-total-section">
+                          <div class="customers-show-total-wrapper">
+                            <span class="customers-show-total-label">Total</span>
+                            <span class="customers-show-total-value">
+                              <%= number_to_currency(sale.total_price) %>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="customers-show-sale-actions">
+                        <button class="customers-show-btn-primary show-cart"
+                                data-show-text="<%= I18n.t(:show_cart) %>"
+                                data-hide-text="<%= I18n.t(:hide_cart) %>">
+                          <i class="bi bi-eye customers-show-btn-icon"></i>
+                          <span class="customers-show-btn-text"><%= I18n.t(:show_cart) %></span>
+                          <i class="bi bi-chevron-down customers-show-btn-chevron"></i>
+                        </button>
+
+                        <div class="customers-show-action-buttons">
+                          <%= link_to main_sale_path(sale), class: "customers-show-btn-secondary", title: "Ver detalhes" do %>
+                            <i class="bi bi-info-circle"></i>
+                            <span>Detalhes</span>
+                          <% end %>
+                        </div>
+                      </div>
+
+                      <div class="customers-show-cart-details hidden">
+                        <div class="customers-show-cart-header">
+                          <div class="customers-show-cart-title-wrapper">
+                            <h5 class="customers-show-cart-title">
+                              <i class="bi bi-basket2"></i>
+                              Itens da Compra
+                            </h5>
+                            <span class="customers-show-items-count-badge">
+                              <%= cart.length %> produtos
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="customers-show-cart-body">
+                          <div class="customers-show-items-grid">
+                            <% cart.each_with_index do |item, item_index| %>
+                              <div class="customers-show-item-card">
+                                <div class="customers-show-item-header">
+                                  <h6 class="customers-show-item-name"><%= item["name"] %></h6>
+                                  <div class="customers-show-item-price-badge">
+                                    <%= number_to_currency(item["price"].to_f * item["quantity"].to_i) %>
+                                  </div>
+                                </div>
+
+                                <div class="customers-show-item-details">
+                                  <div class="customers-show-item-info">
+                                    <span class="customers-show-unit-price">
+                                      <%= number_to_currency(item["price"]) %> por unidade
+                                    </span>
+                                  </div>
+                                  <div class="customers-show-quantity-display">
+                                    <span class="customers-show-quantity-label">Qtd:</span>
+                                    <span class="customers-show-quantity-value">
+                                      <%= item["quantity"] %>
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            <% end %>
+                          </div>
+
+                          <div class="customers-show-cart-footer">
+                            <div class="customers-show-summary-grid">
+                              <div class="customers-show-summary-item">
+                                <span class="customers-show-summary-label">Total de itens:</span>
+                                <span class="customers-show-summary-value">
+                                  <%= cart.sum { |item| item["quantity"] } %>
+                                </span>
+                              </div>
+                              <div class="customers-show-summary-item">
+                                <span class="customers-show-summary-label">Produtos únicos:</span>
+                                <span class="customers-show-summary-value">
+                                  <%= cart.length %>
+                                </span>
+                              </div>
+                              <div class="customers-show-summary-item customers-show-summary-total">
+                                <span class="customers-show-summary-label">Total Final:</span>
+                                <span class="customers-show-summary-value">
+                                  <%= number_to_currency(sale.total_price) %>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -216,9 +348,29 @@
               </div>
             <% else %>
               <div class="customers-show-empty-state">
-                <i class="bi bi-cart-x customers-show-empty-icon"></i>
-                <h4 class="customers-show-empty-title">Nenhuma compra realizada</h4>
-                <p class="customers-show-empty-text"><%= I18n.t(:no_purchases_made) %></p>
+                <div class="customers-show-empty-illustration">
+                  <div class="customers-show-empty-circle">
+                    <i class="bi bi-cart-x customers-show-empty-icon"></i>
+                  </div>
+                  <div class="customers-show-empty-decoration"></div>
+                </div>
+                <div class="customers-show-empty-content">
+                  <h4 class="customers-show-empty-title">Nenhuma compra realizada</h4>
+                  <p class="customers-show-empty-description">
+                    <%= I18n.t(:no_purchases_made) %><br>
+                    <small>Compras aparecerão aqui quando forem realizadas.</small>
+                  </p>
+                  <div class="customers-show-empty-actions">
+                    <button class="customers-show-btn-primary">
+                      <i class="bi bi-plus-circle"></i>
+                      Registrar Compra
+                    </button>
+                    <button class="customers-show-btn-secondary">
+                      <i class="bi bi-graph-up"></i>
+                      Ver Relatórios
+                    </button>
+                  </div>
+                </div>
               </div>
             <% end %>
           </div>
