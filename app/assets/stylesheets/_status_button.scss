@@ -64,22 +64,7 @@ $status-btn-activate-gradient: linear-gradient(135deg, $status-btn-activate-colo
     }
   }
 
-  // Button icon styling
   .btn-icon {
     font-size: 0.9rem;
-  }
-}
-
-// ===========================================
-// RESPONSIVE ADJUSTMENTS
-// ===========================================
-@media (max-width: 768px) {
-  .btn-status-toggle {
-    padding: $spacing-xs $spacing-sm;
-    font-size: 0.8rem;
-
-    .btn-icon {
-      font-size: 0.8rem;
-    }
   }
 }

@@ -48,12 +48,6 @@ $opacity-medium: 0.5;
   transform: scale($scale) translateY($translateY);
 }
 
-@mixin sales-mobile {
-  @media (max-width: $breakpoint-md) {
-    @content;
-  }
-}
-
 // ===========================================
 // KEYFRAMES & ANIMATIONS
 // ===========================================
@@ -175,10 +169,6 @@ $opacity-medium: 0.5;
 
   &-body {
     padding: $spacing-md;
-
-    @include sales-mobile {
-      padding: $spacing-md $spacing-sm;
-    }
   }
 }
 
@@ -196,10 +186,6 @@ $opacity-medium: 0.5;
 
   .card-body {
     padding: $spacing-md;
-
-    @include sales-mobile {
-      padding: $spacing-sm;
-    }
   }
 
   .btn {
@@ -296,12 +282,6 @@ $opacity-medium: 0.5;
       background-color: $color-danger;
       border-color: $color-danger;
       color: $color-white;
-    }
-  }
-
-  .row > div {
-    @include sales-mobile {
-      margin-bottom: $spacing-sm;
     }
   }
 }
@@ -402,11 +382,6 @@ $opacity-medium: 0.5;
   &-lg {
     padding: 12px 24px;
     font-size: $font-size-lg;
-
-    @include sales-mobile {
-      padding: 10px 20px;
-      font-size: $font-size-base;
-    }
   }
 }
 
@@ -456,7 +431,6 @@ $opacity-medium: 0.5;
 // LOADING STATES & ANIMATIONS
 // ===========================================
 
-// Loading States
 .sales-loading {
   animation: pulse 1.5s ease-in-out infinite;
 
@@ -471,7 +445,6 @@ $opacity-medium: 0.5;
 // EMPTY STATES
 // ===========================================
 
-// No Results
 .sales-no-results {
   i {
     opacity: $opacity-light;
@@ -487,7 +460,6 @@ $opacity-medium: 0.5;
 // UTILITY CLASSES
 // ===========================================
 
-// Cart action buttons
 .sales-cart-action-btn {
   width: 28px;
   height: 28px;
@@ -495,20 +467,17 @@ $opacity-medium: 0.5;
   border-radius: 50%;
 }
 
-// Quantity input
 .sales-quantity-input-container {
   width: 60px;
   padding: 2px 4px;
   border-radius: 4px;
 }
 
-// Empty cart icon
 .sales-empty-cart-icon {
   font-size: 3rem;
   color: #dee2e6;
 }
 
-// Product card styles
 .sales-product-card-container {
   transition: all 0.3s ease;
 }
@@ -537,7 +506,6 @@ $opacity-medium: 0.5;
   min-width: 60px;
 }
 
-// Hover states for product cards
 .sales-product-item-hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -548,7 +516,6 @@ $opacity-medium: 0.5;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-// Product card visibility
 .sales-product-card-visible {
   display: block;
 }
@@ -557,7 +524,6 @@ $opacity-medium: 0.5;
   display: none;
 }
 
-// Filter manager visibility classes
 .filter-item-visible {
   display: block;
 }
@@ -578,7 +544,6 @@ $opacity-medium: 0.5;
 // BROWSER SPECIFIC STYLES
 // ===========================================
 
-// Scrollbar Styling
 .sales-container {
   ::-webkit-scrollbar {
     width: 6px;

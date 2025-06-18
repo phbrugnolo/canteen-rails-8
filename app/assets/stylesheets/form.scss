@@ -259,15 +259,6 @@ textarea.form-control {
   margin-top: $spacing-xl;
   padding-top: $spacing-lg;
   border-top: 1px solid $color-border;
-
-  @media (max-width: $breakpoint-sm) {
-    flex-direction: column-reverse;
-    gap: $spacing-sm;
-
-    .btn {
-      width: 100%;
-    }
-  }
 }
 
 // ===========================================
@@ -498,55 +489,6 @@ textarea.form-control {
     border-left-color: $color-warning;
     background: $color-warning-bg;
     color: darken($color-warning, 30%);
-  }
-}
-
-// ===========================================
-// RESPONSIVE DESIGN
-// ===========================================
-
-@media (max-width: $breakpoint-md) {
-  .form-container {
-    padding: $spacing-lg;
-  }
-
-  .form-card {
-    padding: $spacing-lg;
-  }
-
-  .form-title {
-    font-size: 1.5rem;
-    flex-direction: column;
-    gap: $spacing-sm;
-
-    .form-icon {
-      width: 35px;
-      height: 35px;
-      font-size: 1rem;
-    }
-  }
-
-  .form-actions {
-    flex-direction: column-reverse;
-    gap: $spacing-sm;
-
-    .btn {
-      width: 100%;
-    }
-  }
-}
-
-@media (max-width: $breakpoint-sm) {
-  .form-container {
-    padding: $spacing-md;
-  }
-
-  .form-card {
-    padding: $spacing-md;
-  }
-
-  .form-title {
-    font-size: 1.25rem;
   }
 }
 

@@ -8,7 +8,6 @@ $customers-show-light: rgba(102, 126, 234, 0.1);
 
 // Component-specific variables
 $avatar-size-large: 120px;
-$avatar-size-mobile: 80px;
 $card-border-radius: 1rem;
 $tab-border-radius: 0.75rem;
 
@@ -83,10 +82,6 @@ $tab-border-radius: 0.75rem;
   margin: 0 auto;
   padding: $spacing-xl;
   animation: customers-show-fadeInUp 0.6s ease-out;
-
-  @media (max-width: $breakpoint-md) {
-    padding: $spacing-md;
-  }
 }
 
 // ===========================================
@@ -112,12 +107,6 @@ $tab-border-radius: 0.75rem;
   margin-bottom: $spacing-xl;
   padding-bottom: $spacing-lg;
   border-bottom: 2px solid $color-border;
-
-  @media (max-width: $breakpoint-md) {
-    flex-direction: column;
-    gap: $spacing-lg;
-    align-items: stretch;
-  }
 }
 
 .customers-show-title-section {
@@ -132,10 +121,6 @@ $tab-border-radius: 0.75rem;
   display: flex;
   align-items: center;
   gap: $spacing-md;
-
-  @media (max-width: $breakpoint-md) {
-    font-size: 2rem;
-  }
 }
 
 .customers-show-title-name {
@@ -162,11 +147,6 @@ $tab-border-radius: 0.75rem;
   display: flex;
   gap: $spacing-sm;
   align-items: center;
-
-  @media (max-width: $breakpoint-md) {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
 }
 
 // ===========================================
@@ -295,25 +275,6 @@ $tab-border-radius: 0.75rem;
       font-size: 1.1rem;
       margin-right: $spacing-sm;
     }
-
-    @media (max-width: $breakpoint-md) {
-      padding: $spacing-sm $spacing-lg;
-      font-size: 0.9rem;
-      margin: 0 $spacing-xs/2;
-
-      .bi {
-        font-size: 1rem;
-        margin-right: $spacing-xs;
-      }
-    }
-
-    @media (max-width: $breakpoint-sm) {
-      padding: $spacing-sm $spacing-md;
-
-      .bi {
-        margin-right: $spacing-xs;
-      }
-    }
   }
 }
 
@@ -327,79 +288,6 @@ $tab-border-radius: 0.75rem;
     &.active {
       opacity: 1;
       transform: translateY(0) scale(1);
-    }
-  }
-}
-
-// Mobile responsive design
-@media (max-width: $breakpoint-md) {
-  .customers-show-tabs {
-    padding: 0 $spacing-sm;
-  }
-
-  #customerShowTabs {
-    width: 100%;
-    justify-content: center;
-    padding: $spacing-xs/2;
-  }
-}
-
-@media (max-width: $breakpoint-sm) {
-  .customers-show-tabs {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    justify-content: flex-start;
-    padding: 0 $spacing-sm;
-
-    // Hide scrollbar
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  #customerShowTabs {
-    min-width: max-content;
-    width: auto;
-
-    .nav-item {
-      flex-shrink: 0;
-    }
-
-    .nav-link {
-      padding: $spacing-sm $spacing-md;
-      min-width: 100px;
-      text-align: center;
-    }
-  }
-}
-
-// Very small screens - stack vertically if needed
-@media (max-width: 400px) {
-  .customers-show-tabs {
-    justify-content: stretch;
-  }
-
-  #customerShowTabs {
-    flex-direction: column;
-    width: 100%;
-    padding: $spacing-xs;
-
-    .nav-link {
-      margin: $spacing-xs/2 0;
-      width: 100%;
-      text-align: center;
-    }
-  }
-}
-
-// Enhanced hover effects for larger screens
-@media (min-width: $breakpoint-lg) {
-  #customerShowTabs .nav-link {
-    &:hover:not(.active) {
-      background: rgba($customers-show-primary, 0.08);
-      box-shadow: 0 2px 4px rgba($customers-show-primary, 0.1);
     }
   }
 }
@@ -446,11 +334,6 @@ $tab-border-radius: 0.75rem;
   display: flex;
   gap: $spacing-xl;
 
-  @media (max-width: $breakpoint-md) {
-    flex-direction: column;
-    align-items: center;
-    padding: $spacing-lg;
-  }
 }
 
 .customers-show-profile-avatar {
@@ -465,10 +348,6 @@ $tab-border-radius: 0.75rem;
   border: 4px solid $color-border;
   box-shadow: $box-shadow-md;
 
-  @media (max-width: $breakpoint-md) {
-    width: $avatar-size-mobile;
-    height: $avatar-size-mobile;
-  }
 }
 
 .customers-show-profile-details {
@@ -551,18 +430,12 @@ $tab-border-radius: 0.75rem;
 .customers-show-purchases-content {
   padding: $spacing-xl;
 
-  @media (max-width: $breakpoint-md) {
-    padding: $spacing-lg;
-  }
 }
 
 .customers-show-sales-grid {
   display: grid;
   gap: $spacing-lg;
 
-  @media (min-width: $breakpoint-lg) {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 .customers-show-sale-card {
@@ -580,11 +453,6 @@ $tab-border-radius: 0.75rem;
   align-items: center;
   border-bottom: 1px solid $color-border;
 
-  @media (max-width: $breakpoint-sm) {
-    flex-direction: column;
-    gap: $spacing-sm;
-    align-items: flex-start;
-  }
 }
 
 .customers-show-sale-date,
@@ -701,9 +569,6 @@ $tab-border-radius: 0.75rem;
 .customers-show-documents-content {
   padding: $spacing-xl;
 
-  @media (max-width: $breakpoint-md) {
-    padding: $spacing-lg;
-  }
 }
 
 // ===========================================
@@ -731,42 +596,6 @@ $tab-border-radius: 0.75rem;
 .customers-show-empty-text {
   font-size: 1rem;
   margin: 0;
-}
-
-// ===========================================
-// MOBILE RESPONSIVE STYLES
-// ===========================================
-@media (max-width: $breakpoint-md) {
-  .customers-show-title {
-    font-size: 2rem;
-  }
-
-  .customers-show-sales-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .customers-show-sale-header {
-    padding: $spacing-sm;
-  }
-
-  .customers-show-cart-content {
-    padding: $spacing-sm;
-  }
-
-  .customers-show-cart-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: $spacing-xs;
-  }
-
-  .customers-show-item-details {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-    .customers-show-title-name {
-    max-width: 180px;
-  }
 }
 
 // ===========================================

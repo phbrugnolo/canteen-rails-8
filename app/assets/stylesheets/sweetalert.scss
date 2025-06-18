@@ -156,16 +156,3 @@ $confirm-cancel-hover: #4b5563;
     color: $confirm-delete-color;
   }
 }
-
-// Responsive adjustments
-@media (max-width: 768px) {
-  .swal2-popup {
-    padding: 1.5rem;
-  }
-
-  .swal2-confirm.swal2-styled,
-  .swal2-cancel.swal2-styled {
-    padding: 0.625rem 1.25rem;
-    font-size: 0.9rem;
-  }
-}
