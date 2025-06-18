@@ -220,75 +220,203 @@ $tab-border-radius: 0.75rem;
 // ===========================================
 // TABS SECTION
 // ===========================================
-.customers-show-tabs-card {
-  @include customers-show-card-style;
+.customers-show-tabs {
   margin-bottom: $spacing-xl;
-}
-
-.customers-show-nav-tabs {
   display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  background: $color-light-gray;
-  border-radius: $tab-border-radius $tab-border-radius 0 0;
-
-  @media (max-width: $breakpoint-md) {
-    flex-direction: column;
-  }
-}
-
-.customers-show-nav-item {
-  flex: 1;
-}
-
-.customers-show-nav-link {
-  display: flex;
-  align-items: center;
   justify-content: center;
-  gap: $spacing-sm;
-  padding: $spacing-md $spacing-lg;
-  color: $color-text-secondary;
-  text-decoration: none;
+  padding: 0 $spacing-md;
+}
+
+#customerShowTabs {
   border: none;
-  background: transparent;
-  font-weight: 500;
-  @include customers-show-transition();
-  border-radius: 0;
-  cursor: pointer;
-  width: 100%;
+  margin-bottom: 0;
+  background: $color-light-gray;
+  border-radius: 50px;
+  padding: $spacing-xs;
+  display: inline-flex;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 
-  &:hover {
-    color: $customers-show-primary;
-    background: rgba($customers-show-primary, 0.05);
+  .nav-item {
+    margin-bottom: 0;
   }
 
-  &.active {
-    color: $customers-show-primary;
-    background: $color-white;
-    border-bottom: 3px solid $customers-show-primary;
-    font-weight: 600;
-  }
+  .nav-link {
+    background: transparent;
+    color: $color-text-secondary;
+    border: none;
+    border-radius: 50px;
+    padding: $spacing-md $spacing-xl;
+    font-weight: 500;
+    margin: 0 $spacing-xs;
+    position: relative;
+    @include customers-show-transition(all, 0.3s, ease);
+    white-space: nowrap;
+    min-width: auto;
 
-  @media (max-width: $breakpoint-md) {
-    padding: $spacing-sm $spacing-md;
-    font-size: 0.9rem;
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      background: rgba($customers-show-primary, 0.1);
+      color: $customers-show-primary;
+      transform: translateY(-1px);
+    }
+
+    &.active {
+      background: $color-white;
+      color: $customers-show-primary;
+      font-weight: 600;
+      box-shadow:
+        0 2px 8px rgba($customers-show-primary, 0.2),
+        0 1px 3px rgba(0, 0, 0, 0.1);
+      transform: translateY(-1px);
+
+      // Optional: Add a subtle gradient for the active state
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $customers-show-gradient;
+        border-radius: 50px;
+        opacity: 0.1;
+        z-index: -1;
+      }
+    }
+
+    .bi {
+      font-size: 1.1rem;
+      margin-right: $spacing-sm;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      padding: $spacing-sm $spacing-lg;
+      font-size: 0.9rem;
+      margin: 0 $spacing-xs/2;
+
+      .bi {
+        font-size: 1rem;
+        margin-right: $spacing-xs;
+      }
+    }
+
+    @media (max-width: $breakpoint-sm) {
+      padding: $spacing-sm $spacing-md;
+
+      .bi {
+        margin-right: $spacing-xs;
+      }
+    }
   }
 }
 
-.customers-show-tab-icon {
-  font-size: 1.1rem;
+// Tab content containers with enhanced animations
+.tab-content {
+  .tab-pane {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    @include customers-show-transition(all, 0.4s, cubic-bezier(0.4, 0, 0.2, 1));
+
+    &.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
 }
 
-.customers-show-tab-content {
-  background: $color-white;
+// Mobile responsive design
+@media (max-width: $breakpoint-md) {
+  .customers-show-tabs {
+    padding: 0 $spacing-sm;
+  }
+
+  #customerShowTabs {
+    width: 100%;
+    justify-content: center;
+    padding: $spacing-xs/2;
+  }
 }
 
-.customers-show-tab-pane {
-  padding: $spacing-xl;
+@media (max-width: $breakpoint-sm) {
+  .customers-show-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    padding: 0 $spacing-sm;
 
-  @media (max-width: $breakpoint-md) {
-    padding: $spacing-lg;
+    // Hide scrollbar
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  #customerShowTabs {
+    min-width: max-content;
+    width: auto;
+
+    .nav-item {
+      flex-shrink: 0;
+    }
+
+    .nav-link {
+      padding: $spacing-sm $spacing-md;
+      min-width: 100px;
+      text-align: center;
+    }
+  }
+}
+
+// Very small screens - stack vertically if needed
+@media (max-width: 400px) {
+  .customers-show-tabs {
+    justify-content: stretch;
+  }
+
+  #customerShowTabs {
+    flex-direction: column;
+    width: 100%;
+    padding: $spacing-xs;
+
+    .nav-link {
+      margin: $spacing-xs/2 0;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+// Enhanced hover effects for larger screens
+@media (min-width: $breakpoint-lg) {
+  #customerShowTabs .nav-link {
+    &:hover:not(.active) {
+      background: rgba($customers-show-primary, 0.08);
+      box-shadow: 0 2px 4px rgba($customers-show-primary, 0.1);
+    }
+  }
+}
+
+// Optional: Add a subtle animation when switching tabs
+.customers-show-tab-indicator {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  height: 3px;
+  background: $customers-show-gradient;
+  border-radius: 2px;
+  @include customers-show-transition(all, 0.3s, ease);
+  opacity: 0;
+
+  .nav-link.active & {
+    opacity: 1;
   }
 }
 

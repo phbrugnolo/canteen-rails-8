@@ -32,26 +32,28 @@
 
   <!-- Tabs Navigation -->
   <div class="customers-show-tabs-card">
-    <ul class="nav nav-tabs" id="customerShowTabs" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">
-          <i class="bi bi-person-circle me-2"></i>
-          <%= I18n.t(:profile) %>
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="purchases-tab" data-bs-toggle="tab" data-bs-target="#purchases-tab-pane" type="button" role="tab" aria-controls="purchases-tab-pane" aria-selected="false">
-          <i class="bi bi-cart-fill me-2"></i>
-          <%= I18n.t(:purchases) %>
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents-tab-pane" type="button" role="tab" aria-controls="documents-tab-pane" aria-selected="false">
-          <i class="bi bi-file-earmark-text me-2"></i>
-          <%= I18n.t(:documents) %>
-        </button>
-      </li>
-    </ul>
+    <div class="customers-show-tabs">
+      <ul class="nav nav-pills" id="customerShowTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">
+            <i class="bi bi-person-circle"></i>
+            <%= I18n.t(:profile) %>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="purchases-tab" data-bs-toggle="tab" data-bs-target="#purchases-tab-pane" type="button" role="tab" aria-controls="purchases-tab-pane" aria-selected="false">
+            <i class="bi bi-cart-fill"></i>
+            <%= I18n.t(:purchases) %>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents-tab-pane" type="button" role="tab" aria-controls="documents-tab-pane" aria-selected="false">
+            <i class="bi bi-file-earmark-text"></i>
+            <%= I18n.t(:documents) %>
+          </button>
+        </li>
+      </ul>
+    </div>
 
     <div class="tab-content" id="customerShowTabContent">
       <!-- Profile Tab -->
