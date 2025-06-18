@@ -554,22 +554,22 @@ $table-font-size-mobile: 0.9rem;
 }
 
 // ===========================================
-// FILTER STATES (for JavaScript integration)
+// FILTER STATES
 // ===========================================
 .customers-index-filter-item-visible {
-  display: table-row;
+  display: table-row !important;
 }
 
 .customers-index-filter-item-hidden {
-  display: none;
+  display: none !important;
 }
 
 .customers-index-filter-no-results-visible {
-  display: block;
+  display: block !important;
 }
 
 .customers-index-filter-no-results-hidden {
-  display: none;
+  display: none !important;
 }
 
 // ===========================================
