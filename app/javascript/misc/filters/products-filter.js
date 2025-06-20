@@ -3,7 +3,6 @@ import { FilterManager } from '../../shared/filter-manager.js';
 export class ProductsFilters {
   constructor() {
     this.filterManager = null;
-    this.viewToggle = null;
     this.currentView = 'table';
     this.init();
     this.initEnhancements();
@@ -50,45 +49,46 @@ export class ProductsFilters {
   }
 
   initEnhancements() {
-    this.initViewToggle();
-    this.initTableAnimations();
     this.initSearchEnhancements();
+    this.setupViewManagerIntegration();
   }
 
-  initViewToggle() {
-    this.viewToggle = document.getElementById('viewToggle');
-    const tableView = document.getElementById('tableView');
-    const gridView = document.getElementById('gridView');
-
-    if (!this.viewToggle || !tableView || !gridView) return;
-
-    this.viewToggle.addEventListener('click', () => {
-      const isTableVisible = this.currentView === 'table';
-
-      if (isTableVisible) {
-        this.switchToGridView(tableView, gridView);
+  setupViewManagerIntegration() {
+    const checkViewManager = () => {
+      const viewManager = window.canteen?.productsViewManager;
+      if (viewManager) {
+        this.listenToViewChanges();
       } else {
-        this.switchToTableView(tableView, gridView);
+        setTimeout(checkViewManager, 100);
       }
-    });
+    };
+
+    checkViewManager();
   }
 
-  switchToGridView(tableView, gridView) {
-    tableView.style.display = 'none';
-    gridView.style.display = 'grid';
-    this.viewToggle.innerHTML = '<i class="bi bi-table"></i><span>Tabela</span>';
-    this.viewToggle.title = 'Alternar para visualização em tabela';
-    this.currentView = 'grid';
-    this.updateFilterForGridView();
+  listenToViewChanges() {
+    const viewManager = window.canteen?.productsViewManager;
+    if (viewManager) {
+      const originalNotifyViewChange = viewManager.notifyViewChange;
+      viewManager.notifyViewChange = (newView) => {
+        this.currentView = newView;
+        this.updateFilterConfiguration();
+
+        if (originalNotifyViewChange) {
+          originalNotifyViewChange.call(viewManager, newView);
+        }
+      };
+    }
   }
 
-  switchToTableView(tableView, gridView) {
-    tableView.style.display = 'block';
-    gridView.style.display = 'none';
-    this.viewToggle.innerHTML = '<i class="bi bi-grid-3x3-gap"></i><span>Grade</span>';
-    this.viewToggle.title = 'Alternar para visualização em grade';
-    this.currentView = 'table';
-    this.updateFilterForTableView();
+  updateFilterConfiguration() {
+    if (!this.filterManager) return;
+
+    if (this.currentView === 'grid') {
+      this.updateFilterForGridView();
+    } else {
+      this.updateFilterForTableView();
+    }
   }
 
   updateFilterForGridView() {
@@ -139,22 +139,6 @@ export class ProductsFilters {
     if (price <= 25) return '10-25';
     if (price <= 50) return '25-50';
     return '50+';
-  }
-
-  initTableAnimations() {
-    const rows = document.querySelectorAll('.product-row');
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-        }
-      });
-    }, { threshold: 0.1 });
-
-    rows.forEach((row) => {
-      observer.observe(row);
-    });
   }
 
   initSearchEnhancements() {
