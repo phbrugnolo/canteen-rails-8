@@ -533,6 +533,7 @@ $table-font-size: 0.95rem;
   display: flex;
   gap: $spacing-sm;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 // ===========================================
@@ -542,7 +543,11 @@ $table-font-size: 0.95rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax($product-card-width, 1fr));
   gap: $spacing-xl;
-  padding: $spacing-md 0;
+  padding: $spacing-md;
+
+  // Better spacing between cards
+  margin: 0 auto;
+  max-width: 100%;
 }
 
 // ===========================================
@@ -696,7 +701,7 @@ $table-font-size: 0.95rem;
 }
 
 // ===========================================
-// LOADING STATES
+// LOADING STATES & RESPONSIVE DESIGN
 // ===========================================
 .products-index-skeleton-row {
   background: linear-gradient(90deg,
@@ -706,4 +711,24 @@ $table-font-size: 0.95rem;
   );
   animation: shimmer 1.5s infinite;
   height: 60px;
+}
+
+// ===========================================
+// PRINT STYLES
+// ===========================================
+@media print {
+  .products-index-action-buttons,
+  .products-index-filters-card,
+  .products-index-actions,
+  .products-index-view-toggle {
+    display: none !important;
+  }
+
+  .products-index-table {
+    font-size: 0.8rem;
+  }
+
+  .products-index-container {
+    padding: 0;
+  }
 }

@@ -80,8 +80,11 @@
         <span class="badge bg-light text-dark ms-2"><%= @products.count %></span>
       </h3>
       <div class="products-index-table-actions">
-        <button class="products-index-view-toggle" id="viewToggle" title="Alternar visualização">
-          <i class="bi bi-grid-3x3-gap"></i>
+        <button class="products-index-view-toggle"
+                id="viewToggle"
+                title="Alternar visualização"
+                aria-label="Alternar entre visualização em tabela e grade">
+          <i class="bi bi-grid-3x3-gap" aria-hidden="true"></i>
           <span>Grade</span>
         </button>
       </div>
@@ -90,44 +93,49 @@
     <% if @products.any? %>
       <!-- Table View -->
       <div class="products-index-table-responsive" id="tableView">
-        <table class="products-index-table">
+        <table class="products-index-table" role="table" aria-label="<%= I18n.t(:products_catalog) %>">
           <thead class="products-index-thead">
-            <tr class="products-index-tr">
-              <th class="products-index-th products-index-th-image">
-                <i class="bi bi-image products-index-th-icon"></i>
+            <tr class="products-index-tr" role="row">
+              <th class="products-index-th products-index-th-image" role="columnheader" scope="col">
+                <i class="bi bi-image products-index-th-icon" aria-hidden="true"></i>
                 Imagem
               </th>
-              <th class="products-index-th products-index-th-name">
-                <i class="bi bi-tag products-index-th-icon"></i>
+              <th class="products-index-th products-index-th-name" role="columnheader" scope="col">
+                <i class="bi bi-tag products-index-th-icon" aria-hidden="true"></i>
                 <%= I18n.t(:name, scope: %i[activerecord attributes product]) %>
               </th>
-              <th class="products-index-th products-index-th-price">
-                <i class="bi bi-currency-dollar products-index-th-icon"></i>
+              <th class="products-index-th products-index-th-price" role="columnheader" scope="col">
+                <i class="bi bi-currency-dollar products-index-th-icon" aria-hidden="true"></i>
                 <%= I18n.t(:price, scope: %i[activerecord attributes product]) %>
               </th>
-              <th class="products-index-th products-index-th-status">
-                <i class="bi bi-toggle-on products-index-th-icon"></i>
+              <th class="products-index-th products-index-th-status" role="columnheader" scope="col">
+                <i class="bi bi-toggle-on products-index-th-icon" aria-hidden="true"></i>
                 <%= I18n.t(:status, scope: %i[activerecord attributes product]) %>
               </th>
-              <th class="products-index-th products-index-th-actions">
-                <i class="bi bi-gear products-index-th-icon"></i>
+              <th class="products-index-th products-index-th-actions" role="columnheader" scope="col">
+                <i class="bi bi-gear products-index-th-icon" aria-hidden="true"></i>
                 <%= I18n.t(:actions) %>
               </th>
             </tr>
           </thead>
           <tbody class="products-index-tbody" id="products">
             <% @products.each do |product| %>
-              <tr class="products-index-tr product-row" data-status="<%= product.status %>" data-price="<%= product.price %>">
-                <td class="products-index-td products-index-td-image">
+              <tr class="products-index-tr product-row"
+                  data-status="<%= product.status %>"
+                  data-price="<%= product.price %>"
+                  role="row"
+                  aria-label="<%= product.name %>">
+                <td class="products-index-td products-index-td-image" role="cell">
                   <div class="products-index-product-image-container">
                     <%= image_tag(
                       product.image_url,
                       alt: I18n.t(:alt_image, scope: %i[activerecord], model: product.model_name.human),
-                      class: "products-index-product-image"
+                      class: "products-index-product-image",
+                      loading: "lazy"
                     ) %>
                   </div>
                 </td>
-                <td class="products-index-td products-index-td-name">
+                <td class="products-index-td products-index-td-name" role="cell">
                   <div class="products-index-product-info">
                     <div class="products-index-product-details">
                       <span class="products-index-product-name"><%= product.name %></span>
@@ -135,30 +143,36 @@
                     </div>
                   </div>
                 </td>
-                <td class="products-index-td products-index-td-price">
+                <td class="products-index-td products-index-td-price" role="cell">
                   <span class="products-index-product-price"><%= number_to_currency(product.price) %></span>
                 </td>
-                <td class="products-index-td products-index-td-status">
+                <td class="products-index-td products-index-td-status" role="cell">
                   <% if product.active? %>
-                    <span class="products-index-status-badge products-index-status-active">
-                      <i class="bi bi-check-circle-fill products-index-status-icon"></i>
+                    <span class="products-index-status-badge products-index-status-active"
+                          aria-label="<%= I18n.t(:active) %>">
+                      <i class="bi bi-check-circle-fill products-index-status-icon" aria-hidden="true"></i>
                       <%= I18n.t(:active) %>
                     </span>
                   <% else %>
-                    <span class="products-index-status-badge products-index-status-inactive">
-                      <i class="bi bi-x-circle-fill products-index-status-icon"></i>
+                    <span class="products-index-status-badge products-index-status-inactive"
+                          aria-label="<%= I18n.t(:inactive) %>">
+                      <i class="bi bi-x-circle-fill products-index-status-icon" aria-hidden="true"></i>
                       <%= I18n.t(:inactive) %>
                     </span>
                   <% end %>
                 </td>
-                <td class="products-index-td products-index-td-actions">
+                <td class="products-index-td products-index-td-actions" role="cell">
                   <div class="products-index-action-buttons">
-                    <%= link_to main_product_path(product), class: "products-index-btn-action products-index-btn-view" do %>
-                      <i class="bi bi-eye products-index-btn-action-icon"></i>
+                    <%= link_to main_product_path(product),
+                        class: "products-index-btn-action products-index-btn-view",
+                        "aria-label": "#{I18n.t(:show)} #{product.name}" do %>
+                      <i class="bi bi-eye products-index-btn-action-icon" aria-hidden="true"></i>
                       <span class="products-index-btn-action-text"><%= I18n.t(:show) %></span>
                     <% end %>
-                    <%= link_to edit_main_product_path(product), class: "products-index-btn-action products-index-btn-edit" do %>
-                      <i class="bi bi-pencil products-index-btn-action-icon"></i>
+                    <%= link_to edit_main_product_path(product),
+                        class: "products-index-btn-action products-index-btn-edit",
+                        "aria-label": "#{I18n.t(:edit)} #{product.name}" do %>
+                      <i class="bi bi-pencil products-index-btn-action-icon" aria-hidden="true"></i>
                       <span class="products-index-btn-action-text"><%= I18n.t(:edit) %></span>
                     <% end %>
                     <%= status_toggle_button(product) %>
@@ -171,22 +185,33 @@
       </div>
 
       <!-- Grid View -->
-      <div class="products-index-grid" id="gridView" style="display: none;">
+      <div class="products-index-grid" id="gridView" style="display: none;" role="grid" aria-label="<%= I18n.t(:products_catalog) %>">
         <% @products.each do |product| %>
-          <div class="products-index-product-card mx-2" data-status="<%= product.status %>" data-price="<%= product.price %>">
+          <div class="products-index-product-card"
+               data-status="<%= product.status %>"
+               data-price="<%= product.price %>"
+               role="gridcell"
+               aria-label="<%= product.name %>">
             <!-- Product Image with Overlay -->
             <div class="products-index-product-image">
               <%= image_tag(
                 product.image_url,
                 alt: I18n.t(:alt_image, scope: %i[activerecord], model: product.model_name.human),
-                class: "products-index-image"
+                class: "products-index-image",
+                loading: "lazy"
               ) %>
               <div class="products-index-image-overlay">
                 <div class="products-index-quick-actions">
-                  <%= link_to main_product_path(product), class: "products-index-quick-btn", title: I18n.t(:view_product) do %>
+                  <%= link_to main_product_path(product),
+                      class: "products-index-quick-btn",
+                      title: I18n.t(:view_product),
+                      "aria-label": "#{I18n.t(:view_product)} #{product.name}" do %>
                     <i class="bi bi-eye icon"></i>
                   <% end %>
-                  <%= link_to edit_main_product_path(product), class: "products-index-quick-btn", title: I18n.t(:edit_product) do %>
+                  <%= link_to edit_main_product_path(product),
+                      class: "products-index-quick-btn",
+                      title: I18n.t(:edit_product),
+                      "aria-label": "#{I18n.t(:edit_product)} #{product.name}" do %>
                     <i class="bi bi-pencil icon"></i>
                   <% end %>
                 </div>

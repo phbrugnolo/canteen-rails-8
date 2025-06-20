@@ -2,6 +2,9 @@ import { FilterManager } from '../../shared/filter-manager.js';
 
 export class ProductsFilters {
   constructor() {
+    this.filterManager = null;
+    this.viewToggle = null;
+    this.currentView = 'table';
     this.init();
     this.initEnhancements();
   }
@@ -53,73 +56,47 @@ export class ProductsFilters {
   }
 
   initViewToggle() {
-    const viewToggle = document.getElementById('viewToggle');
+    this.viewToggle = document.getElementById('viewToggle');
     const tableView = document.getElementById('tableView');
     const gridView = document.getElementById('gridView');
 
-    if (!viewToggle || !tableView || !gridView) return;
+    if (!this.viewToggle || !tableView || !gridView) return;
 
-    viewToggle.addEventListener('click', () => {
-      const isTableVisible = tableView.style.display !== 'none';
+    this.viewToggle.addEventListener('click', () => {
+      const isTableVisible = this.currentView === 'table';
 
       if (isTableVisible) {
-        // Switch to grid view
-        tableView.style.display = 'none';
-        gridView.style.display = 'grid';
-        viewToggle.innerHTML = '<i class="bi bi-table"></i><span>Tabela</span>';
-        viewToggle.title = 'Alternar para visualização em tabela';
-
-        // Update filter to work with cards
-        this.updateFilterForGridView();
+        this.switchToGridView(tableView, gridView);
       } else {
-        // Switch to table view
-        tableView.style.display = 'block';
-        gridView.style.display = 'none';
-        viewToggle.innerHTML = '<i class="bi bi-grid-3x3-gap"></i><span>Grade</span>';
-        viewToggle.title = 'Alternar para visualização em grade';
-
-        // Update filter to work with table rows
-        this.updateFilterForTableView();
+        this.switchToTableView(tableView, gridView);
       }
     });
+  }
+
+  switchToGridView(tableView, gridView) {
+    tableView.style.display = 'none';
+    gridView.style.display = 'grid';
+    this.viewToggle.innerHTML = '<i class="bi bi-table"></i><span>Tabela</span>';
+    this.viewToggle.title = 'Alternar para visualização em tabela';
+    this.currentView = 'grid';
+    this.updateFilterForGridView();
+  }
+
+  switchToTableView(tableView, gridView) {
+    tableView.style.display = 'block';
+    gridView.style.display = 'none';
+    this.viewToggle.innerHTML = '<i class="bi bi-grid-3x3-gap"></i><span>Grade</span>';
+    this.viewToggle.title = 'Alternar para visualização em grade';
+    this.currentView = 'table';
+    this.updateFilterForTableView();
   }
 
   updateFilterForGridView() {
     if (!this.filterManager) return;
 
-    // Update filter configuration for grid view
     this.filterManager.container = document.querySelector('#gridView');
     this.filterManager.itemSelector = '.products-index-product-card';
-
-    // Update filter configurations for grid elements
-    this.filterManager.filters = [
-      {
-        input: '#search_name',
-        selector: '.products-index-product-name',
-        matchType: 'includes'
-      },
-      {
-        input: '#search_status',
-        attribute: 'data-status',
-        matchType: 'equals'
-      },
-      {
-        input: '#search_price_range',
-        getText: (card) => {
-          const priceStr = card.getAttribute('data-price');
-          const price = parseFloat(priceStr);
-
-          if (isNaN(price)) return '';
-
-          if (price <= 10) return '0-10';
-          if (price <= 25) return '10-25';
-          if (price <= 50) return '25-50';
-          return '50+';
-        },
-        matchType: 'equals'
-      }
-    ];
-
+    this.filterManager.filters = this.createFilterConfigs();
     this.filterManager.filter();
   }
 
@@ -128,8 +105,12 @@ export class ProductsFilters {
 
     this.filterManager.container = document.querySelector('#products');
     this.filterManager.itemSelector = '.product-row';
+    this.filterManager.filters = this.createFilterConfigs();
+    this.filterManager.filter();
+  }
 
-    this.filterManager.filters = [
+  createFilterConfigs() {
+    return [
       {
         input: '#search_name',
         selector: '.products-index-product-name',
@@ -142,22 +123,22 @@ export class ProductsFilters {
       },
       {
         input: '#search_price_range',
-        getText: (row) => {
-          const priceStr = row.getAttribute('data-price');
-          const price = parseFloat(priceStr);
-
-          if (isNaN(price)) return '';
-
-          if (price <= 10) return '0-10';
-          if (price <= 25) return '10-25';
-          if (price <= 50) return '25-50';
-          return '50+';
-        },
+        getText: this.getPriceRangeText,
         matchType: 'equals'
       }
     ];
+  }
 
-    this.filterManager.filter();
+  getPriceRangeText = (element) => {
+    const priceStr = element.getAttribute('data-price');
+    const price = parseFloat(priceStr);
+
+    if (isNaN(price)) return '';
+
+    if (price <= 10) return '0-10';
+    if (price <= 25) return '10-25';
+    if (price <= 50) return '25-50';
+    return '50+';
   }
 
   initTableAnimations() {
@@ -203,9 +184,8 @@ export class ProductsFilters {
   }
 
   updateResultsCount() {
-    setTimeout(() => {
-      const tableView = document.getElementById('tableView');
-      const isTableVisible = tableView && tableView.style.display !== 'none';
+    requestAnimationFrame(() => {
+      const isTableVisible = this.currentView === 'table';
 
       let visibleItems;
       if (isTableVisible) {
@@ -219,13 +199,11 @@ export class ProductsFilters {
       if (countBadge) {
         countBadge.textContent = visibleItems.length;
 
-        if (visibleItems.length === 0) {
-          countBadge.className = 'badge bg-warning text-dark ms-2';
-        } else {
-          countBadge.className = 'badge bg-light text-dark ms-2';
-        }
+        countBadge.className = visibleItems.length === 0
+          ? 'badge bg-warning text-dark ms-2'
+          : 'badge bg-light text-dark ms-2';
       }
-    }, 100);
+    });
   }
 
   debounce(func, wait) {
