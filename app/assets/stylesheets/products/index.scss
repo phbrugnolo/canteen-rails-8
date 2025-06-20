@@ -534,6 +534,50 @@ $table-font-size: 0.95rem;
   gap: $spacing-sm;
   flex-wrap: wrap;
   align-items: center;
+
+  .btn-status-toggle {
+    &.products-status-activate,
+    &.products-status-deactivate {
+      // Seguindo o mesmo padrão dos botões view/edit
+      @include button-base;
+      padding: $spacing-xs $spacing-sm;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 1px solid;
+
+      .btn-icon {
+        font-size: 0.8rem;
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+
+    &.products-status-activate {
+      background: $color-white;
+      color: $color-success;
+      border-color: $color-success;
+
+      &:hover {
+        background: $color-success;
+        color: $color-white;
+        transform: translateY(-1px);
+      }
+    }
+
+    &.products-status-deactivate {
+      background: $color-white;
+      color: $color-danger;
+      border-color: $color-danger;
+
+      &:hover {
+        background: $color-danger;
+        color: $color-white;
+        transform: translateY(-1px);
+      }
+    }
+  }
 }
 
 // ===========================================
@@ -651,6 +695,51 @@ $table-font-size: 0.95rem;
   padding-top: $spacing-md;
   border-top: 1px solid $color-border;
   flex-wrap: wrap;
+
+  // Estilos específicos para botões na grid view
+  .btn-status-toggle {
+    &.products-status-activate,
+    &.products-status-deactivate {
+      // Seguindo o mesmo padrão dos botões view/edit na grid
+      @include button-base;
+      padding: $spacing-xs $spacing-sm;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 1px solid;
+
+      .btn-icon {
+        font-size: 0.8rem;
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+
+    &.products-status-activate {
+      background: $color-white;
+      color: $color-success;
+      border-color: $color-success;
+
+      &:hover {
+        background: $color-success;
+        color: $color-white;
+        transform: translateY(-1px);
+      }
+    }
+
+    &.products-status-deactivate {
+      background: $color-white;
+      color: $color-danger;
+      border-color: $color-danger;
+
+      &:hover {
+        background: $color-danger;
+        color: $color-white;
+        transform: translateY(-1px);
+      }
+    }
+  }
 }
 
 // ===========================================

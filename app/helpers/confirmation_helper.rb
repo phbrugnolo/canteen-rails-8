@@ -46,11 +46,12 @@ module ConfirmationHelper
 
   def activation_button(entity, options = {})
     entity_name = entity_name_for_confirmation(entity)
+    context_class = get_context_class(entity, "activate")
 
     default_options = {
       entity_name: entity_name,
       entity_type: entity.class.name.downcase,
-      class: "btn-status-toggle activate",
+      class: "btn-status-toggle activate #{context_class}",
       title: I18n.t("confirmations.activate.title"),
       confirm_text: I18n.t("confirmations.activate.text", entity: entity_name),
       button_text: I18n.t("confirmations.activate.button"),
@@ -68,11 +69,12 @@ module ConfirmationHelper
 
   def deactivation_button(entity, options = {})
     entity_name = entity_name_for_confirmation(entity)
+    context_class = get_context_class(entity, "deactivate")
 
     default_options = {
       entity_name: entity_name,
       entity_type: entity.class.name.downcase,
-      class: "btn-status-toggle deactivate",
+      class: "btn-status-toggle deactivate #{context_class}",
       title: I18n.t("confirmations.deactivate.title"),
       confirm_text: I18n.t("confirmations.deactivate.text", entity: entity_name),
       button_text: I18n.t("confirmations.deactivate.button"),
@@ -224,6 +226,20 @@ module ConfirmationHelper
       deactivate_main_customer_path(entity)
     else
       polymorphic_path([ :deactivate ] + entity_path_parts(entity) + [ entity ])
+    end
+  end
+
+  def get_context_class(entity, action)
+    controller_name = controller.controller_name
+    entity_type = entity.class.name.downcase
+
+    case controller_name
+    when "products"
+      "products-status-#{action}"
+    when "customers"
+      "customers-status-#{action}"
+    else
+      "#{entity_type}-status-#{action}"
     end
   end
 end
