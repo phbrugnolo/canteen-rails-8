@@ -1,52 +1,251 @@
-<p style="color: green"><%= notice %></p>
-<h1 class="mx-2"><%= I18n.t(:product, scope: %i[activerecord models], count: 2) %></h1>
-<hr>
-<div class="container">
-  <div class="card p-2 mt-4" style="background-color: #EEF5FF">
-    <div class="d-flex justify-content-end flex-wrap">
-      <%= link_to I18n.t(:add, scope: %i[activerecord], model: Product.model_name.human), new_main_product_path, class: "btn btn-primary mt-3 me-5" %>
+<div class="products-index-container">
+  <!-- Success/Notice Alert -->
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle-fill"></i>
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <div class="row mt-4">
-      <div class="col-md-6">
-        <input type="text" id="search_name" class="form-control" placeholder="<%= I18n.t(:search_by_name) %>">
+  <% end %>
+
+  <!-- Page Header -->
+  <div class="products-index-header">
+    <div class="products-index-title-section">
+      <h1 class="products-index-title">
+        <i class="bi bi-box-seam-fill products-index-title-icon"></i>
+        <%= I18n.t(:product, scope: %i[activerecord models], count: 2) %>
+      </h1>
+      <p class="products-index-subtitle"><%= I18n.t(:products_index_subtitle) %></p>
+    </div>
+    <div class="products-index-actions">
+      <%= link_to new_main_product_path, class: "products-index-btn-primary" do %>
+        <i class="bi bi-plus-circle products-index-btn-icon"></i>
+        <%= I18n.t(:add, scope: %i[activerecord], model: Product.model_name.human) %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="products-index-filters-card">
+    <div class="products-index-filters-header">
+      <h3 class="products-index-filters-title">
+        <i class="bi bi-funnel products-index-filters-icon"></i>
+        <%= I18n.t(:search_filters) %>
+      </h3>
+    </div>
+    <div class="products-index-filters-grid">
+      <div class="products-index-filter-group">
+        <label for="search_name" class="products-index-filter-label">
+          <i class="bi bi-search products-index-filter-label-icon"></i>
+          <%= I18n.t(:search_by_name) %>
+        </label>
+        <input type="text"
+               id="search_name"
+               class="products-index-filter-input"
+               placeholder="<%= I18n.t(:search_product) %>">
       </div>
-      <div class="col-md-6">
-        <select id="search_status" class="form-control">
+      <div class="products-index-filter-group">
+        <label for="search_status" class="products-index-filter-label">
+          <i class="bi bi-toggles products-index-filter-label-icon"></i>
+          <%= I18n.t(:status, scope: %i[activerecord attributes product]) %>
+        </label>
+        <select id="search_status" class="products-index-filter-select">
           <option value=""><%= I18n.t(:select_status) %></option>
           <option value="active"><%= I18n.t(:active) %></option>
           <option value="inactive"><%= I18n.t(:inactive) %></option>
         </select>
       </div>
+      <div class="products-index-filter-group">
+        <label for="search_price_range" class="products-index-filter-label">
+          <i class="bi bi-currency-dollar products-index-filter-label-icon"></i>
+          Faixa de Preço
+        </label>
+        <select id="search_price_range" class="products-index-filter-select">
+          <option value="">Todas as faixas</option>
+          <option value="0-10">Até R$ 10,00</option>
+          <option value="10-25">R$ 10,00 - R$ 25,00</option>
+          <option value="25-50">R$ 25,00 - R$ 50,00</option>
+          <option value="50+">Acima de R$ 50,00</option>
+        </select>
+      </div>
     </div>
-    <div id="products" class="mt-1">
-      <div class="container d-flex justify-content-around flex-wrap">
+  </div>
+
+  <!-- Products Table -->
+  <div class="products-index-table-card">
+    <div class="products-index-table-header">
+      <h3 class="products-index-table-title">
+        <i class="bi bi-table products-index-table-title-icon"></i>
+        <%= I18n.t(:products_catalog) %>
+        <span class="badge bg-light text-dark ms-2"><%= @products.count %></span>
+      </h3>
+      <div class="products-index-table-actions">
+        <button class="products-index-view-toggle" id="viewToggle" title="Alternar visualização">
+          <i class="bi bi-grid-3x3-gap"></i>
+          <span>Grade</span>
+        </button>
+      </div>
+    </div>
+
+    <% if @products.any? %>
+      <!-- Table View -->
+      <div class="products-index-table-responsive" id="tableView">
+        <table class="products-index-table">
+          <thead class="products-index-thead">
+            <tr class="products-index-tr">
+              <th class="products-index-th products-index-th-image">
+                <i class="bi bi-image products-index-th-icon"></i>
+                Imagem
+              </th>
+              <th class="products-index-th products-index-th-name">
+                <i class="bi bi-tag products-index-th-icon"></i>
+                <%= I18n.t(:name, scope: %i[activerecord attributes product]) %>
+              </th>
+              <th class="products-index-th products-index-th-price">
+                <i class="bi bi-currency-dollar products-index-th-icon"></i>
+                <%= I18n.t(:price, scope: %i[activerecord attributes product]) %>
+              </th>
+              <th class="products-index-th products-index-th-status">
+                <i class="bi bi-toggle-on products-index-th-icon"></i>
+                <%= I18n.t(:status, scope: %i[activerecord attributes product]) %>
+              </th>
+              <th class="products-index-th products-index-th-actions">
+                <i class="bi bi-gear products-index-th-icon"></i>
+                <%= I18n.t(:actions) %>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="products-index-tbody" id="products">
+            <% @products.each do |product| %>
+              <tr class="products-index-tr product-row" data-status="<%= product.status %>" data-price="<%= product.price %>">
+                <td class="products-index-td products-index-td-image">
+                  <div class="products-index-product-image-container">
+                    <%= image_tag(
+                      product.image_url,
+                      alt: I18n.t(:alt_image, scope: %i[activerecord], model: product.model_name.human),
+                      class: "products-index-product-image"
+                    ) %>
+                  </div>
+                </td>
+                <td class="products-index-td products-index-td-name">
+                  <div class="products-index-product-info">
+                    <div class="products-index-product-details">
+                      <span class="products-index-product-name"><%= product.name %></span>
+                      <span class="products-index-product-description"><%= truncate(product.description, length: 60) %></span>
+                    </div>
+                  </div>
+                </td>
+                <td class="products-index-td products-index-td-price">
+                  <span class="products-index-product-price"><%= number_to_currency(product.price) %></span>
+                </td>
+                <td class="products-index-td products-index-td-status">
+                  <% if product.active? %>
+                    <span class="products-index-status-badge products-index-status-active">
+                      <i class="bi bi-check-circle-fill products-index-status-icon"></i>
+                      <%= I18n.t(:active) %>
+                    </span>
+                  <% else %>
+                    <span class="products-index-status-badge products-index-status-inactive">
+                      <i class="bi bi-x-circle-fill products-index-status-icon"></i>
+                      <%= I18n.t(:inactive) %>
+                    </span>
+                  <% end %>
+                </td>
+                <td class="products-index-td products-index-td-actions">
+                  <div class="products-index-action-buttons">
+                    <%= link_to main_product_path(product), class: "products-index-btn-action products-index-btn-view" do %>
+                      <i class="bi bi-eye products-index-btn-action-icon"></i>
+                      <span class="products-index-btn-action-text"><%= I18n.t(:show) %></span>
+                    <% end %>
+                    <%= link_to edit_main_product_path(product), class: "products-index-btn-action products-index-btn-edit" do %>
+                      <i class="bi bi-pencil products-index-btn-action-icon"></i>
+                      <span class="products-index-btn-action-text"><%= I18n.t(:edit) %></span>
+                    <% end %>
+                    <%= status_toggle_button(product) %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Grid View -->
+      <div class="products-index-grid" id="gridView" style="display: none;">
         <% @products.each do |product| %>
-          <div class="card border-info m-4" style="width: 15rem;" data-status="<%= product.status %>">
-            <%= image_tag(
-              product.image_url,
-              alt: I18n.t(:alt_image, scope: %i[activerecord], model: product.model_name.human),
-              class: "card-img-top mx-auto standard-image-size-product-card"
-            ) %>
-            <div class="card-body">
-              <h5 class="card-title"><%= product.name %></h5>
-              <p class="card-text"><%= product.description %></p>
+          <div class="products-index-product-card" data-status="<%= product.status %>" data-price="<%= product.price %>">
+            <!-- Product Image with Overlay -->
+            <div class="products-index-product-image">
+              <%= image_tag(
+                product.image_url,
+                alt: I18n.t(:alt_image, scope: %i[activerecord], model: product.model_name.human),
+                class: "products-index-image"
+              ) %>
+              <div class="products-index-image-overlay">
+                <div class="products-index-quick-actions">
+                  <%= link_to main_product_path(product), class: "products-index-quick-btn", title: I18n.t(:view_product) do %>
+                    <i class="bi bi-eye icon"></i>
+                  <% end %>
+                  <%= link_to edit_main_product_path(product), class: "products-index-quick-btn", title: I18n.t(:edit_product) do %>
+                    <i class="bi bi-pencil icon"></i>
+                  <% end %>
+                </div>
+              </div>
             </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item" style="border-top: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)"><%= I18n.t(:price, scope: %i[activerecord attributes product]) %>: <%= number_to_currency(product.price) %></li>
-              <li class="list-group-item" style="border-bottom: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)"><%= I18n.t(:status, scope: %i[activerecord attributes product]) %>:
-                <% if product.active? %>
-                  <span class="text-success border rounded border-success px-2 bg-success-subtle"><%= I18n.t(:active) %></span>
-                <% else %>
-                  <span class="text-danger border rounded border-danger px-2 bg-danger-subtle"><%= I18n.t(:inactive) %></span>
+
+            <!-- Product Body -->
+            <div class="products-index-product-body">
+              <div class="products-index-product-header">
+                <h5 class="products-index-product-name"><%= product.name %></h5>
+                <p class="products-index-product-description"><%= product.description %></p>
+              </div>
+
+              <div class="products-index-product-details">
+                <div class="products-index-product-price">
+                  <%= number_to_currency(product.price) %>
+                </div>
+                <div class="products-index-product-status">
+                  <% if product.active? %>
+                    <span class="products-index-status-badge active">
+                      <i class="bi bi-check-circle products-index-status-icon"></i>
+                      <%= I18n.t(:active) %>
+                    </span>
+                  <% else %>
+                    <span class="products-index-status-badge inactive">
+                      <i class="bi bi-x-circle products-index-status-icon"></i>
+                      <%= I18n.t(:inactive) %>
+                    </span>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="products-index-product-actions">
+                <%= link_to main_product_path(product), class: "products-index-btn-action products-index-btn-view" do %>
+                  <i class="bi bi-eye products-index-btn-action-icon"></i>
+                  <%= I18n.t(:show) %>
                 <% end %>
-              </li>
-            </ul>
-            <div class="text-center mb-3">
-              <%= link_to I18n.t(:show, scope: %i[activerecord], model: @products.model_name.human), main_product_path(product), class: "btn btn-primary mt-4" %>
+                <%= link_to edit_main_product_path(product), class: "products-index-btn-action products-index-btn-edit" do %>
+                  <i class="bi bi-pencil products-index-btn-action-icon"></i>
+                  <%= I18n.t(:edit) %>
+                <% end %>
+                <%= status_toggle_button(product) %>
+              </div>
             </div>
           </div>
         <% end %>
       </div>
-    </div>
+    <% else %>
+      <div class="products-index-empty-state">
+        <i class="bi bi-box-seam products-index-empty-icon"></i>
+        <h3 class="products-index-empty-title"><%= I18n.t(:no_products_found) %></h3>
+        <p class="products-index-empty-description">
+          Comece adicionando produtos ao seu catálogo para gerenciar seu estoque.
+        </p>
+        <%= link_to new_main_product_path, class: "products-index-btn-primary" do %>
+          <i class="bi bi-plus-circle products-index-btn-icon"></i>
+          <%= I18n.t(:add, scope: %i[activerecord], model: Product.model_name.human) %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
