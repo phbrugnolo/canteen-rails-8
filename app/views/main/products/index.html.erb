@@ -173,7 +173,7 @@
       <!-- Grid View -->
       <div class="products-index-grid" id="gridView" style="display: none;">
         <% @products.each do |product| %>
-          <div class="products-index-product-card" data-status="<%= product.status %>" data-price="<%= product.price %>">
+          <div class="products-index-product-card mx-2" data-status="<%= product.status %>" data-price="<%= product.price %>">
             <!-- Product Image with Overlay -->
             <div class="products-index-product-image">
               <%= image_tag(

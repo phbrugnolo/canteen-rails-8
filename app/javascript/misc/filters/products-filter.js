@@ -126,11 +126,9 @@ export class ProductsFilters {
   updateFilterForTableView() {
     if (!this.filterManager) return;
 
-    // Update filter configuration for table view
     this.filterManager.container = document.querySelector('#products');
     this.filterManager.itemSelector = '.product-row';
 
-    // Update filter configurations for table rows
     this.filterManager.filters = [
       {
         input: '#search_name',
