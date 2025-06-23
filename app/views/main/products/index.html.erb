@@ -166,16 +166,20 @@
                     <%= link_to main_product_path(product),
                         class: "products-index-btn-action products-index-btn-view",
                         title: I18n.t(:show),
+                        "data-bs-toggle": "tooltip",
+                        "data-bs-placement": "top",
                         "aria-label": "#{I18n.t(:show)} #{product.name}" do %>
                       <i class="bi bi-eye products-index-btn-action-icon" aria-hidden="true"></i>
                     <% end %>
                     <%= link_to edit_main_product_path(product),
                         class: "products-index-btn-action products-index-btn-edit",
                         title: I18n.t(:edit),
+                        "data-bs-toggle": "tooltip",
+                        "data-bs-placement": "top",
                         "aria-label": "#{I18n.t(:edit)} #{product.name}" do %>
                       <i class="bi bi-pencil products-index-btn-action-icon" aria-hidden="true"></i>
                     <% end %>
-                    <%= status_toggle_button(product, icon_only: true) %>
+                    <%= status_toggle_button(product, icon_only: true, tooltip_placement: "top") %>
                   </div>
                 </td>
               </tr>

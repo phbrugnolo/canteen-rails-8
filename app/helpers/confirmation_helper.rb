@@ -36,7 +36,12 @@ module ConfirmationHelper
       data: data_attrs
     }
 
-    button_attrs[:title] = options[:tooltip] if options[:tooltip]
+    if options[:tooltip]
+      button_attrs[:title] = options[:tooltip]
+      button_attrs[:data][:bs_toggle] = "tooltip"
+      button_attrs[:data][:bs_placement] = options[:tooltip_placement] || "top"
+    end
+
     content_tag :button, text, button_attrs
   end
 
