@@ -535,10 +535,27 @@ $table-font-size: 0.95rem;
   flex-wrap: wrap;
   align-items: center;
 
+  // Botões específicos para tabela (apenas ícones)
+  .products-index-table & {
+    gap: $spacing-xs;
+
+    .products-index-btn-action {
+      min-width: 32px;
+      width: 32px;
+      height: 32px;
+      padding: $spacing-xs;
+      justify-content: center;
+
+      .products-index-btn-action-icon {
+        font-size: 0.9rem;
+        margin: 0;
+      }
+    }
+  }
+
   .btn-status-toggle {
     &.products-status-activate,
     &.products-status-deactivate {
-      // Seguindo o mesmo padrão dos botões view/edit
       @include button-base;
       padding: $spacing-xs $spacing-sm;
       font-size: 0.85rem;
@@ -551,6 +568,18 @@ $table-font-size: 0.95rem;
 
       &:hover {
         transform: translateY(-1px);
+      }
+
+      .products-index-table & {
+        padding: $spacing-xs;
+        min-width: 32px;
+        width: 32px;
+        height: 32px;
+        justify-content: center;
+
+        .btn-icon {
+          margin: 0;
+        }
       }
     }
 

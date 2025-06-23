@@ -27,17 +27,17 @@ module ConfirmationHelper
       data_attrs[:enhanced] = true
     end
 
-    if options[:confirmation_config]
-      data_attrs[:confirmation_config] = options[:confirmation_config].to_json
-    end
-
+    data_attrs[:confirmation_config] = options[:confirmation_config].to_json if options[:confirmation_config]
     data_attrs[:confirmation_initialized] = false
 
-    content_tag :button, text, {
+    button_attrs = {
       type: "button",
       class: html_class,
       data: data_attrs
     }
+
+    button_attrs[:title] = options[:tooltip] if options[:tooltip]
+    content_tag :button, text, button_attrs
   end
 
   def enhanced_confirmation_button(text, url, action, options = {})
@@ -60,10 +60,16 @@ module ConfirmationHelper
       error_message: I18n.t("confirmations.activate.error", entity: entity_name)
     }
 
+    default_options[:tooltip] = I18n.t(:activate) if options[:icon_only]
     url = generate_activation_url(entity)
     method_name = options[:enhanced] ? :enhanced_confirmation_button : :confirmation_button
 
-    button_text = content_tag(:i, "", class: "bi bi-toggle-on btn-icon") + " " + I18n.t(:activate)
+    if options[:icon_only]
+      button_text = content_tag(:i, "", class: "bi bi-toggle-on btn-icon")
+    else
+      button_text = content_tag(:i, "", class: "bi bi-toggle-on btn-icon") + " " + I18n.t(:activate)
+    end
+
     send(method_name, button_text.html_safe, url, "activate", default_options.merge(options))
   end
 
@@ -83,10 +89,16 @@ module ConfirmationHelper
       error_message: I18n.t("confirmations.deactivate.error", entity: entity_name)
     }
 
+    default_options[:tooltip] = I18n.t(:deactivate) if options[:icon_only]
     url = generate_deactivation_url(entity)
     method_name = options[:enhanced] ? :enhanced_confirmation_button : :confirmation_button
 
-    button_text = content_tag(:i, "", class: "bi bi-toggle-off btn-icon") + " " + I18n.t(:deactivate)
+    if options[:icon_only]
+      button_text = content_tag(:i, "", class: "bi bi-toggle-off btn-icon")
+    else
+      button_text = content_tag(:i, "", class: "bi bi-toggle-off btn-icon") + " " + I18n.t(:deactivate)
+    end
+
     send(method_name, button_text.html_safe, url, "deactivate", default_options.merge(options))
   end
 

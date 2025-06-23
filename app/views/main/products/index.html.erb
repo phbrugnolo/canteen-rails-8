@@ -165,17 +165,17 @@
                   <div class="products-index-action-buttons">
                     <%= link_to main_product_path(product),
                         class: "products-index-btn-action products-index-btn-view",
+                        title: I18n.t(:show),
                         "aria-label": "#{I18n.t(:show)} #{product.name}" do %>
                       <i class="bi bi-eye products-index-btn-action-icon" aria-hidden="true"></i>
-                      <span class="products-index-btn-action-text"><%= I18n.t(:show) %></span>
                     <% end %>
                     <%= link_to edit_main_product_path(product),
                         class: "products-index-btn-action products-index-btn-edit",
+                        title: I18n.t(:edit),
                         "aria-label": "#{I18n.t(:edit)} #{product.name}" do %>
                       <i class="bi bi-pencil products-index-btn-action-icon" aria-hidden="true"></i>
-                      <span class="products-index-btn-action-text"><%= I18n.t(:edit) %></span>
                     <% end %>
-                    <%= status_toggle_button(product) %>
+                    <%= status_toggle_button(product, icon_only: true) %>
                   </div>
                 </td>
               </tr>
