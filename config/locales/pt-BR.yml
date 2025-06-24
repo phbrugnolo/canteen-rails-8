@@ -208,6 +208,8 @@ pt-BR:
         description: "Descrição"
         status: "Status"
         image: "Imagem"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
       customer:
         name: "Nome"
         matriculation: "Matrícula"
