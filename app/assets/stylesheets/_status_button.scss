@@ -65,18 +65,16 @@ $status-btn-activate-gradient: linear-gradient(135deg, $status-btn-activate-colo
     }
   }
 
-  // Context-specific styles for products (seguem o padrão dos botões view/edit)
   &.products-status-activate,
   &.products-status-deactivate {
-    // Override base styles to match products pattern
     @include status-btn-base;
-    padding: $spacing-xs $spacing-sm;
-    font-size: 0.85rem;
+    padding: $spacing-sm $spacing-md;
+    font-size: inherit;
     font-weight: 500;
     border: 1px solid;
 
     .btn-icon {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
     }
 
     &:hover {

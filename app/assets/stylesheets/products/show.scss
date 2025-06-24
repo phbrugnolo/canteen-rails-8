@@ -379,7 +379,7 @@ $price-font-size: 2rem;
   padding-top: $spacing-lg;
   border-top: 1px solid $color-border;
   display: flex;
-  gap: $spacing-md;
+  gap: $spacing-sm;
   flex-wrap: wrap;
 
   @media (max-width: 576px) {
@@ -408,14 +408,6 @@ $price-font-size: 2rem;
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-  }
-}
-
-.products-show-btn-status {
-  @include button-base;
-
-  &:hover {
-    transform: translateY(-2px);
   }
 }
 
@@ -454,103 +446,4 @@ $price-font-size: 2rem;
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
-}
-
-// ===========================================
-// RESPONSIVE DESIGN
-// ===========================================
-@media (max-width: 992px) {
-  .products-show-main-content {
-    .row {
-      .col-lg-6:first-child {
-        margin-bottom: $spacing-xl;
-      }
-    }
-  }
-
-  .products-show-image-container {
-    height: 350px;
-  }
-}
-
-@media (max-width: 768px) {
-  .products-show-container {
-    padding: $spacing-md;
-  }
-
-  .products-show-title {
-    font-size: 1.75rem;
-  }
-
-  .products-show-price {
-    font-size: 1.75rem;
-  }
-
-  .products-show-actions {
-    .btn {
-      width: 100%;
-      justify-content: center;
-    }
-  }
-}
-
-@media (max-width: 576px) {
-  .products-show-details-card {
-    padding: $spacing-md;
-  }
-
-  .products-show-metadata {
-    padding: $spacing-md;
-  }
-
-  .products-show-title {
-    font-size: 1.5rem;
-  }
-
-  .products-show-price {
-    font-size: 1.5rem;
-  }
-}
-
-// ===========================================
-// ACCESSIBILITY IMPROVEMENTS
-// ===========================================
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-// ===========================================
-// PRINT STYLES
-// ===========================================
-@media print {
-  .products-show-container {
-    padding: 0;
-    max-width: none;
-  }
-
-  .products-show-actions,
-  .products-show-zoom-btn,
-  .alert {
-    display: none !important;
-  }
-
-  .products-show-main-content {
-    .row {
-      display: block !important;
-
-      .col-lg-6 {
-        width: 100% !important;
-        margin-bottom: $spacing-lg;
-      }
-    }
-  }
-
-  .products-show-image-container {
-    height: auto;
-    min-height: 200px;
-  }
 }
