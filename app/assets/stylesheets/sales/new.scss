@@ -1,22 +1,22 @@
 /* Modern Sales Interface Styles - SCSS Version */
 
 // ===========================================
-// SALES-SPECIFIC STYLES
+// SALE-NEW-SPECIFIC STYLES
 // ===========================================
 // All global variables are now imported from _variables.scss
 // This prevents conflicts with other stylesheets
 
-// Sales-specific color overrides (when needed)
-$sales-success-alt: #28a745;
+// Sale-new-specific color overrides (when needed)
+$sale-new-success-alt: #28a745;
 
-// Loading & Skeleton colors (sales-specific)
-$sales-skeleton-light: #f0f0f0;
-$sales-skeleton-dark: #e0e0e0;
+// Loading & Skeleton colors (sale-new-specific)
+$sale-new-skeleton-light: #f0f0f0;
+$sale-new-skeleton-dark: #e0e0e0;
 
-// Scrollbar colors (sales-specific)
-$sales-scrollbar-track: #f1f1f1;
-$sales-scrollbar-thumb: #c1c1c1;
-$sales-scrollbar-thumb-hover: #a1a1a1;
+// Scrollbar colors (sale-new-specific)
+$sale-new-scrollbar-track: #f1f1f1;
+$sale-new-scrollbar-thumb: #c1c1c1;
+$sale-new-scrollbar-thumb-hover: #a1a1a1;
 
 // Opacity values
 $opacity-light: 0.3;
@@ -26,25 +26,25 @@ $opacity-medium: 0.5;
 // MIXINS
 // ===========================================
 
-@mixin sales-transition($properties: all, $duration: 0.3s, $timing: ease) {
+@mixin sale-new-transition($properties: all, $duration: 0.3s, $timing: ease) {
   transition: $properties $duration $timing;
 }
 
-@mixin sales-border-radius($radius: $border-radius-md) {
+@mixin sale-new-border-radius($radius: $border-radius-md) {
   border-radius: $radius;
 }
 
-@mixin sales-box-shadow($shadow: $box-shadow-sm) {
+@mixin sale-new-box-shadow($shadow: $box-shadow-sm) {
   box-shadow: $shadow;
 }
 
-@mixin sales-focus-styles($color: $color-sale-primary) {
+@mixin sale-new-focus-styles($color: $color-sale-primary) {
   border-color: $color;
   box-shadow: 0 0 0 0.2rem rgba(red($color), green($color), blue($color), 0.25);
   outline: none;
 }
 
-@mixin sales-hover-transform($scale: 1.05, $translateY: 0px) {
+@mixin sale-new-hover-transform($scale: 1.05, $translateY: 0px) {
   transform: scale($scale) translateY($translateY);
 }
 
@@ -142,7 +142,7 @@ $opacity-medium: 0.5;
 // LAYOUT
 // ===========================================
 
-.sales-container {
+.sale-new-container {
   background: linear-gradient(135deg, $color-light-gray 0%, $color-medium-gray 100%);
   min-height: 100vh;
 }
@@ -152,13 +152,13 @@ $opacity-medium: 0.5;
 // ===========================================
 
 // Cards
-.sales-card {
-  @include sales-border-radius($border-radius-lg);
-  @include sales-transition();
-  @include sales-box-shadow();
+.sale-new-card {
+  @include sale-new-border-radius($border-radius-lg);
+  @include sale-new-transition();
+  @include sale-new-box-shadow();
 
   &:hover {
-    @include sales-box-shadow($box-shadow-md);
+    @include sale-new-box-shadow($box-shadow-md);
   }
 
   &-header {
@@ -173,15 +173,15 @@ $opacity-medium: 0.5;
 }
 
 // Product Items
-.sales-product-item {
+.sale-new-product-item {
   cursor: pointer;
-  @include sales-border-radius($border-radius-lg);
+  @include sale-new-border-radius($border-radius-lg);
   overflow: hidden;
-  @include sales-transition();
+  @include sale-new-transition();
 
   &:hover {
     transform: translateY(-4px);
-    @include sales-box-shadow($box-shadow-md);
+    @include sale-new-box-shadow($box-shadow-md);
   }
 
   .card-body {
@@ -189,17 +189,17 @@ $opacity-medium: 0.5;
   }
 
   .btn {
-    @include sales-transition();
+    @include sale-new-transition();
     font-size: $font-size-sm;
 
     &:hover {
-      @include sales-hover-transform();
+      @include sale-new-hover-transform();
     }
   }
 }
 
 // Product Cards with Animation
-.sales-product-card {
+.sale-new-product-card {
   animation: fadeIn 0.6s ease-out;
   animation-fill-mode: both;
 
@@ -211,15 +211,15 @@ $opacity-medium: 0.5;
 }
 
 // Search Input
-.sales-search-input {
+.sale-new-search-input {
   border: 1px solid $color-medium-gray;
-  @include sales-border-radius();
+  @include sale-new-border-radius();
   padding: 12px 16px;
   font-size: $font-size-base;
-  @include sales-transition();
+  @include sale-new-transition();
 
   &:focus {
-    @include sales-focus-styles();
+    @include sale-new-focus-styles();
   }
 }
 
@@ -228,17 +228,17 @@ $opacity-medium: 0.5;
 // ===========================================
 
 // Cart Styles
-.sales-cart-content {
+.sale-new-cart-content {
   background: $color-white;
 }
 
-.sales-cart-items {
+.sale-new-cart-items {
   max-height: 400px;
   overflow-y: auto;
 }
 
-.sales-cart-item {
-  @include sales-transition(background-color, 0.2s, ease);
+.sale-new-cart-item {
+  @include sale-new-transition(background-color, 0.2s, ease);
   animation: slideInRight 0.4s ease-out;
 
   &:hover {
@@ -255,17 +255,17 @@ $opacity-medium: 0.5;
 
   &.quantity-updated {
     background-color: $color-success-light !important;
-    @include sales-transition(background-color, 0.3s, ease);
+    @include sale-new-transition(background-color, 0.3s, ease);
 
-    .sales-quantity-input {
-      border-color: $sales-success-alt !important;
+    .sale-new-quantity-input {
+      border-color: $sale-new-success-alt !important;
       background-color: $color-success-bg !important;
     }
   }
 
   // Cart Action Buttons
   .btn {
-    @include sales-transition();
+    @include sale-new-transition();
     border-width: 1px;
 
     &:hover {
@@ -286,9 +286,9 @@ $opacity-medium: 0.5;
   }
 }
 
-.sales-cart-summary {
+.sale-new-cart-summary {
   .badge {
-    @include sales-transition();
+    @include sale-new-transition();
 
     &.updated {
       animation: pulse 0.6s ease-out;
@@ -301,28 +301,28 @@ $opacity-medium: 0.5;
 // ===========================================
 
 // Form Elements
-.sales-form-label {
+.sale-new-form-label {
   font-weight: $font-weight-semibold;
   color: $color-dark-gray;
   margin-bottom: $spacing-sm;
 }
 
-.sales-form-control,
-.sales-form-select {
+.sale-new-form-control,
+.sale-new-form-select {
   border: 1px solid $color-border;
-  @include sales-border-radius();
+  @include sale-new-border-radius();
   padding: 12px 16px;
   font-size: $font-size-base;
-  @include sales-transition();
+  @include sale-new-transition();
 
   &:focus {
-    @include sales-focus-styles();
+    @include sale-new-focus-styles();
   }
 }
 
 // Quantity Input
-.sales-quantity-input {
-  @include sales-transition(all, 0.2s, ease);
+.sale-new-quantity-input {
+  @include sale-new-transition(all, 0.2s, ease);
   border: 1px solid $color-border !important;
   font-weight: $font-weight-semibold !important;
 
@@ -360,10 +360,10 @@ $opacity-medium: 0.5;
 // ===========================================
 
 // Buttons
-.sales-btn {
-  @include sales-border-radius();
+.sale-new-btn {
+  @include sale-new-border-radius();
   font-weight: $font-weight-medium;
-  @include sales-transition();
+  @include sale-new-transition();
 
   &-success {
     background: linear-gradient(135deg, $color-success 0%, $color-success-gradient 100%);
@@ -390,8 +390,8 @@ $opacity-medium: 0.5;
 // ===========================================
 
 // Badge
-.sales-badge {
-  @include sales-border-radius($border-radius-pill);
+.sale-new-badge {
+  @include sale-new-border-radius($border-radius-pill);
   font-weight: $font-weight-medium;
 }
 
@@ -400,7 +400,7 @@ $opacity-medium: 0.5;
 // ===========================================
 
 // TomSelect Customization
-.sales-ts-control {
+.sale-new-ts-control {
   border-radius: $border-radius-md !important;
   border: 1px solid $color-border !important;
   min-height: 48px !important;
@@ -411,7 +411,7 @@ $opacity-medium: 0.5;
   }
 }
 
-.sales-ts-dropdown {
+.sale-new-ts-dropdown {
   border-radius: $border-radius-md !important;
   border: 1px solid $color-border !important;
   box-shadow: $box-shadow-md !important;
@@ -431,11 +431,11 @@ $opacity-medium: 0.5;
 // LOADING STATES & ANIMATIONS
 // ===========================================
 
-.sales-loading {
+.sale-new-loading {
   animation: pulse 1.5s ease-in-out infinite;
 
   &-skeleton {
-    background: linear-gradient(90deg, $sales-skeleton-light 25%, $sales-skeleton-dark 50%, $sales-skeleton-light 75%);
+    background: linear-gradient(90deg, $sale-new-skeleton-light 25%, $sale-new-skeleton-dark 50%, $sale-new-skeleton-light 75%);
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
   }
@@ -445,7 +445,7 @@ $opacity-medium: 0.5;
 // EMPTY STATES
 // ===========================================
 
-.sales-no-results {
+.sale-new-no-results {
   i {
     opacity: $opacity-light;
   }
@@ -460,67 +460,67 @@ $opacity-medium: 0.5;
 // UTILITY CLASSES
 // ===========================================
 
-.sales-cart-action-btn {
+.sale-new-cart-action-btn {
   width: 28px;
   height: 28px;
   padding: 0;
   border-radius: 50%;
 }
 
-.sales-quantity-input-container {
+.sale-new-quantity-input-container {
   width: 60px;
   padding: 2px 4px;
   border-radius: 4px;
 }
 
-.sales-empty-cart-icon {
+.sale-new-empty-cart-icon {
   font-size: 3rem;
   color: #dee2e6;
 }
 
-.sales-product-card-container {
+.sale-new-product-card-container {
   transition: all 0.3s ease;
 }
 
-.sales-product-image-container {
+.sale-new-product-image-container {
   height: 120px;
   overflow: hidden;
 }
 
-.sales-product-image {
+.sale-new-product-image {
   max-height: 100px;
   max-width: 100%;
   object-fit: contain;
 }
 
-.sales-product-add-btn {
+.sale-new-product-add-btn {
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(25, 135, 84, 0.3);
 }
 
-.sales-search-input-no-shadow {
+.sale-new-search-input-no-shadow {
   box-shadow: none;
 }
 
-.sales-min-width-30 {
+.sale-new-min-width-30 {
   min-width: 60px;
 }
 
-.sales-product-item-hover {
+.sale-new-product-item-hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-.sales-product-item-normal {
+.sale-new-product-item-normal {
   transform: translateY(0);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.sales-product-card-visible {
+.sale-new-product-card-visible {
   display: block;
 }
 
-.sales-product-card-hidden {
+.sale-new-product-card-hidden {
   display: none;
 }
 
@@ -544,21 +544,21 @@ $opacity-medium: 0.5;
 // BROWSER SPECIFIC STYLES
 // ===========================================
 
-.sales-container {
+.sale-new-container {
   ::-webkit-scrollbar {
     width: 6px;
 
     &-track {
-      background: $sales-scrollbar-track;
-      @include sales-border-radius(3px);
+      background: $sale-new-scrollbar-track;
+      @include sale-new-border-radius(3px);
     }
 
     &-thumb {
-      background: $sales-scrollbar-thumb;
-      @include sales-border-radius(3px);
+      background: $sale-new-scrollbar-thumb;
+      @include sale-new-border-radius(3px);
 
       &:hover {
-        background: $sales-scrollbar-thumb-hover;
+        background: $sale-new-scrollbar-thumb-hover;
       }
     }
   }

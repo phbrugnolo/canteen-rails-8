@@ -193,7 +193,7 @@ export class CartManager {
         const subTotal = (price * quantity).toFixed(2);
 
         return `
-          <div class="sales-cart-item border-bottom py-3 px-3" data-product-id="${product.id}">
+          <div class="sale-new-cart-item border-bottom py-3 px-3" data-product-id="${product.id}">
             <div class="row align-items-center">
               <div class="col-7">
                 <h6 class="mb-1 fw-semibold text-truncate">${this.escapeHtml(product.name || 'Produto sem nome')}</h6>
@@ -201,14 +201,14 @@ export class CartManager {
               </div>
               <div class="col-5 text-end">
                 <div class="d-flex align-items-center justify-content-end gap-2 mb-2">
-                  <button type="button" class="btn btn-outline-secondary btn-sm sales-cart-action-btn"
+                  <button type="button" class="btn btn-outline-secondary btn-sm sale-new-cart-action-btn"
                           data-action="remove" data-product-id="${product.id}"
                           title="Remover um">
                     <i class="bi bi-dash small"></i>
                   </button>
 
                   <input type="number"
-                         class="form-control form-control-sm text-center fw-bold sales-quantity-input sales-quantity-input-container"
+                         class="form-control form-control-sm text-center fw-bold sale-new-quantity-input sale-new-quantity-input-container"
                          value="${quantity}"
                          min="${this.MIN_QUANTITY}"
                          max="${this.MAX_QUANTITY}"
@@ -218,7 +218,7 @@ export class CartManager {
                          autocomplete="off"
                          inputmode="numeric">
 
-                  <button type="button" class="btn btn-outline-secondary btn-sm sales-cart-action-btn"
+                  <button type="button" class="btn btn-outline-secondary btn-sm sale-new-cart-action-btn"
                           data-action="add" data-product-id="${product.id}"
                           title="Adicionar mais um">
                     <i class="bi bi-plus small"></i>
@@ -227,7 +227,7 @@ export class CartManager {
 
                 <div class="d-flex justify-content-between align-items-center">
                   <strong class="text-success">R$ ${subTotal}</strong>
-                  <button type="button" class="btn btn-outline-danger btn-sm sales-cart-action-btn"
+                  <button type="button" class="btn btn-outline-danger btn-sm sale-new-cart-action-btn"
                           data-action="delete" data-product-id="${product.id}"
                           title="Remover do carrinho">
                     <i class="bi bi-trash3 small"></i>
@@ -240,8 +240,8 @@ export class CartManager {
       }).join('');
 
       this.container.innerHTML = `
-        <div class="sales-cart-content">
-          <div class="sales-cart-items">
+        <div class="sale-new-cart-content">
+          <div class="sale-new-cart-items">
             ${cartRows}
           </div>
         </div>
@@ -256,7 +256,7 @@ export class CartManager {
     this.container.innerHTML = `
       <div class="text-center p-5">
         <div class="mb-3">
-          <i class="bi bi-cart-x sales-empty-cart-icon"></i>
+          <i class="bi bi-cart-x sale-new-empty-cart-icon"></i>
         </div>
         <h6 class="text-muted mb-2">Carrinho vazio</h6>
         <small class="text-muted">Adicione produtos para começar sua venda</small>
@@ -314,7 +314,7 @@ export class CartManager {
   }
 
   handleQuantityInput(event) {
-    if (!event.target.classList.contains('sales-quantity-input')) return;
+    if (!event.target.classList.contains('sale-new-quantity-input')) return;
 
     const input = event.target;
     const productId = parseInt(input.dataset.productId);
@@ -342,7 +342,7 @@ export class CartManager {
   }
 
   handleQuantityBlur(event) {
-    if (!event.target.classList.contains('sales-quantity-input')) return;
+    if (!event.target.classList.contains('sale-new-quantity-input')) return;
 
     const input = event.target;
     const productId = parseInt(input.dataset.productId);
@@ -380,7 +380,7 @@ export class CartManager {
   }
 
   handleQuantityKeydown(event) {
-    if (!event.target.classList.contains('sales-quantity-input')) return;
+    if (!event.target.classList.contains('sale-new-quantity-input')) return;
 
     const input = event.target;
     const productId = parseInt(input.dataset.productId);
@@ -426,7 +426,7 @@ export class CartManager {
   }
 
   handleQuantityFocus(event) {
-    if (!event.target.classList.contains('sales-quantity-input')) return;
+    if (!event.target.classList.contains('sale-new-quantity-input')) return;
 
     const input = event.target;
     setTimeout(() => input.select(), 0);
