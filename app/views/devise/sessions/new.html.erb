@@ -3,10 +3,10 @@
     <!-- Header Section with Logo -->
     <div class="auth-header">
       <div class="auth-logo">
-        <%= image_tag "logo-rd.png", alt: "Login Logo" %>
+        <%= image_tag "logo-rd.png", alt: I18n.t(:logo_rd_alt_image) %>
       </div>
-      <h2 class="auth-heading">Bem-vindo de volta</h2>
-      <p class="auth-subtitle">Faça login para acessar o sistema</p>
+      <h2 class="auth-heading"><%= I18n.t(:heading, scope: %i[devise sessions new]) %></h2>
+      <p class="auth-subtitle"><%= I18n.t(:subtitle, scope: %i[devise sessions new]) %></p>
     </div>
 
     <%= render "devise/shared/error_messages", resource: resource %>
@@ -16,7 +16,7 @@
       <div class="form-group form-group-with-icon">
         <label class="form-label" for="user_name">
           <i class="bi bi-person me-1"></i>
-          Nome de usuário
+          <%= I18n.t(:name, scope: %i[activerecord attributes user]) %>
         </label>
         <div class="form-icon">
           <i class="bi bi-person"></i>
@@ -24,7 +24,7 @@
         <%= f.input :name,
                   required: false,
                   autofocus: true,
-                  placeholder: "Digite seu nome de usuário",
+                  placeholder: I18n.t(:name_placeholder, scope: %i[devise sessions new]),
                   input_html: {
                     autocomplete: "name",
                     class: "form-control",
@@ -37,14 +37,14 @@
       <div class="form-group form-group-with-icon">
         <label class="form-label" for="user_password">
           <i class="bi bi-lock me-1"></i>
-          Senha
+          <%= I18n.t(:password, scope: %i[activerecord attributes user]) %>
         </label>
         <div class="form-icon">
           <i class="bi bi-lock"></i>
         </div>
         <%= f.input :password,
                   required: false,
-                  placeholder: "Digite sua senha",
+                  placeholder: I18n.t(:password_placeholder, scope: %i[devise sessions new]),
                   input_html: {
                     autocomplete: "current-password",
                     class: "form-control",
@@ -60,13 +60,13 @@
                     as: :boolean,
                     input_html: { class: "form-check-input" },
                     label_html: { class: "form-check-label" },
-                    label: "Manter-me conectado" %>
+                    label: I18n.t(:remember_me, scope: %i[devise sessions new]) %>
         </div>
       <% end %>
 
       <!-- Submit Button -->
       <div class="form-actions">
-        <%= f.button :submit, "Entrar", class: "btn btn-primary auth-btn" %>
+        <%= f.button :submit, I18n.t(:submit, scope: %i[devise sessions new]), class: "btn btn-primary auth-btn" %>
       </div>
     <% end %>
 

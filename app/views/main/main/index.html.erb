@@ -63,7 +63,7 @@
       </div>
       <div class="dashboard-metric-content">
         <div class="d-flex justify-content-between align-items-start mb-2">
-          <%= content_tag tag_class, class: "metric-value mb-0" do %>
+          <%= content_tag tag_class.to_sym, class: "metric-value mb-0" do %>
             <%= number_to_currency(revenue_value) %>
           <% end %>
           <div class="dropup">
