@@ -3,8 +3,9 @@ import TomSelect from 'tom-select';
 document.addEventListener('DOMContentLoaded', () => {
   if (window.canteen && window.canteen.controller_name !== 'sales') return;
 
-  if (document.getElementById('customer-id')) {
-    new TomSelect('#customer-id', {
+  const customerCartSelect = document.getElementById('customer-id');
+  if (customerCartSelect) {
+    new TomSelect(customerCartSelect, {
       create: false,
       sortField: {
         field: 'text',
@@ -26,6 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
                  '</div>';
         }
       }
+    });
+  }
+
+  const saleCards = document.querySelectorAll('.sales-index-card');
+  if (!saleCards.length === 0) {
+    saleCards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        this.style.transform = 'translateY(-2px)';
+      });
+
+      card.addEventListener('mouseleave', () => {
+        this.style.transform = 'translateY(0)';
+      });
     });
   }
 });

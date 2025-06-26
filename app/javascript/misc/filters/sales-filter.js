@@ -1,3 +1,4 @@
+import TomSelect from 'tom-select';
 import { FilterManager } from '../../shared/filter-manager.js';
 
 export class SalesFilters {
@@ -50,7 +51,7 @@ export class SalesFilters {
       selectElement.appendChild(option);
     });
 
-    new window.TomSelect(selectElement, {
+    const tomSelectInstance = new TomSelect(selectElement, {
       plugins: ['remove_button'],
       placeholder: selectElement.getAttribute('data-placeholder') || 'Selecione clientes...',
       allowEmptyOption: true,
@@ -60,8 +61,15 @@ export class SalesFilters {
       sortField: {
         field: 'text',
         direction: 'asc'
+      },
+      render: {
+        no_results: () => {
+          return '<div class="no-results">Nenhum cliente encontrado</div>';
+        }
       }
     });
+
+    selectElement.tomselect = tomSelectInstance;
   }
 
   getUniqueCustomerNames() {
