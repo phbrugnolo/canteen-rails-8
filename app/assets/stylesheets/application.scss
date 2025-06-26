@@ -19,9 +19,6 @@
 // Page-specific styles
 @import "./pages/authentication";
 @import "./pages/dashboard";
-@import "./pages/customers/index";
-@import "./pages/customers/show";
-@import "./pages/products/index";
-@import "./pages/products/show";
-@import "./pages/sales/new";
-@import "./pages/sales/index";
+@import "./pages/customer";
+@import "./pages/product";
+@import "./pages/sale";
