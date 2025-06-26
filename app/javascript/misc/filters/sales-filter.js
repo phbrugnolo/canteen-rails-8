@@ -121,7 +121,12 @@ export class SalesFilters {
   updateSalesCount(visibleCount) {
     const salesCountElement = document.querySelector('#sales-count');
     if (salesCountElement) {
+      salesCountElement.classList.add('updating');
       salesCountElement.textContent = visibleCount;
+
+      setTimeout(() => {
+        salesCountElement.classList.remove('updating');
+      }, 200);
     }
   }
 }

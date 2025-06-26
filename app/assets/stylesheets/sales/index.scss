@@ -575,3 +575,102 @@ $filter-card-bg: #f8f9fa;
     transition-duration: 0.01ms !important;
   }
 }
+
+// ===========================================
+// FILTER SYSTEM CLASSES
+// ===========================================
+
+.sales-index-filter-item-visible {
+  display: block !important;
+  animation: sales-index-fadeInUp 0.3s ease-out;
+}
+
+.sales-index-filter-item-hidden {
+  display: none !important;
+}
+
+.sales-index-filter-no-results-visible {
+  display: block !important;
+  text-align: center;
+  padding: 2rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.sales-index-filter-no-results-hidden {
+  display: none !important;
+}
+
+.sales-index-card {
+  @include sales-index-transition(all, 0.3s, ease-out);
+
+  &.sales-index-filter-item-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &.sales-index-filter-item-hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  }
+}
+
+#sales-count {
+  @include sales-index-transition(all, 0.2s, ease-out);
+
+  &.updating {
+    transform: scale(1.1);
+    color: $sales-primary;
+  }
+}
+
+// TomSelect customizations for filters
+.ts-wrapper {
+  &.multi {
+    .ts-control {
+      border: 2px solid $color-border;
+      border-radius: $border-radius-md;
+      @include sales-index-transition();
+
+      &:focus-within {
+        border-color: $sales-primary;
+        box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+      }
+    }
+
+    .ts-control > div {
+      background: $sales-light;
+      color: $sales-primary;
+      border: 1px solid $sales-primary;
+      border-radius: $border-radius-sm;
+      padding: 2px 6px;
+      margin: 2px;
+
+      .remove {
+        color: $sales-primary;
+
+        &:hover {
+          background: $sales-primary;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+// No results message enhanced styling
+.sales-index-filter-no-results-visible {
+  .card {
+    border: 2px dashed $color-border !important;
+    background: linear-gradient(135deg, rgba(79, 172, 254, 0.02) 0%, rgba(79, 172, 254, 0.05) 100%) !important;
+  }
+
+  .bi {
+    color: $sales-primary !important;
+  }
+
+  h5 {
+    color: $sales-primary !important;
+  }
+}
