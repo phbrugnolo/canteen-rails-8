@@ -1,4 +1,4 @@
-import TomSelect from 'tom-select';
+import { CustomerTomSelect } from '../../shared/customer-tom-select.js';
 import { FilterManager } from '../../shared/filter-manager.js';
 
 export class SalesFilters {
@@ -43,31 +43,7 @@ export class SalesFilters {
     if (!selectElement) return;
 
     const customerNames = this.getUniqueCustomerNames();
-
-    customerNames.forEach(name => {
-      const option = document.createElement('option');
-      option.value = name;
-      option.textContent = name;
-      selectElement.appendChild(option);
-    });
-
-    const tomSelectInstance = new TomSelect(selectElement, {
-      plugins: ['remove_button'],
-      placeholder: selectElement.getAttribute('data-placeholder') || 'Selecione clientes...',
-      allowEmptyOption: true,
-      maxItems: null,
-      create: false,
-      searchField: ['text'],
-      sortField: {
-        field: 'text',
-        direction: 'asc'
-      },
-      render: {
-        no_results: () => {
-          return '<div class="no-results">Nenhum cliente encontrado</div>';
-        }
-      }
-    });
+    const tomSelectInstance = CustomerTomSelect.createFilterSelect(selectElement, customerNames);
 
     selectElement.tomselect = tomSelectInstance;
   }
