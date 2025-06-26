@@ -7,17 +7,17 @@
 @import "tom-select/dist/scss/tom-select";
 
 // Global component styles
-@import "status_button";
+@import "./components/status_button";
 
 // Project stylesheets
-@import "authentication";
-@import "dashboard";
-@import "form";
-@import "sidebar";
-@import "sweetalert";
-@import "./customers/index";
-@import "./customers/show";
-@import "./products/index";
-@import "./products/show";
-@import "./sales/new";
-@import "./sales/index";
+@import "./components/form";
+@import "./components/sidebar";
+@import "./components/sweetalert";
+@import "./pages/authentication";
+@import "./pages/dashboard";
+@import "./pages/customers/index";
+@import "./pages/customers/show";
+@import "./pages/products/index";
+@import "./pages/products/show";
+@import "./pages/sales/new";
+@import "./pages/sales/index";
