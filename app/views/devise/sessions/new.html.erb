@@ -1,26 +1,76 @@
 <div class="auth-container">
   <div class="auth-form-container">
-    <h2 class="auth-heading">Log in</h2>
+    <!-- Header Section with Logo -->
+    <div class="auth-header">
+      <div class="auth-logo">
+        <%= image_tag "logo-rd.png", alt: "Login Logo" %>
+      </div>
+      <h2 class="auth-heading">Bem-vindo de volta</h2>
+      <p class="auth-subtitle">Faça login para acessar o sistema</p>
+    </div>
 
     <%= render "devise/shared/error_messages", resource: resource %>
 
-    <%= simple_form_for(resource, as: resource_name, url: user_session_path) do |f| %>
-      <div class="form-inputs">
+    <%= simple_form_for(resource, as: resource_name, url: user_session_path, html: { class: "auth-form" }) do |f| %>
+      <!-- Name Field with Icon -->
+      <div class="form-group form-group-with-icon">
+        <label class="form-label" for="user_name">
+          <i class="bi bi-person me-1"></i>
+          Nome de usuário
+        </label>
+        <div class="form-icon">
+          <i class="bi bi-person"></i>
+        </div>
         <%= f.input :name,
                   required: false,
                   autofocus: true,
-                  input_html: { autocomplete: "name", class: "form-control" } %>
-        <%= f.input :password,
-                  required: false,
-                  input_html: { autocomplete: "current-password", class: "form-control" } %>
-        <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+                  placeholder: "Digite seu nome de usuário",
+                  input_html: {
+                    autocomplete: "name",
+                    class: "form-control",
+                    id: "user_name"
+                  },
+                  label: false %>
       </div>
 
+      <!-- Password Field with Icon -->
+      <div class="form-group form-group-with-icon">
+        <label class="form-label" for="user_password">
+          <i class="bi bi-lock me-1"></i>
+          Senha
+        </label>
+        <div class="form-icon">
+          <i class="bi bi-lock"></i>
+        </div>
+        <%= f.input :password,
+                  required: false,
+                  placeholder: "Digite sua senha",
+                  input_html: {
+                    autocomplete: "current-password",
+                    class: "form-control",
+                    id: "user_password"
+                  },
+                  label: false %>
+      </div>
+
+      <!-- Remember Me Checkbox -->
+      <% if devise_mapping.rememberable? %>
+        <div class="form-check">
+          <%= f.input :remember_me,
+                    as: :boolean,
+                    input_html: { class: "form-check-input" },
+                    label_html: { class: "form-check-label" },
+                    label: "Manter-me conectado" %>
+        </div>
+      <% end %>
+
+      <!-- Submit Button -->
       <div class="form-actions">
-        <%= f.button :submit, "Log in", class: "btn btn-primary auth-btn" %>
+        <%= f.button :submit, "Entrar", class: "btn btn-primary auth-btn" %>
       </div>
     <% end %>
 
+    <!-- Additional Links -->
     <div class="auth-links">
       <%= render "devise/shared/links" %>
     </div>

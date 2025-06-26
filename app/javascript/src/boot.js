@@ -8,7 +8,7 @@ import { initializeConfirmationSystem, reinitializeConfirmations } from './confi
 
 class App {
   constructor() {
-    this.initializeComponents();
+    if (window.canteen) this.initializeComponents();
     this.setupGlobalHelpers();
   }
 
@@ -122,9 +122,7 @@ document.addEventListener('turbo:load', () => {
 window.addEventListener('pageshow', (event) => {
   if (event.persisted) {
     reinitializeConfirmations();
-    if (window.canteenApp) {
-      window.canteenApp.reinitializeTooltips();
-    }
+    if (window.canteenApp) window.canteenApp.reinitializeTooltips();
   }
 });
 
