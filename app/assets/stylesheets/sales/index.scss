@@ -625,41 +625,6 @@ $filter-card-bg: #f8f9fa;
   }
 }
 
-// TomSelect customizations for filters
-.ts-wrapper {
-  &.multi {
-    .ts-control {
-      border: 2px solid $color-border;
-      border-radius: $border-radius-md;
-      @include sales-index-transition();
-
-      &:focus-within {
-        border-color: $sales-primary;
-        box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
-      }
-    }
-
-    .ts-control > div {
-      background: $sales-light;
-      color: $sales-primary;
-      border: 1px solid $sales-primary;
-      border-radius: $border-radius-sm;
-      padding: 2px 6px;
-      margin: 2px;
-
-      .remove {
-        color: $sales-primary;
-
-        &:hover {
-          background: $sales-primary;
-          color: white;
-        }
-      }
-    }
-  }
-}
-
-// No results message enhanced styling
 .sales-index-filter-no-results-visible {
   .card {
     border: 2px dashed $color-border !important;

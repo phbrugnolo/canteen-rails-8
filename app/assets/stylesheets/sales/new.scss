@@ -396,38 +396,6 @@ $opacity-medium: 0.5;
 }
 
 // ===========================================
-// THIRD-PARTY COMPONENTS
-// ===========================================
-
-// TomSelect Customization
-.sale-new-ts-control {
-  border-radius: $border-radius-md !important;
-  border: 1px solid $color-border !important;
-  min-height: 48px !important;
-
-  &.focus {
-    border-color: $color-sale-primary !important;
-    box-shadow: $box-shadow-focus !important;
-  }
-}
-
-.sale-new-ts-dropdown {
-  border-radius: $border-radius-md !important;
-  border: 1px solid $color-border !important;
-  box-shadow: $box-shadow-md !important;
-
-  .option {
-    border-radius: 4px !important;
-    margin: 2px 4px !important;
-
-    &.active {
-      background-color: $color-sale-primary !important;
-      color: $color-white !important;
-    }
-  }
-}
-
-// ===========================================
 // LOADING STATES & ANIMATIONS
 // ===========================================
 
