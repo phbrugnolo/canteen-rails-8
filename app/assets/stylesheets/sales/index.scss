@@ -124,11 +124,6 @@ $filter-card-bg: #f8f9fa;
   margin-bottom: $spacing-xl;
   padding-bottom: $spacing-lg;
   border-bottom: 2px solid $color-border;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: $spacing-md;
-  }
 }
 
 .sales-index-title-section {
@@ -143,10 +138,6 @@ $filter-card-bg: #f8f9fa;
   display: flex;
   align-items: center;
   gap: $spacing-md;
-
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
 }
 
 .sales-index-title-icon {
@@ -168,11 +159,6 @@ $filter-card-bg: #f8f9fa;
   display: flex;
   gap: $spacing-md;
   align-items: flex-start;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    justify-content: flex-start;
-  }
 }
 
 // ===========================================
@@ -243,15 +229,6 @@ $filter-card-bg: #f8f9fa;
   grid-template-columns: 2fr 1fr 1fr;
   gap: $spacing-lg;
   align-items: end;
-
-  @media (max-width: 992px) {
-    grid-template-columns: 1fr;
-    gap: $spacing-md;
-  }
-
-  @media (max-width: 768px) {
-    padding: $spacing-md;
-  }
 }
 
 .sales-index-filter-group {
@@ -300,11 +277,6 @@ $filter-card-bg: #f8f9fa;
   grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   gap: $spacing-lg;
   margin-top: $spacing-xl;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: $spacing-md;
-  }
 }
 
 // ===========================================
