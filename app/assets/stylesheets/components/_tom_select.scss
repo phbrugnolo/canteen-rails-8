@@ -1,0 +1,170 @@
+// ===========================================
+// TOM SELECT COMPONENT STYLES
+// ===========================================
+// Consistent styling for customer selection inputs across the application
+// Uses centralized variables from _variables.scss
+
+// ===========================================
+// VARIABLES
+// ===========================================
+$tomselect-border-color: $color-border;
+$tomselect-border-hover: $color-border-hover;
+$tomselect-border-focus: $color-sale-primary;
+$tomselect-bg: $color-white;
+$tomselect-text: $color-text-primary;
+$tomselect-placeholder: $color-text-secondary;
+
+// ===========================================
+// MIXINS
+// ===========================================
+@mixin tomselect-transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+@mixin tomselect-focus-styles($color: $tomselect-border-focus) {
+  border-color: $color;
+  box-shadow: 0 0 0 0.2rem rgba(red($color), green($color), blue($color), 0.25);
+  outline: none;
+}
+
+// ===========================================
+// BASE TOM SELECT STYLES
+// ===========================================
+
+// Remove card styling from TomSelect wrapper
+.ts-wrapper {
+  position: relative;
+
+  // Remove any existing box shadow or border radius that creates "card" appearance
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+// Style the actual input control
+.ts-control {
+  background: $tomselect-bg;
+  border: 1px solid $tomselect-border-color;
+  border-radius: $border-radius-md;
+  padding: $spacing-sm $spacing-md;
+  font-size: 0.8rem;
+  color: $tomselect-text;
+  min-height: 38px;
+  @include tomselect-transition();
+
+  // Remove any card-like styling
+  box-shadow: none !important;
+
+  // Hover state
+  &:hover {
+    border-color: $tomselect-border-hover;
+  }
+
+  // Focus state
+  &.focus {
+    @include tomselect-focus-styles();
+  }
+
+  // Input field within the control
+  .ts-input {
+    input {
+      color: $tomselect-text;
+      font-size: inherit;
+
+      &::placeholder {
+        color: $tomselect-placeholder;
+      }
+    }
+  }
+}
+
+// ===========================================
+// DROPDOWN STYLES
+// ===========================================
+.ts-dropdown {
+  border: 1px solid $tomselect-border-color;
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow-md;
+  background: $tomselect-bg;
+
+  // Options within dropdown
+  .ts-option {
+    padding: $spacing-sm $spacing-md;
+    color: $tomselect-text;
+    @include tomselect-transition();
+
+    &:hover {
+      background: $color-light-gray;
+    }
+
+    &.active {
+      background: $color-sale-primary;
+      color: $color-white;
+    }
+  }
+
+  // No results message
+  .ts-option.no-results {
+    color: $tomselect-placeholder;
+    font-style: italic;
+  }
+}
+
+// ===========================================
+// SELECTED ITEMS (for multiple select)
+// ===========================================
+.ts-control .ts-item {
+  background: $color-sale-primary;
+  color: $color-white;
+  border-radius: $border-radius-sm;
+  padding: 2px $spacing-sm;
+  margin: 2px;
+  font-size: 0.875rem;
+  @include tomselect-transition();
+
+  &:hover {
+    background: darken($color-sale-primary, 10%);
+  }
+}
+
+// Remove button for selected items
+.ts-control .ts-item .remove {
+  color: rgba(255, 255, 255, 0.8);
+  margin-left: $spacing-xs;
+  font-weight: bold;
+
+  &:hover {
+    color: $color-white;
+  }
+}
+
+// ===========================================
+// CUSTOMER-SPECIFIC STYLING
+// ===========================================
+
+// Target customer selection specifically
+#customer-id.ts-wrapper,
+#search_customers.ts-wrapper {
+  .ts-control {
+    // Additional customer-specific styling can go here
+    border-color: $tomselect-border-color;
+
+    &.focus {
+      border-color: $color-sale-primary;
+    }
+  }
+}
+
+// ===========================================
+// ACCESSIBILITY
+// ===========================================
+@media (prefers-reduced-motion: reduce) {
+  .ts-wrapper,
+  .ts-control,
+  .ts-dropdown,
+  .ts-item {
+    transition: none !important;
+  }
+}

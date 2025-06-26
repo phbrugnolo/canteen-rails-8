@@ -26,7 +26,8 @@
     "sweetalert",
     "sweetalert2",
     "tbody",
-    "thead"
+    "thead",
+    "tomselect"
   ],
   "search.exclude": {
     "**/node_modules": true,
