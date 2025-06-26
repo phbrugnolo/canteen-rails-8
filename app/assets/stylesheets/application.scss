@@ -10,9 +10,12 @@
 @import "./components/status_button";
 
 // Project stylesheets
+// Reusable styles
 @import "./components/form";
 @import "./components/sidebar";
 @import "./components/sweetalert";
+
+// Page-specific styles
 @import "./pages/authentication";
 @import "./pages/dashboard";
 @import "./pages/customers/index";
