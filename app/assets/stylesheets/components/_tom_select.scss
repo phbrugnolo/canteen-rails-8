@@ -34,13 +34,17 @@ $tomselect-placeholder: $color-text-secondary;
 // Remove card styling from TomSelect wrapper
 .ts-wrapper {
   position: relative;
+  z-index: 1;
 
-  // Remove any existing box shadow or border radius that creates "card" appearance
   box-shadow: none !important;
   border-radius: 0 !important;
   background: transparent !important;
   border: none !important;
   padding: 0 !important;
+
+  &.dropdown-active {
+    z-index: 2;
+  }
 }
 
 // Style the actual input control
@@ -88,6 +92,8 @@ $tomselect-placeholder: $color-text-secondary;
   border-radius: $border-radius-md;
   box-shadow: $box-shadow-md;
   background: $tomselect-bg;
+  z-index: 9999 !important; // Ensure dropdown appears above cards and other elements
+  position: absolute !important;
 
   // Options within dropdown
   .ts-option {
@@ -166,5 +172,33 @@ $tomselect-placeholder: $color-text-secondary;
   .ts-dropdown,
   .ts-item {
     transition: none !important;
+  }
+}
+
+// ===========================================
+// ENHANCED DROPDOWN POSITIONING
+// ===========================================
+
+// Ensure dropdown container has proper stacking context
+.ts-dropdown-content {
+  z-index: 10000 !important;
+  position: relative;
+}
+
+// When dropdown is appended to body (TomSelect default behavior)
+body > .ts-dropdown {
+  z-index: 10000 !important;
+}
+
+// Ensure dropdown appears above Bootstrap modals and other high z-index elements
+.ts-dropdown.multi,
+.ts-dropdown.single {
+  z-index: 10000 !important;
+}
+
+// Additional positioning for filter containers
+.sales-index-filters-card .ts-wrapper {
+  .ts-dropdown {
+    z-index: 10001 !important; // Even higher for filters within cards
   }
 }
