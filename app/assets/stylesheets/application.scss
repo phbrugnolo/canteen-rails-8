@@ -6,12 +6,10 @@
 @import "bootstrap-icons/font/bootstrap-icons";
 @import "tom-select/dist/scss/tom-select";
 
+// Project stylesheets
 // Global component styles
 @import "./components/status_button";
 @import "./components/tom_select";
-
-// Project stylesheets
-// Reusable styles
 @import "./components/form";
 @import "./components/sidebar";
 @import "./components/sweetalert";
