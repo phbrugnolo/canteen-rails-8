@@ -51,31 +51,3 @@
           style: "border-radius: 8px; box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);" %>
   </div>
 <% end %>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const select = new TomSelect("#customer-id", {
-      create: false,
-      sortField: {
-        field: "text",
-        direction: "asc"
-      },
-      placeholder: "<%= I18n.t(:select_customer_placeholder) %>",
-      searchField: ['text'],
-      render: {
-        option: (data, escape) => {
-          return '<div class="py-2 px-1">' +
-                   '<i class="bi bi-person-circle me-2 text-primary"></i>' +
-                   '<span>' + escape(data.text) + '</span>' +
-                 '</div>';
-        },
-        item: (data, escape) => {
-          return '<div>' +
-                   '<i class="bi bi-person-check me-2 text-success"></i>' +
-                   '<span>' + escape(data.text) + '</span>' +
-                 '</div>';
-        }
-      }
-    });
-  });
-</script>

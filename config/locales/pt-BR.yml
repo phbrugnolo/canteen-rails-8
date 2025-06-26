@@ -32,7 +32,6 @@ pt-BR:
   items: "itens"
   finalize_sale: "Finalizar Venda"
   customer: "Cliente"
-  select_customer_placeholder: "Selecione um cliente..."
   automatically_calculated_value: "Valor calculado automaticamente"
   recent_purchases: "Compras Recentes"
   confirm_activation: "Confirmar Ativação"
