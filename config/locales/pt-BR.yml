@@ -110,6 +110,13 @@ pt-BR:
   no_customers_found: "Nenhum cliente encontrado"
   add_first_customer: "Adicione o primeiro cliente para começar a gerenciar sua base de clientes."
   add_first_customer_btn: "Adicionar Primeiro Cliente"
+  sales_index_subtitle: "Gerencie todas as vendas realizadas no sistema"
+  search_by_customer: "Pesquisar por cliente"
+  filter_by_date: "Filtrar por data"
+  total_found: "Total de vendas"
+  no_sales_found: "Nenhuma venda encontrada"
+  no_sales_found_description: "Não encontramos vendas para os filtros selecionados."
+  create_first_sale: "Criar Primeira Venda"
   confirmations:
     activate:
       title: "Confirmar Ativação"

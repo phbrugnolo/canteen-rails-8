@@ -1,39 +1,232 @@
-<p style="color: green"><%= notice %></p>
-<h1 class="mx-2 mt-2"><%= I18n.t(:sale, scope: %i[activerecord models], count: 2) %></h1>
-<hr>
-<div id="sales">
-  <div class="card p-2 mt-4" style="background-color: #EEF5FF">
-    <div class="container">
-      <span data-i18n="no_purchases_found" style="display: none;"><%= I18n.t(:no_purchases_found) %></span>
-      <% if @sales.size > 0 %>
-        <div class="row mb-2 mt-4">
-          <div class="col-md-6">
-            <select multiple id="search_customers" class="form-control" data-placeholder="<%= I18n.t(:search_by_name) %>">
-            </select>
-          </div>
-          <div class="col-md-3">
-            <input type="date" id="search_date" class="form-control" placeholder="<%= I18n.t(:created_at, scope: %i[activerecord attributes sales]) %>">
-          </div>
-        </div>
-        <div class="row">
-          <% @sales.order(created_at: :desc).each do |sale| %>
-            <div class="col-6">
-              <div class="card border-info m-4 p-2" style="position: relative;">
-                <table class="table mb-0 mt-1">
-                  <tr class="list-group list-group-flush table-row">
-                    <td><%= I18n.t(:date) %>: <%= sale.created_at.strftime("%d/%m/%Y") %></td>
-                    <td><%= I18n.t(:customer, scope: %i[activerecord models], count: 1) %>: <%= sale.customer.name %></td>
-                    <td><%= I18n.t(:total_price) %>: <%= number_to_currency(sale.total_price) %></td>
-                    <td class="border-bottom-0 d-flex justify-content-end flex-column">
-                      <%= link_to I18n.t(:show_sale), main_sale_path(sale), class: "btn btn-primary show-cart my-2" %>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          <% end %>
-        </div>
+<div class="sales-index-container">
+  <!-- Success/Notice Alert -->
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show sales-index-alert" role="alert">
+      <i class="bi bi-check-circle-fill"></i>
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <!-- Page Header -->
+  <div class="sales-index-header">
+    <div class="sales-index-title-section">
+      <h1 class="sales-index-title">
+        <i class="bi bi-receipt sales-index-title-icon"></i>
+        <%= I18n.t(:sale, scope: %i[activerecord models], count: 2) %>
+      </h1>
+      <p class="sales-index-subtitle"><%= I18n.t(:sales_index_subtitle) %></p>
+    </div>
+    <div class="sales-index-actions">
+      <%= link_to new_main_sale_path, class: "sales-index-btn-primary" do %>
+        <i class="bi bi-plus-circle"></i>
+        <%= I18n.t(:new_sale) %>
       <% end %>
     </div>
   </div>
+
+  <!-- Filters Section -->
+  <div class="sales-index-filters-card">
+    <div class="sales-index-filters-header">
+      <h3 class="sales-index-filters-title">
+        <i class="bi bi-funnel"></i>
+        <%= I18n.t(:search_filters) %>
+      </h3>
+    </div>
+    <div class="sales-index-filters-grid">
+      <div class="sales-index-filter-group">
+        <label class="sales-index-filter-label">
+          <i class="bi bi-person"></i>
+          <%= I18n.t(:search_by_customer) %>
+        </label>
+        <select multiple id="search_customers" class="sales-index-filter-control" data-placeholder="<%= I18n.t(:search_by_name) %>">
+        </select>
+      </div>
+      <div class="sales-index-filter-group">
+        <label class="sales-index-filter-label">
+          <i class="bi bi-calendar3"></i>
+          <%= I18n.t(:filter_by_date) %>
+        </label>
+        <input type="date" id="search_date" class="sales-index-filter-control" placeholder="<%= I18n.t(:created_at, scope: %i[activerecord attributes sales]) %>">
+      </div>
+      <div class="sales-index-filter-group">
+        <label class="sales-index-filter-label">
+          <i class="bi bi-cash-stack"></i>
+          <%= I18n.t(:total_found) %>
+        </label>
+        <div class="sales-index-filter-control" style="background: #f8f9fa; border-style: dashed;">
+          <span id="sales-count"><%= @sales.size %></span> <%= I18n.t(:sale, scope: %i[activerecord models], count: @sales.size) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sales Grid -->
+  <% if @sales.size > 0 %>
+    <div class="sales-index-grid" id="sales-grid">
+      <% @sales.order(created_at: :desc).each do |sale| %>
+        <div class="sales-index-card" data-sale-id="<%= sale.id %>" data-customer-name="<%= sale.customer.name.downcase %>" data-sale-date="<%= sale.created_at.strftime('%Y-%m-%d') %>">
+          <div class="sales-index-card-header">
+            <div class="sales-index-card-date">
+              <i class="bi bi-calendar3"></i>
+              <%= sale.created_at.strftime("%d/%m/%Y") %>
+            </div>
+            <div class="sales-index-card-total">
+              <%= number_to_currency(sale.total_price) %>
+            </div>
+          </div>
+
+          <div class="sales-index-card-body">
+            <div class="sales-index-card-customer">
+              <div class="sales-index-customer-avatar">
+                <%= sale.customer.name.first.upcase %>
+              </div>
+              <div class="sales-index-customer-info">
+                <div class="sales-index-customer-name"><%= sale.customer.name %></div>
+                <div class="sales-index-customer-label"><%= I18n.t(:customer, scope: %i[activerecord models], count: 1) %></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sales-index-card-actions">
+            <%= link_to main_sale_path(sale), class: "sales-index-view-btn" do %>
+              <i class="bi bi-eye"></i>
+              <%= I18n.t(:show_sale) %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="sales-index-empty-state">
+      <div class="sales-index-empty-icon">
+        <i class="bi bi-receipt"></i>
+      </div>
+      <h3 class="sales-index-empty-title"><%= I18n.t(:no_sales_found) %></h3>
+      <p class="sales-index-empty-subtitle"><%= I18n.t(:no_sales_found_description) %></p>
+      <%= link_to new_main_sale_path, class: "sales-index-btn-primary" do %>
+        <i class="bi bi-plus-circle"></i>
+        <%= I18n.t(:create_first_sale) %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- Hidden element for filtering -->
+  <span data-i18n="no_purchases_found" style="display: none;" id="no-results-message">
+    <%= I18n.t(:no_purchases_found) %>
+  </span>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const searchCustomers = document.getElementById('search_customers');
+    const searchDate = document.getElementById('search_date');
+    const salesGrid = document.getElementById('sales-grid');
+    const salesCount = document.getElementById('sales-count');
+    const noResultsMessage = document.getElementById('no-results-message');
+
+    // Initialize TomSelect for customer search if available
+    if (searchCustomers && typeof TomSelect !== 'undefined') {
+      new TomSelect(searchCustomers, {
+        placeholder: '<%= I18n.t(:search_by_name) %>',
+        maxItems: null,
+        plugins: ['remove_button'],
+        create: false,
+        render: {
+          no_results: function(data, escape) {
+            return '<div class="no-results"><%= I18n.t(:no_customers_found) %></div>';
+          }
+        }
+      });
+    }
+
+    // Function to filter sales
+    function filterSales() {
+      if (!salesGrid) return;
+
+      const selectedCustomers = searchCustomers ? Array.from(searchCustomers.selectedOptions).map(option => option.value.toLowerCase()) : [];
+      const selectedDate = searchDate ? searchDate.value : '';
+      const saleCards = salesGrid.querySelectorAll('.sales-index-card');
+      let visibleCount = 0;
+
+      saleCards.forEach(card => {
+        const customerName = card.dataset.customerName;
+        const saleDate = card.dataset.saleDate;
+
+        let showCard = true;
+
+        // Filter by customer
+        if (selectedCustomers.length > 0) {
+          showCard = selectedCustomers.some(selected => customerName.includes(selected));
+        }
+
+        // Filter by date
+        if (selectedDate && showCard) {
+          showCard = saleDate === selectedDate;
+        }
+
+        if (showCard) {
+          card.style.display = 'block';
+          card.style.animation = 'sales-index-fadeInUp 0.3s ease-out';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Update count
+      if (salesCount) {
+        salesCount.textContent = visibleCount;
+      }
+
+      // Show/hide no results message
+      if (noResultsMessage) {
+        if (visibleCount === 0 && (selectedCustomers.length > 0 || selectedDate)) {
+          noResultsMessage.style.display = 'block';
+          noResultsMessage.style.textAlign = 'center';
+          noResultsMessage.style.padding = '2rem';
+          noResultsMessage.style.color = '#6c757d';
+          noResultsMessage.style.fontStyle = 'italic';
+        } else {
+          noResultsMessage.style.display = 'none';
+        }
+      }
+    }
+
+    // Add event listeners
+    if (searchCustomers) {
+      searchCustomers.addEventListener('change', filterSales);
+    }
+
+    if (searchDate) {
+      searchDate.addEventListener('change', filterSales);
+    }
+
+    // Add hover effects to cards
+    const saleCards = document.querySelectorAll('.sales-index-card');
+    saleCards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-2px)';
+      });
+
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+      });
+    });
+
+    // Populate customer search options (this would typically come from the server)
+    if (searchCustomers) {
+      const customers = new Set();
+      document.querySelectorAll('.sales-index-customer-name').forEach(nameElement => {
+        customers.add(nameElement.textContent.trim());
+      });
+
+      customers.forEach(customerName => {
+        const option = document.createElement('option');
+        option.value = customerName.toLowerCase();
+        option.textContent = customerName;
+        searchCustomers.appendChild(option);
+      });
+    }
+  });
+</script>
