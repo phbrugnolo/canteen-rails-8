@@ -1,35 +1,153 @@
-<h1 class="mx-2"><%= I18n.t(:product, scope: %i[activerecord models], count: 1) %></h1>
-<hr>
-<div class="container d-flex justify-content-center">
-  <div class="card p-4 mt-3" style="background-color: #EEF5FF; width: 100%;">
-    <div class="d-flex w-100 h-100 justify-content-center align-items-center my-3">
-      <div class="m-auto">
-        <p style="color: green"><%= notice %></p>
-        <div class="card" style="width: 18rem;">
+<div class="products-show-container">
+  <!-- Success/Notice Alert -->
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show products-show-alert" role="alert">
+      <i class="bi bi-check-circle-fill me-2"></i>
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <!-- Breadcrumb Navigation -->
+  <nav aria-label="breadcrumb" class="products-show-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to main_products_path, class: "text-decoration-none" do %>
+          <i class="bi bi-box-seam me-1"></i>
+          <%= I18n.t(:product, scope: %i[activerecord models], count: 2) %>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <%= truncate(@product.name, length: 30) %>
+      </li>
+    </ol>
+  </nav>
+
+  <!-- Main Product Content -->
+  <div class="products-show-main-content">
+    <div class="row g-4">
+      <!-- Product Image Section -->
+      <div class="col-lg-6">
+        <div class="products-show-image-card">
+          <div class="products-show-image-container">
+            <%= image_tag(
+              @product.image_url,
+              alt: I18n.t(:alt_image, scope: %i[activerecord], model: @product.model_name.human),
+              class: "products-show-image card-img-top standard-image-size-product"
+            ) %>
+            <div class="products-show-image-overlay">
+              <button class="btn btn-light products-show-zoom-btn" data-bs-toggle="modal" data-bs-target="#imageModal">
+                <i class="bi bi-zoom-in"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Details Section -->
+      <div class="col-lg-6">
+        <div class="products-show-details-card">
+          <!-- Product Header -->
+          <div class="products-show-header">
+            <div class="products-show-title-section">
+              <h1 class="products-show-title"><%= @product.name %></h1>
+              <div class="products-show-status">
+                <% if @product.active? %>
+                  <span class="badge products-show-status-active">
+                    <i class="bi bi-check-circle-fill me-1"></i>
+                    <%= I18n.t(:active) %>
+                  </span>
+                <% else %>
+                  <span class="badge products-show-status-inactive">
+                    <i class="bi bi-x-circle-fill me-1"></i>
+                    <%= I18n.t(:inactive) %>
+                  </span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Description -->
+          <div class="products-show-description">
+            <h3 class="products-show-section-title">
+              <i class="bi bi-card-text me-2"></i>
+              <%= I18n.t(:description, scope: %i[activerecord attributes product]) %>
+            </h3>
+            <p class="products-show-description-text"><%= @product.description %></p>
+          </div>
+
+          <!-- Product Price -->
+          <div class="products-show-price-section">
+            <h3 class="products-show-section-title">
+              <i class="bi bi-tag-fill me-2"></i>
+              <%= I18n.t(:price, scope: %i[activerecord attributes product]) %>
+            </h3>
+            <div class="products-show-price">
+              <%= number_to_currency(@product.price) %>
+            </div>
+          </div>
+
+          <!-- Product Metadata -->
+          <div class="products-show-metadata">
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <div class="products-show-meta-item">
+                  <span class="products-show-meta-label">
+                    <i class="bi bi-calendar-plus me-1"></i>
+                    <%= I18n.t(:created_at, scope: %i[activerecord attributes product]) %>
+                  </span>
+                  <span class="products-show-meta-value">
+                    <%= @product&.created_at&.strftime(I18n.t(:datetime_format)) %>
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="products-show-meta-item">
+                  <span class="products-show-meta-label">
+                    <i class="bi bi-pencil-square me-1"></i>
+                    <%= I18n.t(:updated_at, scope: %i[activerecord attributes product]) %>
+                  </span>
+                  <span class="products-show-meta-value">
+                    <%= @product&.updated_at&.strftime(I18n.t(:datetime_format)) %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="products-show-actions">
+            <%= link_to main_products_path, class: "btn btn-outline-secondary products-show-btn-back" do %>
+              <i class="bi bi-arrow-left me-2"></i>
+              <%= I18n.t(:return) %>
+            <% end %>
+
+            <%= link_to edit_main_product_path(@product), class: "btn btn-primary products-show-btn-edit" do %>
+              <i class="bi bi-pencil-square me-2"></i>
+              <%= I18n.t(:edit) %>
+            <% end %>
+
+            <%= status_toggle_button(@product) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imageModalLabel"><%= @product.name %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
           <%= image_tag(
             @product.image_url,
             alt: I18n.t(:alt_image, scope: %i[activerecord], model: @product.model_name.human),
-            class: "card-img-top mx-auto standard-image-size-product"
+            class: "img-fluid"
           ) %>
-          <div class="card-body">
-            <h5 class="card-title"><%= @product.name %></h5>
-            <p class="card-text"><%= @product.description %></p>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item"><%= I18n.t(:price, scope: %i[activerecord attributes product]) %>: <%= number_to_currency(@product.price) %></li>
-            <li class="list-group-item"><%= I18n.t(:status, scope: %i[activerecord attributes product]) %>:
-              <% if @product.status == "active" %>
-                <span class="text-success border rounded border-success px-2 bg-success-subtle"><%= I18n.t(:active) %></span>
-              <% else %>
-                <span class="text-danger border rounded border-danger px-2 bg-danger-subtle"><%= I18n.t(:inactive) %></span>
-              <% end %>
-            </li>
-          </ul>
-          <div class="card-body text-center">
-            <%= link_to I18n.t(:return), main_products_path, class: "btn btn-secondary ms-1" %>
-            <%= link_to I18n.t(:edit), edit_main_product_path(@product), class: "btn btn-primary" %>
-            <%= status_toggle_button(@product) %>
-          </div>
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { CustomerTomSelect } from '../../shared/customer-tom-select.js';
 import { FilterManager } from '../../shared/filter-manager.js';
 
 export class SalesFilters {
@@ -6,41 +7,34 @@ export class SalesFilters {
   }
 
   init() {
-    const salesContainer = document.querySelector('#sales');
+    const salesContainer = document.querySelector('#sales-grid');
     if (!salesContainer) return;
 
     this.initCustomerSelect();
 
     this.filterManager = new FilterManager({
-      container: '#sales .container',
-      items: '.card.border-info',
+      container: '#sales-grid',
+      items: '.sales-index-card',
       noResultsMessage: this.getNoResultsMessage(),
-      noResultsIcon: 'bi-cart-x',
+      noResultsIcon: 'bi-receipt',
+      cssPrefix: 'sales-index-',
       filters: [
         {
           input: '#search_customers',
           type: 'tomselect-multiple',
           getText: (item) => {
-            const customerCell = item.querySelector('td:nth-child(2)');
-            return customerCell ? customerCell.textContent.split(': ')[1] || '' : '';
+            const customerName = item.querySelector('.sales-index-customer-name');
+            return customerName ? customerName.textContent.trim() : '';
           },
           matchType: 'includes'
         },
         {
           input: '#search_date',
-          getText: (item) => {
-            const dateCell = item.querySelector('td:nth-child(1)');
-            if (!dateCell) return '';
-
-            const dateText = dateCell.textContent.split(': ')[1];
-            if (!dateText) return '';
-
-            const [day, month, year] = dateText.split('/');
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-          },
+          attribute: 'data-sale-date',
           matchType: 'equals'
         }
-      ]
+      ],
+      onFilter: (visibleCount) => this.updateSalesCount(visibleCount)
     });
   }
 
@@ -49,38 +43,21 @@ export class SalesFilters {
     if (!selectElement) return;
 
     const customerNames = this.getUniqueCustomerNames();
+    const tomSelectInstance = CustomerTomSelect.createFilterSelect(selectElement, customerNames);
 
-    customerNames.forEach(name => {
-      const option = document.createElement('option');
-      option.value = name;
-      option.textContent = name;
-      selectElement.appendChild(option);
-    });
-
-    new window.TomSelect(selectElement, {
-      plugins: ['remove_button'],
-      placeholder: selectElement.getAttribute('data-placeholder') || 'Selecione clientes...',
-      allowEmptyOption: true,
-      maxItems: null,
-      create: false,
-      searchField: ['text'],
-      sortField: {
-        field: 'text',
-        direction: 'asc'
-      }
-    });
+    selectElement.tomselect = tomSelectInstance;
   }
 
   getUniqueCustomerNames() {
     const customerNames = new Set();
-    const salesCards = document.querySelectorAll('#sales .card.border-info');
+    const salesCards = document.querySelectorAll('.sales-index-card');
 
     salesCards.forEach(card => {
-      const customerCell = card.querySelector('td:nth-child(2)');
-      if (customerCell) {
-        const customerName = customerCell.textContent.split(': ')[1];
+      const customerNameElement = card.querySelector('.sales-index-customer-name');
+      if (customerNameElement) {
+        const customerName = customerNameElement.textContent.trim();
         if (customerName) {
-          customerNames.add(customerName.trim());
+          customerNames.add(customerName);
         }
       }
     });
@@ -114,6 +91,18 @@ export class SalesFilters {
   removeFilter(inputSelector) {
     if (this.filterManager) {
       this.filterManager.removeFilter(inputSelector);
+    }
+  }
+
+  updateSalesCount(visibleCount) {
+    const salesCountElement = document.querySelector('#sales-count');
+    if (salesCountElement) {
+      salesCountElement.classList.add('updating');
+      salesCountElement.textContent = visibleCount;
+
+      setTimeout(() => {
+        salesCountElement.classList.remove('updating');
+      }, 200);
     }
   }
 }

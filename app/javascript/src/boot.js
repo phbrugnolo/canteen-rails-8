@@ -2,12 +2,13 @@ import { Sidebar } from '../shared/sidebar';
 import { SalesFilters } from '../misc/filters/sales-filter';
 import { ProductsFilters } from '../misc/filters/products-filter';
 import { CustomersFilters } from '../misc/filters/customers-filter';
+import { Tooltip } from 'bootstrap';
 
 import { initializeConfirmationSystem, reinitializeConfirmations } from './confirmation-decorator';
 
 class App {
   constructor() {
-    this.initializeComponents();
+    if (window.canteen) this.initializeComponents();
     this.setupGlobalHelpers();
   }
 
@@ -15,6 +16,7 @@ class App {
     new Sidebar();
     this.initializeFilters();
     initializeConfirmationSystem();
+    this.initializeTooltips();
     this.setupMutationObserver();
   }
 
@@ -33,6 +35,25 @@ class App {
     }
   }
 
+  initializeTooltips(container = document) {
+    const existingTooltips = container.querySelectorAll('[data-bs-toggle="tooltip"]');
+    existingTooltips.forEach(element => {
+      const tooltipInstance = Tooltip.getInstance(element);
+      if (tooltipInstance) {
+        tooltipInstance.dispose();
+      }
+    });
+
+    const tooltipTriggerList = container.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach(tooltipTriggerEl => {
+      new Tooltip(tooltipTriggerEl);
+    });
+  }
+
+  reinitializeTooltips(container = document) {
+    this.initializeTooltips(container);
+  }
+
   setupMutationObserver() {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -40,6 +61,7 @@ class App {
           mutation.addedNodes.forEach((node) => {
             if (node.nodeType === Node.ELEMENT_NODE) {
               reinitializeConfirmations(node);
+              this.reinitializeTooltips(node);
             }
           });
         }
@@ -57,6 +79,7 @@ class App {
   setupGlobalHelpers() {
     window.App = {
       reinitializeConfirmations: reinitializeConfirmations,
+      reinitializeTooltips: (container = document) => this.reinitializeTooltips(container),
       showNotification: (message, type = 'info') => {
         if (window.showConfirmDialog) {
           window.showConfirmDialog({
@@ -85,16 +108,21 @@ class App {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  new App();
+  const app = new App();
+  window.canteenApp = app;
 });
 
 document.addEventListener('turbo:load', () => {
   reinitializeConfirmations();
+  if (window.canteenApp) {
+    window.canteenApp.reinitializeTooltips();
+  }
 });
 
 window.addEventListener('pageshow', (event) => {
   if (event.persisted) {
     reinitializeConfirmations();
+    if (window.canteenApp) window.canteenApp.reinitializeTooltips();
   }
 });
 

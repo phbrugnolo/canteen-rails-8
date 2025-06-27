@@ -1,0 +1,852 @@
+// ===========================================
+// VARIABLES
+// ===========================================
+$products-primary: #28a745;
+$products-primary-hover: #218838;
+$products-gradient: linear-gradient(135deg, $products-primary 0%, $products-primary-hover 100%);
+$products-light: rgba(40, 167, 69, 0.1);
+
+// Component-specific variables
+$product-card-width: 280px;
+$product-image-height: 200px;
+$product-image-table-size: 60px;
+$table-font-size: 0.95rem;
+
+// ===========================================
+// MIXINS
+// ===========================================
+@mixin products-index-transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+@mixin products-index-hover-effect($translateY: -4px) {
+  transform: translateY($translateY);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+@mixin products-index-card-style {
+  background: $color-white;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-sm;
+  border: 1px solid $color-border;
+  @include products-index-transition();
+}
+
+@mixin button-base {
+  border: none;
+  border-radius: $border-radius-md;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  @include products-index-transition();
+}
+
+@mixin section-header {
+  font-weight: 600;
+  color: $color-text-primary;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  .icon {
+    color: $products-primary;
+  }
+}
+
+// ===========================================
+// ANIMATIONS
+// ===========================================
+@keyframes products-index-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes products-card-slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+// ===========================================
+// MAIN CONTAINER
+// ===========================================
+.products-index-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: $spacing-lg;
+  animation: products-index-fadeInUp 0.6s ease-out;
+}
+
+// ===========================================
+// PAGE HEADER
+// ===========================================
+.products-index-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 2px solid $color-border;
+}
+
+.products-index-title-section {
+  flex: 1;
+}
+
+.products-index-title {
+  @include section-header;
+  font-size: 2.5rem;
+  color: $products-primary;
+  margin-bottom: $spacing-sm;
+
+  .products-index-title-icon {
+    font-size: 2.2rem;
+    background: $products-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.products-index-subtitle {
+  font-size: 1.1rem;
+  color: $color-text-secondary;
+  margin: 0;
+}
+
+.products-index-actions {
+  display: flex;
+  gap: $spacing-md;
+}
+
+// ===========================================
+// BUTTONS
+// ===========================================
+.products-index-btn-primary {
+  @include button-base;
+  background: $products-gradient;
+  color: $color-white;
+  padding: $spacing-sm $spacing-lg;
+
+  &:hover {
+    color: $color-white;
+    @include products-index-hover-effect(-2px);
+  }
+
+  .products-index-btn-icon {
+    font-size: 1.1rem;
+  }
+}
+
+.products-index-btn-action {
+  @include button-base;
+  padding: $spacing-xs $spacing-sm;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid;
+
+  &.products-index-btn-view {
+    background: $color-white;
+    color: $products-primary;
+    border-color: $products-primary;
+
+    &:hover {
+      background: $products-primary;
+      color: $color-white;
+      transform: translateY(-1px);
+    }
+  }
+
+  &.products-index-btn-edit {
+    background: $color-white;
+    color: #ffc107;
+    border-color: #ffc107;
+
+    &:hover {
+      background: #ffc107;
+      color: $color-white;
+      transform: translateY(-1px);
+    }
+  }
+
+  .products-index-btn-action-icon {
+    font-size: 0.8rem;
+  }
+}
+
+// ===========================================
+// VIEW TOGGLE BUTTON
+// ===========================================
+.products-index-view-toggle {
+  @include button-base;
+  background: $color-white;
+  color: $products-primary;
+  border: 1px solid $products-primary;
+  padding: $spacing-xs $spacing-md;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: $products-primary;
+    color: $color-white;
+    transform: translateY(-1px);
+  }
+
+  i {
+    font-size: 1rem;
+  }
+
+  span {
+    font-weight: 500;
+  }
+}
+
+// ===========================================
+// FILTERS SECTION
+// ===========================================
+.products-index-filters-card {
+  @include products-index-card-style;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-xl;
+}
+
+.products-index-filters-header {
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-md;
+  border-bottom: 1px solid $color-border;
+}
+
+.products-index-filters-title {
+  @include section-header;
+  font-size: 1.3rem;
+
+  .products-index-filters-icon {
+    font-size: 1.2rem;
+  }
+}
+
+.products-index-filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: $spacing-lg;
+}
+
+.products-index-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.products-index-filter-label {
+  font-weight: 600;
+  color: $color-text-primary;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  .products-index-filter-label-icon {
+    color: $products-primary;
+    font-size: 1rem;
+  }
+}
+
+.products-index-filter-input,
+.products-index-filter-select {
+  padding: $spacing-sm $spacing-md;
+  border: 2px solid $color-border;
+  border-radius: $border-radius-md;
+  font-size: 1rem;
+  @include products-index-transition();
+
+  &:focus {
+    outline: none;
+    border-color: $products-primary;
+    box-shadow: 0 0 0 3px $products-light;
+  }
+
+  &:hover {
+    border-color: lighten($products-primary, 20%);
+  }
+
+  &::placeholder {
+    color: $color-text-secondary;
+  }
+}
+
+// ===========================================
+// TABLE SECTION
+// ===========================================
+.products-index-table-card {
+  @include products-index-card-style;
+  overflow: hidden;
+}
+
+.products-index-table-header {
+  padding: $spacing-lg;
+  background: linear-gradient(135deg, $products-light 0%, rgba(33, 136, 56, 0.05) 100%);
+  border-bottom: 1px solid $color-border;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.products-index-table-title {
+  @include section-header;
+  font-size: 1.3rem;
+
+  .products-index-table-title-icon {
+    font-size: 1.2rem;
+  }
+}
+
+.products-index-table-actions {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.products-index-table-responsive {
+  overflow-x: auto;
+}
+
+// ===========================================
+// TABLE STRUCTURE
+// ===========================================
+.products-index-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $table-font-size;
+  display: table;
+
+  // Table structure elements
+  .products-index-thead {
+    display: table-header-group;
+    background: $color-light-gray;
+  }
+
+  .products-index-tbody {
+    display: table-row-group;
+  }
+
+  .products-index-tr {
+    display: table-row;
+    @include products-index-transition();
+    animation: products-index-fadeInUp 0.4s ease-out;
+    animation-fill-mode: both;
+
+    &:hover {
+      background: $products-light;
+    }
+
+    // Staggered animation for rows
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.05}s;
+      }
+    }
+  }
+
+  // Table cell base styles
+  .products-index-th,
+  .products-index-td {
+    display: table-cell;
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $color-border;
+    vertical-align: middle;
+  }
+
+  // Header specific styles
+  .products-index-th {
+    text-align: left;
+    font-weight: 600;
+    color: $color-text-primary;
+    border-bottom: 2px solid $color-border;
+    white-space: nowrap;
+
+    .products-index-th-icon {
+      margin-right: $spacing-sm;
+      color: $products-primary;
+    }
+  }
+
+  // Column widths
+  .products-index-th-image,
+  .products-index-td-image {
+    width: 100px;
+    min-width: 100px;
+  }
+
+  .products-index-th-name,
+  .products-index-td-name {
+    width: 40%;
+    min-width: 200px;
+  }
+
+  .products-index-th-price,
+  .products-index-td-price {
+    width: 150px;
+    min-width: 150px;
+  }
+
+  .products-index-th-status,
+  .products-index-td-status {
+    width: 150px;
+    min-width: 150px;
+  }
+
+  .products-index-th-actions,
+  .products-index-td-actions {
+    width: 200px;
+    min-width: 200px;
+  }
+}
+
+// ===========================================
+// TABLE CELL CONTENT
+// ===========================================
+.products-index-product-image-container {
+  width: $product-image-table-size;
+  height: $product-image-table-size;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  background: $color-light-gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $box-shadow-sm;
+
+  .products-index-product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    @include products-index-transition();
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.products-index-product-info {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  min-width: 0;
+  width: 100%;
+}
+
+.products-index-product-details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  min-width: 0;
+  overflow: hidden;
+
+  .products-index-product-name,
+  .products-index-product-description {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.products-index-product-name {
+  font-weight: 600;
+  color: $color-text-primary;
+  line-height: 1.3;
+}
+
+.products-index-product-description {
+  font-size: 0.85rem;
+  color: $color-text-secondary;
+  line-height: 1.4;
+}
+
+.products-index-product-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: $products-primary;
+}
+
+// ===========================================
+// STATUS BADGES
+// ===========================================
+.products-index-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-pill;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  .products-index-status-icon {
+    font-size: 0.9rem;
+  }
+
+  &.products-index-status-active {
+    background: $color-success-light;
+    color: $color-success;
+    border: 1px solid rgba(25, 135, 84, 0.2);
+
+    .products-index-status-icon {
+      color: $color-success;
+    }
+  }
+
+  &.products-index-status-inactive {
+    background: rgba(220, 53, 69, 0.1);
+    color: $color-danger;
+    border: 1px solid rgba(220, 53, 69, 0.2);
+
+    .products-index-status-icon {
+      color: $color-danger;
+    }
+  }
+}
+
+// ===========================================
+// ACTION BUTTONS
+// ===========================================
+.products-index-action-buttons {
+  display: flex;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+  align-items: center;
+
+  // Botões específicos para tabela (apenas ícones)
+  .products-index-table & {
+    gap: $spacing-xs;
+
+    .products-index-btn-action {
+      min-width: 32px;
+      width: 32px;
+      height: 32px;
+      padding: $spacing-xs;
+      justify-content: center;
+
+      .products-index-btn-action-icon {
+        font-size: 0.9rem;
+        margin: 0;
+      }
+    }
+  }
+
+  .btn-status-toggle {
+    &.products-status-activate,
+    &.products-status-deactivate {
+      @include button-base;
+      padding: $spacing-xs $spacing-sm;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 1px solid;
+
+      .btn-icon {
+        font-size: 0.8rem;
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+
+      .products-index-table & {
+        padding: $spacing-xs;
+        min-width: 32px;
+        width: 32px;
+        height: 32px;
+        justify-content: center;
+
+        .btn-icon {
+          margin: 0;
+        }
+      }
+    }
+
+    &.products-status-activate {
+      background: $color-white;
+      color: $color-success;
+      border-color: $color-success;
+
+      &:hover {
+        background: $color-success;
+        color: $color-white;
+        transform: translateY(-1px);
+      }
+    }
+
+    &.products-status-deactivate {
+      background: $color-white;
+      color: $color-danger;
+      border-color: $color-danger;
+
+      &:hover {
+        background: $color-danger;
+        color: $color-white;
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+// ===========================================
+// GRID VIEW (LEGACY SUPPORT)
+// ===========================================
+.products-index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($product-card-width, 1fr));
+  gap: $spacing-xl;
+  padding: $spacing-md;
+
+  // Better spacing between cards
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+// ===========================================
+// PRODUCT CARDS (FOR GRID VIEW)
+// ===========================================
+.products-index-product-card {
+  @include products-index-card-style;
+  overflow: hidden;
+  animation: products-card-slideIn 0.5s ease-out;
+  animation-fill-mode: both;
+
+  &:hover {
+    @include products-index-hover-effect();
+  }
+
+  // Staggered animation for cards
+  @for $i from 1 through 20 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+.products-index-product-image {
+  position: relative;
+  height: $product-image-height;
+  overflow: hidden;
+  background: $color-light-gray;
+
+  .products-index-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    @include products-index-transition();
+  }
+
+  .products-index-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    @include products-index-transition();
+  }
+
+  &:hover {
+    .products-index-image {
+      transform: scale(1.05);
+    }
+
+    .products-index-image-overlay {
+      opacity: 1;
+    }
+  }
+}
+
+.products-index-quick-actions {
+  display: flex;
+  gap: $spacing-sm;
+
+  .products-index-quick-btn {
+    background: $color-white;
+    border: none;
+    border-radius: $border-radius-circle;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $products-primary;
+    @include products-index-transition();
+
+    &:hover {
+      background: $products-primary;
+      color: $color-white;
+      transform: scale(1.1);
+    }
+
+    .icon {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.products-index-product-body {
+  padding: $spacing-lg;
+}
+
+.products-index-product-header {
+  margin-bottom: $spacing-md;
+}
+
+.products-index-product-actions {
+  display: flex;
+  gap: $spacing-sm;
+  padding-top: $spacing-md;
+  border-top: 1px solid $color-border;
+  flex-wrap: wrap;
+
+  // Estilos específicos para botões na grid view
+  .btn-status-toggle {
+    &.products-status-activate,
+    &.products-status-deactivate {
+      // Seguindo o mesmo padrão dos botões view/edit na grid
+      @include button-base;
+      padding: $spacing-xs $spacing-sm;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 1px solid;
+
+      .btn-icon {
+        font-size: 0.8rem;
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+
+    &.products-status-activate {
+      background: $color-white;
+      color: $color-success;
+      border-color: $color-success;
+
+      &:hover {
+        background: $color-success;
+        color: $color-white;
+        transform: translateY(-1px);
+      }
+    }
+
+    &.products-status-deactivate {
+      background: $color-white;
+      color: $color-danger;
+      border-color: $color-danger;
+
+      &:hover {
+        background: $color-danger;
+        color: $color-white;
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+// ===========================================
+// EMPTY STATE
+// ===========================================
+.products-index-empty-state {
+  text-align: center;
+  padding: $spacing-xxl;
+  color: $color-text-secondary;
+
+  .products-index-empty-icon {
+    font-size: 4rem;
+    color: $products-primary;
+    margin-bottom: $spacing-lg;
+    opacity: 0.5;
+  }
+
+  .products-index-empty-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $color-text-primary;
+    margin-bottom: $spacing-sm;
+  }
+
+  .products-index-empty-description {
+    font-size: 1rem;
+    margin-bottom: $spacing-xl;
+  }
+}
+
+// ===========================================
+// FILTER STATES
+// ===========================================
+.products-index-filter-item-visible {
+  display: table-row !important;
+}
+
+.products-index-filter-item-hidden {
+  display: none !important;
+}
+
+.products-index-filter-no-results-visible {
+  display: block !important;
+}
+
+.products-index-filter-no-results-hidden {
+  display: none !important;
+}
+
+// ===========================================
+// LOADING STATES & RESPONSIVE DESIGN
+// ===========================================
+.products-index-skeleton-row {
+  background: linear-gradient(90deg,
+    transparent,
+    $products-light,
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+  height: 60px;
+}
+
+// ===========================================
+// PRINT STYLES
+// ===========================================
+@media print {
+  .products-index-action-buttons,
+  .products-index-filters-card,
+  .products-index-actions,
+  .products-index-view-toggle {
+    display: none !important;
+  }
+
+  .products-index-table {
+    font-size: 0.8rem;
+  }
+
+  .products-index-container {
+    padding: 0;
+  }
+}

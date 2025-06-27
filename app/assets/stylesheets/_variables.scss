@@ -1,0 +1,125 @@
+// ===========================================
+// GLOBAL VARIABLES
+// ===========================================
+// Central location for all color, spacing, and design tokens
+// to prevent conflicts across different stylesheets
+
+// ===========================================
+// COLOR PALETTE
+// ===========================================
+
+// Primary colors for different sections
+$color-dashboard-primary: #2c3e50;
+$color-sale-primary: #0d6efd;
+$color-auth-primary: #0d6efd;
+
+// Semantic colors
+$color-success: #198754;
+$color-success-hover: #157347;
+$color-success-gradient: #20c997;
+$color-success-light: #e8f5e8;
+$color-success-bg: #f8fff8;
+
+$color-danger: #dc3545;
+$color-warning: #ffc107;
+$color-warning-bg: #fffbf0;
+
+// Neutral colors
+$color-secondary: #6c757d;
+$color-light-gray: #f8f9fa;
+$color-medium-gray: #e9ecef;
+$color-dark-gray: #495057;
+$color-border: #dee2e6;
+$color-border-hover: #adb5bd;
+$color-white: #ffffff;
+$color-black: #000000;
+
+// Text colors
+$color-text-primary: #212529;
+$color-text-secondary: #6c757d;
+
+// ===========================================
+// SPACING SYSTEM
+// ===========================================
+$spacing-xs: 0.25rem;   // 4px
+$spacing-sm: 0.5rem;    // 8px
+$spacing-md: 1rem;      // 16px
+$spacing-lg: 1.5rem;    // 24px
+$spacing-xl: 2rem;      // 32px
+$spacing-xxl: 3rem;     // 48px
+
+// ===========================================
+// BORDER RADIUS
+// ===========================================
+$border-radius-sm: 0.25rem;    // 4px
+$border-radius-md: 0.5rem;     // 8px
+$border-radius-lg: 0.75rem;    // 12px
+$border-radius-xl: 1rem;       // 16px
+$border-radius-pill: 50rem;    // pill shape
+$border-radius-circle: 50%;    // perfect circle
+
+// ===========================================
+// SHADOWS
+// ===========================================
+$box-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+$box-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+$box-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+$box-shadow-focus: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+
+// ===========================================
+// TRANSITIONS
+// ===========================================
+$transition-base: 0.3s ease;
+$transition-fast: 0.15s ease;
+$transition-slow: 0.5s ease;
+
+// ===========================================
+// TYPOGRAPHY
+// ===========================================
+$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$font-size-xs: 0.75rem;    // 12px
+$font-size-sm: 0.875rem;   // 14px
+$font-size-base: 1rem;     // 16px
+$font-size-lg: 1.25rem;    // 20px
+$font-size-xl: 1.5rem;     // 24px
+
+// ===========================================
+// Z-INDEX SCALE
+// ===========================================
+// Designed to work with Bootstrap 5.3.7 and other third-party libraries
+// Bootstrap uses: 1000, 1020, 1030, 1040, 1045, 1050, 1055, 1070, 1080, 1090
+// SweetAlert2 uses: 1060 (main container)
+// Tom Select uses: 10 (default), 1000 (Bootstrap theme)
+
+// Low-level z-index for background elements and basic layering
+$z-index-background: -1;        // Background pseudo-elements
+$z-index-base: 1;               // Base level above normal flow
+$z-index-content: 10;           // Content elements
+$z-index-overlay: 100;          // Small overlays, icons, indicators
+
+// Component-level z-index (below Bootstrap's range)
+$z-index-dropdown: 900;         // Custom dropdowns (below Bootstrap's 1000)
+$z-index-sticky: 950;           // Sticky elements (below Bootstrap's 1020)
+$z-index-fixed: 980;            // Fixed elements (below Bootstrap's 1030)
+
+// High-level z-index (above Bootstrap's range for when you need to override)
+$z-index-modal-backdrop: 1100;  // Above Bootstrap's modal (1055)
+$z-index-modal: 1110;           // Above Bootstrap's modal
+$z-index-popover: 1120;         // Above SweetAlert2 (1060) and Bootstrap's tooltip (1080)
+$z-index-tooltip: 1130;         // Above Bootstrap's toast (1090)
+$z-index-notification: 1200;    // For critical notifications
+$z-index-debug: 9999;           // For debugging overlays
+
+// ===========================================
+// BREAKPOINTS
+// ===========================================
+$breakpoint-xs: 576px;
+$breakpoint-sm: 768px;
+$breakpoint-md: 992px;
+$breakpoint-lg: 1200px;
+$breakpoint-xl: 1400px;

@@ -27,17 +27,22 @@ module ConfirmationHelper
       data_attrs[:enhanced] = true
     end
 
-    if options[:confirmation_config]
-      data_attrs[:confirmation_config] = options[:confirmation_config].to_json
-    end
-
+    data_attrs[:confirmation_config] = options[:confirmation_config].to_json if options[:confirmation_config]
     data_attrs[:confirmation_initialized] = false
 
-    content_tag :button, text, {
+    button_attrs = {
       type: "button",
       class: html_class,
       data: data_attrs
     }
+
+    if options[:tooltip]
+      button_attrs[:title] = options[:tooltip]
+      button_attrs[:data][:bs_toggle] = "tooltip"
+      button_attrs[:data][:bs_placement] = options[:tooltip_placement] || "top"
+    end
+
+    content_tag :button, text, button_attrs
   end
 
   def enhanced_confirmation_button(text, url, action, options = {})
@@ -46,11 +51,12 @@ module ConfirmationHelper
 
   def activation_button(entity, options = {})
     entity_name = entity_name_for_confirmation(entity)
+    context_class = get_context_class(entity, "activate")
 
     default_options = {
       entity_name: entity_name,
       entity_type: entity.class.name.downcase,
-      class: "btn btn-success me-1",
+      class: "btn-status-toggle activate #{context_class}",
       title: I18n.t("confirmations.activate.title"),
       confirm_text: I18n.t("confirmations.activate.text", entity: entity_name),
       button_text: I18n.t("confirmations.activate.button"),
@@ -59,18 +65,27 @@ module ConfirmationHelper
       error_message: I18n.t("confirmations.activate.error", entity: entity_name)
     }
 
+    default_options[:tooltip] = I18n.t(:activate) if options[:icon_only]
     url = generate_activation_url(entity)
     method_name = options[:enhanced] ? :enhanced_confirmation_button : :confirmation_button
-    send(method_name, I18n.t(:activate), url, "activate", default_options.merge(options))
+
+    if options[:icon_only]
+      button_text = content_tag(:i, "", class: "bi bi-toggle-on btn-icon")
+    else
+      button_text = content_tag(:i, "", class: "bi bi-toggle-on btn-icon") + " " + I18n.t(:activate)
+    end
+
+    send(method_name, button_text.html_safe, url, "activate", default_options.merge(options))
   end
 
   def deactivation_button(entity, options = {})
     entity_name = entity_name_for_confirmation(entity)
+    context_class = get_context_class(entity, "deactivate")
 
     default_options = {
       entity_name: entity_name,
       entity_type: entity.class.name.downcase,
-      class: "btn btn-danger me-1",
+      class: "btn-status-toggle deactivate #{context_class}",
       title: I18n.t("confirmations.deactivate.title"),
       confirm_text: I18n.t("confirmations.deactivate.text", entity: entity_name),
       button_text: I18n.t("confirmations.deactivate.button"),
@@ -79,9 +94,17 @@ module ConfirmationHelper
       error_message: I18n.t("confirmations.deactivate.error", entity: entity_name)
     }
 
+    default_options[:tooltip] = I18n.t(:deactivate) if options[:icon_only]
     url = generate_deactivation_url(entity)
     method_name = options[:enhanced] ? :enhanced_confirmation_button : :confirmation_button
-    send(method_name, I18n.t(:deactivate), url, "deactivate", default_options.merge(options))
+
+    if options[:icon_only]
+      button_text = content_tag(:i, "", class: "bi bi-toggle-off btn-icon")
+    else
+      button_text = content_tag(:i, "", class: "bi bi-toggle-off btn-icon") + " " + I18n.t(:deactivate)
+    end
+
+    send(method_name, button_text.html_safe, url, "deactivate", default_options.merge(options))
   end
 
   def delete_button(entity, options = {})
@@ -90,7 +113,7 @@ module ConfirmationHelper
     default_options = {
       entity_name: entity_name,
       entity_type: entity.class.name.downcase,
-      class: "btn btn-danger",
+      class: "btn-secondary",
       method: "DELETE",
       title: I18n.t("confirmations.delete.title"),
       confirm_text: I18n.t("confirmations.delete.text", entity: entity_name),
@@ -106,7 +129,7 @@ module ConfirmationHelper
   end
 
   def status_toggle_button(entity, options = {})
-    if entity.status == "active"
+    if entity.active?
       deactivation_button(entity, options)
     else
       activation_button(entity, options)
@@ -177,13 +200,13 @@ module ConfirmationHelper
   def default_button_class(action)
     case action
     when "activate"
-      "btn btn-activate me-1"
+      "btn-status-toggle activate"
     when "deactivate"
-      "btn btn-deactivate me-1"
+      "btn-status-toggle deactivate"
     when "delete"
-      "btn btn-delete"
+      "btn-secondary"
     else
-      "btn btn-primary"
+      "btn-primary"
     end
   end
 
@@ -220,6 +243,20 @@ module ConfirmationHelper
       deactivate_main_customer_path(entity)
     else
       polymorphic_path([ :deactivate ] + entity_path_parts(entity) + [ entity ])
+    end
+  end
+
+  def get_context_class(entity, action)
+    controller_name = controller.controller_name
+    entity_type = entity.class.name.downcase
+
+    case controller_name
+    when "products"
+      "products-status-#{action}"
+    when "customers"
+      "customers-status-#{action}"
+    else
+      "#{entity_type}-status-#{action}"
     end
   end
 end

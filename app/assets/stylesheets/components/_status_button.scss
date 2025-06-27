@@ -1,0 +1,218 @@
+// ===========================================
+// STATUS BUTTON STYLES
+// ===========================================
+
+// ===========================================
+// VARIABLES
+// ===========================================
+$status-btn-activate-color: $color-success;
+$status-btn-activate-hover: $color-success-hover;
+$status-btn-activate-gradient: linear-gradient(135deg, $status-btn-activate-color 0%, $color-success-gradient 100%);
+
+// ===========================================
+// MIXINS
+// ===========================================
+@mixin status-btn-transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+@mixin status-btn-base {
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  @include status-btn-transition();
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+// ===========================================
+// STATUS TOGGLE BUTTON STYLES
+// ===========================================
+
+// Context-specific styles for products
+.btn-status-toggle {
+  // Base styles
+  @include status-btn-base;
+
+  &.activate {
+    background: $status-btn-activate-gradient;
+    color: $color-white;
+    border-color: $status-btn-activate-color;
+
+    &:hover {
+      background: linear-gradient(135deg, $status-btn-activate-hover 0%, $status-btn-activate-color 100%);
+      color: $color-white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($status-btn-activate-color, 0.3);
+    }
+  }
+
+  &.deactivate {
+    background: $color-danger;
+    color: $color-white;
+    border-color: $color-danger;
+
+    &:hover {
+      background: darken($color-danger, 10%);
+      color: $color-white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($color-danger, 0.3);
+    }
+  }
+
+  &.products-status-activate,
+  &.products-status-deactivate {
+    @include status-btn-base;
+    padding: $spacing-sm $spacing-md;
+    font-size: inherit;
+    font-weight: 500;
+    border: 1px solid;
+
+    .btn-icon {
+      font-size: 0.9rem;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  &.products-status-activate {
+    background: $color-white !important;
+    color: $color-success !important;
+    border-color: $color-success !important;
+
+    &:hover {
+      background: $color-success !important;
+      color: $color-white !important;
+      transform: translateY(-1px);
+      box-shadow: none;
+    }
+  }
+
+  &.products-status-deactivate {
+    background: $color-white !important;
+    color: $color-danger !important;
+    border-color: $color-danger !important;
+
+    &:hover {
+      background: $color-danger !important;
+      color: $color-white !important;
+      transform: translateY(-1px);
+      box-shadow: none;
+    }
+  }
+
+  // Context-specific styles for customers (mantém o estilo atual)
+  &.customers-status-activate,
+  &.customers-status-deactivate {
+    font-size: 0.9rem;
+    padding: $spacing-sm $spacing-md;
+
+    .btn-icon {
+      font-size: 0.9rem;
+    }
+  }
+
+  &.customers-status-activate {
+    background: $status-btn-activate-gradient;
+    color: $color-white;
+    border-color: $status-btn-activate-color;
+
+    &:hover {
+      background: linear-gradient(135deg, $status-btn-activate-hover 0%, $status-btn-activate-color 100%);
+      color: $color-white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($status-btn-activate-color, 0.3);
+    }
+  }
+
+  &.customers-status-deactivate {
+    background: $color-danger;
+    color: $color-white;
+    border-color: $color-danger;
+
+    &:hover {
+      background: darken($color-danger, 10%);
+      color: $color-white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($color-danger, 0.3);
+    }
+  }
+
+  .btn-icon {
+    font-size: 0.9rem;
+  }
+}
+
+// ===========================================
+// ADDITIONAL UTILITY CLASSES FOR CUSTOMIZATION
+// ===========================================
+
+// Compact size variant for table contexts
+.btn-status-toggle.btn-compact {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+
+  .btn-icon {
+    font-size: 0.65rem;
+    margin-right: 0.2rem;
+  }
+}
+
+// Minimal style variant
+.btn-status-toggle.btn-minimal {
+  background: transparent !important;
+  border: 1px solid;
+  font-weight: 500;
+
+  &.activate {
+    color: $status-btn-activate-color;
+    border-color: $status-btn-activate-color;
+
+    &:hover {
+      background: $status-btn-activate-color !important;
+      color: $color-white;
+    }
+  }
+
+  &.deactivate {
+    color: $color-danger;
+    border-color: $color-danger;
+
+    &:hover {
+      background: $color-danger !important;
+      color: $color-white;
+    }
+  }
+}
+
+// Rounded variant
+.btn-status-toggle.btn-rounded {
+  border-radius: 20px;
+}
+
+// Custom size variants
+.btn-status-toggle.btn-xs {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.3rem;
+
+  .btn-icon {
+    font-size: 0.6rem;
+  }
+}
+
+.btn-status-toggle.btn-sm {
+  font-size: 0.8rem;
+  padding: 0.2rem 0.4rem;
+
+  .btn-icon {
+    font-size: 0.7rem;
+  }
+}

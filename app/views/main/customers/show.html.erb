@@ -1,108 +1,400 @@
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true"><%= I18n.t(:profile) %></button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="purchases-tab" data-bs-toggle="tab" data-bs-target="#purchases-tab-pane" type="button" role="tab" aria-controls="purchases-tab-pane" aria-selected="false"><%= I18n.t(:purchases) %></button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents-tab-pane" type="button" role="tab" aria-controls="documents-tab-pane" aria-selected="false"><%= I18n.t(:documents) %></button>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-    <p style="color: green"><%= notice %></p>
-    <div class="card px-4 py-5 d-flex justify-content-center" style="background-color: #EEF5FF; margin-top: 2rem">
-      <div class="container">
-        <div class="d-flex w-100 h-100 justify-content-center align-items-center">
-          <div class="m-auto">
-            <div class="card" style="width: 720px;">
-              <div class="row g-0">
-                <div class="col-md-4 d-flex justify-content-center align-items-center">
-                  <%= image_tag(
-                    @customer.avatar.attached? ? url_for(@customer.avatar) : asset_path("img-perfil.png"),
-                    alt: I18n.t(:alt_image, scope: %i[activerecord], model: @customer.model_name.human),
-                    class: "img-fluid rounded border border-secondary-subtle standard-image-size"
-                  ) %>
+<div class="customers-show-container">
+  <!-- Success/Notice Alert -->
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show customers-show-alert" role="alert">
+      <i class="bi bi-check-circle-fill"></i>
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <!-- Page Header -->
+  <div class="customers-show-header">
+    <div class="customers-show-title-section">
+      <h1 class="customers-show-title">
+        <i class="bi bi-person-fill customers-show-title-icon"></i>
+        <span class="customers-show-title-name"><%= @customer.name %></span>
+      </h1>
+      <p class="customers-show-subtitle"><%= I18n.t(:customer_show_subtitle) %></p>
+    </div>
+    <div class="customers-show-actions">
+      <%= link_to main_customers_path, class: "customers-show-btn-secondary" do %>
+        <i class="bi bi-arrow-left customers-show-btn-icon"></i>
+        <%= I18n.t(:return) %>
+      <% end %>
+      <%= link_to edit_main_customer_path(@customer), class: "customers-show-btn-primary" do %>
+        <i class="bi bi-pencil customers-show-btn-icon"></i>
+        <%= I18n.t(:edit) %>
+      <% end %>
+      <%= status_toggle_button(@customer) %>
+    </div>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="customers-show-tabs-card">
+    <div class="customers-show-tabs">
+      <ul class="nav nav-pills" id="customerShowTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">
+            <i class="bi bi-person-circle"></i>
+            <%= I18n.t(:profile) %>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="purchases-tab" data-bs-toggle="tab" data-bs-target="#purchases-tab-pane" type="button" role="tab" aria-controls="purchases-tab-pane" aria-selected="false">
+            <i class="bi bi-cart-fill"></i>
+            <%= I18n.t(:purchases) %>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents-tab-pane" type="button" role="tab" aria-controls="documents-tab-pane" aria-selected="false">
+            <i class="bi bi-file-earmark-text"></i>
+            <%= I18n.t(:documents) %>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="tab-content" id="customerShowTabContent">
+      <!-- Profile Tab -->
+      <div class="tab-pane fade show active customers-show-tab-pane" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        <div class="customers-show-profile-card">
+          <div class="customers-show-profile-hero">
+            <div class="customers-show-profile-avatar">
+              <%= image_tag(
+                @customer.avatar.attached? ? url_for(@customer.avatar) : asset_path("img-perfil.png"),
+                alt: I18n.t(:alt_image, scope: %i[activerecord], model: @customer.model_name.human),
+                class: "customers-show-avatar-image"
+              ) %>
+              <div class="customers-show-avatar-overlay">
+                <span class="customers-show-status-indicator customers-show-status-<%= @customer.active? ? 'active' : 'inactive' %>">
+                  <i class="bi bi-circle-fill"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="customers-show-profile-primary">
+              <h2 class="customers-show-profile-name"><%= @customer.name %></h2>
+              <div class="customers-show-profile-meta">
+                <span class="customers-show-matriculation">
+                  <i class="bi bi-hash customers-show-meta-icon"></i>
+                  <%= @customer.matriculation %>
+                </span>
+                <span class="customers-show-status-badge customers-show-status-<%= @customer.active? ? 'active' : 'inactive' %>">
+                  <i class="bi bi-toggle-<%= @customer.active? ? 'on' : 'off' %>"></i>
+                  <%= I18n.t(@customer.active? ? :active : :inactive) %>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="customers-show-profile-details">
+            <div class="customers-show-detail-grid">
+              <div class="customers-show-detail-item">
+                <div class="customers-show-detail-header">
+                  <i class="bi bi-person customers-show-detail-icon"></i>
+                  <label class="customers-show-detail-label">
+                    <%= I18n.t(:name, scope: %i[activerecord attributes customer]) %>
+                  </label>
                 </div>
-                <div class="col-md-8">
-                  <div class="card-body mt-2">
-                    <h5 class="card-title ms-1"><%= @customer.name %></h5>
-                    <ul class="list-group list-group-flush mt-2">
-                      <li class="list-group-item"><%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>: <%= @customer.matriculation %></li>
-                      <li class="list-group-item"><%= I18n.t(:status, scope: %i[activerecord attributes customer]) %>:
-                        <% if @customer.status == "active" %>
-                          <span class="text-success border rounded border-success px-2 bg-success-subtle"><%= I18n.t(:active) %></span>
-                        <% else %>
-                          <span class="text-danger border rounded border-danger px-2 bg-danger-subtle"><%= I18n.t(:inactive) %></span>
-                        <% end %>
-                      </li>
-                    </ul>
-                    <div class="card-body text-end" style="margin: 0px">
-                      <%= link_to I18n.t(:return), main_customers_path, class: "btn btn-secondary ms-1" %>
-                      <%= link_to I18n.t(:edit), edit_main_customer_path(@customer), class: "btn btn-primary" %>
-                      <%= status_toggle_button(@customer) %>
-                    </div>
+                <div class="customers-show-detail-content">
+                  <span class="customers-show-detail-value"><%= @customer.name %></span>
+                </div>
+              </div>
+
+              <div class="customers-show-detail-item">
+                <div class="customers-show-detail-header">
+                  <i class="bi bi-hash customers-show-detail-icon"></i>
+                  <label class="customers-show-detail-label">
+                    <%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>
+                  </label>
+                </div>
+                <div class="customers-show-detail-content">
+                  <span class="customers-show-detail-value customers-show-detail-value--code"><%= @customer.matriculation %></span>
+                </div>
+              </div>
+
+              <div class="customers-show-detail-item">
+                <div class="customers-show-detail-header">
+                  <i class="bi bi-calendar-check customers-show-detail-icon"></i>
+                  <label class="customers-show-detail-label">
+                    <%= I18n.t(:status, scope: %i[activerecord attributes customer]) %>
+                  </label>
+                </div>
+                <div class="customers-show-detail-content">
+                  <div class="customers-show-status-display">
+                    <span class="customers-show-status-indicator customers-show-status-<%= @customer.active? ? 'active' : 'inactive' %>">
+                      <i class="bi bi-circle-fill"></i>
+                    </span>
+                    <span class="customers-show-status-text">
+                      <%= I18n.t(@customer.active? ? :active : :inactive) %>
+                    </span>
                   </div>
+                </div>
+              </div>
+
+              <div class="customers-show-detail-item">
+                <div class="customers-show-detail-header">
+                  <i class="bi bi-clock customers-show-detail-icon"></i>
+                  <label class="customers-show-detail-label"><%= I18n.t(:created_at) %></label>
+                </div>
+                <div class="customers-show-detail-content">
+                  <span class="customers-show-detail-value customers-show-detail-value--muted">
+                    <%= @customer&.created_at&.strftime(I18n.t(:datetime_format)) %>
+                  </span>
+                </div>
+              </div>
+
+              <div class="customers-show-detail-item">
+                <div class="customers-show-detail-header">
+                  <i class="bi bi-clock customers-show-detail-icon"></i>
+                  <label class="customers-show-detail-label"><%= I18n.t(:updated_at) %></label>
+                </div>
+                <div class="customers-show-detail-content">
+                  <span class="customers-show-detail-value customers-show-detail-value--muted">
+                    <%= @customer&.updated_at&.strftime(I18n.t(:datetime_format)) %>
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="tab-pane fade" id="purchases-tab-pane" role="tabpanel" aria-labelledby="purchases-tab" tabindex="0">
-    <h1 class="mx-2 mt-2"><%= I18n.t(:recent_purchases) %></h1>
-    <hr>
-    <div class="card p-2 mt-4" style="background-color: #EEF5FF">
-      <div class="container">
-        <div class="row">
-          <% if @customer.sales.size > 0 %>
-            <% @customer.sales.order(created_at: :desc).each do |sale| %>
-              <div class="card border-info m-4 p-2 col-lg-6" style="position: relative;">
-                <table class="table mb-0 mt-1">
-                  <tr class="list-group list-group-flush table-row">
-                    <td><%= I18n.t(:date) %>: <%= sale.created_at.strftime("%d/%m/%Y") %></td>
-                    <td><%= I18n.t(:total_price) %>: <%= number_to_currency(sale.total_price) %></td>
-                    <td class="border-bottom-0 d-flex justify-content-end flex-column">
-                      <button class="btn btn-primary show-cart my-2"
-                              data-show-text="<%= I18n.t(:show_cart) %>"
-                              data-hide-text="<%= I18n.t(:hide_cart) %>">
-                        <%= I18n.t(:show_cart) %>
-                      </button>
-                    </td>
-                  </tr>
-                </table>
-                <table class="cart-table table border my-2 hidden table-wrapper-scroll-y rounded border-info" style="display: none; position: absolute; top: 0; right: -95%; width: 90%; margin-top: 30px; background-color: #fff; padding: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1);">
-                  <thead style="display: table; width: 100%; table-layout: fixed;">
-                    <tr>
-                      <th class="col-5"><%= I18n.t(:product, scope: %i[activerecord attributes sale]) %></th>
-                      <th class="col-3"><%= I18n.t(:price) %></th>
-                      <th class="col-4"><%= I18n.t(:quantity, scope: %i[activerecord attributes sale]) %></th>
-                    </tr>
-                  </thead>
-                  <tbody style="display: table; width: 100%; table-layout: fixed;">
-                    <% cart = JSON.parse(sale.cart) %>
-                    <% cart.each do |item| %>
-                      <tr>
-                        <td class="col-5"><%= item["name"] %></td>
-                        <td class="col-3"><%= number_to_currency(item["price"]) %></td>
-                        <td class="col-4 text-center"><%= item["quantity"] %></td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-                </table>
+
+      <!-- Purchases Tab -->
+      <div class="tab-pane fade customers-show-tab-pane" id="purchases-tab-pane" role="tabpanel" aria-labelledby="purchases-tab" tabindex="0">
+        <div class="customers-show-purchases-card">
+          <div class="customers-show-purchases-header">
+            <div class="customers-show-purchases-title-section">
+              <h3 class="customers-show-purchases-title">
+                <i class="bi bi-cart-check customers-show-purchases-icon"></i>
+                <%= I18n.t(:recent_purchases) %>
+              </h3>
+              <% if @customer.sales.size > 0 %>
+                <div class="customers-show-purchases-summary">
+                  <div class="customers-show-summary-stat">
+                    <i class="bi bi-bag-check customers-show-summary-icon"></i>
+                    <div class="customers-show-summary-content">
+                      <span class="customers-show-summary-value"><%= @customer.sales.count %></span>
+                      <span class="customers-show-summary-label">
+                        <%= pluralize(@customer.sales.count, I18n.t(:purchase_one), I18n.t(:purchase_other)) %>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="customers-show-summary-stat">
+                    <i class="bi bi-currency-dollar customers-show-summary-icon"></i>
+                    <div class="customers-show-summary-content">
+                      <span class="customers-show-summary-value">
+                        <%= number_to_currency(@customer.sales.sum(:total_price)) %>
+                      </span>
+                      <span class="customers-show-summary-label"><%= I18n.t(:total_spent) %></span>
+                    </div>
+                  </div>
+                  <div class="customers-show-summary-stat">
+                    <i class="bi bi-calendar3 customers-show-summary-icon"></i>
+                    <div class="customers-show-summary-content">
+                      <span class="customers-show-summary-value">
+                        <%= @customer.sales.order(:created_at).first&.created_at&.strftime(I18n.t(:month_year_format)) || "-" %>
+                      </span>
+                      <span class="customers-show-summary-label"><%= I18n.t(:first_purchase) %></span>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="customers-show-purchases-content">
+            <% if @customer.sales.size > 0 %>
+              <div class="customers-show-sales-timeline">
+                <% @customer.sales.order(created_at: :desc).each_with_index do |sale, index| %>
+                  <div class="customers-show-sale-card" data-index="<%= index %>">
+                    <div class="customers-show-timeline-connector">
+                      <div class="customers-show-timeline-dot">
+                        <i class="bi bi-cart-check"></i>
+                      </div>
+                      <% unless index == @customer.sales.count - 1 %>
+                        <div class="customers-show-timeline-line"></div>
+                      <% end %>
+                    </div>
+
+                    <div class="customers-show-sale-content">
+                      <div class="customers-show-sale-header">
+                        <div class="customers-show-sale-primary">
+                          <div class="customers-show-sale-date-section">
+                            <div class="customers-show-sale-date">
+                              <span class="customers-show-date-day">
+                                <%= sale.created_at.strftime("%d") %>
+                              </span>
+                              <div class="customers-show-date-details">
+                                <span class="customers-show-date-month">
+                                  <%= sale.created_at.strftime(I18n.t(:month_year_format)) %>
+                                </span>
+                                <span class="customers-show-date-time">
+                                  <%= sale.created_at.strftime(I18n.t(:hour_minute_format)) %>
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="customers-show-sale-badges">
+                              <% cart = JSON.parse(sale.cart) %>
+                              <span class="customers-show-badge customers-show-badge-items">
+                                <i class="bi bi-box"></i>
+                                <%= pluralize(cart.sum { |item| item["quantity"] }, I18n.t(:item_one), I18n.t(:item_other)) %>
+                              </span>
+                              <span class="customers-show-badge customers-show-badge-status">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <%= I18n.t(:completed) %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="customers-show-sale-total-section">
+                          <div class="customers-show-total-wrapper">
+                            <span class="customers-show-total-label"><%= I18n.t(:total) %></span>
+                            <span class="customers-show-total-value">
+                              <%= number_to_currency(sale.total_price) %>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="customers-show-sale-actions">
+                        <button class="customers-show-btn-primary show-cart"
+                                data-show-text="<%= I18n.t(:show_cart) %>"
+                                data-hide-text="<%= I18n.t(:hide_cart) %>">
+                          <i class="bi bi-eye customers-show-btn-icon"></i>
+                          <span class="customers-show-btn-text"><%= I18n.t(:show_cart) %></span>
+                          <i class="bi bi-chevron-down customers-show-btn-chevron"></i>
+                        </button>
+
+                        <div class="customers-show-action-buttons">
+                          <%= link_to main_sale_path(sale), class: "customers-show-purchases-btn-secondary", title: I18n.t(:view_details) do %>
+                            <i class="bi bi-info-circle"></i>
+                            <span><%= I18n.t(:details) %></span>
+                          <% end %>
+                        </div>
+                      </div>
+
+                      <div class="customers-show-cart-details hidden">
+                        <div class="customers-show-cart-header">
+                          <div class="customers-show-cart-title-wrapper">
+                            <h5 class="customers-show-cart-title">
+                              <i class="bi bi-basket2"></i>
+                              <%= I18n.t(:cart_items) %>
+                            </h5>
+                            <span class="customers-show-items-count-badge">
+                              <%= cart.length %> <%= I18n.t(:products) %>
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="customers-show-cart-body">
+                          <div class="customers-show-items-grid">
+                            <% cart.each_with_index do |item, item_index| %>
+                              <div class="customers-show-item-card">
+                                <div class="customers-show-item-header">
+                                  <h6 class="customers-show-item-name"><%= item["name"] %></h6>
+                                  <div class="customers-show-item-price-badge">
+                                    <%= number_to_currency(item["price"].to_f * item["quantity"].to_i) %>
+                                  </div>
+                                </div>
+
+                                <div class="customers-show-item-details">
+                                  <div class="customers-show-item-info">
+                                    <span class="customers-show-unit-price">
+                                      <%= number_to_currency(item["price"]) %> <%= I18n.t(:per_unit) %>
+                                    </span>
+                                  </div>
+                                  <div class="customers-show-quantity-display">
+                                    <span class="customers-show-quantity-label"><%= I18n.t(:quantity) %>:</span>
+                                    <span class="customers-show-quantity-value">
+                                      <%= item["quantity"] %>
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            <% end %>
+                          </div>
+
+                          <div class="customers-show-cart-footer">
+                            <div class="customers-show-summary-grid">
+                              <div class="customers-show-summary-item">
+                                <span class="customers-show-summary-label"><%= I18n.t(:total_items) %>:</span>
+                                <span class="customers-show-summary-value">
+                                  <%= cart.sum { |item| item["quantity"] } %>
+                                </span>
+                              </div>
+                              <div class="customers-show-summary-item">
+                                <span class="customers-show-summary-label"><%= I18n.t(:unique_products) %>:</span>
+                                <span class="customers-show-summary-value">
+                                  <%= cart.length %>
+                                </span>
+                              </div>
+                              <div class="customers-show-summary-item customers-show-summary-total">
+                                <span class="customers-show-summary-label"><%= I18n.t(:final_total) %>:</span>
+                                <span class="customers-show-summary-value">
+                                  <%= number_to_currency(sale.total_price) %>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="customers-show-empty-state">
+                <div class="customers-show-empty-illustration">
+                  <div class="customers-show-empty-circle">
+                    <i class="bi bi-cart-x customers-show-empty-icon"></i>
+                  </div>
+                  <div class="customers-show-empty-decoration"></div>
+                </div>
+                <div class="customers-show-empty-content">
+                  <h4 class="customers-show-empty-title"><%= I18n.t(:no_purchases_made) %></h4>
+                  <p class="customers-show-empty-description">
+                    <%= I18n.t(:no_purchases_made) %><br>
+                    <small><%= I18n.t(:purchases_will_appear_here) %></small>
+                  </p>
+                  <!-- <div class="customers-show-empty-actions">
+                    <button class="customers-show-btn-primary">
+                      <i class="bi bi-plus-circle"></i>
+                      Realizar Venda
+                    </button>
+                    <button class="customers-show-btn-secondary">
+                      <i class="bi bi-graph-up"></i>
+                      Ver Relatórios
+                    </button>
+                  </div> -->
+                </div>
               </div>
             <% end %>
-          <% else %>
-            <h6 class="mb-0"><%= I18n.t(:no_purchases_made) %></h6>
-          <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Documents Tab -->
+      <div class="tab-pane fade customers-show-tab-pane" id="documents-tab-pane" role="tabpanel" aria-labelledby="documents-tab" tabindex="0">
+        <div class="customers-show-documents-card">
+          <div class="customers-show-documents-header">
+            <h3 class="customers-show-documents-title">
+              <i class="bi bi-files customers-show-documents-icon"></i>
+              <%= I18n.t(:documents) %>
+            </h3>
+          </div>
+          <div class="customers-show-documents-content">
+            <div class="customers-show-empty-state">
+              <i class="bi bi-file-earmark-plus customers-show-empty-icon"></i>
+              <h4 class="customers-show-empty-title"><%= I18n.t(:feature_in_development) %></h4>
+              <p class="customers-show-empty-text"><%= I18n.t(:soon_you_will_manage_documents) %></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="tab-pane fade" id="documents-tab-pane" role="tabpanel" aria-labelledby="documents-tab" tabindex="0">
-    ...
   </div>
 </div>

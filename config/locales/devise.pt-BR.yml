@@ -49,6 +49,13 @@ pt-BR:
       signed_in: "Login efetuado com sucesso."
       signed_out: "Logout efetuado com sucesso."
       already_signed_out: "Logout efetuado com sucesso."
+      new:
+        heading: "Bem-vindo de volta"
+        subtitle: "Faça login para acessar o sistema da Cantina - RD"
+        name_placeholder: "Digite seu nome de usuário"
+        password_placeholder: "Digite sua senha"
+        remember_me: "Manter-me conectado"
+        submit: "Entrar"
     unlocks:
       send_instructions: "Você receberá um e-mail com instruções sobre como desbloquear sua conta em alguns minutos."
       send_paranoid_instructions: "Se sua conta existir, você receberá um e-mail com instruções sobre como desbloqueá-la em alguns minutos."

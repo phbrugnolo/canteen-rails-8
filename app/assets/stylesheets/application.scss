@@ -1,13 +1,21 @@
-// node_modules stylesheets
+// Global variables
+@import "variables";
+
+// External libraries
 @import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons";
-@import "tom-select/dist/scss/tom-select";
+@import "tom-select/dist/scss/tom-select.bootstrap5";
 
 // Project stylesheets
-@import "sidebar";
-@import "sale";
-@import "sales-animations";
-@import "images";
-@import "authentication";
-@import "dashboard";
-@import "sweetalert";
+// Global component styles
+@import "./components/status_button";
+@import "./components/form";
+@import "./components/sidebar";
+@import "./components/sweetalert";
+
+// Page-specific styles
+@import "./pages/authentication";
+@import "./pages/dashboard";
+@import "./pages/customer";
+@import "./pages/product";
+@import "./pages/sale";

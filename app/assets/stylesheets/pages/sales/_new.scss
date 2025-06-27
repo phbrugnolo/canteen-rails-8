@@ -1,0 +1,533 @@
+/* Modern Sales Interface Styles - SCSS Version */
+
+// ===========================================
+// SALE-NEW-SPECIFIC STYLES
+// ===========================================
+// All global variables are now imported from _variables.scss
+// This prevents conflicts with other stylesheets
+
+// Sale-new-specific color overrides (when needed)
+$sale-new-success-alt: #28a745;
+
+// Loading & Skeleton colors (sale-new-specific)
+$sale-new-skeleton-light: #f0f0f0;
+$sale-new-skeleton-dark: #e0e0e0;
+
+// Scrollbar colors (sale-new-specific)
+$sale-new-scrollbar-track: #f1f1f1;
+$sale-new-scrollbar-thumb: #c1c1c1;
+$sale-new-scrollbar-thumb-hover: #a1a1a1;
+
+// Opacity values
+$opacity-light: 0.3;
+$opacity-medium: 0.5;
+
+// ===========================================
+// MIXINS
+// ===========================================
+
+@mixin sale-new-transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+@mixin sale-new-border-radius($radius: $border-radius-md) {
+  border-radius: $radius;
+}
+
+@mixin sale-new-box-shadow($shadow: $box-shadow-sm) {
+  box-shadow: $shadow;
+}
+
+@mixin sale-new-focus-styles($color: $color-sale-primary) {
+  border-color: $color;
+  box-shadow: 0 0 0 0.2rem rgba(red($color), green($color), blue($color), 0.25);
+  outline: none;
+}
+
+@mixin sale-new-hover-transform($scale: 1.05, $translateY: 0px) {
+  transform: scale($scale) translateY($translateY);
+}
+
+// ===========================================
+// KEYFRAMES & ANIMATIONS
+// ===========================================
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: $opacity-medium;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes success {
+  0% {
+    transform: scale(1);
+    background-color: $color-success;
+  }
+  50% {
+    transform: scale(1.1);
+    background-color: $color-success-gradient;
+  }
+  100% {
+    transform: scale(1);
+    background-color: $color-success;
+  }
+}
+
+// ===========================================
+// BASE STYLES
+// ===========================================
+
+* {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+// ===========================================
+// LAYOUT
+// ===========================================
+
+.sale-new-container {
+  background: linear-gradient(135deg, $color-light-gray 0%, $color-medium-gray 100%);
+  min-height: 100vh;
+}
+
+// ===========================================
+// COMPONENTS
+// ===========================================
+
+// Cards
+.sale-new-card {
+  @include sale-new-border-radius($border-radius-lg);
+  @include sale-new-transition();
+  @include sale-new-box-shadow();
+
+  &:hover {
+    @include sale-new-box-shadow($box-shadow-md);
+  }
+
+  &-header {
+    border-radius: $border-radius-lg $border-radius-lg 0 0 !important;
+    border-bottom: 1px solid rgba($color-black, 0.05) !important;
+    font-weight: $font-weight-semibold;
+  }
+
+  &-body {
+    padding: $spacing-md;
+  }
+}
+
+// Product Items
+.sale-new-product-item {
+  cursor: pointer;
+  @include sale-new-border-radius($border-radius-lg);
+  overflow: hidden;
+  @include sale-new-transition();
+
+  &:hover {
+    transform: translateY(-4px);
+    @include sale-new-box-shadow($box-shadow-md);
+  }
+
+  .card-body {
+    padding: $spacing-md;
+  }
+
+  .btn {
+    @include sale-new-transition();
+    font-size: $font-size-sm;
+
+    &:hover {
+      @include sale-new-hover-transform();
+    }
+  }
+}
+
+// Product Cards with Animation
+.sale-new-product-card {
+  animation: fadeIn 0.6s ease-out;
+  animation-fill-mode: both;
+
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+// Search Input
+.sale-new-search-input {
+  border: 1px solid $color-medium-gray;
+  @include sale-new-border-radius();
+  padding: 12px 16px;
+  font-size: $font-size-base;
+  @include sale-new-transition();
+
+  &:focus {
+    @include sale-new-focus-styles();
+  }
+}
+
+// ===========================================
+// CART COMPONENTS
+// ===========================================
+
+// Cart Styles
+.sale-new-cart-content {
+  background: $color-white;
+}
+
+.sale-new-cart-items {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.sale-new-cart-item {
+  @include sale-new-transition(background-color, 0.2s, ease);
+  animation: slideInRight 0.4s ease-out;
+
+  &:hover {
+    background-color: $color-light-gray;
+  }
+
+  &:last-child {
+    border-bottom: none !important;
+  }
+
+  &.new-item {
+    animation: bounceIn 0.6s ease-out;
+  }
+
+  &.quantity-updated {
+    background-color: $color-success-light !important;
+    @include sale-new-transition(background-color, 0.3s, ease);
+
+    .sale-new-quantity-input {
+      border-color: $sale-new-success-alt !important;
+      background-color: $color-success-bg !important;
+    }
+  }
+
+  // Cart Action Buttons
+  .btn {
+    @include sale-new-transition();
+    border-width: 1px;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &.btn-outline-secondary:hover {
+      background-color: $color-secondary;
+      border-color: $color-secondary;
+      color: $color-white;
+    }
+
+    &.btn-outline-danger:hover {
+      background-color: $color-danger;
+      border-color: $color-danger;
+      color: $color-white;
+    }
+  }
+}
+
+.sale-new-cart-summary {
+  .badge {
+    @include sale-new-transition();
+
+    &.updated {
+      animation: pulse 0.6s ease-out;
+    }
+  }
+}
+
+// ===========================================
+// FORM ELEMENTS
+// ===========================================
+
+// Form Elements
+.sale-new-form-label {
+  font-weight: $font-weight-semibold;
+  color: $color-dark-gray;
+  margin-bottom: $spacing-sm;
+}
+
+.sale-new-form-control,
+.sale-new-form-select {
+  border: 1px solid $color-border;
+  @include sale-new-border-radius();
+  padding: 12px 16px;
+  font-size: $font-size-base;
+  @include sale-new-transition();
+
+  &:focus {
+    @include sale-new-focus-styles();
+  }
+}
+
+// Quantity Input
+.sale-new-quantity-input {
+  @include sale-new-transition(all, 0.2s, ease);
+  border: 1px solid $color-border !important;
+  font-weight: $font-weight-semibold !important;
+
+  &:focus {
+    border-color: $color-sale-primary !important;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25) !important;
+    outline: none;
+  }
+
+  &:hover {
+    border-color: $color-border-hover !important;
+  }
+
+  &.is-updating {
+    border-color: $color-warning !important;
+    background-color: $color-warning-bg !important;
+  }
+
+  // Remove spinner arrows
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+
+  &[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}
+
+// ===========================================
+// BUTTONS
+// ===========================================
+
+// Buttons
+.sale-new-btn {
+  @include sale-new-border-radius();
+  font-weight: $font-weight-medium;
+  @include sale-new-transition();
+
+  &-success {
+    background: linear-gradient(135deg, $color-success 0%, $color-success-gradient 100%);
+    border: none;
+
+    &:hover {
+      background: linear-gradient(135deg, $color-success-hover 0%, $color-success-gradient 100%);
+      transform: translateY(-2px);
+    }
+
+    &.animate-success {
+      animation: success 0.6s ease-out;
+    }
+  }
+
+  &-lg {
+    padding: 12px 24px;
+    font-size: $font-size-lg;
+  }
+}
+
+// ===========================================
+// UI COMPONENTS
+// ===========================================
+
+// Badge
+.sale-new-badge {
+  @include sale-new-border-radius($border-radius-pill);
+  font-weight: $font-weight-medium;
+}
+
+// ===========================================
+// LOADING STATES & ANIMATIONS
+// ===========================================
+
+.sale-new-loading {
+  animation: pulse 1.5s ease-in-out infinite;
+
+  &-skeleton {
+    background: linear-gradient(90deg, $sale-new-skeleton-light 25%, $sale-new-skeleton-dark 50%, $sale-new-skeleton-light 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+}
+
+// ===========================================
+// EMPTY STATES
+// ===========================================
+
+.sale-new-no-results {
+  i {
+    opacity: $opacity-light;
+  }
+
+  p {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+  }
+}
+
+// ===========================================
+// UTILITY CLASSES
+// ===========================================
+
+.sale-new-cart-action-btn {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.sale-new-quantity-input-container {
+  width: 60px;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.sale-new-empty-cart-icon {
+  font-size: 3rem;
+  color: #dee2e6;
+}
+
+.sale-new-product-card-container {
+  transition: all 0.3s ease;
+}
+
+.sale-new-product-image-container {
+  height: 120px;
+  overflow: hidden;
+}
+
+.sale-new-product-image {
+  max-height: 100px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.sale-new-product-add-btn {
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(25, 135, 84, 0.3);
+}
+
+.sale-new-search-input-no-shadow {
+  box-shadow: none;
+}
+
+.sale-new-min-width-30 {
+  min-width: 60px;
+}
+
+.sale-new-product-item-hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.sale-new-product-item-normal {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sale-new-product-card-visible {
+  display: block;
+}
+
+.sale-new-product-card-hidden {
+  display: none;
+}
+
+.filter-item-visible {
+  display: block;
+}
+
+.filter-item-hidden {
+  display: none;
+}
+
+.filter-no-results-visible {
+  display: block;
+}
+
+.filter-no-results-hidden {
+  display: none;
+}
+
+// ===========================================
+// BROWSER SPECIFIC STYLES
+// ===========================================
+
+.sale-new-container {
+  ::-webkit-scrollbar {
+    width: 6px;
+
+    &-track {
+      background: $sale-new-scrollbar-track;
+      @include sale-new-border-radius(3px);
+    }
+
+    &-thumb {
+      background: $sale-new-scrollbar-thumb;
+      @include sale-new-border-radius(3px);
+
+      &:hover {
+        background: $sale-new-scrollbar-thumb-hover;
+      }
+    }
+  }
+}

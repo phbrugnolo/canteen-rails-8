@@ -11,28 +11,33 @@ export class CustomersFilters {
 
     this.filterManager = new FilterManager({
       container: '#customers',
-      items: 'tr',
+      items: 'tr.customer-row',
       noResultsMessage: 'Nenhum cliente encontrado',
       noResultsIcon: 'bi-person-x',
+      cssPrefix: 'customers-index-',
       filters: [
         {
           input: '#search_name',
-          selector: 'td:nth-child(2)',
+          selector: '.customers-index-customer-name',
           matchType: 'includes'
         },
         {
-          input: '#search_id',
-          selector: 'td:nth-child(1)',
+          input: '#search_matriculation',
+          selector: '.customers-index-customer-matriculation',
           matchType: 'includes'
         },
         {
           input: '#search_status',
           getText: (row) => {
-            const statusSpan = row.querySelector('td:nth-child(3) span');
+            const statusSpan = row.querySelector('.customers-index-status-badge');
             if (!statusSpan) return '';
 
-            const statusText = statusSpan.textContent.trim().toLowerCase();
-            return statusText === 'ativo' ? 'active' : 'inactive';
+            if (statusSpan.classList.contains('customers-index-status-active')) {
+              return 'active';
+            } else if (statusSpan.classList.contains('customers-index-status-inactive')) {
+              return 'inactive';
+            }
+            return '';
           },
           matchType: 'equals'
         }

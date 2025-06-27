@@ -18,52 +18,52 @@
 
   <!-- Metrics Cards -->
   <div class="metrics-grid">
-    <div class="metric-card">
-      <div class="metric-icon customers">
+    <div class="dashboard-metric-card">
+      <div class="dashboard-metric-icon customers">
         <i class="bi bi-people-fill"></i>
       </div>
-      <div class="metric-content">
-        <h3 class="metric-value"><%= @total_customers %></h3>
-        <p class="metric-label"><%= I18n.t(:customer, scope: %i[activerecord models], count: 2) %></p>
-        <small class="metric-detail text-success">
+      <div class="dashboard-metric-content">
+        <h3 class="dashboard-metric-value"><%= @total_customers %></h3>
+        <p class="dashboard-metric-label"><%= I18n.t(:customer, scope: %i[activerecord models], count: 2) %></p>
+        <small class="dashboard-metric-detail text-success">
           <%= @active_customers %> <%= I18n.t(:actives) %>
         </small>
       </div>
     </div>
 
-    <div class="metric-card">
-      <div class="metric-icon products">
+    <div class="dashboard-metric-card">
+      <div class="dashboard-metric-icon products">
         <i class="bi bi-box-seam-fill"></i>
       </div>
-      <div class="metric-content">
-        <h3 class="metric-value"><%= @total_products %></h3>
-        <p class="metric-label"><%= I18n.t(:product, scope: %i[activerecord models], count: 2) %></p>
-        <small class="metric-detail text-success">
+      <div class="dashboard-metric-content">
+        <h3 class="dashboard-metric-value"><%= @total_products %></h3>
+        <p class="dashboard-metric-label"><%= I18n.t(:product, scope: %i[activerecord models], count: 2) %></p>
+        <small class="dashboard-metric-detail text-success">
           <%= @active_products %> <%= I18n.t(:actives) %>
         </small>
       </div>
     </div>
 
-    <div class="metric-card">
-      <div class="metric-icon sales">
+    <div class="dashboard-metric-card">
+      <div class="dashboard-metric-icon sales">
         <i class="bi bi-cart-check-fill"></i>
       </div>
-      <div class="metric-content">
-        <h3 class="metric-value"><%= @total_sales %></h3>
-        <p class="metric-label"><%= I18n.t(:sale, scope: %i[activerecord models], count: 2) %></p>
-        <small class="metric-detail text-info">
+      <div class="dashboard-metric-content">
+        <h3 class="dashboard-metric-value"><%= @total_sales %></h3>
+        <p class="dashboard-metric-label"><%= I18n.t(:sale, scope: %i[activerecord models], count: 2) %></p>
+        <small class="dashboard-metric-detail text-info">
           <%= I18n.t(:this_month) %>
         </small>
       </div>
     </div>
 
-    <div class="metric-card">
-      <div class="metric-icon revenue">
+    <div class="dashboard-metric-card">
+      <div class="dashboard-metric-icon revenue">
         <i class="bi bi-currency-dollar"></i>
       </div>
-      <div class="metric-content">
+      <div class="dashboard-metric-content">
         <div class="d-flex justify-content-between align-items-start mb-2">
-          <%= content_tag tag_class, class: "metric-value mb-0" do %>
+          <%= content_tag tag_class.to_sym, class: "metric-value mb-0" do %>
             <%= number_to_currency(revenue_value) %>
           <% end %>
           <div class="dropup">
@@ -79,8 +79,8 @@
             </ul>
           </div>
         </div>
-        <p class="metric-label"><%= I18n.t(:revenue) %></p>
-        <small class="metric-detail text-info">
+        <p class="dashboard-metric-label"><%= I18n.t(:revenue) %></p>
+        <small class="dashboard-metric-detail text-info">
           <%= case params[:period]
               when 'today' then I18n.t(:today)
               when 'this_year' then I18n.t(:this_year)
