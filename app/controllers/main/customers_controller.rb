@@ -77,6 +77,6 @@ class Main::CustomersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def customer_params
-      params.expect(customer: %i[name matriculation status avatar])
+      params.expect(customer: %i[name matriculation status avatar cpf])
     end
 end
