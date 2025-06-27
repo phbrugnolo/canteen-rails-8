@@ -18,7 +18,7 @@ export class CustomerTomSelect {
       field: 'text',
       direction: 'asc'
     },
-    allowEmptyOption: true,
+    allowEmptyOption: false,
     plugins: [],
     dropdownParent: 'body',
     render: {
@@ -71,8 +71,17 @@ export class CustomerTomSelect {
     const config = {
       ...CustomerTomSelect.DEFAULT_CONFIG,
       placeholder: options.placeholder || 'Selecione um cliente...',
+      items: [],
       ...options
     };
+
+    const selectElement = typeof element === 'string' ? document.querySelector(element) : element;
+
+    if (selectElement) {
+      Array.from(selectElement.options).forEach(option => {
+        if (!option.value || option.value === '') option.remove();
+      });
+    }
 
     return new TomSelect(element, config);
   }
