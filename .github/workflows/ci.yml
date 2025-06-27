@@ -37,6 +37,32 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Install SARIF formatter
+        run: yarn add -D @microsoft/eslint-formatter-sarif
+      - name: Run ESLint with SARIF output
+        run: |
+          yarn eslint . --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif
+          # Also run with compact format for logs
+          yarn eslint . --format compact || true
+      - name: Upload SARIF results to GitHub
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: eslint-results.sarif
+          category: eslint
+
   test:
     runs-on: ubuntu-latest
     steps:
