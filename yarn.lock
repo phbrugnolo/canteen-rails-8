@@ -654,7 +654,7 @@ __metadata:
     postcss: "npm:^8.5.6"
     postcss-cli: "npm:^11.0.1"
     sass: "npm:^1.89.2"
-    sweetalert2: "npm:^11.22.0"
+    sweetalert2: "npm:^11.22.1"
     tom-select: "npm:^2.4.3"
   languageName: unknown
   linkType: soft
@@ -2372,10 +2372,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sweetalert2@npm:^11.22.0":
-  version: 11.22.0
-  resolution: "sweetalert2@npm:11.22.0"
-  checksum: 10/68a51280f304195808fda28eb37cf34660b4d6ecfc2d3eaf796f47bd4ba43f44f29202da49c99dc099cc4da8c42e7f05567b665d69606a0c0242cc7927040410
+"sweetalert2@npm:^11.22.1":
+  version: 11.22.1
+  resolution: "sweetalert2@npm:11.22.1"
+  checksum: 10/d66afb29ec58038adeecc805a72e35a3cb31c3dc7bc5d28c026d6068cf731e9bc44ee6729ea640073cf943b41c9935f8a33111f52babeeaa9f75e129d81db4e1
   languageName: node
   linkType: hard
 
