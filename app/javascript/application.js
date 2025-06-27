@@ -1,6 +1,7 @@
 import './src/dependencies'
 import './src/sweetalert'
 import './src/rails-sweetalert-helpers'
+import './src/notice'
 import './src/boot'
 
 import './misc/sales/sales-manager'
