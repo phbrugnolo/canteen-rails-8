@@ -204,7 +204,7 @@ $filter-card-bg: #f8f9fa;
 .sales-index-filters-card {
   @include sales-index-card-style;
   margin-bottom: $spacing-xl;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .sales-index-filters-header {
