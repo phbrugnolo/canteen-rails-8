@@ -4,9 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.canteen && window.canteen.controller_name !== 'sales') return;
 
   const customerCartSelect = document.getElementById('customer-id');
-  if (customerCartSelect) {
-    CustomerTomSelect.createSingleSelect(customerCartSelect);
-  }
+  if (customerCartSelect) CustomerTomSelect.createSingleSelect(customerCartSelect);
 
   const saleCards = document.querySelectorAll('.sales-index-card');
   if (saleCards.length > 0) {
