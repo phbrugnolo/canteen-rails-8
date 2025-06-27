@@ -90,6 +90,9 @@
 
       <main id="content" class="main-content<%= ' expanded' if sidebar_collapsed %>">
         <div class="content-wrapper">
+          <% if notice %>
+            <%= notice %>
+          <% end %>
           <%= yield %>
         </div>
       </main>
