@@ -172,6 +172,7 @@ pt-BR:
       customer:
         name: "Ex: João Silva"
         matriculation: "Ex: 2024001234"
+        cpf: "Ex: 123.456.789-00"
     uploads:
       product:
         click_to_select_image: "Clique para selecionar uma imagem"
@@ -224,6 +225,7 @@ pt-BR:
         password: "Senha"
         status: "Status"
         avatar: "Foto"
+        cpf: "CPF"
       sale:
         product: "Produto"
         customer: "Cliente"

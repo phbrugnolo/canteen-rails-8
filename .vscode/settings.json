@@ -15,6 +15,7 @@
     "activatable",
     "Activatable",
     "activerecord",
+    "autofocus",
     "beforeunload",
     "csrf",
     "defaultable",

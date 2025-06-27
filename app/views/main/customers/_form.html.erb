@@ -27,7 +27,7 @@
         </div>
       <% end %>
 
-      <!-- Customer Name Field with Icon -->
+      <!-- Customer Name Field -->
       <div class="form-group form-group-with-icon">
         <%= f.label :name, class: "form-label required" do %>
           <i class="bi bi-person"></i> <%= I18n.t(:name, scope: %i[activerecord attributes customer]) %>
@@ -40,7 +40,21 @@
         <i class="form-icon bi bi-person"></i>
       </div>
 
-      <!-- Customer Matriculation Field with Icon -->
+      <!-- Customer CPF Field -->
+      <div class="form-group form-group-with-icon">
+        <%= f.label :cpf, class: "form-label required" do %>
+          <i class="bi bi-file-person-fill"></i> <%= I18n.t(:cpf, scope: %i[activerecord attributes customer]) %>
+        <% end %>
+        <%= f.input_field :cpf,
+            class: "form-control",
+            placeholder: I18n.t(:cpf, scope: %i[form placeholders customer]),
+            id: "customer_cpf",
+            required: true,
+            autofocus: true %>
+        <i class="form-icon bi bi-file-person-fill"></i>
+      </div>
+
+      <!-- Customer Matriculation Field -->
       <div class="form-group form-group-with-icon">
         <%= f.label :matriculation, class: "form-label required" do %>
           <i class="bi bi-card-text"></i> <%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>
@@ -52,7 +66,7 @@
         <i class="form-icon bi bi-card-text"></i>
       </div>
 
-      <!-- Customer Avatar Field with Enhanced File Upload -->
+      <!-- Customer Avatar Field -->
       <div class="form-group">
         <%= f.label :avatar, class: "form-label" do %>
           <i class="bi bi-image"></i> <%= I18n.t(:avatar, scope: %i[activerecord attributes customer]) %>

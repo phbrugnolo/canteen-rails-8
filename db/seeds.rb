@@ -33,16 +33,19 @@ Customer.create([
   {
     name: "João Nome Muito Grande Grande Grande Grande",
     matriculation: "123456",
+    cpf: CPF.generate(true),
     status: "active"
   },
   {
     name: "Pedro",
     matriculation: "654321",
+    cpf: CPF.generate(true),
     status: "active"
   },
   {
     name: "Teste",
     matriculation: "1456789",
+    cpf: CPF.generate(true),
     status: "inactive"
   }
 ])

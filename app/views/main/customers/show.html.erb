@@ -104,6 +104,18 @@
 
               <div class="customers-show-detail-item">
                 <div class="customers-show-detail-header">
+                  <i class="bi bi-file-person-fill customers-show-detail-icon"></i>
+                  <label class="customers-show-detail-label">
+                    <%= I18n.t(:cpf, scope: %i[activerecord attributes customer]) %>
+                  </label>
+                </div>
+                <div class="customers-show-detail-content">
+                  <span class="customers-show-detail-value"><%= @customer.cpf %></span>
+                </div>
+              </div>
+
+              <div class="customers-show-detail-item">
+                <div class="customers-show-detail-header">
                   <i class="bi bi-hash customers-show-detail-icon"></i>
                   <label class="customers-show-detail-label">
                     <%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>
