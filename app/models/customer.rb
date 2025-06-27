@@ -6,6 +6,8 @@ class Customer < ApplicationRecord
 
   validates :name, presence: true
   validates :matriculation, presence: true, uniqueness: true
+  validates :cpf, presence: true, uniqueness: true
+  validate :cpf_must_be_valid
 
   def self.top_customers_data
     joins(:sales)
@@ -14,5 +16,11 @@ class Customer < ApplicationRecord
       .order("total_sales DESC")
       .limit(5)
       .map { |customer| { name: customer.name, total: customer.total_sales } }
+  end
+
+  private
+
+  def cpf_must_be_valid
+    errors.add(:cpf, :invalid) if !CPF.valid?(cpf, strict: true)
   end
 end
