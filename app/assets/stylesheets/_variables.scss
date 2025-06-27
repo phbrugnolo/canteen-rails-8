@@ -91,13 +91,29 @@ $font-size-xl: 1.5rem;     // 24px
 // ===========================================
 // Z-INDEX SCALE
 // ===========================================
-$z-index-dropdown: 1000;
-$z-index-sticky: 1020;
-$z-index-fixed: 1030;
-$z-index-modal-backdrop: 1040;
-$z-index-modal: 1050;
-$z-index-popover: 1060;
-$z-index-tooltip: 1070;
+// Designed to work with Bootstrap 5.3.7 and other third-party libraries
+// Bootstrap uses: 1000, 1020, 1030, 1040, 1045, 1050, 1055, 1070, 1080, 1090
+// SweetAlert2 uses: 1060 (main container)
+// Tom Select uses: 10 (default), 1000 (Bootstrap theme)
+
+// Low-level z-index for background elements and basic layering
+$z-index-background: -1;        // Background pseudo-elements
+$z-index-base: 1;               // Base level above normal flow
+$z-index-content: 10;           // Content elements
+$z-index-overlay: 100;          // Small overlays, icons, indicators
+
+// Component-level z-index (below Bootstrap's range)
+$z-index-dropdown: 900;         // Custom dropdowns (below Bootstrap's 1000)
+$z-index-sticky: 950;           // Sticky elements (below Bootstrap's 1020)
+$z-index-fixed: 980;            // Fixed elements (below Bootstrap's 1030)
+
+// High-level z-index (above Bootstrap's range for when you need to override)
+$z-index-modal-backdrop: 1100;  // Above Bootstrap's modal (1055)
+$z-index-modal: 1110;           // Above Bootstrap's modal
+$z-index-popover: 1120;         // Above SweetAlert2 (1060) and Bootstrap's tooltip (1080)
+$z-index-tooltip: 1130;         // Above Bootstrap's toast (1090)
+$z-index-notification: 1200;    // For critical notifications
+$z-index-debug: 9999;           // For debugging overlays
 
 // ===========================================
 // BREAKPOINTS
