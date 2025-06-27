@@ -90,6 +90,15 @@
 
       <main id="content" class="main-content<%= ' expanded' if sidebar_collapsed %>">
         <div class="content-wrapper">
+          <% if notice %>
+            <div class="flash-notice" id="notice-message">
+              <div class="notice-content">
+                <i class="fas fa-check-circle notice-icon"></i>
+                <span><%= notice %></span>
+              </div>
+              <button class="notice-close" onclick="this.parentElement.style.display='none';">&times;</button>
+            </div>
+          <% end %>
           <%= yield %>
         </div>
       </main>

@@ -92,29 +92,6 @@ $filter-card-bg: #f8f9fa;
 }
 
 // ===========================================
-// ALERTS
-// ===========================================
-.sales-index-alert {
-  border-radius: $border-radius-lg;
-  border: none;
-  padding: $spacing-md $spacing-lg;
-  margin-bottom: $spacing-lg;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  @include sales-index-transition();
-
-  &.alert-success {
-    background: linear-gradient(135deg, $color-success-light 0%, $color-success-bg 100%);
-    color: $color-success;
-    border-left: 4px solid $color-success;
-  }
-
-  .bi {
-    font-size: 1.1rem;
-    margin-right: $spacing-sm;
-  }
-}
-
-// ===========================================
 // PAGE HEADER
 // ===========================================
 .sales-index-header {

@@ -174,11 +174,11 @@ class RailsConfirmationDialog {
   }
 }
 
-window.showRailsConfirmDialog = function(options) {
+window.showRailsConfirmDialog = (options) => {
   return RailsConfirmationDialog.show(options);
 };
 
-window.showEnhancedRailsConfirmDialog = function(options) {
+window.showEnhancedRailsConfirmDialog = (options) => {
   return RailsConfirmationDialog.show({
     ...options,
     onSuccess: (result) => {
