@@ -37,6 +37,21 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Run ESLint
+        run: yarn eslint . --format=github
+
   test:
     runs-on: ubuntu-latest
     steps:
