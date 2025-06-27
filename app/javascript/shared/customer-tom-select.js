@@ -20,7 +20,6 @@ export class CustomerTomSelect {
     },
     allowEmptyOption: false,
     plugins: [],
-    dropdownParent: 'body',
     render: {
       option: (data, escape) => {
         return '<div class="py-2 px-1">' +
