@@ -1,10 +1,8 @@
-// Variáveis para cores e tempos
 $success-bg: #d4edda;
 $success-border: #28a745;
 $success-text: #155724;
 $success-text-hover: #0f3e19;
 $animation-time: 0.5s;
-$notice-timeout: 5s;
 
 .flash-notice {
   background-color: $success-bg;
@@ -49,7 +47,6 @@ $notice-timeout: 5s;
   }
 }
 
-// Animações
 @keyframes fadeIn {
   from {
     opacity: 0;
