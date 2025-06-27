@@ -1,3 +1,159 @@
-<p style="color: green"><%= notice %></p>
+<div class="sales-show-container">
+  <!-- Success/Notice Alert -->
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show sales-show-alert" role="alert">
+      <i class="bi bi-check-circle-fill"></i>
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
 
-<%= render @sale %>
+  <!-- Page Header -->
+  <div class="sales-show-header">
+    <div class="sales-show-title-section">
+      <h1 class="sales-show-title">
+        <i class="bi bi-receipt sales-show-title-icon"></i>
+        <%= I18n.t(:sale_details) %>
+      </h1>
+      <p class="sales-show-subtitle">
+        <%= I18n.t(:sale) %> #<%= @sale.id %> - <%= @sale.created_at.strftime("%d/%m/%Y %H:%M") %>
+      </p>
+    </div>
+    <div class="sales-show-actions">
+      <%= link_to main_sales_path, class: "sales-show-btn-secondary" do %>
+        <i class="bi bi-arrow-left sales-show-btn-icon"></i>
+        <%= I18n.t(:back, scope: %i[form actions]) %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Sale Details Card -->
+  <div class="sales-show-details-card">
+    <div class="sales-show-details-header">
+      <h3 class="sales-show-details-title">
+        <i class="bi bi-info-circle"></i>
+        <%= I18n.t(:sale_details) %>
+      </h3>
+      <div class="sales-show-total-badge">
+        <i class="bi bi-currency-dollar"></i>
+        <%= number_to_currency(@sale.total_price) %>
+      </div>
+    </div>
+    <div class="sales-show-details-body">
+      <div class="sales-show-info-grid">
+        <div class="sales-show-info-item">
+          <div class="sales-show-info-label">
+            <i class="bi bi-calendar3"></i>
+            <%= I18n.t(:date) %>
+          </div>
+          <div class="sales-show-info-value">
+            <%= @sale.created_at.strftime("%d/%m/%Y") %>
+          </div>
+        </div>
+        <div class="sales-show-info-item">
+          <div class="sales-show-info-label">
+            <i class="bi bi-clock"></i>
+            <%= I18n.t(:time) %>
+          </div>
+          <div class="sales-show-info-value">
+            <%= @sale.created_at.strftime("%H:%M") %>
+          </div>
+        </div>
+        <div class="sales-show-info-item">
+          <div class="sales-show-info-label">
+            <i class="bi bi-person-fill"></i>
+            <%= I18n.t(:customer, scope: %i[activerecord attributes sale]) %>
+          </div>
+          <div class="sales-show-info-value">
+            <div class="sales-show-customer">
+              <div class="sales-show-customer-avatar">
+                <%= @sale.customer.name.first.upcase %>
+              </div>
+              <span><%= @sale.customer.name %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Items Card -->
+  <div class="sales-show-items-card">
+    <div class="sales-show-items-header">
+      <h3 class="sales-show-items-title">
+        <i class="bi bi-basket3"></i>
+        <%= I18n.t(:items) %>
+      </h3>
+      <div class="sales-show-items-count">
+        <% cart = JSON.parse(@sale.cart) %>
+        <%= cart.size %> <%= I18n.t(:items).downcase %>
+      </div>
+    </div>
+    <div class="sales-show-items-table-wrapper">
+      <table class="sales-show-items-table">
+        <thead class="sales-show-items-thead">
+          <tr class="sales-show-items-tr">
+            <th class="sales-show-items-th">
+              <i class="bi bi-box sales-show-items-th-icon"></i>
+              <%= I18n.t(:product, scope: %i[activerecord attributes sale]) %>
+            </th>
+            <th class="sales-show-items-th sales-show-items-th-center">
+              <i class="bi bi-hash sales-show-items-th-icon"></i>
+              <%= I18n.t(:quantity, scope: %i[activerecord attributes sale]) %>
+            </th>
+            <th class="sales-show-items-th sales-show-items-th-center">
+              <i class="bi bi-tag sales-show-items-th-icon"></i>
+              <%= I18n.t(:price) %>
+            </th>
+            <th class="sales-show-items-th sales-show-items-th-center">
+              <i class="bi bi-calculator sales-show-items-th-icon"></i>
+              <%= I18n.t(:subtotal) %>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="sales-show-items-tbody">
+          <% cart.each_with_index do |item, index| %>
+            <% subtotal = item["quantity"].to_i * item["price"].to_f %>
+            <tr class="sales-show-items-tr" style="animation-delay: <%= index * 0.1 %>s;">
+              <td class="sales-show-items-td">
+                <div class="sales-show-product-info">
+                  <div class="sales-show-product-icon">
+                    <i class="bi bi-box-seam"></i>
+                  </div>
+                  <span class="sales-show-product-name"><%= item["name"] %></span>
+                </div>
+              </td>
+              <td class="sales-show-items-td sales-show-items-td-center">
+                <span class="sales-show-quantity-badge">
+                  <%= item["quantity"] %>
+                </span>
+              </td>
+              <td class="sales-show-items-td sales-show-items-td-center">
+                <span class="sales-show-price">
+                  <%= number_to_currency(item["price"]) %>
+                </span>
+              </td>
+              <td class="sales-show-items-td sales-show-items-td-center">
+                <span class="sales-show-subtotal">
+                  <%= number_to_currency(subtotal) %>
+                </span>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Total Section -->
+    <div class="sales-show-total-section">
+      <div class="sales-show-total-row">
+        <span class="sales-show-total-label">
+          <%= I18n.t(:total_price) %>
+        </span>
+        <span class="sales-show-total-value">
+          <%= number_to_currency(@sale.total_price) %>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

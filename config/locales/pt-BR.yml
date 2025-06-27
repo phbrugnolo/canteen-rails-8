@@ -5,6 +5,8 @@ pt-BR:
   exit: "Sair"
   return: "Voltar"
   cancel: "Cancelar"
+  sale: "Venda"
+  sale_details: "Detalhes da Compra"
   date: "Data"
   user: "Usuário"
   active: "Ativo"
