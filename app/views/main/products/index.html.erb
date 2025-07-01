@@ -1,4 +1,4 @@
-<div class="products-index-container">
+<div class="container-fluid">
   <!-- Page Header -->
   <div class="products-index-header">
     <div class="products-index-title-section">
@@ -52,11 +52,11 @@
           Faixa de Preço
         </label>
         <select id="search_price_range" class="products-index-filter-select">
-          <option value="">Todas as faixas</option>
-          <option value="0-10">Até R$ 10,00</option>
-          <option value="10-25">R$ 10,00 - R$ 25,00</option>
-          <option value="25-50">R$ 25,00 - R$ 50,00</option>
-          <option value="50+">Acima de R$ 50,00</option>
+          <option value=""><%= I18n.t('price_range.all') %></option>
+          <option value="0-10"><%= I18n.t('price_range.under_10') %></option>
+          <option value="10-25"><%= I18n.t('price_range.10_25') %></option>
+          <option value="25-50"><%= I18n.t('price_range.25_50') %></option>
+          <option value="50+"><%= I18n.t('price_range.above_50') %></option>
         </select>
       </div>
     </div>
