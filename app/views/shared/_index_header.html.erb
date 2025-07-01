@@ -1,0 +1,15 @@
+<div class="<%= section %>-index-header">
+  <div class="<%= section %>-index-title-section">
+    <h1 class="<%= section %>-index-title">
+      <i class="bi <%= icon_class %> <%= section %>-index-title-icon"></i>
+      <%= title %>
+    </h1>
+    <p class="<%= section %>-index-subtitle"><%= subtitle %></p>
+  </div>
+  <div class="<%= section %>-index-actions">
+    <%= link_to path, class: "#{section}-index-btn-primary" do %>
+      <i class="bi bi-plus-circle <%= section %>-index-btn-icon"></i>
+      <%= button_text %>
+    <% end %>
+  </div>
+</div>

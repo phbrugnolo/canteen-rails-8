@@ -84,49 +84,8 @@ $filter-card-bg: #f8f9fa;
 // ===========================================
 // PAGE HEADER
 // ===========================================
-.sales-index-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: $spacing-xl;
-  padding-bottom: $spacing-lg;
-  border-bottom: 2px solid $color-border;
-}
+@include page-header('sales', $sales-primary, $sales-gradient);
 
-.sales-index-title-section {
-  flex: 1;
-}
-
-.sales-index-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: $sales-primary;
-  margin-bottom: $spacing-sm;
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-}
-
-.sales-index-title-icon {
-  font-size: 2rem;
-  background: $sales-gradient;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.sales-index-subtitle {
-  font-size: 1.1rem;
-  color: $color-text-secondary;
-  margin-bottom: 0;
-  font-weight: 400;
-}
-
-.sales-index-actions {
-  display: flex;
-  gap: $spacing-md;
-  align-items: flex-start;
-}
 
 // ===========================================
 // BUTTONS

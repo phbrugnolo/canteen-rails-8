@@ -1,20 +1,13 @@
 <div class="container-fluid">
   <!-- Page Header -->
-  <div class="customers-index-header">
-    <div class="customers-index-title-section">
-      <h1 class="customers-index-title">
-        <i class="bi bi-people-fill customers-index-title-icon"></i>
-        <%= I18n.t(:customer, scope: %i[activerecord models], count: 2) %>
-      </h1>
-      <p class="customers-index-subtitle"><%= I18n.t(:customers_index_subtitle) %></p>
-    </div>
-    <div class="customers-index-actions">
-      <%= link_to new_main_customer_path, class: "customers-index-btn-primary" do %>
-        <i class="bi bi-plus-circle customers-index-btn-icon"></i>
-        <%= I18n.t(:add, scope: %i[activerecord], model: Customer.model_name.human) %>
-      <% end %>
-    </div>
-  </div>
+  <%= render 'shared/index_header',
+    section: 'customers',
+    icon_class: 'bi-people-fill',
+    title: I18n.t(:customer, scope: %i[activerecord models], count: 2),
+    subtitle: I18n.t(:customers_index_subtitle),
+    path: new_main_customer_path,
+    button_text: I18n.t(:add, scope: %i[activerecord], model: Customer.model_name.human)
+  %>
 
   <!-- Filters Section -->
   <div class="customers-index-filters-card">

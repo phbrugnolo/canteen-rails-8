@@ -1,20 +1,13 @@
 <div class="container-fluid">
   <!-- Page Header -->
-  <div class="sales-index-header">
-    <div class="sales-index-title-section">
-      <h1 class="sales-index-title">
-        <i class="bi bi-receipt sales-index-title-icon"></i>
-        <%= I18n.t(:sale, scope: %i[activerecord models], count: 2) %>
-      </h1>
-      <p class="sales-index-subtitle"><%= I18n.t(:sales_index_subtitle) %></p>
-    </div>
-    <div class="sales-index-actions">
-      <%= link_to new_main_sale_path, class: "sales-index-btn-primary" do %>
-        <i class="bi bi-plus-circle me-1"></i>
-        <%= I18n.t(:new_sale) %>
-      <% end %>
-    </div>
-  </div>
+  <%= render 'shared/index_header',
+    section: 'sales',
+    icon_class: 'bi-receipt',
+    title: I18n.t(:sale, scope: %i[activerecord models], count: 2),
+    subtitle: I18n.t(:sales_index_subtitle),
+    path: new_main_sale_path,
+    button_text: I18n.t(:new_sale)
+  %>
 
   <!-- Filters Section -->
   <div class="sales-index-filters-card">

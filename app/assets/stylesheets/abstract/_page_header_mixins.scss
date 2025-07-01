@@ -1,0 +1,89 @@
+// Mixins para headers de seção
+@mixin index-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 2px solid $color-border;
+}
+
+@mixin index-title-section {
+  flex: 1;
+}
+
+@mixin index-title($primary-color) {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: $primary-color;
+  margin-bottom: $spacing-sm;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+@mixin index-title-icon($gradient) {
+  font-size: 2.2rem;
+  background: $gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@mixin index-subtitle {
+  font-size: 1.1rem;
+  color: $color-text-secondary;
+  margin: 0;
+}
+
+@mixin index-actions {
+  display: flex;
+  gap: $spacing-md;
+}
+
+@mixin index-btn-primary($primary-color) {
+  // Adicione seus estilos de botão aqui
+  background-color: $primary-color;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+// Mixin principal que aplica todos os estilos de header
+@mixin page-header($section, $primary-color, $gradient) {
+  .#{$section}-index-header {
+    @include index-header;
+  }
+
+  .#{$section}-index-title-section {
+    @include index-title-section;
+  }
+
+  .#{$section}-index-title {
+    @include index-title($primary-color);
+  }
+
+  .#{$section}-index-title-icon {
+    @include index-title-icon($gradient);
+  }
+
+  .#{$section}-index-subtitle {
+    @include index-subtitle;
+  }
+
+  .#{$section}-index-actions {
+    @include index-actions;
+  }
+
+  .#{$section}-index-btn-primary {
+    @include index-btn-primary($primary-color);
+  }
+}

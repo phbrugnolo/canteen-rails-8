@@ -1,20 +1,13 @@
 <div class="container-fluid">
   <!-- Page Header -->
-  <div class="products-index-header">
-    <div class="products-index-title-section">
-      <h1 class="products-index-title">
-        <i class="bi bi-box-seam-fill products-index-title-icon"></i>
-        <%= I18n.t(:product, scope: %i[activerecord models], count: 2) %>
-      </h1>
-      <p class="products-index-subtitle"><%= I18n.t(:products_index_subtitle) %></p>
-    </div>
-    <div class="products-index-actions">
-      <%= link_to new_main_product_path, class: "products-index-btn-primary" do %>
-        <i class="bi bi-plus-circle products-index-btn-icon"></i>
-        <%= I18n.t(:add, scope: %i[activerecord], model: Product.model_name.human) %>
-      <% end %>
-    </div>
-  </div>
+  <%= render 'shared/index_header',
+    section: 'products',
+    icon_class: 'bi-box-seam-fill',
+    title: I18n.t(:product, scope: %i[activerecord models], count: 2),
+    subtitle: I18n.t(:products_index_subtitle),
+    path: new_main_product_path,
+    button_text: I18n.t(:add, scope: %i[activerecord], model: Product.model_name.human)
+  %>
 
   <!-- Filters Section -->
   <div class="products-index-filters-card">

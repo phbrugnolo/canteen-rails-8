@@ -89,44 +89,7 @@ $table-font-size: 0.95rem;
 // ===========================================
 // PAGE HEADER
 // ===========================================
-.products-index-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: $spacing-xl;
-  padding-bottom: $spacing-lg;
-  border-bottom: 2px solid $color-border;
-}
-
-.products-index-title-section {
-  flex: 1;
-}
-
-.products-index-title {
-  @include section-header;
-  font-size: 2.5rem;
-  color: $products-primary;
-  margin-bottom: $spacing-sm;
-
-  .products-index-title-icon {
-    font-size: 2.2rem;
-    background: $products-gradient;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-}
-
-.products-index-subtitle {
-  font-size: 1.1rem;
-  color: $color-text-secondary;
-  margin: 0;
-}
-
-.products-index-actions {
-  display: flex;
-  gap: $spacing-md;
-}
+@include page-header('products', $products-primary, $products-gradient);
 
 // ===========================================
 // BUTTONS

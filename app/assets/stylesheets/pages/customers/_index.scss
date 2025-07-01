@@ -77,44 +77,7 @@ $table-font-size: 0.95rem;
 // ===========================================
 // PAGE HEADER
 // ===========================================
-.customers-index-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: $spacing-xl;
-  padding-bottom: $spacing-lg;
-  border-bottom: 2px solid $color-border;
-}
-
-.customers-index-title-section {
-  flex: 1;
-}
-
-.customers-index-title {
-  @include section-header;
-  font-size: 2.5rem;
-  color: $customers-primary;
-  margin-bottom: $spacing-sm;
-
-  .customers-index-title-icon {
-    font-size: 2.2rem;
-    background: $customers-gradient;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-}
-
-.customers-index-subtitle {
-  font-size: 1.1rem;
-  color: $color-text-secondary;
-  margin: 0;
-}
-
-.customers-index-actions {
-  display: flex;
-  gap: $spacing-md;
-}
+@include page-header('customers', $customers-primary, $customers-gradient);
 
 // ===========================================
 // BUTTONS
