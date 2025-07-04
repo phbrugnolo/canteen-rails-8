@@ -4,7 +4,7 @@
 
   <!-- Customer Selection -->
   <div class="mb-4">
-    <label class="form-label fw-semibold text-dark mb-2">
+    <label class="sale-new-form-label fw-semibold text-dark mb-2">
       <i class="bi bi-person me-1"></i>
       <%= I18n.t(:customer) %>
     </label>
@@ -14,7 +14,7 @@
           value_method: :id,
           input_html: {
             id: "customer-id",
-            class: "form-select",
+            class: "sale-new-form-select",
             style: "border-radius: 8px;"
           },
           label: false,
@@ -27,7 +27,7 @@
 
   <!-- Total Price Display -->
   <div class="mb-4">
-    <label class="form-label fw-semibold text-dark mb-2">
+    <label class="sale-new-form-label fw-semibold text-dark mb-2">
       <i class="bi bi-currency-dollar me-1"></i>
       <%= I18n.t(:total_price) %>
     </label>
@@ -35,7 +35,7 @@
       <span class="input-group-text bg-light border-end-0 fw-bold text-success">R$</span>
       <%= f.text_field :total_price,
             readonly: true,
-            class: "form-control border-start-0 bg-light fw-bold text-success fs-5 text-end",
+            class: "sale-new-form-control border-start-0 bg-light fw-bold text-success fs-5 text-end",
             style: "font-family: 'Courier New', monospace;" %>
     </div>
     <small class="text-muted mt-1 d-block">
@@ -51,31 +51,3 @@
           style: "border-radius: 8px; box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);" %>
   </div>
 <% end %>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const select = new TomSelect("#customer-id", {
-      create: false,
-      sortField: {
-        field: "text",
-        direction: "asc"
-      },
-      placeholder: "<%= I18n.t(:select_customer_placeholder) %>",
-      searchField: ['text'],
-      render: {
-        option: (data, escape) => {
-          return '<div class="py-2 px-1">' +
-                   '<i class="bi bi-person-circle me-2 text-primary"></i>' +
-                   '<span>' + escape(data.text) + '</span>' +
-                 '</div>';
-        },
-        item: (data, escape) => {
-          return '<div>' +
-                   '<i class="bi bi-person-check me-2 text-success"></i>' +
-                   '<span>' + escape(data.text) + '</span>' +
-                 '</div>';
-        }
-      }
-    });
-  });
-</script>

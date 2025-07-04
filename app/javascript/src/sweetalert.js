@@ -4,7 +4,7 @@ const AppSwal = Swal.mixin({
   reverseButtons: true
 });
 
-window.showConfirmDialog = function(options) {
+window.showConfirmDialog = (options) => {
   const defaultOptions = {
     title: 'Tem certeza?',
     text: '',

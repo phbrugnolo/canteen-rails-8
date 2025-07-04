@@ -46,15 +46,27 @@ class Main::ProductsController < ApplicationController
   end
 
   def activate
-    @product.update(status: "active")
-    @product.save!
-    redirect_to main_products_path
+    respond_to do |format|
+      if @product.activate!
+        format.html { redirect_to main_product_url(@product), notice: I18n.t(:model_was_successfully_updated, model: @product.model_name.human) }
+        format.json { render :show, status: :ok, location: @product }
+      else
+        format.html { redirect_to main_product_url(@product), status: :unprocessable_entity }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def deactivate
-    @product.update(status: "inactive")
-    @product.save!
-    redirect_to main_products_path
+    respond_to do |format|
+      if @product.deactivate!
+        format.html { redirect_to main_product_url(@product), notice: I18n.t(:model_was_successfully_updated, model: @product.model_name.human) }
+        format.json { render :show, status: :ok, location: @product }
+      else
+        format.html { redirect_to main_product_url(@product), status: :unprocessable_entity }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private

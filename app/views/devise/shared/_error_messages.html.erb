@@ -17,6 +17,7 @@
 <% if flash[:alert] %>
   <% unless flash[:alert] == I18n.t("devise.failure.unauthenticated") %>
     <div class="alert alert-danger">
+      <i class="bi bi-exclamation-triangle me-2"></i>
       <%= flash[:alert] %>
     </div>
   <% end %>
@@ -24,6 +25,7 @@
 
 <% if flash[:notice] %>
   <div class="alert alert-info">
+    <i class="bi bi-info-circle me-2"></i>
     <%= flash[:notice] %>
   </div>
 <% end %>

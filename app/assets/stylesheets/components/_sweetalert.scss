@@ -1,0 +1,158 @@
+// SweetAlert2 Custom Styles for Confirmation Dialogs
+// Modern color palette for better UX
+
+// SCSS Variables
+$confirm-activate-color: #10b981;
+$confirm-activate-hover: #059669;
+$confirm-deactivate-color: #ef4444;
+$confirm-deactivate-hover: #dc2626;
+$confirm-delete-color: #ef4444;
+$confirm-delete-hover: #dc2626;
+$confirm-cancel-color: #6b7280;
+$confirm-cancel-hover: #4b5563;
+
+// Mixins for common button styles
+@mixin button-gradient($start-color, $end-color) {
+  background: linear-gradient(135deg, $start-color 0%, $end-color 100%);
+  transition: all 0.3s ease;
+}
+
+@mixin button-hover-effect($shadow-r, $shadow-g, $shadow-b) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba($shadow-r, $shadow-g, $shadow-b, 0.3);
+}
+
+// Custom button classes for main buttons
+.btn-activate {
+  @include button-gradient($confirm-activate-color, $confirm-activate-hover);
+  border-color: $confirm-activate-color;
+  color: white;
+
+  &:hover {
+    @include button-gradient($confirm-activate-hover, #047857);
+    @include button-hover-effect(16, 185, 129);
+    border-color: $confirm-activate-hover;
+    color: white;
+  }
+}
+
+.btn-deactivate {
+  @include button-gradient($confirm-deactivate-color, $confirm-deactivate-hover);
+  border-color: $confirm-deactivate-color;
+  color: white;
+
+  &:hover {
+    @include button-gradient($confirm-deactivate-hover, #b91c1c);
+    @include button-hover-effect(239, 68, 68);
+    border-color: $confirm-deactivate-hover;
+    color: white;
+  }
+}
+
+.btn-delete {
+  @include button-gradient($confirm-delete-color, $confirm-delete-hover);
+  border-color: $confirm-delete-color;
+  color: white;
+
+  &:hover {
+    @include button-gradient($confirm-delete-hover, #b91c1c);
+    @include button-hover-effect(239, 68, 68);
+    border-color: $confirm-delete-hover;
+    color: white;
+  }
+}
+
+// SweetAlert2 Custom Styles
+.swal2-popup {
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.swal2-title {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.swal2-html-container {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+// Mixin for SweetAlert2 confirm buttons
+@mixin swal2-confirm-button($bg-start, $bg-end, $hover-start, $hover-end, $shadow-r, $shadow-g, $shadow-b) {
+  @include button-gradient($bg-start, $bg-end);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+
+  &:hover {
+    @include button-gradient($hover-start, $hover-end);
+    @include button-hover-effect($shadow-r, $shadow-g, $shadow-b);
+  }
+}
+
+// Custom confirm button styles for SweetAlert2
+.swal2-confirm.swal2-styled {
+  &.btn-activate-confirm {
+    @include swal2-confirm-button(
+      $confirm-activate-color,
+      $confirm-activate-hover,
+      $confirm-activate-hover,
+      #047857,
+      16, 185, 129
+    );
+  }
+
+  &.btn-deactivate-confirm {
+    @include swal2-confirm-button(
+      $confirm-deactivate-color,
+      $confirm-deactivate-hover,
+      $confirm-deactivate-hover,
+      #b91c1c,
+      239, 68, 68
+    );
+  }
+
+  &.btn-delete-confirm {
+    @include swal2-confirm-button(
+      $confirm-delete-color,
+      $confirm-delete-hover,
+      $confirm-delete-hover,
+      #b91c1c,
+      239, 68, 68
+    );
+  }
+}
+
+// Cancel button styling
+.swal2-cancel.swal2-styled {
+  @include button-gradient($confirm-cancel-color, $confirm-cancel-hover);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+
+  &:hover {
+    @include button-gradient($confirm-cancel-hover, #374151);
+    @include button-hover-effect(107, 114, 128);
+  }
+}
+
+// Icon styling based on action type
+.swal2-icon {
+  &.swal2-question {
+    border-color: $confirm-activate-color;
+    color: $confirm-activate-color;
+  }
+
+  &.swal2-warning {
+    border-color: $confirm-deactivate-color;
+    color: $confirm-deactivate-color;
+  }
+
+  &.swal2-error {
+    border-color: $confirm-delete-color;
+    color: $confirm-delete-color;
+  }
+}

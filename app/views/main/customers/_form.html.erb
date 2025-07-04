@@ -1,15 +1,108 @@
-<div class="container mx-auto w-50">
-  <div class="card p-4 mt-4" style="background-color: #EEF5FF">
-    <%= simple_form_for [:main, @customer] do |f| %>
-      <%= f.error_notification %>
-      <div class="form-inputs">
-        <%= f.input :name, placeholder: I18n.t(:name, scope: %i[activerecord attributes customer]), required: true %>
-        <%= f.input :matriculation, placeholder: I18n.t(:matriculation, scope: %i[activerecord attributes customer]), required: true %>
-        <%= f.input :avatar, as: :file, label: I18n.t(:avatar, scope: %i[activerecord attributes customer]) %>
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2 class="form-title">
+        <div class="form-icon">
+          <i class="bi bi-person-plus"></i>
+        </div>
+        <%= @customer.persisted? ? I18n.t(:edit, scope: %i[form titles customer]) : I18n.t(:new, scope: %i[form titles customer]) %>
+      </h2>
+      <p class="form-subtitle">
+        <%= @customer.persisted? ? I18n.t(:edit, scope: %i[form subtitles customer]) : I18n.t(:new, scope: %i[form subtitles customer]) %>
+      </p>
+    </div>
+
+    <%= simple_form_for [:main, @customer], html: { class: "simple_form" } do |f| %>
+      <!-- Error notification with enhanced styling -->
+      <% if @customer.errors.any? %>
+        <div class="form-notification error">
+          <div>
+            <strong><%= "<i class='bi bi-exclamation-triangle'></i> #{I18n.t(:found_problems, scope: %i[form errors])}".html_safe %></strong>
+            <ul class="mb-0 mt-2">
+              <% @customer.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Customer Name Field -->
+      <div class="form-group form-group-with-icon">
+        <%= f.label :name, class: "form-label required" do %>
+          <i class="bi bi-person"></i> <%= I18n.t(:name, scope: %i[activerecord attributes customer]) %>
+        <% end %>
+        <%= f.input_field :name,
+            class: "form-control",
+            placeholder: I18n.t(:name, scope: %i[form placeholders customer]),
+            required: true,
+            autofocus: true %>
+        <i class="form-icon bi bi-person"></i>
       </div>
-      <div class="form-actions float-end">
-        <%= link_to I18n.t(:back, scope: %i[form actions]), (request.referer.present? ? request.referer : main_customers_path), class: "btn btn-secondary mt-3 ms-2" %>
-        <%= f.button :submit, I18n.t(:submit, scope: %i[form actions]), class: "btn btn-primary mt-3" %>
+
+      <!-- Customer CPF Field -->
+      <div class="form-group form-group-with-icon">
+        <%= f.label :cpf, class: "form-label required" do %>
+          <i class="bi bi-file-person-fill"></i> <%= I18n.t(:cpf, scope: %i[activerecord attributes customer]) %>
+        <% end %>
+        <%= f.input_field :cpf,
+            class: "form-control",
+            placeholder: I18n.t(:cpf, scope: %i[form placeholders customer]),
+            id: "customer_cpf",
+            required: true,
+            autofocus: true %>
+        <i class="form-icon bi bi-file-person-fill"></i>
+      </div>
+
+      <!-- Customer Matriculation Field -->
+      <div class="form-group form-group-with-icon">
+        <%= f.label :matriculation, class: "form-label required" do %>
+          <i class="bi bi-card-text"></i> <%= I18n.t(:matriculation, scope: %i[activerecord attributes customer]) %>
+        <% end %>
+        <%= f.input_field :matriculation,
+            class: "form-control",
+            placeholder: I18n.t(:matriculation, scope: %i[form placeholders customer]),
+            required: true %>
+        <i class="form-icon bi bi-card-text"></i>
+      </div>
+
+      <!-- Customer Avatar Field -->
+      <div class="form-group">
+        <%= f.label :avatar, class: "form-label" do %>
+          <i class="bi bi-image"></i> <%= I18n.t(:avatar, scope: %i[activerecord attributes customer]) %>
+        <% end %>
+        <div class="form-file-upload">
+          <%= f.input_field :avatar,
+              as: :file,
+              class: "file-upload-input",
+              accept: "image/*" %>
+          <label class="file-upload-label">
+            <i class="upload-icon bi bi-person-circle"></i>
+            <div class="upload-text"><%= I18n.t(:click_to_select_avatar, scope: %i[form uploads customer]) %></div>
+            <div class="upload-hint"><%= I18n.t(:avatar_formats, scope: %i[form uploads customer]) %></div>
+          </label>
+        </div>
+        <% if @customer.avatar.attached? %>
+          <div class="mt-2">
+            <small class="text-muted">
+              <i class="bi bi-check-circle text-success"></i>
+              <%= I18n.t(:current_avatar, scope: %i[form uploads customer]) %> <%= @customer.avatar.filename %>
+            </small>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <%= link_to main_customers_path, class: "btn btn-form-secondary" do %>
+          <i class="btn-icon bi bi-arrow-left"></i>
+          <%= I18n.t(:back, scope: %i[form actions]) %>
+        <% end %>
+
+        <%= f.button :button, :submit, class: "btn btn-form-primary" do %>
+          <i class="btn-icon bi bi-check-lg"></i>
+          <%= @customer.persisted? ? I18n.t(:update, scope: %i[form buttons customer]) : I18n.t(:submit, scope: %i[form actions]) %>
+        <% end %>
       </div>
     <% end %>
   </div>

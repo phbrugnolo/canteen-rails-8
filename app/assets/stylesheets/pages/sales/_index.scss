@@ -1,0 +1,618 @@
+// ===========================================
+// SALES INDEX PAGE STYLES
+// ===========================================
+
+// ===========================================
+// VARIABLES
+// ===========================================
+$sales-primary: #4facfe;
+$sales-primary-hover: #00f2fe;
+$sales-gradient: linear-gradient(135deg, $sales-primary 0%, $sales-primary-hover 100%);
+$sales-light: rgba(79, 172, 254, 0.1);
+
+// Component-specific variables
+$sale-card-border-radius: 1rem;
+$table-font-size: 0.95rem;
+$filter-card-bg: #f8f9fa;
+
+// ===========================================
+// MIXINS
+// ===========================================
+@mixin sales-index-transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+@mixin sales-index-hover-effect($translateY: -2px) {
+  transform: translateY($translateY);
+  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.15);
+}
+
+@mixin sales-index-card-style {
+  background: $color-white;
+  border-radius: $sale-card-border-radius;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid $color-border;
+  @include sales-index-transition();
+}
+
+@mixin button-base {
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  @include sales-index-transition();
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+@mixin section-header {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+// ===========================================
+// ANIMATIONS
+// ===========================================
+@keyframes sales-index-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+// ===========================================
+// MAIN CONTAINER
+// ===========================================
+.sales-index-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: $spacing-lg;
+  animation: sales-index-fadeInUp 0.6s ease-out;
+}
+
+// ===========================================
+// PAGE HEADER
+// ===========================================
+.sales-index-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 2px solid $color-border;
+}
+
+.sales-index-title-section {
+  flex: 1;
+}
+
+.sales-index-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $sales-primary;
+  margin-bottom: $spacing-sm;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.sales-index-title-icon {
+  font-size: 2rem;
+  background: $sales-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sales-index-subtitle {
+  font-size: 1.1rem;
+  color: $color-text-secondary;
+  margin-bottom: 0;
+  font-weight: 400;
+}
+
+.sales-index-actions {
+  display: flex;
+  gap: $spacing-md;
+  align-items: flex-start;
+}
+
+// ===========================================
+// BUTTONS
+// ===========================================
+.sales-index-btn-primary {
+  @include button-base;
+  background: $sales-gradient;
+  color: $color-white;
+  font-weight: 600;
+  padding: $spacing-sm $spacing-lg;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+
+  &:hover {
+    @include sales-index-hover-effect(-1px);
+    color: $color-white;
+    box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+  }
+
+  .bi {
+    font-size: 1.1rem;
+  }
+}
+
+.sales-index-btn-action {
+  @include button-base;
+  background: $color-white;
+  color: $sales-primary;
+  border: 2px solid $sales-primary;
+  font-weight: 500;
+
+  &:hover {
+    background: $sales-primary;
+    color: $color-white;
+    @include sales-index-hover-effect(-1px);
+  }
+}
+
+// ===========================================
+// FILTERS SECTION
+// ===========================================
+.sales-index-filters-card {
+  @include sales-index-card-style;
+  margin-bottom: $spacing-xl;
+  overflow: visible;
+}
+
+.sales-index-filters-header {
+  background: $filter-card-bg;
+  padding: $spacing-lg;
+  border-bottom: 1px solid $color-border;
+}
+
+.sales-index-filters-title {
+  @include section-header;
+  margin-bottom: 0;
+  color: $sales-primary;
+
+  .bi {
+    font-size: 1.2rem;
+  }
+}
+
+.sales-index-filters-grid {
+  padding: $spacing-lg;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: $spacing-lg;
+  align-items: end;
+}
+
+.sales-index-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.sales-index-filter-label {
+  font-weight: 600;
+  color: $color-text-primary;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  .bi {
+    color: $sales-primary;
+  }
+}
+
+.sales-index-filter-control {
+  border: 2px solid $color-border;
+  border-radius: $border-radius-md;
+  padding: $spacing-sm $spacing-md;
+  font-size: 0.95rem;
+  @include sales-index-transition();
+
+  &:focus {
+    outline: none;
+    border-color: $sales-primary;
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+  }
+
+  &::placeholder {
+    color: $color-text-secondary;
+    font-style: italic;
+  }
+}
+
+// ===========================================
+// SALES GRID
+// ===========================================
+.sales-index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: $spacing-lg;
+  margin-top: $spacing-xl;
+}
+
+// ===========================================
+// SALE CARDS
+// ===========================================
+.sales-index-card {
+  @include sales-index-card-style;
+  overflow: hidden;
+  position: relative;
+
+  &:hover {
+    @include sales-index-hover-effect();
+  }
+}
+
+.sales-index-card-header {
+  background: linear-gradient(135deg, $sales-light 0%, rgba(79, 172, 254, 0.05) 100%);
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1px solid $color-border;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sales-index-card-date {
+  font-weight: 600;
+  color: $sales-primary;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  .bi {
+    font-size: 1rem;
+  }
+}
+
+.sales-index-card-total {
+  font-weight: 700;
+  color: $color-success;
+  font-size: 1.1rem;
+}
+
+.sales-index-card-body {
+  padding: $spacing-lg;
+}
+
+.sales-index-card-customer {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.sales-index-customer-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: $sales-gradient;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-white;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.sales-index-customer-info {
+  flex: 1;
+}
+
+.sales-index-customer-name {
+  font-weight: 600;
+  color: $color-text-primary;
+  margin-bottom: 2px;
+  font-size: 1rem;
+}
+
+.sales-index-customer-label {
+  font-size: 0.85rem;
+  color: $color-text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sales-index-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: $spacing-md $spacing-lg;
+  background: $color-light-gray;
+  border-top: 1px solid $color-border;
+}
+
+.sales-index-view-btn {
+  @include button-base;
+  background: $sales-primary;
+  color: $color-white;
+  font-size: 0.9rem;
+  padding: $spacing-sm $spacing-md;
+
+  &:hover {
+    background: $sales-primary-hover;
+    color: $color-white;
+    transform: translateY(-1px);
+  }
+
+  .bi {
+    font-size: 0.9rem;
+  }
+}
+
+// ===========================================
+// EMPTY STATE
+// ===========================================
+.sales-index-empty-state {
+  text-align: center;
+  padding: $spacing-xxl;
+  background: $color-white;
+  border-radius: $border-radius-lg;
+  border: 2px dashed $color-border;
+  margin-top: $spacing-xl;
+}
+
+.sales-index-empty-icon {
+  font-size: 4rem;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-lg;
+}
+
+.sales-index-empty-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $color-text-primary;
+  margin-bottom: $spacing-sm;
+}
+
+.sales-index-empty-subtitle {
+  color: $color-text-secondary;
+  margin-bottom: $spacing-lg;
+}
+
+// ===========================================
+// ADDITIONAL UTILITY STYLES
+// ===========================================
+
+// Status indicators for future use
+.sales-index-status {
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-pill;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &.status-completed {
+    background: $color-success-light;
+    color: $color-success;
+    border: 1px solid $color-success;
+  }
+
+  &.status-pending {
+    background: $color-warning-bg;
+    color: $color-warning;
+    border: 1px solid $color-warning;
+  }
+
+  &.status-cancelled {
+    background: rgba(220, 53, 69, 0.1);
+    color: $color-danger;
+    border: 1px solid $color-danger;
+  }
+}
+
+// Enhanced table styles for potential future table view
+.sales-index-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: $color-white;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  th {
+    background: $sales-light;
+    padding: $spacing-md $spacing-lg;
+    font-weight: 600;
+    color: $sales-primary;
+    text-align: left;
+    border-bottom: 2px solid $color-border;
+  }
+
+  td {
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $color-border;
+    vertical-align: middle;
+  }
+
+  tr {
+    @include sales-index-transition();
+
+    &:hover {
+      background: rgba(79, 172, 254, 0.03);
+    }
+  }
+}
+
+// View toggle buttons for future enhancements
+.sales-index-view-toggle {
+  display: flex;
+  background: $color-white;
+  border: 2px solid $color-border;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+
+  button {
+    @include button-base;
+    background: transparent;
+    border: none;
+    padding: $spacing-sm $spacing-md;
+    color: $color-text-secondary;
+    border-radius: 0;
+
+    &.active {
+      background: $sales-primary;
+      color: $color-white;
+    }
+
+    &:hover:not(.active) {
+      background: $color-light-gray;
+    }
+
+    .bi {
+      font-size: 1rem;
+    }
+  }
+}
+
+// Pagination styles for future use
+.sales-index-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-xl;
+
+  .pagination {
+    display: flex;
+    gap: $spacing-xs;
+
+    .page-item {
+      .page-link {
+        border: 2px solid $color-border;
+        color: $color-text-primary;
+        padding: $spacing-sm $spacing-md;
+        border-radius: $border-radius-md;
+        text-decoration: none;
+        @include sales-index-transition();
+
+        &:hover {
+          background: $sales-primary;
+          color: $color-white;
+          border-color: $sales-primary;
+        }
+      }
+
+      &.active .page-link {
+        background: $sales-primary;
+        color: $color-white;
+        border-color: $sales-primary;
+      }
+    }
+  }
+}
+
+// ===========================================
+// LOADING STATES
+// ===========================================
+.sales-index-loading {
+  .sales-index-card {
+    background: linear-gradient(
+      90deg,
+      $color-light-gray 25%,
+      $color-medium-gray 50%,
+      $color-light-gray 75%
+    );
+    background-size: 200px 100%;
+    animation: shimmer 1.5s infinite;
+  }
+}
+
+// ===========================================
+// ACCESSIBILITY
+// ===========================================
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// ===========================================
+// FILTER SYSTEM CLASSES
+// ===========================================
+
+.sales-index-filter-item-visible {
+  display: block !important;
+  animation: sales-index-fadeInUp 0.3s ease-out;
+}
+
+.sales-index-filter-item-hidden {
+  display: none !important;
+}
+
+.sales-index-filter-no-results-visible {
+  display: block !important;
+  text-align: center;
+  padding: 2rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.sales-index-filter-no-results-hidden {
+  display: none !important;
+}
+
+.sales-index-card {
+  @include sales-index-transition(all, 0.3s, ease-out);
+
+  &.sales-index-filter-item-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &.sales-index-filter-item-hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  }
+}
+
+#sales-count {
+  @include sales-index-transition(all, 0.2s, ease-out);
+
+  &.updating {
+    transform: scale(1.1);
+    color: $sales-primary;
+  }
+}
+
+.sales-index-filter-no-results-visible {
+  .card {
+    border: 2px dashed $color-border !important;
+    background: linear-gradient(135deg, rgba(79, 172, 254, 0.02) 0%, rgba(79, 172, 254, 0.05) 100%) !important;
+  }
+
+  .bi {
+    color: $sales-primary !important;
+  }
+
+  h5 {
+    color: $sales-primary !important;
+  }
+}
