@@ -9,7 +9,7 @@ class Main::ReportsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "promissory",
+        render pdf: I18n.t(:promissory),
                page_size: "A4",
                orientation: "Portrait",
                encoding: "UTF-8",
