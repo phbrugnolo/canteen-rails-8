@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_06_27_175924) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -60,7 +63,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_175924) do
   create_table "sales", force: :cascade do |t|
     t.json "cart"
     t.decimal "total_price"
-    t.integer "customer_id", null: false
+    t.bigint "customer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_sales_on_customer_id"
