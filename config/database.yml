@@ -20,14 +20,15 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 dev_connection: &dev_connection
-  username: postgres
-  password: postgres
-  host: 127.0.0.1
-  port: 5432
+  username: <%= ENV.fetch("DB_USER", "postgres") %>
+  password: <%= ENV.fetch("DB_PASSWORD", "postgres") %>
+  host: <%= ENV.fetch("DB_HOST", "db") %>
+  port: <%= ENV.fetch("DB_PORT", 5432) %>
 
 development:
-  <<: *default
-  <<: *dev_connection
+  <<:
+    - *default
+    - *dev_connection
   database: canteen_development
 
   # The specified database role being used to connect to PostgreSQL.
@@ -61,8 +62,9 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  <<: *dev_connection
+  <<:
+    - *default
+    - *dev_connection
   database: canteen_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
