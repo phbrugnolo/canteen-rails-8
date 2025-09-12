@@ -13,6 +13,7 @@
     "dbaeumer.vscode-eslint",
     "steoates.autoimport",
     "ecmel.vscode-html-css",
-    "VisualStudioExptTeam.vscodeintellicode"
+    "GitHub.copilot",
+    "GitHub.copilot-chat"
   ]
 }
