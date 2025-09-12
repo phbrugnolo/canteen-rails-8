@@ -99,8 +99,8 @@ rvm --default use 3.4.5
 rvm gemset create canteen
 rvm gemset use canteen
 gem install bundler
-bundle config --global timeout 10000
-bundle config --global retry 10000
+bundle config --global timeout 300
+bundle config --global retry 3
 gem install rails
 
 sudo tee /etc/profile.d/rvm.sh << 'EOF'
