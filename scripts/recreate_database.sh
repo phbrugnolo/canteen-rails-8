@@ -13,6 +13,9 @@ bin/rails db:drop RAILS_ENV=$RAILS_ENV
 echo "Creating the database..."
 bin/rails db:create RAILS_ENV=$RAILS_ENV
 
+echo "Loading the database..."
+bin/rails db:schema:load RAILS_ENV=$RAILS_ENV
+
 echo "Migrating the database..."
 bin/rails db:migrate RAILS_ENV=$RAILS_ENV
 
