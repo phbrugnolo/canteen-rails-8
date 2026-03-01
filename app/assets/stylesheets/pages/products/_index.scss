@@ -3,7 +3,7 @@
 // ===========================================
 $products-primary: #28a745;
 $products-primary-hover: #218838;
-$products-gradient: linear-gradient(135deg, $products-primary 0%, $products-primary-hover 100%);
+$products-gradient: $gradient-products;
 $products-light: rgba(40, 167, 69, 0.1);
 
 // Component-specific variables
@@ -13,87 +13,13 @@ $product-image-table-size: 60px;
 $table-font-size: 0.95rem;
 
 // ===========================================
-// MIXINS
-// ===========================================
-@mixin products-index-transition($properties: all, $duration: 0.3s, $timing: ease) {
-  transition: $properties $duration $timing;
-}
-
-@mixin products-index-hover-effect($translateY: -4px) {
-  transform: translateY($translateY);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-}
-
-@mixin products-index-card-style {
-  background: $color-white;
-  border-radius: $border-radius-lg;
-  box-shadow: $box-shadow-sm;
-  border: 1px solid $color-border;
-  @include products-index-transition();
-}
-
-@mixin button-base {
-  border: none;
-  border-radius: $border-radius-md;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-sm;
-  @include products-index-transition();
-}
-
-@mixin section-header {
-  font-weight: 600;
-  color: $color-text-primary;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: $spacing-sm;
-
-  .icon {
-    color: $products-primary;
-  }
-}
-
-// ===========================================
-// ANIMATIONS
-// ===========================================
-@keyframes products-index-fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes products-card-slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-// ===========================================
 // MAIN CONTAINER
 // ===========================================
 .products-index-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: $spacing-lg;
-  animation: products-index-fadeInUp 0.6s ease-out;
+  animation: fadeInUp 0.6s ease-out;
 }
 
 // ===========================================
@@ -113,7 +39,7 @@ $table-font-size: 0.95rem;
 }
 
 .products-index-title {
-  @include section-header;
+  @include section-header($products-primary);
   font-size: 2.5rem;
   color: $products-primary;
   margin-bottom: $spacing-sm;
@@ -142,14 +68,14 @@ $table-font-size: 0.95rem;
 // BUTTONS
 // ===========================================
 .products-index-btn-primary {
-  @include button-base;
+  @include button-base();
   background: $products-gradient;
   color: $color-white;
   padding: $spacing-sm $spacing-lg;
 
   &:hover {
     color: $color-white;
-    @include products-index-hover-effect(-2px);
+    @include hover-effect(-2px);
   }
 
   .products-index-btn-icon {
@@ -158,7 +84,7 @@ $table-font-size: 0.95rem;
 }
 
 .products-index-btn-action {
-  @include button-base;
+  @include button-base();
   padding: $spacing-xs $spacing-sm;
   font-size: 0.85rem;
   font-weight: 500;
@@ -197,7 +123,7 @@ $table-font-size: 0.95rem;
 // VIEW TOGGLE BUTTON
 // ===========================================
 .products-index-view-toggle {
-  @include button-base;
+  @include button-base();
   background: $color-white;
   color: $products-primary;
   border: 1px solid $products-primary;
@@ -223,7 +149,7 @@ $table-font-size: 0.95rem;
 // FILTERS SECTION
 // ===========================================
 .products-index-filters-card {
-  @include products-index-card-style;
+  @include card-style;
   padding: $spacing-lg;
   margin-bottom: $spacing-xl;
 }
@@ -235,7 +161,7 @@ $table-font-size: 0.95rem;
 }
 
 .products-index-filters-title {
-  @include section-header;
+  @include section-header($products-primary);
   font-size: 1.3rem;
 
   .products-index-filters-icon {
@@ -275,7 +201,7 @@ $table-font-size: 0.95rem;
   border: 2px solid $color-border;
   border-radius: $border-radius-md;
   font-size: 1rem;
-  @include products-index-transition();
+  @include transition();
 
   &:focus {
     outline: none;
@@ -296,7 +222,7 @@ $table-font-size: 0.95rem;
 // TABLE SECTION
 // ===========================================
 .products-index-table-card {
-  @include products-index-card-style;
+  @include card-style;
   overflow: hidden;
 }
 
@@ -310,7 +236,7 @@ $table-font-size: 0.95rem;
 }
 
 .products-index-table-title {
-  @include section-header;
+  @include section-header($products-primary);
   font-size: 1.3rem;
 
   .products-index-table-title-icon {
@@ -348,8 +274,8 @@ $table-font-size: 0.95rem;
 
   .products-index-tr {
     display: table-row;
-    @include products-index-transition();
-    animation: products-index-fadeInUp 0.4s ease-out;
+    @include transition();
+    animation: fadeInUp 0.4s ease-out;
     animation-fill-mode: both;
 
     &:hover {
@@ -437,7 +363,7 @@ $table-font-size: 0.95rem;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    @include products-index-transition();
+    @include transition();
 
     &:hover {
       transform: scale(1.05);
@@ -556,7 +482,7 @@ $table-font-size: 0.95rem;
   .btn-status-toggle {
     &.products-status-activate,
     &.products-status-deactivate {
-      @include button-base;
+      @include button-base();
       padding: $spacing-xs $spacing-sm;
       font-size: 0.85rem;
       font-weight: 500;
@@ -627,13 +553,13 @@ $table-font-size: 0.95rem;
 // PRODUCT CARDS (FOR GRID VIEW)
 // ===========================================
 .products-index-product-card {
-  @include products-index-card-style;
+  @include card-style;
   overflow: hidden;
-  animation: products-card-slideIn 0.5s ease-out;
+  animation: slideIn 0.5s ease-out;
   animation-fill-mode: both;
 
   &:hover {
-    @include products-index-hover-effect();
+    @include hover-effect();
   }
 
   // Staggered animation for cards
@@ -654,7 +580,7 @@ $table-font-size: 0.95rem;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    @include products-index-transition();
+    @include transition();
   }
 
   .products-index-image-overlay {
@@ -668,7 +594,7 @@ $table-font-size: 0.95rem;
     align-items: center;
     justify-content: center;
     opacity: 0;
-    @include products-index-transition();
+    @include transition();
   }
 
   &:hover {
@@ -696,7 +622,7 @@ $table-font-size: 0.95rem;
     align-items: center;
     justify-content: center;
     color: $products-primary;
-    @include products-index-transition();
+    @include transition();
 
     &:hover {
       background: $products-primary;
@@ -730,7 +656,7 @@ $table-font-size: 0.95rem;
     &.products-status-activate,
     &.products-status-deactivate {
       // Seguindo o mesmo padrão dos botões view/edit na grid
-      @include button-base;
+      @include button-base();
       padding: $spacing-xs $spacing-sm;
       font-size: 0.85rem;
       font-weight: 500;

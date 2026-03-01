@@ -7,28 +7,7 @@
 // ===========================================
 $status-btn-activate-color: $color-success;
 $status-btn-activate-hover: $color-success-hover;
-$status-btn-activate-gradient: linear-gradient(135deg, $status-btn-activate-color 0%, $color-success-gradient 100%);
-
-// ===========================================
-// MIXINS
-// ===========================================
-@mixin status-btn-transition($properties: all, $duration: 0.3s, $timing: ease) {
-  transition: $properties $duration $timing;
-}
-
-@mixin status-btn-base {
-  padding: $spacing-sm $spacing-md;
-  border-radius: $border-radius-md;
-  font-weight: 500;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-xs;
-  @include status-btn-transition();
-  border: 1px solid transparent;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
+$status-btn-activate-gradient: $gradient-success;
 
 // ===========================================
 // STATUS TOGGLE BUTTON STYLES
@@ -37,38 +16,31 @@ $status-btn-activate-gradient: linear-gradient(135deg, $status-btn-activate-colo
 // Context-specific styles for products
 .btn-status-toggle {
   // Base styles
-  @include status-btn-base;
+  @include button-base($spacing-sm $spacing-md);
+  font-weight: 500;
+  gap: $spacing-xs;
+  border: 1px solid transparent;
+  font-size: 0.9rem;
 
   &.activate {
-    background: $status-btn-activate-gradient;
-    color: $color-white;
-    border-color: $status-btn-activate-color;
-
-    &:hover {
-      background: linear-gradient(135deg, $status-btn-activate-hover 0%, $status-btn-activate-color 100%);
-      color: $color-white;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba($status-btn-activate-color, 0.3);
-    }
+    @include button-color-variant(
+      $bg-color: $status-btn-activate-gradient,
+      $hover-bg: linear-gradient(135deg, $status-btn-activate-hover 0%, $status-btn-activate-color 100%),
+      $border-color: $status-btn-activate-color,
+      $hover-shadow: 0 4px 12px rgba($status-btn-activate-color, 0.3)
+    );
   }
 
   &.deactivate {
-    background: $color-danger;
-    color: $color-white;
-    border-color: $color-danger;
-
-    &:hover {
-      background: darken($color-danger, 10%);
-      color: $color-white;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba($color-danger, 0.3);
-    }
+    @include button-color-variant(
+      $bg-color: $color-danger,
+      $hover-shadow: 0 4px 12px rgba($color-danger, 0.3)
+    );
   }
 
   &.products-status-activate,
   &.products-status-deactivate {
-    @include status-btn-base;
-    padding: $spacing-sm $spacing-md;
+    @include button-base($spacing-sm $spacing-md);
     font-size: inherit;
     font-weight: 500;
     border: 1px solid;
@@ -120,29 +92,19 @@ $status-btn-activate-gradient: linear-gradient(135deg, $status-btn-activate-colo
   }
 
   &.customers-status-activate {
-    background: $status-btn-activate-gradient;
-    color: $color-white;
-    border-color: $status-btn-activate-color;
-
-    &:hover {
-      background: linear-gradient(135deg, $status-btn-activate-hover 0%, $status-btn-activate-color 100%);
-      color: $color-white;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba($status-btn-activate-color, 0.3);
-    }
+    @include button-color-variant(
+      $bg-color: $status-btn-activate-gradient,
+      $hover-bg: linear-gradient(135deg, $status-btn-activate-hover 0%, $status-btn-activate-color 100%),
+      $border-color: $status-btn-activate-color,
+      $hover-shadow: 0 4px 12px rgba($status-btn-activate-color, 0.3)
+    );
   }
 
   &.customers-status-deactivate {
-    background: $color-danger;
-    color: $color-white;
-    border-color: $color-danger;
-
-    &:hover {
-      background: darken($color-danger, 10%);
-      color: $color-white;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba($color-danger, 0.3);
-    }
+    @include button-color-variant(
+      $bg-color: $color-danger,
+      $hover-shadow: 0 4px 12px rgba($color-danger, 0.3)
+    );
   }
 
   .btn-icon {

@@ -14,9 +14,6 @@ $tab-border-radius: 0.75rem;
 // ===========================================
 // MIXINS
 // ===========================================
-@mixin customers-show-transition($properties: all, $duration: 0.3s, $timing: ease) {
-  transition: $properties $duration $timing;
-}
 
 @mixin customers-show-hover-effect($translateY: -2px) {
   &:hover {
@@ -25,35 +22,8 @@ $tab-border-radius: 0.75rem;
   }
 }
 
-@mixin customers-show-card-style {
-  background: $color-white;
-  border-radius: $card-border-radius;
-  box-shadow: $box-shadow-sm;
-  border: 1px solid $color-border;
-  overflow: hidden;
-}
 
-@mixin button-base {
-  padding: $spacing-sm $spacing-md;
-  border-radius: $border-radius-md;
-  font-weight: 500;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-xs;
-  @include customers-show-transition();
-  border: 1px solid transparent;
-}
 
-@mixin section-header {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: $color-text-primary;
-  margin-bottom: 0;
-  display: flex;
-  align-items: center;
-  gap: $spacing-sm;
-}
 
 // ===========================================
 // ANIMATIONS
@@ -140,7 +110,7 @@ $tab-border-radius: 0.75rem;
 // BUTTONS
 // ===========================================
 .customers-show-btn-primary {
-  @include button-base;
+  @include button-base();
   background: $customers-show-gradient;
   color: $color-white;
   border-color: $customers-show-primary;
@@ -154,7 +124,7 @@ $tab-border-radius: 0.75rem;
 }
 
 .customers-show-btn-secondary {
-  @include button-base;
+  @include button-base();
   background: $color-secondary;
   color: $color-white;
   border-color: $color-secondary;
@@ -167,7 +137,7 @@ $tab-border-radius: 0.75rem;
 }
 
 .customers-show-btn-action {
-  @include button-base;
+  @include button-base();
   background: $color-light-gray;
   color: $customers-show-primary;
   border-color: $color-border;
@@ -216,7 +186,7 @@ $tab-border-radius: 0.75rem;
     font-weight: 500;
     margin: 0 $spacing-xs;
     position: relative;
-    @include customers-show-transition(all, 0.3s, ease);
+    @include transition(all, 0.3s, ease);
     white-space: nowrap;
     min-width: auto;
 
@@ -268,7 +238,7 @@ $tab-border-radius: 0.75rem;
   .tab-pane {
     opacity: 0;
     transform: translateY(20px) scale(0.98);
-    @include customers-show-transition(all, 0.4s, cubic-bezier(0.4, 0, 0.2, 1));
+    @include transition(all, 0.4s, cubic-bezier(0.4, 0, 0.2, 1));
 
     &.active {
       opacity: 1;
@@ -281,7 +251,7 @@ $tab-border-radius: 0.75rem;
 // PROFILE TAB STYLES
 // ===========================================
 .customers-show-profile-card {
-  @include customers-show-card-style;
+  @include card-style;
   overflow: hidden;
 }
 
@@ -513,7 +483,7 @@ $tab-border-radius: 0.75rem;
 // PURCHASES TAB STYLES
 // ===========================================
 .customers-show-purchases-card {
-  @include customers-show-card-style;
+  @include card-style;
   overflow: hidden;
 }
 
@@ -1094,7 +1064,7 @@ $tab-border-radius: 0.75rem;
 // DOCUMENTS TAB STYLES
 // ===========================================
 .customers-show-documents-card {
-  @include customers-show-card-style;
+  @include card-style;
 }
 
 .customers-show-documents-header {

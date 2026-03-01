@@ -7,28 +7,18 @@
 // ===========================================
 $sales-primary: #4facfe;
 $sales-primary-hover: #00f2fe;
-$sales-gradient: linear-gradient(135deg, $sales-primary 0%, $sales-primary-hover 100%);
+$sales-gradient: $gradient-sales;
 $sales-light: rgba(79, 172, 254, 0.1);
 
 // ===========================================
 // MIXINS
 // ===========================================
-@mixin sales-show-transition($properties: all, $duration: 0.3s, $timing: ease) {
-  transition: $properties $duration $timing;
-}
 
 @mixin sales-show-hover-effect($translateY: -2px) {
   transform: translateY($translateY);
   box-shadow: 0 8px 25px rgba(79, 172, 254, 0.15);
 }
 
-@mixin sales-show-card-style {
-  background: $color-white;
-  border-radius: $border-radius-lg;
-  box-shadow: $box-shadow-sm;
-  border: 1px solid $color-border;
-  @include sales-show-transition();
-}
 
 // ===========================================
 // ANIMATIONS
@@ -133,7 +123,7 @@ $sales-light: rgba(79, 172, 254, 0.1);
   border-radius: $border-radius-md;
   text-decoration: none;
   font-weight: 500;
-  @include sales-show-transition();
+  @include transition();
 
   &:hover {
     color: $sales-primary;
@@ -152,7 +142,7 @@ $sales-light: rgba(79, 172, 254, 0.1);
 // SALE DETAILS CARD
 // ===========================================
 .sales-show-details-card {
-  @include sales-show-card-style;
+  @include card-style;
   margin-bottom: $spacing-xl;
   overflow: hidden;
 
@@ -262,7 +252,7 @@ $sales-light: rgba(79, 172, 254, 0.1);
 // ITEMS CARD
 // ===========================================
 .sales-show-items-card {
-  @include sales-show-card-style;
+  @include card-style;
   overflow: hidden;
 
   &:hover {
@@ -320,7 +310,7 @@ $sales-light: rgba(79, 172, 254, 0.1);
 
   .sales-show-items-tbody {
     .sales-show-items-tr {
-      @include sales-show-transition();
+      @include transition();
       animation: sales-show-slideInRight 0.4s ease-out;
       animation-fill-mode: both;
 

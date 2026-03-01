@@ -12,12 +12,9 @@ $auth-success-gradient: linear-gradient(135deg, $color-success 0%, $color-succes
 // ===========================================
 // MIXINS
 // ===========================================
-@mixin auth-transition($properties: all, $duration: 0.3s, $timing: ease) {
-  transition: $properties $duration $timing;
-}
 
 @mixin auth-hover-effect($translateY: -2px) {
-  @include auth-transition();
+  @include transition();
   &:hover {
     transform: translateY($translateY);
   }
@@ -107,7 +104,7 @@ $auth-success-gradient: linear-gradient(135deg, $color-success 0%, $color-succes
   position: relative;
   z-index: 2;
   animation: auth-fadeInUp 0.6s ease-out;
-  @include auth-transition();
+  @include transition();
 
   &:hover {
     transform: translateY(-5px);
@@ -206,7 +203,7 @@ $auth-success-gradient: linear-gradient(135deg, $color-success 0%, $color-succes
     border-radius: $border-radius-lg;
     padding: $spacing-md;
     font-size: $font-size-base;
-    @include auth-transition();
+    @include transition();
     @include auth-focus-styles();
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
 
@@ -234,7 +231,7 @@ $auth-success-gradient: linear-gradient(135deg, $color-success 0%, $color-succes
       font-size: $font-size-lg;
       z-index: 3;
       pointer-events: none;
-      @include auth-transition();
+      @include transition();
     }
 
     .form-control {
@@ -253,7 +250,7 @@ $auth-success-gradient: linear-gradient(135deg, $color-success 0%, $color-succes
     .form-check-input {
       border-radius: $border-radius-sm;
       border: 2px solid $color-border;
-      @include auth-transition();
+      @include transition();
       @include auth-focus-styles();
 
       &:checked {
@@ -284,7 +281,7 @@ $auth-success-gradient: linear-gradient(135deg, $color-success 0%, $color-succes
   font-weight: $font-weight-semibold;
   font-size: $font-size-base;
   letter-spacing: 0.025em;
-  @include auth-transition();
+  @include transition();
   @include auth-hover-effect(-3px);
 
   &:hover {
@@ -343,7 +340,7 @@ $auth-success-gradient: linear-gradient(135deg, $color-success 0%, $color-succes
     margin: 0 $spacing-sm;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
-    @include auth-transition();
+    @include transition();
     @include auth-hover-effect(-1px);
 
     &:hover {

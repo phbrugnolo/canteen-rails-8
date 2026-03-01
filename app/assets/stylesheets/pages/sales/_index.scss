@@ -7,7 +7,7 @@
 // ===========================================
 $sales-primary: #4facfe;
 $sales-primary-hover: #00f2fe;
-$sales-gradient: linear-gradient(135deg, $sales-primary 0%, $sales-primary-hover 100%);
+$sales-gradient: $gradient-sales;
 $sales-light: rgba(79, 172, 254, 0.1);
 
 // Component-specific variables
@@ -18,45 +18,14 @@ $filter-card-bg: #f8f9fa;
 // ===========================================
 // MIXINS
 // ===========================================
-@mixin sales-index-transition($properties: all, $duration: 0.3s, $timing: ease) {
-  transition: $properties $duration $timing;
-}
 
 @mixin sales-index-hover-effect($translateY: -2px) {
   transform: translateY($translateY);
   box-shadow: 0 8px 25px rgba(79, 172, 254, 0.15);
 }
 
-@mixin sales-index-card-style {
-  background: $color-white;
-  border-radius: $sale-card-border-radius;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid $color-border;
-  @include sales-index-transition();
-}
 
-@mixin button-base {
-  padding: $spacing-sm $spacing-md;
-  border-radius: $border-radius-md;
-  font-weight: 500;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-xs;
-  @include sales-index-transition();
-  border: 1px solid transparent;
-  cursor: pointer;
-}
 
-@mixin section-header {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: $color-text-primary;
-  margin-bottom: $spacing-md;
-  display: flex;
-  align-items: center;
-  gap: $spacing-sm;
-}
 
 // ===========================================
 // ANIMATIONS
@@ -142,7 +111,7 @@ $filter-card-bg: #f8f9fa;
 // BUTTONS
 // ===========================================
 .sales-index-btn-primary {
-  @include button-base;
+  @include button-base();
   background: $sales-gradient;
   color: $color-white;
   font-weight: 600;
@@ -162,7 +131,7 @@ $filter-card-bg: #f8f9fa;
 }
 
 .sales-index-btn-action {
-  @include button-base;
+  @include button-base();
   background: $color-white;
   color: $sales-primary;
   border: 2px solid $sales-primary;
@@ -179,7 +148,7 @@ $filter-card-bg: #f8f9fa;
 // FILTERS SECTION
 // ===========================================
 .sales-index-filters-card {
-  @include sales-index-card-style;
+  @include card-style;
   margin-bottom: $spacing-xl;
   overflow: visible;
 }
@@ -191,7 +160,7 @@ $filter-card-bg: #f8f9fa;
 }
 
 .sales-index-filters-title {
-  @include section-header;
+  @include section-header($sales-primary);
   margin-bottom: 0;
   color: $sales-primary;
 
@@ -232,7 +201,7 @@ $filter-card-bg: #f8f9fa;
   border-radius: $border-radius-md;
   padding: $spacing-sm $spacing-md;
   font-size: 0.95rem;
-  @include sales-index-transition();
+  @include transition();
 
   &:focus {
     outline: none;
@@ -260,7 +229,7 @@ $filter-card-bg: #f8f9fa;
 // SALE CARDS
 // ===========================================
 .sales-index-card {
-  @include sales-index-card-style;
+  @include card-style;
   overflow: hidden;
   position: relative;
 
@@ -348,7 +317,7 @@ $filter-card-bg: #f8f9fa;
 }
 
 .sales-index-view-btn {
-  @include button-base;
+  @include button-base();
   background: $sales-primary;
   color: $color-white;
   font-size: 0.9rem;
@@ -452,7 +421,7 @@ $filter-card-bg: #f8f9fa;
   }
 
   tr {
-    @include sales-index-transition();
+    @include transition();
 
     &:hover {
       background: rgba(79, 172, 254, 0.03);
@@ -469,7 +438,7 @@ $filter-card-bg: #f8f9fa;
   overflow: hidden;
 
   button {
-    @include button-base;
+    @include button-base();
     background: transparent;
     border: none;
     padding: $spacing-sm $spacing-md;
@@ -508,7 +477,7 @@ $filter-card-bg: #f8f9fa;
         padding: $spacing-sm $spacing-md;
         border-radius: $border-radius-md;
         text-decoration: none;
-        @include sales-index-transition();
+        @include transition();
 
         &:hover {
           background: $sales-primary;
@@ -579,7 +548,7 @@ $filter-card-bg: #f8f9fa;
 }
 
 .sales-index-card {
-  @include sales-index-transition(all, 0.3s, ease-out);
+  @include transition(all, 0.3s, ease-out);
 
   &.sales-index-filter-item-visible {
     opacity: 1;
@@ -594,7 +563,7 @@ $filter-card-bg: #f8f9fa;
 }
 
 #sales-count {
-  @include sales-index-transition(all, 0.2s, ease-out);
+  @include transition(all, 0.2s, ease-out);
 
   &.updating {
     transform: scale(1.1);

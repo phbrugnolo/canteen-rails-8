@@ -26,9 +26,6 @@ $opacity-medium: 0.5;
 // MIXINS
 // ===========================================
 
-@mixin sale-new-transition($properties: all, $duration: 0.3s, $timing: ease) {
-  transition: $properties $duration $timing;
-}
 
 @mixin sale-new-border-radius($radius: $border-radius-md) {
   border-radius: $radius;
@@ -154,7 +151,7 @@ $opacity-medium: 0.5;
 // Cards
 .sale-new-card {
   @include sale-new-border-radius($border-radius-lg);
-  @include sale-new-transition();
+  @include transition();
   @include sale-new-box-shadow();
 
   &:hover {
@@ -177,7 +174,7 @@ $opacity-medium: 0.5;
   cursor: pointer;
   @include sale-new-border-radius($border-radius-lg);
   overflow: hidden;
-  @include sale-new-transition();
+  @include transition();
 
   &:hover {
     transform: translateY(-4px);
@@ -189,7 +186,7 @@ $opacity-medium: 0.5;
   }
 
   .btn {
-    @include sale-new-transition();
+    @include transition();
     font-size: $font-size-sm;
 
     &:hover {
@@ -216,7 +213,7 @@ $opacity-medium: 0.5;
   @include sale-new-border-radius();
   padding: 12px 16px;
   font-size: $font-size-base;
-  @include sale-new-transition();
+  @include transition();
 
   &:focus {
     @include sale-new-focus-styles();
@@ -238,7 +235,7 @@ $opacity-medium: 0.5;
 }
 
 .sale-new-cart-item {
-  @include sale-new-transition(background-color, 0.2s, ease);
+  @include transition(background-color, 0.2s, ease);
   animation: slideInRight 0.4s ease-out;
 
   &:hover {
@@ -255,7 +252,7 @@ $opacity-medium: 0.5;
 
   &.quantity-updated {
     background-color: $color-success-light !important;
-    @include sale-new-transition(background-color, 0.3s, ease);
+    @include transition(background-color, 0.3s, ease);
 
     .sale-new-quantity-input {
       border-color: $sale-new-success-alt !important;
@@ -265,7 +262,7 @@ $opacity-medium: 0.5;
 
   // Cart Action Buttons
   .btn {
-    @include sale-new-transition();
+    @include transition();
     border-width: 1px;
 
     &:hover {
@@ -288,7 +285,7 @@ $opacity-medium: 0.5;
 
 .sale-new-cart-summary {
   .badge {
-    @include sale-new-transition();
+    @include transition();
 
     &.updated {
       animation: pulse 0.6s ease-out;
@@ -313,7 +310,7 @@ $opacity-medium: 0.5;
   @include sale-new-border-radius();
   padding: 12px 16px;
   font-size: $font-size-base;
-  @include sale-new-transition();
+  @include transition();
 
   &:focus {
     @include sale-new-focus-styles();
@@ -322,7 +319,7 @@ $opacity-medium: 0.5;
 
 // Quantity Input
 .sale-new-quantity-input {
-  @include sale-new-transition(all, 0.2s, ease);
+  @include transition(all, 0.2s, ease);
   border: 1px solid $color-border !important;
   font-weight: $font-weight-semibold !important;
 
@@ -363,14 +360,14 @@ $opacity-medium: 0.5;
 .sale-new-btn {
   @include sale-new-border-radius();
   font-weight: $font-weight-medium;
-  @include sale-new-transition();
+  @include transition();
 
   &-success {
-    background: linear-gradient(135deg, $color-success 0%, $color-success-gradient 100%);
+    background: $gradient-success;
     border: none;
 
     &:hover {
-      background: linear-gradient(135deg, $color-success-hover 0%, $color-success-gradient 100%);
+      background: $gradient-success;
       transform: translateY(-2px);
     }
 

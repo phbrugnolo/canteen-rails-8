@@ -1,6 +1,11 @@
 // Global variables
 @import "variables";
 
+// Shared utilities (must come after variables)
+@import "mixins";
+@import "animations";
+@import "gradients";
+
 // External libraries
 @import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons";

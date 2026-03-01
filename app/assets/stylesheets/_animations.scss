@@ -1,0 +1,89 @@
+// ===========================================
+// SHARED ANIMATIONS
+// ===========================================
+// Global keyframe animations used across multiple pages/components
+// Centralized to maintain DRY principles
+
+// ===========================================
+// FADE IN UP ANIMATION
+// ===========================================
+// Standard fade in with upward movement - used for page loads
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===========================================
+// SLIDE IN ANIMATION
+// ===========================================
+// Slide in from bottom with scale effect - used for cards/modals
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// ===========================================
+// SHIMMER ANIMATION
+// ===========================================
+// Loading shimmer effect for skeleton screens
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// ===========================================
+// FADE IN ANIMATION
+// ===========================================
+// Simple fade in - used for smooth element appearances
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ===========================================
+// SLIDE DOWN ANIMATION
+// ===========================================
+// Slide down effect - used for dropdowns and reveals
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===========================================
+// PULSE ANIMATION
+// ===========================================
+// Gentle pulse effect - used for notifications and attention
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}

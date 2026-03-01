@@ -1,0 +1,115 @@
+// ===========================================
+// SHARED MIXINS
+// ===========================================
+// Global reusable mixins to maintain DRY principles
+// Used across all components and pages
+
+// ===========================================
+// TRANSITION MIXIN
+// ===========================================
+// Universal transition mixin - replaces all page-specific transition mixins
+@mixin transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+// ===========================================
+// HOVER EFFECT MIXIN
+// ===========================================
+// Standard hover effect with transform and shadow
+@mixin hover-effect($translateY: -2px, $shadow: 0 8px 25px rgba(0, 0, 0, 0.15)) {
+  transform: translateY($translateY);
+  box-shadow: $shadow;
+}
+
+// ===========================================
+// FOCUS STYLES MIXIN
+// ===========================================
+// Consistent focus styles for form elements and interactive components
+@mixin focus-styles($color: $color-sale-primary, $alpha: 0.25) {
+  border-color: $color;
+  box-shadow: 0 0 0 0.2rem rgba(red($color), green($color), blue($color), $alpha);
+  outline: none;
+}
+
+// ===========================================
+// CARD STYLE MIXIN
+// ===========================================
+// Standard card styling with optional hover effect
+@mixin card-style($hover: true) {
+  background: $color-white;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-sm;
+  border: 1px solid $color-border;
+  @include transition();
+
+  @if $hover {
+    &:hover {
+      box-shadow: $box-shadow-md;
+    }
+  }
+}
+
+// ===========================================
+// BUTTON BASE MIXIN
+// ===========================================
+// Base button styles used across all button variants
+@mixin button-base($padding: $spacing-sm $spacing-md) {
+  padding: $padding;
+  border: none;
+  border-radius: $border-radius-md;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  cursor: pointer;
+  @include transition();
+}
+
+// ===========================================
+// SECTION HEADER MIXIN
+// ===========================================
+// Consistent section header styling with optional icon color
+@mixin section-header($icon-color: null) {
+  font-weight: 600;
+  color: $color-text-primary;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  @if $icon-color {
+    .icon {
+      color: $icon-color;
+    }
+  }
+}
+
+// ===========================================
+// BUTTON COLOR VARIANT MIXIN
+// ===========================================
+// Generate color variants for buttons (activate/deactivate, success/danger, etc.)
+@mixin button-color-variant(
+  $bg-color,
+  $text-color: $color-white,
+  $hover-bg: null,
+  $border-color: null,
+  $hover-transform: translateY(-1px),
+  $hover-shadow: null
+) {
+  background: $bg-color;
+  color: $text-color;
+  border-color: if($border-color, $border-color, $bg-color);
+
+  &:hover {
+    background: if($hover-bg, $hover-bg, darken($bg-color, 10%));
+    color: $text-color;
+    transform: $hover-transform;
+
+    @if $hover-shadow {
+      box-shadow: $hover-shadow;
+    } @else {
+      box-shadow: 0 4px 12px rgba($bg-color, 0.3);
+    }
+  }
+}

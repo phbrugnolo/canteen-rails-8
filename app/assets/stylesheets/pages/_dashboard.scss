@@ -3,13 +3,7 @@
 // DASHBOARD-SPECIFIC STYLES
 // ===========================================
 // All variables are now imported from _variables.scss
-// This prevents conflicts with other stylesheets
-
-// Dashboard-specific gradients (using centralized colors)
-$gradient-customers: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-$gradient-products: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-$gradient-sales: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-$gradient-revenue: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+// Gradients are imported from _gradients.scss
 
 // Dashboard container with proper scoping
 .dashboard-container {
