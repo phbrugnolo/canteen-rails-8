@@ -1,0 +1,51 @@
+// ===========================================
+// SHARED GRADIENTS
+// ===========================================
+// Centralized gradient definitions and factory mixin
+// Maintains consistency across the application
+
+// ===========================================
+// GRADIENT FACTORY MIXIN
+// ===========================================
+// Generate linear gradients with consistent angle and fallback
+@mixin gradient($start-color, $end-color, $angle: 135deg) {
+  background: linear-gradient($angle, $start-color 0%, $end-color 100%);
+}
+
+// ===========================================
+// PREDEFINED GRADIENTS
+// ===========================================
+
+// Primary gradients for different sections
+$gradient-customers: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$gradient-products: linear-gradient(135deg, #28a745 0%, #218838 100%);
+$gradient-sales: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+$gradient-dashboard: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+
+// Semantic gradients
+$gradient-success: linear-gradient(135deg, $color-success 0%, $color-success-gradient 100%);
+$gradient-danger: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+$gradient-warning: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+$gradient-info: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+
+// Special effect gradients
+$gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$gradient-blue: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+$gradient-green: linear-gradient(135deg, #28a745 0%, #218838 100%);
+
+// ===========================================
+// GRADIENT HELPER UTILITIES
+// ===========================================
+
+// Generate gradient from single color (auto-darken)
+@mixin auto-gradient($color, $angle: 135deg) {
+  background: linear-gradient($angle, $color 0%, darken($color, 10%) 100%);
+}
+
+// Text gradient effect
+@mixin text-gradient($gradient) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
