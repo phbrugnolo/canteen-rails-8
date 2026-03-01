@@ -363,11 +363,11 @@ $opacity-medium: 0.5;
   @include transition();
 
   &-success {
-    background: linear-gradient(135deg, $color-success 0%, $color-success-gradient 100%);
+    background: $gradient-success;
     border: none;
 
     &:hover {
-      background: linear-gradient(135deg, $color-success-hover 0%, $color-success-gradient 100%);
+      background: $gradient-success;
       transform: translateY(-2px);
     }
 
