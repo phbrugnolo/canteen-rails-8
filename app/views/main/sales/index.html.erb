@@ -46,16 +46,16 @@
           <%= I18n.t(:total_found) %>
         </label>
         <div class="sales-index-filter-control" style="background: #f8f9fa; border-style: dashed;">
-          <span id="sales-count"><%= @sales.size %></span> <%= I18n.t(:sale, scope: %i[activerecord models], count: @sales.size) %>
+          <span id="sales-count"><%= @sales.total_count %></span> <%= I18n.t(:sale, scope: %i[activerecord models], count: @sales.total_count) %>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Sales Grid -->
-  <% if @sales.size > 0 %>
+  <% if @sales.total_count > 0 %>
     <div class="sales-index-grid" id="sales-grid">
-      <% @sales.order(created_at: :desc).each do |sale| %>
+      <% @sales.each do |sale| %>
         <div class="sales-index-card" data-sale-id="<%= sale.id %>" data-customer-name="<%= sale.customer.name.downcase %>" data-sale-date="<%= sale.created_at.strftime('%Y-%m-%d') %>">
           <div class="sales-index-card-header">
             <div class="sales-index-card-date">
@@ -87,6 +87,9 @@
           </div>
         </div>
       <% end %>
+    </div>
+    <div class="sales-index-pagination">
+      <%= paginate @sales %>
     </div>
   <% else %>
     <div class="sales-index-empty-state">

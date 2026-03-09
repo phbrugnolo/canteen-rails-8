@@ -11,6 +11,13 @@ class SalesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should paginate index" do
+    get main_sales_url, params: { page: 1 }
+    assert_response :success
+    assert_not_nil assigns(:sales)
+    assert assigns(:sales).size <= 12, "Page should contain at most 12 items"
+  end
+
   test "should get new" do
     get new_main_sale_url
     assert_response :success
