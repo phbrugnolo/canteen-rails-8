@@ -134,4 +134,38 @@ class CustomersTest < ApplicationSystemTestCase
     click_on I18n.t(:profile)
     assert_selector "#profile-tab-pane.active", wait: 1
   end
+
+  test "should persist active tab in cookies" do
+    visit main_customer_url(@customer)
+
+    # Click on purchases tab
+    click_on I18n.t(:purchases)
+    assert_selector "#purchases-tab-pane.active", wait: 1
+
+    # Verify cookie was set
+    cookie_value = page.driver.browser.manage.cookie_named('customerActiveTab')
+    assert_not_nil cookie_value
+    assert_equal '#purchases-tab-pane', cookie_value[:value]
+
+    # Refresh the page
+    visit main_customer_url(@customer)
+
+    # Verify the purchases tab is still active after refresh
+    assert_selector "#purchases-tab-pane.active", wait: 1
+
+    # Click on documents tab
+    click_on I18n.t(:documents)
+    assert_selector "#documents-tab-pane.active", wait: 1
+
+    # Verify cookie was updated
+    cookie_value = page.driver.browser.manage.cookie_named('customerActiveTab')
+    assert_not_nil cookie_value
+    assert_equal '#documents-tab-pane', cookie_value[:value]
+
+    # Refresh the page again
+    visit main_customer_url(@customer)
+
+    # Verify the documents tab is still active after refresh
+    assert_selector "#documents-tab-pane.active", wait: 1
+  end
 end

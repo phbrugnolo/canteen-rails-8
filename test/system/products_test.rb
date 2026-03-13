@@ -177,4 +177,31 @@ class ProductsTest < ApplicationSystemTestCase
 
     assert_current_path main_products_path
   end
+
+  test "should persist product show state in cookies" do
+    visit main_product_url(@product)
+
+    # Wait for ProductShowManager to initialize
+    sleep 0.5
+
+    # Verify cookie exists
+    cookie_value = page.driver.browser.manage.cookie_named('productShowState')
+    assert_not_nil cookie_value
+
+    # Open image modal
+    find(".products-show-zoom-btn").click
+
+    # Wait for modal to appear
+    assert_selector "#imageModal", visible: true, wait: 1
+
+    # Close modal
+    find(".btn-close").click
+
+    # Wait a bit for cookie to be updated
+    sleep 0.5
+
+    # Verify cookie was updated with modal view
+    cookie_value = page.driver.browser.manage.cookie_named('productShowState')
+    assert_not_nil cookie_value
+  end
 end
